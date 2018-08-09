@@ -12,7 +12,10 @@ namespace Udp_Agreement.Model
         /// 序号
         /// </summary>
         public int id { get; set; }
-
+        /// <summary>
+        /// 头部数据序号
+        /// </summary>
+        public string head { get; set; }
         /// <summary>
         /// 完整协议
         /// </summary>
@@ -36,28 +39,28 @@ namespace Udp_Agreement.Model
     public class Vibration_Current
     {
         /// <summary>
-        /// 电流1
+        /// 震动1
         /// </summary>
         public string Vibration1 { get; set; }
         /// <summary>
-        /// 电流2
+        /// 震动2
         /// </summary>
         public string Vibration2 { get; set; }
         /// <summary>
-        /// 电流3
+        /// 震动3
         /// </summary>
         public string Vibration3 { get; set; }
 
         /// <summary>
-        /// 电压1
+        /// 电流1
         /// </summary>
         public string Current1 { get; set; }
         /// <summary>
-        /// 电压2
+        /// 电流2
         /// </summary>
         public string Current2 { get; set; }
         /// <summary>
-        /// 电压3
+        /// 电流3
         /// </summary>
         public string Current3 { get; set; }
 

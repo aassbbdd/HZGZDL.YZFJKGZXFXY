@@ -116,5 +116,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Udp_Agreement\Udp_Agreement.csproj">
+      <Project>{c79754ef-6f35-4489-96ad-7731f266d3ec}</Project>
+      <Name>Udp_Agreement</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

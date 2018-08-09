@@ -29,11 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
             this.editor1 = new Steema.TeeChart.Editor(this.components);
-            this.buttonPen1 = new Steema.TeeChart.ButtonPen();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tChart1 = new Steema.TeeChart.TChart();
-            this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // editor1
@@ -44,25 +49,72 @@
             this.editor1.Options = null;
             this.editor1.TabIndex = 0;
             // 
-            // buttonPen1
+            // panel1
             // 
-            this.buttonPen1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonPen1.Location = new System.Drawing.Point(77, 143);
-            this.buttonPen1.Name = "buttonPen1";
-            this.buttonPen1.Size = new System.Drawing.Size(623, 320);
-            this.buttonPen1.TabIndex = 1;
-            this.buttonPen1.Text = "buttonPen1";
-            this.buttonPen1.UseVisualStyleBackColor = true;
-            this.buttonPen1.Click += new System.EventHandler(this.buttonPen1_Click);
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Location = new System.Drawing.Point(6, 48);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(872, 492);
+            this.panel1.TabIndex = 3;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(3, 61);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(892, 590);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(884, 561);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.tChart1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(884, 610);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tChart1
             // 
+            this.tChart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            // 
+            // 
+            // 
+            this.tChart1.Aspect.ClipPoints = false;
+            this.tChart1.Aspect.Orthogonal = false;
+            this.tChart1.Aspect.View3D = false;
+            this.tChart1.Aspect.ZoomText = false;
             // 
             // 
             // 
             // 
             // 
             // 
+            this.tChart1.Axes.Bottom.Automatic = false;
+            this.tChart1.Axes.Bottom.AutomaticMaximum = false;
+            this.tChart1.Axes.Bottom.AutomaticMinimum = false;
             // 
             // 
             // 
@@ -73,6 +125,8 @@
             this.tChart1.Axes.Bottom.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Bottom.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Bottom.Labels.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Bottom.Maximum = 10D;
+            this.tChart1.Axes.Bottom.Minimum = 0D;
             // 
             // 
             // 
@@ -134,6 +188,9 @@
             // 
             // 
             // 
+            this.tChart1.Axes.Left.Automatic = false;
+            this.tChart1.Axes.Left.AutomaticMaximum = false;
+            this.tChart1.Axes.Left.AutomaticMinimum = false;
             // 
             // 
             // 
@@ -144,6 +201,8 @@
             this.tChart1.Axes.Left.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Left.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Left.Labels.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Left.Maximum = 573D;
+            this.tChart1.Axes.Left.Minimum = -10D;
             // 
             // 
             // 
@@ -157,6 +216,9 @@
             // 
             // 
             // 
+            this.tChart1.Axes.Right.Automatic = false;
+            this.tChart1.Axes.Right.AutomaticMaximum = false;
+            this.tChart1.Axes.Right.AutomaticMinimum = false;
             // 
             // 
             // 
@@ -167,6 +229,8 @@
             this.tChart1.Axes.Right.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Right.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Right.Labels.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Right.Maximum = 1000D;
+            this.tChart1.Axes.Right.Minimum = 100D;
             // 
             // 
             // 
@@ -240,7 +304,8 @@
             this.tChart1.Legend.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Legend.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Legend.Title.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Location = new System.Drawing.Point(45, 174);
+            this.tChart1.Legend.Visible = false;
+            this.tChart1.Location = new System.Drawing.Point(8, 18);
             this.tChart1.Name = "tChart1";
             // 
             // 
@@ -252,8 +317,7 @@
             this.tChart1.Panel.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Panel.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Panel.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Series.Add(this.fastLine1);
-            this.tChart1.Size = new System.Drawing.Size(562, 289);
+            this.tChart1.Size = new System.Drawing.Size(868, 575);
             // 
             // 
             // 
@@ -274,7 +338,7 @@
             this.tChart1.SubHeader.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.SubHeader.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.SubHeader.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.TabIndex = 2;
+            this.tChart1.TabIndex = 3;
             // 
             // 
             // 
@@ -319,52 +383,29 @@
             this.tChart1.Walls.Right.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Walls.Right.Bevel.StringColorTwo = "FF808080";
             // 
-            // fastLine1
+            // button1
             // 
-            this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            this.fastLine1.ColorEach = false;
-            // 
-            // 
-            // 
-            this.fastLine1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.fastLine1.Marks.Bevel.StringColorOne = "FFFFFFFF";
-            this.fastLine1.Marks.Bevel.StringColorTwo = "FF808080";
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.fastLine1.Marks.Symbol.Bevel.StringColorOne = "FFFFFFFF";
-            this.fastLine1.Marks.Symbol.Bevel.StringColorTwo = "FF808080";
-            this.fastLine1.Title = "fastLine1";
-            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
-            // 
-            // 
-            // 
-            this.fastLine1.XValues.DataMember = "X";
-            this.fastLine1.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
-            // 
-            // 
-            // 
-            this.fastLine1.YValues.DataMember = "Y";
+            this.button1.Location = new System.Drawing.Point(64, 23);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 610);
-            this.Controls.Add(this.tChart1);
-            this.Controls.Add(this.buttonPen1);
+            this.ClientSize = new System.Drawing.Size(893, 652);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form3";
             this.Text = "Form3";
             this.Load += new System.EventHandler(this.Form3_Load);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -372,8 +413,11 @@
         #endregion
 
         private Steema.TeeChart.Editor editor1;
-        private Steema.TeeChart.ButtonPen buttonPen1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
         private Steema.TeeChart.TChart tChart1;
-        private Steema.TeeChart.Styles.FastLine fastLine1;
+        private System.Windows.Forms.Button button1;
     }
 }

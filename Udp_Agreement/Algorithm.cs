@@ -71,12 +71,12 @@ namespace Udp_Agreement
             /// 振动传感器输出V 默认10V（ -10V到+10V）
             /// </summary>
             int V = 10;
-            double ad = Convert.ToInt32(AD, 16);
+            int ad = Convert.ToInt32(AD, 16);
 
-            //ad
-
-     //  if( ad&&0x8000
-
+            if (ad >= 32768)
+            {
+                ad = -(65535 - ad);
+            }
 
             //振动采集到的AD值 0-32767（正）,32768-65535（负）
             //参考电压：2.5V固定  衰减倍数：5固定
@@ -93,7 +93,7 @@ namespace Udp_Agreement
         /// 电流计算公式 算法
         /// </summary>
         /// <returns></returns>
-        public string Current_Algorithm(double AD)
+        public string Current_Algorithm(int AD)
         {
             /// <summary>
             /// 电流传感器量程：I默认10A（或者100A）
@@ -137,6 +137,12 @@ namespace Udp_Agreement
             //参考电压：2.5V固定 衰减倍数：1固定
             //计算电流：x
             double ad = Convert.ToInt32(AD, 16);
+
+            if (ad >= 32768)
+            {
+                ad = -(65535 - ad);
+            }
+
             double x = (ad * 2.5 * 1 * I * k) / (32768 * V);
             return x.ToString();
         }

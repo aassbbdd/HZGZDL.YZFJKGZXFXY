@@ -119,29 +119,26 @@ namespace Socket_Server
 
             while (true)
             {
-                if (sendUdpClient != null)
+                if (sendUdpClient.Client.Available > 0)
                 {
-                    if (sendUdpClient.Client.Available > 0)
-                    {
-                        /* 接收UPD返回数据，并进行处理 */
-                        byte[] recData = sendUdpClient.Receive(ref receivePoint);
-                        receiveCmd = ProtocolUtil.byteToHexStr(recData);
+                    /* 接收UPD返回数据，并进行处理 */
+                    byte[] recData = sendUdpClient.Receive(ref receivePoint);
+                    receiveCmd = ProtocolUtil.byteToHexStr(recData);
 
-                        Udp_EventArgs eventArgs = new Udp_EventArgs();
-                        eventArgs.Msg = receiveCmd;
-                      
-                        if (!string.IsNullOrEmpty(receiveCmd))//判断 回复包不为空时调用
+                    Udp_EventArgs eventArgs = new Udp_EventArgs();
+                    eventArgs.Msg = receiveCmd;
+
+                    if (!string.IsNullOrEmpty(receiveCmd))//判断 回复包不为空时调用
+                    {
+                        if (receiveCmd.Substring(0, 4) == "0909")//判断是测试回复协议
                         {
-                            if (receiveCmd.Substring(0, 4) == "0909")//判断是测试回复协议
-                            {
-                                eventArgs.Hearder = "0909";
-                                sendmessage = "30FF" + receiveCmd.Substring(4, 4);
-                                sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                                sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
-                            }
+                            eventArgs.Hearder = "0909";
+                            sendmessage = "30FF" + receiveCmd.Substring(4, 4);
+                            sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+                            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                         }
-                        udp_Event("", eventArgs);
                     }
+                    udp_Event("", eventArgs);
                 }
             }
         }

@@ -56,6 +56,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TeeChart">
+      <HintPath>..\..\..\..\开发组件\teechart\TeeChart.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -94,6 +97,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{F60EDB23-65BC-48D2-87F6-F467D42E59CC}</Project>
+      <Name>Commons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Socket_Server\Socket_Server.csproj">
       <Project>{804a7761-3c78-4d70-874e-50d2a5d3a682}</Project>
       <Name>Socket_Server</Name>

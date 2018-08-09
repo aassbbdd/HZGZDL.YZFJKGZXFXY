@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Model\Current.cs" />
     <Compile Include="Model\DataModel.cs" />
+    <Compile Include="Model\Vibration.cs" />
     <Compile Include="Tester_Agreement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
