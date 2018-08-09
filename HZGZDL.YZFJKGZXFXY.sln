@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUdpServer", "WinUdpServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Load_Tap_Changer_Test", "Load_Tap_Changer_Test\Load_Tap_Changer_Test.csproj", "{F703D6E6-4927-4823-8011-9C080DEBBF51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic_Controls", "Basic_Controls\Basic_Controls.csproj", "{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F703D6E6-4927-4823-8011-9C080DEBBF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F703D6E6-4927-4823-8011-9C080DEBBF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F703D6E6-4927-4823-8011-9C080DEBBF51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
