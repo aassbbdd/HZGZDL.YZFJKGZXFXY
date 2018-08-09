@@ -210,7 +210,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(790, 692);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Udp通信";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -222,7 +222,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(790, 692);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "TeeChart图表";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -252,7 +252,7 @@
             this.ClientSize = new System.Drawing.Size(800, 741);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
-            this.Text = "客户端";
+            this.Text = "通信测试工具 v1.0";
             ((System.ComponentModel.ISupportInitialize)(this.txtMsg.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtIp.Properties)).EndInit();
