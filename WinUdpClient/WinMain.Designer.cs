@@ -43,16 +43,28 @@
             this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.v2 = new DevExpress.XtraEditors.CheckEdit();
+            this.v3 = new DevExpress.XtraEditors.CheckEdit();
+            this.c1 = new DevExpress.XtraEditors.CheckEdit();
+            this.c2 = new DevExpress.XtraEditors.CheckEdit();
+            this.c3 = new DevExpress.XtraEditors.CheckEdit();
+            this.v1 = new DevExpress.XtraEditors.CheckEdit();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.txtMsg.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtIp.Properties)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.v2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.v3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.v1.Properties)).BeginInit();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMsg
@@ -181,13 +193,91 @@
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(4, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(798, 721);
             this.tabControl1.TabIndex = 16;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel1);
+            this.tabPage2.Controls.Add(this.v2);
+            this.tabPage2.Controls.Add(this.v3);
+            this.tabPage2.Controls.Add(this.c1);
+            this.tabPage2.Controls.Add(this.c2);
+            this.tabPage2.Controls.Add(this.c3);
+            this.tabPage2.Controls.Add(this.v1);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(790, 692);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "TeeChart图表";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // v2
+            // 
+            this.v2.Location = new System.Drawing.Point(304, 6);
+            this.v2.Name = "v2";
+            this.v2.Properties.Caption = "震动2";
+            this.v2.Size = new System.Drawing.Size(94, 22);
+            this.v2.TabIndex = 11;
+            // 
+            // v3
+            // 
+            this.v3.Location = new System.Drawing.Point(404, 6);
+            this.v3.Name = "v3";
+            this.v3.Properties.Caption = "震动3";
+            this.v3.Size = new System.Drawing.Size(94, 22);
+            this.v3.TabIndex = 10;
+            // 
+            // c1
+            // 
+            this.c1.EditValue = true;
+            this.c1.Location = new System.Drawing.Point(204, 34);
+            this.c1.Name = "c1";
+            this.c1.Properties.Caption = "电流1";
+            this.c1.Size = new System.Drawing.Size(94, 22);
+            this.c1.TabIndex = 9;
+            // 
+            // c2
+            // 
+            this.c2.Location = new System.Drawing.Point(304, 34);
+            this.c2.Name = "c2";
+            this.c2.Properties.Caption = "电流2";
+            this.c2.Size = new System.Drawing.Size(94, 22);
+            this.c2.TabIndex = 8;
+            // 
+            // c3
+            // 
+            this.c3.Location = new System.Drawing.Point(404, 34);
+            this.c3.Name = "c3";
+            this.c3.Properties.Caption = "电流3";
+            this.c3.Size = new System.Drawing.Size(94, 22);
+            this.c3.TabIndex = 7;
+            // 
+            // v1
+            // 
+            this.v1.EditValue = true;
+            this.v1.Location = new System.Drawing.Point(204, 6);
+            this.v1.Name = "v1";
+            this.v1.Properties.Caption = "震动1";
+            this.v1.Size = new System.Drawing.Size(94, 22);
+            this.v1.TabIndex = 6;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(26, 31);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tabPage1
             // 
@@ -213,37 +303,15 @@
             this.tabPage1.Text = "Udp通信";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.button1);
-            this.tabPage2.Controls.Add(this.panel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(790, 692);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "TeeChart图表";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(26, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(6, 85);
+            this.panel1.Location = new System.Drawing.Point(6, 113);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(774, 601);
-            this.panel1.TabIndex = 4;
+            this.panel1.Size = new System.Drawing.Size(778, 573);
+            this.panel1.TabIndex = 12;
             // 
             // Form1
             // 
@@ -257,9 +325,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtPorit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtIp.Properties)).EndInit();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.v2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.v3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.c3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.v1.Properties)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -283,8 +357,14 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
+        private DevExpress.XtraEditors.CheckEdit v2;
+        private DevExpress.XtraEditors.CheckEdit v3;
+        private DevExpress.XtraEditors.CheckEdit c1;
+        private DevExpress.XtraEditors.CheckEdit c2;
+        private DevExpress.XtraEditors.CheckEdit c3;
+        private DevExpress.XtraEditors.CheckEdit v1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

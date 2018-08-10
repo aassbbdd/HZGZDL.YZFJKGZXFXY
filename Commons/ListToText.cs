@@ -139,6 +139,45 @@ namespace Commons
             fs.Close();
         }
 
+        //将List转换为TXT文件
+        public void WriteListToTextFile(string text, string txtFile)
+        {
+            FileStream fs;
+            StreamWriter sw;
+
+            string path = txtFile + "TestTxttext.txt";
+            if (File.Exists(path))
+            {
+                sw = new StreamWriter(path, true,Encoding.UTF8);//转码
+
+                //创建一个文件流，用以写入或者创建一个StreamWriter
+                sw.Flush();
+                //使用StreamWriter来往文件中写入内容
+             //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
+                sw.WriteLine(DateTime.Now.ToString("O") + " : " + text);
+                //关闭此文件
+                sw.Flush();
+                sw.Close();
+            }
+            else
+            {
+                // MessageBox.Show("无此文件");
+                fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                sw = new StreamWriter(fs, Encoding.UTF8);//转码
+
+                //创建一个文件流，用以写入或者创建一个StreamWriter
+                sw.Flush();
+                //使用StreamWriter来往文件中写入内容
+                sw.BaseStream.Seek(0, SeekOrigin.Begin);
+                sw.WriteLine(DateTime.Now.ToString("O") + " : " + text);
+                //关闭此文件
+                sw.Flush();
+                sw.Close();
+                fs.Close();
+            }
+
+        }
+
 
     }
 }

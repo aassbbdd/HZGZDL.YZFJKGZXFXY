@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Udp_Agreement.Model
 {
-    public class Current
+    public class vibration_Current_Model
     {
-        /// <summary>
-        /// 震动
-        /// </summary>
-        public string current { get; set; }
+
+
     }
 }

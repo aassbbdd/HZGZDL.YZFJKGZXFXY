@@ -39,6 +39,15 @@ namespace Udp_Agreement.Model
     public class Vibration_Current
     {
         /// <summary>
+        /// 序号
+        /// </summary>
+        public int id { get; set; }
+        /// <summary>
+        /// 宽度
+        /// </summary>
+        public string width { get; set; }
+
+        /// <summary>
         /// 震动1
         /// </summary>
         public string Vibration1 { get; set; }

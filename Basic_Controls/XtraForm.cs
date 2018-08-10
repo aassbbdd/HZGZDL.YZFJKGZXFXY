@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.XtraEditors;
 
 namespace Basic_Controls
 {
-    public partial class BaseFrom : DevExpress.XtraEditors.XtraForm
+    public partial class XtraForm : DevExpress.XtraEditors.XtraForm
     {
-        public BaseFrom()
+        public XtraForm()
         {
             InitializeComponent();
         }

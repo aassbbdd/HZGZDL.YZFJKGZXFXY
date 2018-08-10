@@ -25,7 +25,7 @@ namespace Socket_Server
         public static event EventHandler<Udp_EventArgs> udp_Event;
         private static int outTime = 3; //单位：秒
 
-        private static bool continueLoop = true;
+        private static bool continueLoop = true;//控制接收开关
         private static Thread threadSendStert;//接收协议线程
 
         #region 发送消息
@@ -49,11 +49,13 @@ namespace Socket_Server
                 Thread threadSend = new Thread(SendMessages);
                 threadSend.IsBackground = true;
                 threadSend.Start(sendMsg);
-                if (sendMsg != "05550555")
+                if (sendMsg == "05550555")
                 {
                     if (threadSendStert != null)
                     {
-                        threadSendStert.Abort();
+                        continueLoop = false;
+                        //Thread.Sleep(100);
+                        //threadSendStert.Abort();
                     }
                 }
             }
@@ -61,12 +63,15 @@ namespace Socket_Server
             {
                 if (threadSendStert != null)
                 {
+                    Thread.Sleep(100);
                     threadSendStert.Abort();
                 }
-                //启动发送线程  开始测试时一直保持运行
-                threadSendStert = new Thread(SendMessages1);
-                threadSendStert.IsBackground = true;
-                threadSendStert.Start(sendMsg);
+               
+                    //启动发送线程  开始测试时一直保持运行
+                    threadSendStert = new Thread(SendMessages1);
+                    threadSendStert.IsBackground = true;
+                    threadSendStert.Start(sendMsg);
+               
             }
         }
         private static void SendMessages(object sendMsg)
@@ -117,7 +122,7 @@ namespace Socket_Server
             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
             IPEndPoint receivePoint = new IPEndPoint(IPAddress.Any, 0);
 
-            while (true)
+            while (continueLoop)
             {
                 if (sendUdpClient.Client.Available > 0)
                 {
@@ -136,6 +141,8 @@ namespace Socket_Server
                             sendmessage = "30FF" + receiveCmd.Substring(4, 4);
                             sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
                             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                            //string path = AppDomain.CurrentDomain.BaseDirectory;
+                            //ListToText.Instance.WriteListToTextFile("", path);
                         }
                     }
                     udp_Event("", eventArgs);

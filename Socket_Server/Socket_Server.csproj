@@ -50,6 +50,10 @@
       <Project>{f60edb23-65bc-48d2-87f6-f467d42e59cc}</Project>
       <Name>Commons</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Udp_Agreement\Udp_Agreement.csproj">
+      <Project>{C79754EF-6F35-4489-96AD-7731F266D3EC}</Project>
+      <Name>Udp_Agreement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
