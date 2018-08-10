@@ -16,5 +16,10 @@ namespace Basic_Controls
         {
             InitializeComponent();
         }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

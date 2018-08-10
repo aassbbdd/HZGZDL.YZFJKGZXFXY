@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Load_Tap_Changer_Test", "Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic_Controls", "Basic_Controls\Basic_Controls.csproj", "{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbHelper", "DbHelper\DbHelper.csproj", "{13BC9B41-1A65-49D6-AF80-7ECFA713F277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BC9B41-1A65-49D6-AF80-7ECFA713F277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BC9B41-1A65-49D6-AF80-7ECFA713F277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BC9B41-1A65-49D6-AF80-7ECFA713F277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BC9B41-1A65-49D6-AF80-7ECFA713F277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

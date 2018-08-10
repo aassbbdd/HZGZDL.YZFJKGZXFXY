@@ -149,17 +149,6 @@ namespace WindowsFormsApp1
             this.simpleButton6.Enabled = false;
         }
 
-        /// <summary>
-        /// 查看转换换算数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void simpleButton5_Click(object sender, EventArgs e)
-        {
-            this.rtBox.Text = Convert.ToInt32("FFFF", 16).ToString() + "\r\n" + this.rtBox.Text;
-            this.rtBox.Text = Algorithm.Instance.Current_Algorithm(Convert.ToInt32("FFFF", 16)).ToString()
-                + "\r\n" + this.rtBox.Text;
-        }
 
         /// <summary>
         /// 生成 txt 文件
@@ -284,8 +273,15 @@ namespace WindowsFormsApp1
         private int space = 5;//计算坐标百分比参数
         double num = 0.00001;//数据显示宽度  1秒=0.000001秒* 800微秒  0.0008毫秒 0.000001 * 800
                              //1个数据包 800微秒 0.0008  一个包80个数据点  每个点 10微秒 0.00001秒
-        double databoxnum = (10 * 1000) / 8;
 
+        int LessPoint = 40;//偷点数量 80能除尽数量 进行偷点
+
+        Line vline1 = new Line();//震动1
+        Line vline2 = new Line();//震动2
+        Line vline3 = new Line();//震动3
+        Line cline1 = new Line();//电流1
+        Line cline2 = new Line();//电流2
+        Line cline3 = new Line();//电流3
         #endregion
 
         //10秒
@@ -330,12 +326,12 @@ namespace WindowsFormsApp1
                 else if (i == 1)
                 {
                     axis.Title.Angle = 90;//'标题摆放角度
-                    axis.Title.Text = "震动1";
+                    axis.Title.Text = "震动2";
                 }
                 else if (i == 2)
                 {
                     axis.Title.Angle = 90;//'标题摆放角度
-                    axis.Title.Text = "震动1";
+                    axis.Title.Text = "震动3";
                 }
                 else if (i == 3)
                 {
@@ -352,7 +348,6 @@ namespace WindowsFormsApp1
                 {
                     axis.Title.Text = "电流3";
                     axis.Title.Angle = 90;//'标题摆放角度
-
                 }
 
                 axis.Maximum = 20;//最大值
@@ -391,12 +386,7 @@ namespace WindowsFormsApp1
         }
 
 
-        Line vline1 = new Line();//震动1
-        Line vline2 = new Line();//震动2
-        Line vline3 = new Line();//震动3
-        Line cline1 = new Line();//电流1
-        Line cline2 = new Line();//电流2
-        Line cline3 = new Line();//电流3
+
         /// <summary>
         /// 绑定图表 line 线
         /// </summary>
@@ -408,7 +398,7 @@ namespace WindowsFormsApp1
                 //震动1路 vline1
                 tChart.Series.Add(vline1);
 
-                vline1.Title = string.Format("震动曲线{0}", 1);
+                //vline1.Title = string.Format("震动曲线{0}", 1);
                 //vline1.YValues.DataMember = "Vibration1";
                 //vline1.XValues.DataMember = "width";
                 // vline1.DataSource = vcdt1;
@@ -416,7 +406,7 @@ namespace WindowsFormsApp1
                 //震动2路 vline2
                 //Line vline2 = new Line();
                 tChart.Series.Add(vline2);
-                vline2.Title = string.Format("震动曲线{0}", 2);
+                //vline2.Title = string.Format("震动曲线{0}", 2);
                 //vline2.YValues.DataMember = "vibration2";
                 //vline2.XValues.DataMember = "width";
                 //vline2.DataSource = dt;
@@ -424,14 +414,14 @@ namespace WindowsFormsApp1
                 //震动3路 vline3
                 //Line vline3 = new Line();
                 tChart.Series.Add(vline3);
-                vline3.Title = string.Format("震动曲线{0}", 3);
+                //vline3.Title = string.Format("震动曲线{0}", 3);
                 //vline3.YValues.DataMember = "vibration3";
                 //vline3.XValues.DataMember = "width";
                 //vline3.DataSource = dt;
 
                 //电流1路 cline1
                 tChart.Series.Add(cline1);
-                cline1.Title = string.Format("电流曲线{0}", 1);
+                //cline1.Title = string.Format("电流曲线{0}", 1);
                 //cline1.YValues.DataMember = "Current1";
                 //cline1.XValues.DataMember = "width";
                 //  cline1.DataSource = vcdt1;
@@ -439,7 +429,7 @@ namespace WindowsFormsApp1
                 //电流2路 cline2
                 //Line cline2 = new Line();
                 tChart.Series.Add(cline2);
-                cline2.Title = string.Format("电流曲线{0}", 2);
+                //cline2.Title = string.Format("电流曲线{0}", 2);
                 //cline2.YValues.DataMember = "current2";
                 //cline2.XValues.DataMember = "width";
                 //cline2.DataSource = dt;
@@ -447,11 +437,10 @@ namespace WindowsFormsApp1
                 //电流3路 cline3
                 //Line cline3 = new Line();
                 tChart.Series.Add(cline3);
-                cline3.Title = string.Format("电流曲线{0}", 3);
+                //cline3.Title = string.Format("电流曲线{0}", 3);
                 //cline3.YValues.DataMember = "current3";
                 //cline3.XValues.DataMember = "width";
                 //cline3.DataSource = dt;
-
                 AddCustomAxis(tChart.Series.Count);//绘制画布
             }
             catch (Exception ex)
@@ -502,7 +491,10 @@ namespace WindowsFormsApp1
                         model.text = e.Msg;
                         model.old_data = new List<Vibration_Current>();
                         model.new_data = new List<Vibration_Current>();
-                        for (int i = 0; i < 80; i++)
+
+                        int Porints = 80 / LessPoint;
+
+                        for (int i = 0; i < Porints; i++)
                         {
                             Vibration_Current vmodel = new Vibration_Current();
                             Vibration_Current vmodel1 = new Vibration_Current();
@@ -526,7 +518,6 @@ namespace WindowsFormsApp1
 
                             model.old_data.Add(vmodel);
                             model.new_data.Add(vmodel1);
-
 
                             #region vcdt1 动态刷新图表数据源
 
@@ -581,33 +572,33 @@ namespace WindowsFormsApp1
 
                             if (this.v1.Checked)
                             {
-                                string vwidth1 = ((vline1.Count * num) + num).ToString();//震动1长度
+                                string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count ,num,LessPoint);//震动1长度
                                 vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
                             }
                             if (this.v2.Checked)
                             {
 
-                                string vwidth2 = ((vline2.Count * num) + num).ToString();//震动2长度
+                                string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint);//震动2长度
                                 vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
                             }
                             if (this.v3.Checked)
                             {
-                                string vwidth3 = ((vline3.Count * num) + num).ToString();//震动3长度
+                                string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint);//震动3长度
                                 vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
                             }
                             if (this.c1.Checked)
                             {
-                                string cwidth1 = ((cline1.Count * num) + num).ToString();//电流1长度
+                                string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint);//电流1长度
                                 cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
                             }
                             if (this.c2.Checked)
                             {
-                                string cwidth2 = ((cline2.Count * num) + num).ToString();//电流2长度
+                                string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint);//电流2长度
                                 cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
                             }
                             if (this.c3.Checked)
                             {
-                                string cwidth3 = ((cline3.Count * num) + num).ToString();//电流3长度
+                                string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint);//电流3长度
                                 cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
                             }
                             #endregion
@@ -645,10 +636,35 @@ namespace WindowsFormsApp1
                 }
             }
         }
-
-
-        #endregion 
+        #endregion
 
         #endregion
+        /// <summary>
+        /// 开始
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton8_Click(object sender, EventArgs e)
+        {
+            simpleButton3_Click(sender,e);
+        }
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton9_Click(object sender, EventArgs e)
+        {
+            simpleButton2_Click(sender, e);
+        }
+        /// <summary>
+        /// 清空
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton7_Click(object sender, EventArgs e)
+        {
+            simpleButton4_Click(sender, e);
+        }
     }
 }

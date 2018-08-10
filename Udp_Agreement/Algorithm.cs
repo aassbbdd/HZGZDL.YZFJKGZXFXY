@@ -87,6 +87,8 @@ namespace Udp_Agreement
 
 
 
+
+
         #endregion
         #region Current 电流
         /// <summary>
@@ -148,5 +150,21 @@ namespace Udp_Agreement
         }
 
         #endregion
+
+
+        #region 偷点算法
+
+        /// <summary>
+        /// 偷点 算法
+        /// </summary>
+        /// <returns></returns>
+        public string Less_Porint_Algorithm(double num,double width, double lessnum)
+        {
+            string l = (((num * width) + width)*lessnum).ToString();
+
+            return l;
+        }
+        #endregion
+
     }
 }

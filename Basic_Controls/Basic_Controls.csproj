@@ -96,5 +96,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbHelper\DbHelper.csproj">
+      <Project>{13bc9b41-1a65-49d6-af80-7ecfa713f277}</Project>
+      <Name>DbHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
