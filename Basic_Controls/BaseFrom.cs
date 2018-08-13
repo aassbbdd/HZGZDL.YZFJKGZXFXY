@@ -1,4 +1,5 @@
 ﻿using DbHelper;
+using DbHelper.Sqlite_Db;
 using DocDecrypt.Common;
 using System;
 using System.Collections.Generic;
@@ -31,11 +32,12 @@ namespace Basic_Controls
         private void simpleButton2_Click(object sender, EventArgs e)
         {
             CreateDb();
-            string tablename = "test21";
+            string tablename = "test21222";
             bool IsTableExist = SQLiteHelper.Instance.IsTableExist(tablename);
             if (IsTableExist)
             {
-                SQLiteHelper.NewTable("test21");
+                string DbStr = Create_Table.Instance.Create_AA(tablename);
+                SQLiteHelper.NewTable(DbStr);
             }
         }
 

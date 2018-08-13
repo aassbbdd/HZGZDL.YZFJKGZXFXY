@@ -103,7 +103,26 @@ namespace DbHelper
         /// </summary>
         /// <param name="dbPath">指定数据库文件</param>
         /// <param name="tableName">表名称</param>
-        static public void NewTable(string tableName)
+        static public void NewTable(string tbStr)
+        {
+            SQLiteConnection sqliteConn = new SQLiteConnection(Conn);
+            if (sqliteConn.State != System.Data.ConnectionState.Open)
+            {
+                sqliteConn.Open();
+                SQLiteCommand cmd = new SQLiteCommand();
+                cmd.Connection = sqliteConn;
+                cmd.CommandText = tbStr;
+                cmd.ExecuteNonQuery();
+            }
+            sqliteConn.Close();
+        }
+
+        /// <summary>
+        /// 创建表
+        /// </summary>
+        /// <param name="dbPath">指定数据库文件</param>
+        /// <param name="tableName">表名称</param>
+        static public void NewTable1(string tableName)
         {
             SQLiteConnection sqliteConn = new SQLiteConnection(Conn);
             if (sqliteConn.State != System.Data.ConnectionState.Open)
@@ -116,7 +135,6 @@ namespace DbHelper
             }
             sqliteConn.Close();
         }
-
         #region CreateCommand(commandText,SQLiteParameter[])
         /// <summary>
         /// 创建命令
