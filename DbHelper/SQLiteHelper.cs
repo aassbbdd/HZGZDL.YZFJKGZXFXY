@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DocDecrypt.Common;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
-
+using System.Configuration;
 namespace DbHelper
 {
     /// <summary>
@@ -23,19 +25,37 @@ namespace DbHelper
         {
         }
         /// <summary>
+        /// 链接路径
+        /// </summary>
+        private static string connectionString = ConfigurationManager.ConnectionStrings["sqlite"].ConnectionString.ToString();
+        /// <summary>
+        /// 数据库名字
+        /// </summary>
+        private static string dbName = ConfigurationManager.ConnectionStrings["path_sqlite"].ConnectionString.ToString();
+
+        /// <summary>
+        /// 获取唯一实例
+        /// </summary>
+        private static SQLiteHelper instance = null;
+        public static SQLiteHelper Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new SQLiteHelper();
+                }
+                return instance;
+            }
+        }
+        /// <summary>
         /// 连接字符串
         /// </summary>
         public static string ConnectionString
-        {//"Data Source=Test.db3;Pooling=true;FailIfMissing=false";
+        {
             get
             {
-                ////(AppSettings节点下的"SQLiteConnectionString")
-                string text = "Data Source=Test.db3;Pooling=true;FailIfMissing=false";
-                //if (str2 == "true")
-                //{
-                    //text = DesEncrypt.Decrypt(text);
-                //}
-                return text;
+                return connectionString;
             }
         }
         private static SQLiteConnection _Conn = null;
@@ -52,6 +72,8 @@ namespace DbHelper
             set { SQLiteHelper._Conn = value; }
         }
 
+        public static object Configuration { get; private set; }
+
         /// <summary>
         /// 新建数据库文件
         /// </summary>
@@ -61,7 +83,13 @@ namespace DbHelper
         {
             try
             {
-                SQLiteConnection.CreateFile(dbPath);
+                string path = AppDomain.CurrentDomain.BaseDirectory + "\\DB\\";
+                FileHelper.CreateDirectoy(path);//创建文件夹
+                path = path + dbName;//拼接文件路径
+                if (!FileHelper.IsFileExist(path))//验证文件是否存在
+                {
+                    SQLiteConnection.CreateFile(path);
+                }
                 return true;
             }
             catch (Exception ex)
@@ -75,10 +103,9 @@ namespace DbHelper
         /// </summary>
         /// <param name="dbPath">指定数据库文件</param>
         /// <param name="tableName">表名称</param>
-        static public void NewTable(string dbPath, string tableName)
+        static public void NewTable(string tableName)
         {
-
-            SQLiteConnection sqliteConn = new SQLiteConnection("data source=" + dbPath);
+            SQLiteConnection sqliteConn = new SQLiteConnection(Conn);
             if (sqliteConn.State != System.Data.ConnectionState.Open)
             {
                 sqliteConn.Open();
@@ -89,7 +116,6 @@ namespace DbHelper
             }
             sqliteConn.Close();
         }
-
 
         #region CreateCommand(commandText,SQLiteParameter[])
         /// <summary>
@@ -109,8 +135,33 @@ namespace DbHelper
             }
             return cmd;
         }
-        #endregion
 
+        /// <summary>
+        /// 判断表是否存在
+        /// </summary>
+        /// <returns> true 存在 false 不存在</returns>
+        public bool IsTableExist(string tableName)
+        {
+            SQLiteCommand cmd = Conn.CreateCommand();
+            cmd.CommandText = "SELECT COUNT(*) FROM sqlite_master where type='table' and name='" + tableName + "';";
+            if (Conn.State == ConnectionState.Closed)
+            {
+                Conn.Open();
+            }
+            int IsTableExist = Convert.ToInt32(cmd.ExecuteScalar());
+            cmd.Dispose();
+            Conn.Close();
+            if (0 == IsTableExist)// 1 有, 0 无
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
 
         #region CreateParameter(parameterName,parameterType,parameterValue)
         /// <summary>
@@ -703,9 +754,7 @@ namespace DbHelper
                 }
             }
         }
+
         #endregion
-
-
-
     }
 }
