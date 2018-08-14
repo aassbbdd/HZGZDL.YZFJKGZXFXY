@@ -151,20 +151,27 @@ namespace Udp_Agreement
 
         #endregion
 
-
         #region 偷点算法
 
         /// <summary>
         /// 偷点 算法
         /// </summary>
         /// <returns></returns>
-        public string Less_Porint_Algorithm(double num,double width, double lessnum)
+        public string Less_Porint_Algorithm(double num, double width, double lessnum,int allnum)
         {
-            string l = (((num * width) + width)*lessnum).ToString();
+            string l = ((((num * width) + width) * lessnum)/ allnum).ToString();
+            return l;
+        }
 
+        /// <summary>
+        /// 偷点 算法
+        /// </summary>
+        /// <returns></returns>
+        public double Less_Porint_Algorithm_d(double num, double width, double lessnum, int allnum)
+        {
+            double l = ((((num * width) + width) * lessnum) / allnum);
             return l;
         }
         #endregion
-
     }
 }
