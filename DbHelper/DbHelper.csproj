@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteHelper.cs" />
     <Compile Include="Sqlite_Db\Create_Table.cs" />
+    <Compile Include="Sqlite_Db\Db_Action.cs" />
+    <Compile Include="Sqlite_Db\Db_Select.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -40,6 +40,10 @@
     <Reference Include="DevExpress.Utils.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraScheduler.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -88,6 +92,12 @@
     <Compile Include="XtraForm.Designer.cs">
       <DependentUpon>XtraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="XForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XForm.Designer.cs">
+      <DependentUpon>XForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BaseFrom.resx">
       <DependentUpon>BaseFrom.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +113,9 @@
     </Compile>
     <EmbeddedResource Include="XtraForm.resx">
       <DependentUpon>XtraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XForm.resx">
+      <DependentUpon>XForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

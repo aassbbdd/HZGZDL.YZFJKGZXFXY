@@ -28,7 +28,7 @@ namespace DbHelper.Sqlite_Db
         }
 
         /// <summary>
-        /// 
+        /// 测试生成表
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>

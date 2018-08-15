@@ -11,12 +11,11 @@ using DevExpress.XtraEditors;
 
 namespace Basic_Controls
 {
-    public partial class XtraForm : DevExpress.XtraEditors.XtraForm
+    public partial class XForm : DevExpress.XtraEditors.XtraForm
     {
-        public XtraForm()
+        public XForm()
         {
             InitializeComponent();
         }
-
     }
 }

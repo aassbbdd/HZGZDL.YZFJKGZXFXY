@@ -1,6 +1,6 @@
 ﻿namespace Basic_Controls
 {
-    partial class XtraForm
+    partial class XForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XForm));
+            this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.barLargeButtonItem2 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -58,14 +63,8 @@
             this.barButtonItem21 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
-            this.bar3 = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -75,27 +74,54 @@
             this.barButtonItem20 = new DevExpress.XtraBars.BarButtonItem();
             this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.navigationPane1 = new DevExpress.XtraBars.Navigation.NavigationPane();
-            this.navigationPage1 = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationPage2 = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationPage3 = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationPage4 = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationPage5 = new DevExpress.XtraBars.Navigation.NavigationPage();
-            this.navigationPage6 = new DevExpress.XtraBars.Navigation.NavigationPage();
+            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.NAME = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.navigationPane1)).BeginInit();
-            this.navigationPane1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // barButtonItem7
+            // 
+            this.barButtonItem7.Caption = "测试";
+            this.barButtonItem7.Id = 6;
+            this.barButtonItem7.Name = "barButtonItem7";
+            // 
+            // barButtonItem8
+            // 
+            this.barButtonItem8.Caption = "批处理";
+            this.barButtonItem8.Id = 7;
+            this.barButtonItem8.Name = "barButtonItem8";
+            // 
+            // barButtonItem9
+            // 
+            this.barButtonItem9.Caption = "诊断工具";
+            this.barButtonItem9.Id = 9;
+            this.barButtonItem9.Name = "barButtonItem9";
+            // 
+            // barButtonItem10
+            // 
+            this.barButtonItem10.Caption = "帮助";
+            this.barButtonItem10.Id = 10;
+            this.barButtonItem10.Name = "barButtonItem10";
+            // 
+            // barDockControlLeft
+            // 
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 111);
+            this.barDockControlLeft.Manager = this.barManager1;
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 589);
             // 
             // barManager1
             // 
             this.barManager1.AllowShowToolbarsPopup = false;
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
             this.bar1,
-            this.bar2,
-            this.bar3});
+            this.bar2});
             this.barManager1.DockControls.Add(this.barDockControlTop);
             this.barManager1.DockControls.Add(this.barDockControlBottom);
             this.barManager1.DockControls.Add(this.barDockControlLeft);
@@ -141,7 +167,6 @@
             this.barLargeButtonItem9});
             this.barManager1.MainMenu = this.bar2;
             this.barManager1.MaxItemId = 37;
-            this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
             // 
@@ -362,73 +387,29 @@
             this.barButtonItem5.Id = 4;
             this.barButtonItem5.Name = "barButtonItem5";
             // 
-            // barButtonItem7
-            // 
-            this.barButtonItem7.Caption = "测试";
-            this.barButtonItem7.Id = 6;
-            this.barButtonItem7.Name = "barButtonItem7";
-            // 
-            // barButtonItem8
-            // 
-            this.barButtonItem8.Caption = "批处理";
-            this.barButtonItem8.Id = 7;
-            this.barButtonItem8.Name = "barButtonItem8";
-            // 
-            // barButtonItem9
-            // 
-            this.barButtonItem9.Caption = "诊断工具";
-            this.barButtonItem9.Id = 9;
-            this.barButtonItem9.Name = "barButtonItem9";
-            // 
-            // barButtonItem10
-            // 
-            this.barButtonItem10.Caption = "帮助";
-            this.barButtonItem10.Id = 10;
-            this.barButtonItem10.Name = "barButtonItem10";
-            // 
-            // bar3
-            // 
-            this.bar3.BarName = "Status bar";
-            this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
-            this.bar3.DockCol = 0;
-            this.bar3.DockRow = 0;
-            this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
-            this.bar3.OptionsBar.AllowQuickCustomization = false;
-            this.bar3.OptionsBar.DrawDragBorder = false;
-            this.bar3.OptionsBar.UseWholeRow = true;
-            this.bar3.Text = "Status bar";
-            // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1006, 111);
+            this.barDockControlTop.Size = new System.Drawing.Size(957, 111);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 968);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 700);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1006, 25);
-            // 
-            // barDockControlLeft
-            // 
-            this.barDockControlLeft.CausesValidation = false;
-            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(0, 111);
-            this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 857);
+            this.barDockControlBottom.Size = new System.Drawing.Size(957, 0);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1006, 111);
+            this.barDockControlRight.Location = new System.Drawing.Point(957, 111);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 857);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 589);
             // 
             // barButtonItem1
             // 
@@ -487,134 +468,95 @@
             this.barLargeButtonItem1.LargeGlyphHot = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem1.LargeGlyphHot")));
             this.barLargeButtonItem1.Name = "barLargeButtonItem1";
             // 
-            // panelControl1
+            // gridControl1
             // 
-            this.panelControl1.AllowDrop = true;
-            this.panelControl1.AllowTouchScroll = true;
-            this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelControl1.Location = new System.Drawing.Point(0, 111);
-            this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(1006, 100);
-            this.panelControl1.TabIndex = 5;
+            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.gridControl1.Location = new System.Drawing.Point(0, 117);
+            this.gridControl1.MainView = this.gridView;
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemLookUpEdit1});
+            this.gridControl1.Size = new System.Drawing.Size(246, 581);
+            this.gridControl1.TabIndex = 13;
+            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView});
             // 
-            // navigationPane1
+            // gridView
             // 
-            this.navigationPane1.Controls.Add(this.navigationPage1);
-            this.navigationPane1.Controls.Add(this.navigationPage2);
-            this.navigationPane1.Controls.Add(this.navigationPage3);
-            this.navigationPane1.Controls.Add(this.navigationPage4);
-            this.navigationPane1.Controls.Add(this.navigationPage5);
-            this.navigationPane1.Controls.Add(this.navigationPage6);
-            this.navigationPane1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.navigationPane1.Location = new System.Drawing.Point(0, 211);
-            this.navigationPane1.Name = "navigationPane1";
-            this.navigationPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
-            this.navigationPage1,
-            this.navigationPage2,
-            this.navigationPage3,
-            this.navigationPage4,
-            this.navigationPage5,
-            this.navigationPage6});
-            this.navigationPane1.RegularSize = new System.Drawing.Size(401, 801);
-            this.navigationPane1.SelectedPage = this.navigationPage2;
-            this.navigationPane1.Size = new System.Drawing.Size(125, 757);
-            this.navigationPane1.State = DevExpress.XtraBars.Navigation.NavigationPaneState.Collapsed;
-            this.navigationPane1.TabIndex = 6;
-            this.navigationPane1.Text = "navigationPane1";
+            this.gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.NAME});
+            this.gridView.GridControl = this.gridControl1;
+            this.gridView.Name = "gridView";
+            this.gridView.OptionsBehavior.Editable = false;
+            this.gridView.OptionsCustomization.AllowFilter = false;
+            this.gridView.OptionsCustomization.AllowSort = false;
+            this.gridView.OptionsMenu.EnableColumnMenu = false;
+            this.gridView.OptionsMenu.EnableFooterMenu = false;
+            this.gridView.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridView.OptionsMenu.ShowAutoFilterRowItem = false;
+            this.gridView.OptionsMenu.ShowDateTimeGroupIntervalItems = false;
+            this.gridView.OptionsMenu.ShowGroupSortSummaryItems = false;
+            this.gridView.OptionsMenu.ShowSplitItem = false;
+            this.gridView.OptionsView.ShowGroupPanel = false;
             // 
-            // navigationPage1
+            // NAME
             // 
-            this.navigationPage1.Caption = "navigationPage1";
-            this.navigationPage1.Name = "navigationPage1";
-            this.navigationPage1.Size = new System.Drawing.Size(0, 0);
+            this.NAME.Caption = "表名";
+            this.NAME.FieldName = "NAME";
+            this.NAME.Name = "NAME";
+            this.NAME.Visible = true;
+            this.NAME.VisibleIndex = 0;
             // 
-            // navigationPage2
+            // repositoryItemLookUpEdit1
             // 
-            this.navigationPage2.Caption = "navigationPage2";
-            this.navigationPage2.Name = "navigationPage2";
-            this.navigationPage2.Size = new System.Drawing.Size(0, 0);
+            this.repositoryItemLookUpEdit1.AutoHeight = false;
+            this.repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
             // 
-            // navigationPage3
-            // 
-            this.navigationPage3.Caption = "navigationPage3";
-            this.navigationPage3.Name = "navigationPage3";
-            this.navigationPage3.Size = new System.Drawing.Size(0, 0);
-            // 
-            // navigationPage4
-            // 
-            this.navigationPage4.Caption = "navigationPage4";
-            this.navigationPage4.Name = "navigationPage4";
-            this.navigationPage4.Size = new System.Drawing.Size(0, 0);
-            // 
-            // navigationPage5
-            // 
-            this.navigationPage5.Caption = "navigationPage5";
-            this.navigationPage5.Name = "navigationPage5";
-            this.navigationPage5.Size = new System.Drawing.Size(0, 0);
-            // 
-            // navigationPage6
-            // 
-            this.navigationPage6.Caption = "navigationPage6";
-            this.navigationPage6.Name = "navigationPage6";
-            this.navigationPage6.Size = new System.Drawing.Size(0, 0);
-            // 
-            // XtraForm
+            // XForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 993);
-            this.Controls.Add(this.navigationPane1);
-            this.Controls.Add(this.panelControl1);
+            this.ClientSize = new System.Drawing.Size(957, 700);
+            this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.IsMdiContainer = true;
-            this.MinimumSize = new System.Drawing.Size(1024, 800);
-            this.Name = "XtraForm";
+            this.Name = "XForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "XtraForm";
+            this.Text = "界面示例";
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.navigationPane1)).EndInit();
-            this.navigationPane1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private DevExpress.XtraBars.BarManager barManager1;
-        private DevExpress.XtraBars.Bar bar1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-        private DevExpress.XtraBars.Bar bar2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem5;
-        private DevExpress.XtraBars.Bar bar3;
-        private DevExpress.XtraBars.BarDockControl barDockControlTop;
-        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
-        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
-        private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraEditors.PanelControl panelControl1;
-        private DevExpress.XtraBars.Navigation.NavigationPane navigationPane1;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage1;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage2;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage3;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage4;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage5;
-        private DevExpress.XtraBars.Navigation.NavigationPage navigationPage6;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem6;
-        private DevExpress.XtraBars.BarSubItem barSubItem1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem11;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem12;
         private DevExpress.XtraBars.BarButtonItem barButtonItem7;
         private DevExpress.XtraBars.BarButtonItem barButtonItem8;
         private DevExpress.XtraBars.BarButtonItem barButtonItem9;
         private DevExpress.XtraBars.BarButtonItem barButtonItem10;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarManager barManager1;
+        private DevExpress.XtraBars.Bar bar1;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem2;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem3;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem4;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem7;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem8;
+        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem9;
+        private DevExpress.XtraBars.Bar bar2;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem11;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem12;
         private DevExpress.XtraBars.BarButtonItem barButtonItem13;
         private DevExpress.XtraBars.BarButtonItem barButtonItem14;
         private DevExpress.XtraBars.BarButtonItem barButtonItem15;
@@ -627,17 +569,22 @@
         private DevExpress.XtraBars.BarSubItem barSubItem3;
         private DevExpress.XtraBars.BarSubItem barSubItem4;
         private DevExpress.XtraBars.BarButtonItem barButtonItem21;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem5;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem6;
         private DevExpress.XtraBars.BarLinkContainerItem barLinkContainerItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem20;
         private DevExpress.XtraBars.BarCheckItem barCheckItem2;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem1;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem2;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem3;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem4;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem7;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem8;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem9;
+        private DevExpress.XtraGrid.GridControl gridControl1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView;
+        private DevExpress.XtraGrid.Columns.GridColumn NAME;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
     }
 }

@@ -16,7 +16,9 @@ namespace Basic_Controls
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BaseFrom());
+            //Application.Run(new XtraForm());
+            Application.Run(new XForm());
+
         }
     }
 }
