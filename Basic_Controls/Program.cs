@@ -18,6 +18,7 @@ namespace Basic_Controls
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new XtraForm());
             Application.Run(new XForm());
+            //Application.Run(new AddTestSelect());
 
         }
     }
