@@ -39,11 +39,10 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
-            //   ReceiveStart();//后台起服务
+            //ReceiveStart();//后台起服务
             Event_Bind();//绑定注册事件
             Chart_Init();//初始化图表
         }
-
 
         #region 按键
 
@@ -1340,7 +1339,7 @@ namespace WindowsFormsApp1
             {
                 try
                 {
-                  //  Thread.Sleep(Sleep_Time);
+                   Thread.Sleep(1);
                     // 异步方法
                     this.Invoke(new ThreadStart(delegate ()
                         {

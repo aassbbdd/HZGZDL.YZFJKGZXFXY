@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Basic_Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Load_Tap_Changer_Test
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWin());
+            Application.Run(new FmMain());
         }
     }
 }

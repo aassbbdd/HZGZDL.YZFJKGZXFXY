@@ -22,7 +22,14 @@ namespace Socket_Server
         /// IP 和端口
         /// </summary>
         private static IPEndPoint ipPoint;
+        /// <summary>
+        /// 波形图数据
+        /// </summary>
         public static event EventHandler<Udp_EventArgs> udp_Event;
+        /// <summary>
+        /// 一般协议发送回调
+        /// </summary>
+        public static event EventHandler<Udp_EventArgs> udp_Event_Kind;
         private static int outTime = 3; //单位：秒
 
         private static bool continueLoop = true;//控制接收开关
@@ -74,6 +81,10 @@ namespace Socket_Server
                
             }
         }
+        /// <summary>
+        /// 一般发送协议使用
+        /// </summary>
+        /// <param name="sendMsg"></param>
         private static void SendMessages(object sendMsg)
         {
             string receiveCmd = string.Empty; //接收到信息
@@ -97,7 +108,7 @@ namespace Socket_Server
 
                         Udp_EventArgs eventArgs = new Udp_EventArgs();
                         eventArgs.Msg = receiveCmd;
-                        udp_Event("", eventArgs);
+                        udp_Event_Kind("", eventArgs);
                         continueLoop = false;
                     }
                     else
@@ -109,7 +120,7 @@ namespace Socket_Server
         }
 
         /// <summary>
-        /// 发送开始 测试协议
+        /// 发送开始 测试协议（震动 电流数据 用）
         /// </summary>
         /// <param name="sendMsg"></param>
         private static void SendMessages1(object sendMsg)
