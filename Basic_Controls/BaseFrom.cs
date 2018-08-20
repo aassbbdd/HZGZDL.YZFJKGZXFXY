@@ -49,7 +49,7 @@ namespace Basic_Controls
         {
             try
             {
-                SQLiteHelper.NewDbFile(path);//生成SQL文件
+                SQLiteHelper.NewDbFile();//生成SQL文件
             }
             catch (Exception ex)
             {

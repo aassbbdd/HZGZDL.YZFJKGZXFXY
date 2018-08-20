@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DbHelper;
+using DbHelper.Sqlite_Db;
 
 namespace Basic_Controls
 {
@@ -25,10 +27,8 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            //index = radioGroup.SelectedIndex;
-            //var dd = radioGroup.Text;
-            // MessageBox.Show(dd);
             index = Convert.ToInt32(radioGroup.Text);
+
             this.Close();
         }
     }

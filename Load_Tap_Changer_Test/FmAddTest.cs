@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using DbHelper;
+using DbHelper.Sqlite_Db;
 
 namespace Basic_Controls
 {
@@ -25,7 +27,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-
+            CreateDb();
         }
         /// <summary>
         /// 取消
@@ -43,7 +45,6 @@ namespace Basic_Controls
             if (GetType == "1")
             {
                 this.txtGetUnit.Enabled = false;
-
                 this.txtSA.Enabled = true;
                 this.txtEA.Enabled = true;
             }
@@ -53,8 +54,25 @@ namespace Basic_Controls
                 this.txtSA.Enabled = false;
                 this.txtEA.Enabled = false;
             }
+        }
 
-
+        /// <summary>
+        /// 生成数据库
+        /// </summary>
+        private void CreateDb()
+        {
+            try
+            {
+                SQLiteHelper.NewDbFile();//生成SQL文件
+                string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
+                SQLiteHelper.NewTable(DbStr);
+                DbStr = Create_Table.Instance.Create_TEST_DATA();
+                SQLiteHelper.NewTable(DbStr);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

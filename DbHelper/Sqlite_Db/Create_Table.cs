@@ -42,5 +42,70 @@ namespace DbHelper.Sqlite_Db
 
             return tablestring;
         }
+
+
+        /// <summary>
+        /// 生成测试配置表
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public string Create_TEST_COFIGE()
+        {
+            StringBuilder sbsql = new StringBuilder();
+            sbsql.Append("drop table if exists TEST_COFIGE; ");
+
+            sbsql.Append(@"   create table TEST_COFIGE
+                                (
+                                   ID                  integer       not null          primary key autoincrement,
+                                   DVNAME               varchar(200)                   null,
+                                   DVPOSITION           varchar(200)                   null,
+                                   DVID                 varchar(20)                    null,
+                                   TESTER               varchar(50)                    null,
+                                   OLTC_TS              varchar(20)                    null,
+                                   CONTACT_NUM          integer                        null,
+                                   TEST_NUM             integer                        null,
+                                   SPLACE               varchar(50)                    null,
+                                   OILTEMP              varchar(50)                    null,
+                                   TEST_TIME            datetime                       null,
+                                   TEST_TYPE            varchar(20)                    null,
+                                   GETINFO              varchar(20)                    null,
+                                   TESTSTAGE            varchar(20)                    null,
+                                   DJUST                varchar(20)                    null,
+                                   DESCRIBE             varchar(2000)                  null,
+                                   SCURRENT             varchar(20)                    null,
+                                   EURRENT              varchar(20)                    null,
+                                   TIME_UNIT            varchar(20)                    null,
+                                   V1                   varchar(20)                    null,
+                                   V2                   varchar(20)                    null,
+                                   V3                   varchar(20)                    null,
+                                   C1                   varchar(20)                    null,
+                                   C2                   varchar(20)                    null,
+                                   C3                   varchar(20)                    null
+                                )");
+
+            return sbsql.ToString();
+        }
+
+
+        /// <summary>
+        /// 生成测试配置表
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        public string Create_TEST_DATA()
+        {
+            StringBuilder sbsql = new StringBuilder();
+            sbsql.Append("drop table if exists TEST_DATA; ");
+
+            sbsql.Append(@"   create table TEST_DATA
+                                (
+                                   ID                  integer       not null          primary key autoincrement,
+                                   DATAID               varchar(50)                    null,
+                                   DATAIDX16            varchar(50)                    null,
+                                   DATACONTENT          varchar(2000)                  null
+                                )");
+
+            return sbsql.ToString();
+        }
     }
 }

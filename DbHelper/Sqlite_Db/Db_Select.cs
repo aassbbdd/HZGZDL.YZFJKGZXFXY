@@ -48,5 +48,26 @@ namespace DbHelper.Sqlite_Db
             }
 
         }
+        /// <summary>
+        /// 获取测试数据
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Test_Data_Get()
+        {
+            try
+            {
+
+                StringBuilder sbsql = new StringBuilder();
+                sbsql.Append("select * from TEST_DATA  order by  DATAID ;");
+                DataSet ds = SQLiteHelper.ExecuteDataSet(sbsql.ToString());
+
+                return ds.Tables[0];
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

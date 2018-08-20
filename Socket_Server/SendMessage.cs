@@ -73,12 +73,12 @@ namespace Socket_Server
                     Thread.Sleep(100);
                     threadSendStert.Abort();
                 }
-               
-                    //启动发送线程  开始测试时一直保持运行
-                    threadSendStert = new Thread(SendMessages1);
-                    threadSendStert.IsBackground = true;
-                    threadSendStert.Start(sendMsg);
-               
+
+                //启动发送线程  开始测试时一直保持运行
+                threadSendStert = new Thread(SendMessages1);
+                threadSendStert.IsBackground = true;
+                threadSendStert.Start(sendMsg);
+
             }
         }
         /// <summary>
@@ -155,9 +155,10 @@ namespace Socket_Server
                             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                             //string path = AppDomain.CurrentDomain.BaseDirectory;
                             //ListToText.Instance.WriteListToTextFile("", path);
+                            udp_Event("", eventArgs);
                         }
                     }
-                    udp_Event("", eventArgs);
+
                 }
             }
         }

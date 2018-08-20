@@ -38,13 +38,15 @@
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem3 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem4 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnCTest = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnETest = new DevExpress.XtraBars.BarButtonItem();
+            this.btnSaveImg = new DevExpress.XtraBars.BarButtonItem();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem11 = new DevExpress.XtraBars.BarButtonItem();
@@ -76,8 +78,6 @@
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.treeList1 = new DevExpress.XtraTreeList.TreeList();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
-            this.btnETest = new DevExpress.XtraBars.BarButtonItem();
-            this.btnSaveImg = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
@@ -157,7 +157,7 @@
             this.barButtonItem21,
             this.barLargeButtonItem1,
             this.btnAddTest,
-            this.barLargeButtonItem3,
+            this.btnLond,
             this.barLargeButtonItem4,
             this.barLargeButtonItem5,
             this.barLargeButtonItem6,
@@ -178,7 +178,7 @@
             this.bar1.FloatLocation = new System.Drawing.Point(541, 209);
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.btnAddTest),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem3),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnLond),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem4),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem5),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
@@ -201,13 +201,14 @@
             this.btnAddTest.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnAddTest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAddTest_ItemClick);
             // 
-            // barLargeButtonItem3
+            // btnLond
             // 
-            this.barLargeButtonItem3.Caption = "载入";
-            this.barLargeButtonItem3.Id = 30;
-            this.barLargeButtonItem3.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem3.ImageOptions.Image")));
-            this.barLargeButtonItem3.Name = "barLargeButtonItem3";
-            this.barLargeButtonItem3.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnLond.Caption = "载入";
+            this.btnLond.Id = 30;
+            this.btnLond.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnLond.ImageOptions.Image")));
+            this.btnLond.Name = "btnLond";
+            this.btnLond.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnLond.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLond_ItemClick);
             // 
             // barLargeButtonItem4
             // 
@@ -224,6 +225,7 @@
             this.barLargeButtonItem5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem5.ImageOptions.Image")));
             this.barLargeButtonItem5.Name = "barLargeButtonItem5";
             this.barLargeButtonItem5.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.barLargeButtonItem5.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem5_ItemClick);
             // 
             // barLargeButtonItem6
             // 
@@ -255,6 +257,20 @@
             this.btnCTest.Id = 36;
             this.btnCTest.Name = "btnCTest";
             this.btnCTest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCTest_ItemClick);
+            // 
+            // btnETest
+            // 
+            this.btnETest.Caption = "停止";
+            this.btnETest.Id = 37;
+            this.btnETest.Name = "btnETest";
+            this.btnETest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnETest_ItemClick);
+            // 
+            // btnSaveImg
+            // 
+            this.btnSaveImg.Caption = "保存图片";
+            this.btnSaveImg.Id = 38;
+            this.btnSaveImg.Name = "btnSaveImg";
+            this.btnSaveImg.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveImg_ItemClick);
             // 
             // bar2
             // 
@@ -495,20 +511,6 @@
             this.pclChart.Size = new System.Drawing.Size(655, 520);
             this.pclChart.TabIndex = 30;
             // 
-            // btnETest
-            // 
-            this.btnETest.Caption = "停止";
-            this.btnETest.Id = 37;
-            this.btnETest.Name = "btnETest";
-            this.btnETest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnETest_ItemClick);
-            // 
-            // btnSaveImg
-            // 
-            this.btnSaveImg.Caption = "保存图片";
-            this.btnSaveImg.Id = 38;
-            this.btnSaveImg.Name = "btnSaveImg";
-            this.btnSaveImg.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveImg_ItemClick);
-            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -543,7 +545,7 @@
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.Bar bar1;
         private DevExpress.XtraBars.BarLargeButtonItem btnAddTest;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem3;
+        private DevExpress.XtraBars.BarLargeButtonItem btnLond;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem4;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;

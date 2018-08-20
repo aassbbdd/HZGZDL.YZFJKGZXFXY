@@ -20,6 +20,8 @@ using Steema.TeeChart;
 using Steema.TeeChart.Styles;
 using Steema.TeeChart.Export;
 using DocDecrypt.Common;
+using DbHelper.Sqlite_Db;
+using Commons;
 
 namespace Basic_Controls
 {
@@ -91,6 +93,47 @@ namespace Basic_Controls
             }
         }
 
+
+        /// <summary>
+        /// 保存图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnSaveImg_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "TestLineImage";
+            FileHelper.CreateDirectoy(path);
+            //文件夹名字
+            string filename = DateTime.Now.ToString("d");
+            path = path + "\\" + filename;
+            FileHelper.CreateDirectoy(path);
+            string imgname = "\\" + DateTime.Now.ToString("HHmmss") + ".png";
+
+            tChart.Export.Image.PNG.Width = 800;
+            tChart.Export.Image.PNG.Height = 600;
+
+            tChart.Export.Image.PNG.Save(path + "\\" + imgname);
+        }
+        /// <summary>
+        /// 载入数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnLond_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+
+                DataTable dt = Db_Select.Instance.Test_Data_Get();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         /// <summary>
         /// 心跳测试
@@ -200,7 +243,10 @@ namespace Basic_Controls
         {
             try
             {
+                //绘图
                 list_Event.Enqueue(e);
+                //数据存储
+                Db_Source.Enqueue(e);
             }
             catch (Exception exception)
             {
@@ -224,6 +270,11 @@ namespace Basic_Controls
         /// 刷新图表
         /// </summary>
         Thread ReChart;
+
+        /// <summary>
+        /// 存储数据
+        /// </summary>
+        Thread Db_Save;
 
         /// <summary>
         /// 处理队列线程
@@ -487,7 +538,14 @@ namespace Basic_Controls
 
         #region 队列刷新动态图表
 
+        /// <summary>
+        /// 绘图队列
+        /// </summary>
         ConcurrentQueue<Udp_EventArgs> list_Event = new ConcurrentQueue<Udp_EventArgs>();
+        /// <summary>
+        /// 存储数据队列
+        /// </summary>
+        ConcurrentQueue<Udp_EventArgs> Db_Source = new ConcurrentQueue<Udp_EventArgs>();
 
         #region  line x y轴 数据源
 
@@ -521,7 +579,7 @@ namespace Basic_Controls
 
             #region 处理队列数据
 
-            thread_List = new Thread(Job_Queue3);
+            thread_List = new Thread(Job_Queue);
             thread_List.IsBackground = true;
             thread_List.Start();//启动线程
 
@@ -534,6 +592,16 @@ namespace Basic_Controls
             ReChart.Start();//启动线程
 
             #endregion
+
+
+            #region 存储数据
+
+            Db_Save = new Thread(Test_Data_insert);
+            Db_Save.IsBackground = true;
+            Db_Save.Start();//启动线程
+
+            #endregion
+
         }
 
         /// <summary>
@@ -546,7 +614,7 @@ namespace Basic_Controls
 
         #region 队列数据处理
 
-        private void Job_Queue3()
+        private void Job_Queue()
         {
             while (isAbort)
             {
@@ -558,7 +626,7 @@ namespace Basic_Controls
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
-                        string head = e.Msg.Substring(4, 4);
+                        //string head = e.Msg.Substring(4, 4);
 
                         int Porints = 80 / LessPoint;
 
@@ -675,7 +743,7 @@ namespace Basic_Controls
                         Line_Bind();
                     }));
                     //死循环
-                    Thread.Sleep(200);
+                    Thread.Sleep(150);
                 }
                 catch (Exception ex)
                 {
@@ -717,24 +785,61 @@ namespace Basic_Controls
 
         #endregion
 
-        #endregion
 
-        #endregion
-
-        private void btnSaveImg_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        #region SQL 数据库操作
+        public void Test_Data_insert()
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "TestLineImage";
-            FileHelper.CreateDirectoy(path);
-            //文件夹名字
-            string filename = DateTime.Now.ToString("d");
-            path = path + "\\" + filename;
-            FileHelper.CreateDirectoy(path);
-            string imgname = "\\" + DateTime.Now.ToString("HHmmss") + ".png";
+            try
+            {
+                while (true)
+                {
+                    if (Db_Source.Count > 0)
+                    {
 
-            tChart.Export.Image.PNG.Width = 800;
-            tChart.Export.Image.PNG.Height = 600;
+                        Udp_EventArgs e = new Udp_EventArgs();
 
-            tChart.Export.Image.PNG.Save(path + "\\" + imgname);
+                        Db_Source.TryDequeue(out e);//取出队里数据并删除
+
+                        DataModel model = new DataModel();
+
+                        model.head = e.Msg.Substring(4, 4); ;
+                        model.text = e.Msg;
+                        model.id = Convert.ToInt32(model.head, 16);
+                        //  Db_Action.Instance.Test_Data_insert(model);
+                        ListToText.Instance.WriteListToTextFile1(e.Msg+"|");
+
+
+
+
+                        Thread.Sleep(1);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        private void barLargeButtonItem5_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Udp_EventArgs ee = new Udp_EventArgs();
+            ee.Hearder = "0909";
+            ee.Msg = @"09090000FFF1FFECFFFFFFE4FFE4FFE4FFE0FFE0FFFFFFEAFFE8FFE9FFE8FFE8FFFFFFE9FFE8FFE8FFE8FFE2FFFFFFEAFFEAFFEAFFF0FFEAFF000000FFEAFFEAFFEAFFE8FFFFFFF5FFF5FFF4FFF5FFF400000000FFF5FFF7FFF5FFF4FFFFFFF4FFF2FFF0FFF2FFF000FFFFF0FFF1FFF0FFF2FFF00000000000000000FFFAFFF4FFFFFFF0FFF2FFF0FFEAFFE8FF00000AFFFFFFFFFFFFFFFF000008FFFE0008FFFFFFFCFFFE0000110014FFFF0010FFFF00FFFFF4FFF1FFF4FFF0FFF0FFFFFFF0FFEDFFEDFFF0FFE9FF000000FFF0FFF4FFF4FFF4FF000008FFFDFFFEFFFEFFFC00000000FFF4FFF4FFF5FFF0FFFFFFEAFFEAFFEAFFEAFFE8FF00000AFFFF00100008FFFE00000000FFF0FFF4FFF4FFF2FF00000800080002FFFEFFFA00000000FFFAFFFAFFFAFFF8FFFFFFF4FFF4FFF4FFF4FFF4FF000008FFFE0008FFFFFFFEFF0000080008FFFEFFFDFFFCFF000000FFF8FFF9FFF6FFF5FFFFFFF4FFF4FFF4FFF4FFF0FFFFFFF1FFEDFFF1FFF0FFEAFFFFFFEAFFEAFFECFFEAFFE8FF000000FFF0FFF2FFF0FFF0FF000000FFF0FFF0FFF0FFEAFFFFFFF4FFF4FFF4FFF1FFF0FFFFFFE8FFE8FFE8FFE8FFE0FF000000FFEDFFF0FFF0FFEAFFFFFFF1FFF0FFF0FFF1FFF0FF000000FFF0FFF4FFF0FFF0FFFFFFEAFFE8FFE8FFEAFFE8FFFFFFF00000FFF2FFF0FFEAFFFFFFF0FFED0000FFECFFE9FF000000FFF0FFF2FFF0FFECFF000002FFFA0000FFFDFFF800000000FFF5FFF5FFF5FFF0FF000000FFF10000FFF1FFEDFFFFFFEDFFEDFFF0FFF0FFEAFFFFFFF5FFF0FFF4FFF5FFF0FFFFFFEAFFEAFFF0FFEAFFEAFFFFFFF2FFF0FFF0FFF0FFEAFF00001000100012FFFFFFFF00FFFFFDFFFD00010004FFF9FFFFFFEAFFE8FFE8FFE8FFE8FF000000FFF4FFF4FFF0FFF0FFFFFFF5FFF4FFF50000FFF0FF000000FFF4FFF4FFF4FFF0FF000000FFF2FFF2FFF1FFF0FF000000FFF8FFF8FFF5FFF1FF000000FFF4FFF5FFF4FFF0FFFFFFF4FFF4FFF0FFF0FFEAFF00001400100011FFFFFFFF00FFFFFAFFF60000FFFAFFF8FF000015001500160016FFFF000010FFFF00100008FFFFFFFF00001000100010FFFFFFFF00000000FFF4FFF4FFF4FFF0FFFFFFE8FFE8FFE8FFE8FFE0FFFFFFE8FFE8FFE4FFE8FFE1FF000000FFF0FFF0FFF0FFEAFFFFFFF0FFF2FFF2FFF2FFEAFF000010FFFF00100010FFFF000000040004FFFCFFFCFFFA00FFF8FFFAFFFA0000FFF50000FFFFE9FFE8FFE8FFE8FFE8FFFFFFF2FFF0FFF0FFF0FFEAFF00001000100010FFFFFFFFFFFFFFF4FFF40000FFF4FFF0FF000000FFECFFF0FFF0FFEAFFFFFFF5FFF5FFF5FFF4FFF4FFFFFFEAFFE8FFE8FFE8FFE8FF000000FFF5FFF4
+";
+
+
+
+            // Test_Data_insert(ee);
         }
     }
 }
