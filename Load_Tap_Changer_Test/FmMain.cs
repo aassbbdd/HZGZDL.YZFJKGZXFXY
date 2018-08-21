@@ -22,6 +22,9 @@ using Steema.TeeChart.Export;
 using DocDecrypt.Common;
 using DbHelper.Sqlite_Db;
 using Commons;
+using Commons.XmlModel;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace Basic_Controls
 {
@@ -593,15 +596,13 @@ namespace Basic_Controls
 
             #endregion
 
-
             #region 存储数据
 
-            Db_Save = new Thread(Test_Data_insert);
+            Db_Save = new Thread(Test_Xml_Insert);
             Db_Save.IsBackground = true;
             Db_Save.Start();//启动线程
 
             #endregion
-
         }
 
         /// <summary>
@@ -785,7 +786,6 @@ namespace Basic_Controls
 
         #endregion
 
-
         #region SQL 数据库操作
         public void Test_Data_insert()
         {
@@ -805,14 +805,10 @@ namespace Basic_Controls
                         model.head = e.Msg.Substring(4, 4); ;
                         model.text = e.Msg;
                         model.id = Convert.ToInt32(model.head, 16);
-                        //  Db_Action.Instance.Test_Data_insert(model);
-                        ListToText.Instance.WriteListToTextFile1(e.Msg+"|");
-
-
-
+                        // Db_Action.Instance.Test_Data_insert(model);
+                        ListToText.Instance.WriteListToTextFile1(e.Msg + "|");
 
                         Thread.Sleep(1);
-
                     }
                 }
             }
@@ -822,24 +818,66 @@ namespace Basic_Controls
             }
         }
 
+        #endregion
 
+        #region Xml 数据操作
+
+        public void Test_Xml_Insert()
+        {
+            try
+            {
+                int i = 1;
+                while (true)
+                {
+                    if (Db_Source.Count > 0)
+                    {
+                        Udp_EventArgs e = new Udp_EventArgs();
+
+                        Db_Source.TryDequeue(out e);//取出队里数据并删除
+                        Xml_Node_Model model = new Xml_Node_Model();
+                        model.Id = e.Msg.Substring(4, 4); ;
+                        model.DataSource = e.Msg;
+                        model.Data = new List<Xml_Element_Model>();
+
+                        XmlHelper.In(model);
+                        Thread.Sleep(1);
+                        if (i == 100)
+                        {
+                            XmlHelper.Save();
+                            i = 1;
+                        };
+                        i++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         #endregion
 
         #endregion
 
         #endregion
-
+        /// <summary>
+        /// xml 存储路径
+        /// </summary>
+        string path = AppDomain.CurrentDomain.BaseDirectory + XmlHelper.Xml_Path + "\\测试1.xml";
         private void barLargeButtonItem5_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Udp_EventArgs ee = new Udp_EventArgs();
-            ee.Hearder = "0909";
-            ee.Msg = @"09090000FFF1FFECFFFFFFE4FFE4FFE4FFE0FFE0FFFFFFEAFFE8FFE9FFE8FFE8FFFFFFE9FFE8FFE8FFE8FFE2FFFFFFEAFFEAFFEAFFF0FFEAFF000000FFEAFFEAFFEAFFE8FFFFFFF5FFF5FFF4FFF5FFF400000000FFF5FFF7FFF5FFF4FFFFFFF4FFF2FFF0FFF2FFF000FFFFF0FFF1FFF0FFF2FFF00000000000000000FFFAFFF4FFFFFFF0FFF2FFF0FFEAFFE8FF00000AFFFFFFFFFFFFFFFF000008FFFE0008FFFFFFFCFFFE0000110014FFFF0010FFFF00FFFFF4FFF1FFF4FFF0FFF0FFFFFFF0FFEDFFEDFFF0FFE9FF000000FFF0FFF4FFF4FFF4FF000008FFFDFFFEFFFEFFFC00000000FFF4FFF4FFF5FFF0FFFFFFEAFFEAFFEAFFEAFFE8FF00000AFFFF00100008FFFE00000000FFF0FFF4FFF4FFF2FF00000800080002FFFEFFFA00000000FFFAFFFAFFFAFFF8FFFFFFF4FFF4FFF4FFF4FFF4FF000008FFFE0008FFFFFFFEFF0000080008FFFEFFFDFFFCFF000000FFF8FFF9FFF6FFF5FFFFFFF4FFF4FFF4FFF4FFF0FFFFFFF1FFEDFFF1FFF0FFEAFFFFFFEAFFEAFFECFFEAFFE8FF000000FFF0FFF2FFF0FFF0FF000000FFF0FFF0FFF0FFEAFFFFFFF4FFF4FFF4FFF1FFF0FFFFFFE8FFE8FFE8FFE8FFE0FF000000FFEDFFF0FFF0FFEAFFFFFFF1FFF0FFF0FFF1FFF0FF000000FFF0FFF4FFF0FFF0FFFFFFEAFFE8FFE8FFEAFFE8FFFFFFF00000FFF2FFF0FFEAFFFFFFF0FFED0000FFECFFE9FF000000FFF0FFF2FFF0FFECFF000002FFFA0000FFFDFFF800000000FFF5FFF5FFF5FFF0FF000000FFF10000FFF1FFEDFFFFFFEDFFEDFFF0FFF0FFEAFFFFFFF5FFF0FFF4FFF5FFF0FFFFFFEAFFEAFFF0FFEAFFEAFFFFFFF2FFF0FFF0FFF0FFEAFF00001000100012FFFFFFFF00FFFFFDFFFD00010004FFF9FFFFFFEAFFE8FFE8FFE8FFE8FF000000FFF4FFF4FFF0FFF0FFFFFFF5FFF4FFF50000FFF0FF000000FFF4FFF4FFF4FFF0FF000000FFF2FFF2FFF1FFF0FF000000FFF8FFF8FFF5FFF1FF000000FFF4FFF5FFF4FFF0FFFFFFF4FFF4FFF0FFF0FFEAFF00001400100011FFFFFFFF00FFFFFAFFF60000FFFAFFF8FF000015001500160016FFFF000010FFFF00100008FFFFFFFF00001000100010FFFFFFFF00000000FFF4FFF4FFF4FFF0FFFFFFE8FFE8FFE8FFE8FFE0FFFFFFE8FFE8FFE4FFE8FFE1FF000000FFF0FFF0FFF0FFEAFFFFFFF0FFF2FFF2FFF2FFEAFF000010FFFF00100010FFFF000000040004FFFCFFFCFFFA00FFF8FFFAFFFA0000FFF50000FFFFE9FFE8FFE8FFE8FFE8FFFFFFF2FFF0FFF0FFF0FFEAFF00001000100010FFFFFFFFFFFFFFF4FFF40000FFF4FFF0FF000000FFECFFF0FFF0FFEAFFFFFFF5FFF5FFF5FFF4FFF4FFFFFFEAFFE8FFE8FFE8FFE8FF000000FFF5FFF4
-";
 
+          
+            XmlHelper.CreateXmlDocument("测试1");
 
-
+            XmlHelper.Init();
             // Test_Data_insert(ee);
+        }
+
+        private void barLargeButtonItem4_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
         }
     }
 }
