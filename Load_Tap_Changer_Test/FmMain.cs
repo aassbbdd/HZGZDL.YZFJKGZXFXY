@@ -25,6 +25,7 @@ using Commons;
 using Commons.XmlModel;
 using System.Xml.Linq;
 using System.Xml;
+using Steema.TeeChart.Tools;
 
 namespace Basic_Controls
 {
@@ -36,15 +37,27 @@ namespace Basic_Controls
 
         }
 
+
         private void FmMain_Load(object sender, EventArgs e)
         {
             Event_Bind();//绑定注册事件
             Chart_Init();//初始化图表
+            XmlHelper.Init("测试数据1");
+            xmlpath = XmlHelper.xmlpath;
         }
+        #region 页面初始化参数
+
+        /// <summary>
+        /// xml 存储路径
+        /// </summary>
+        string xmlpath = "";
+
         /// <summary>
         /// 协议对应参数
         /// </summary>
         Tester_Agreement agreement = new Tester_Agreement();
+
+        #endregion
 
         #region 按键
 
@@ -62,6 +75,9 @@ namespace Basic_Controls
         #endregion
 
         #region 任务栏按钮
+
+
+
         /// <summary>
         /// 新建测试计划
         /// </summary>
@@ -96,6 +112,52 @@ namespace Basic_Controls
             }
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSaveData_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            SaveFileDialog pSaveFileDialog = new SaveFileDialog
+            {
+                Title = "保存为:",
+                RestoreDirectory = true,
+                Filter = "所有文件(*.*)|*.*"
+            };//同打开文件，也可指定任意类型的文件
+            if (pSaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = pSaveFileDialog.FileName;
+            }
+        }
+
+
+        /// <summary>
+        /// 载入数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnLond_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                string filepath = FileHelper.GetOpenFilePath();
+                //List<Xml_Node_Model> list = new List<Xml_Node_Model>();
+                //// List<Xml_Node_Model> listStu = XmlHelper.Xml_To_List(filepath);
+
+                if (!string.IsNullOrEmpty(filepath))
+                {
+                    DataTable dt = XmlHelper.Xml_To_DataTable(filepath);
+                    Chart_DataTable_Init();
+                    Chart_Data_Lond_Bind(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         /// <summary>
         /// 保存图片
@@ -118,26 +180,6 @@ namespace Basic_Controls
 
             tChart.Export.Image.PNG.Save(path + "\\" + imgname);
         }
-        /// <summary>
-        /// 载入数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void btnLond_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            try
-            {
-
-                DataTable dt = Db_Select.Instance.Test_Data_Get();
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
         /// <summary>
         /// 心跳测试
         /// </summary>
@@ -208,6 +250,7 @@ namespace Basic_Controls
                 SendMessage.udp_Event += new EventHandler<Udp_EventArgs>(Run);
                 //一般协议数据
                 SendMessage.udp_Event_Kind += new EventHandler<Udp_EventArgs>(Run_Kind);
+                this.tChart.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.tChart_MouseWheel);
             }
             catch (Exception e)
             {
@@ -352,10 +395,6 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_Init()
         {
-            // 异步方法
-            ///BeginInvoke(new ThreadStart(delegate ()
-            //{
-
             tChart.Series.Clear();
             //总点数=10秒/（单点长度*偷点数）
             linlength = (10 * allnum) / num / LessPoint;
@@ -396,7 +435,6 @@ namespace Basic_Controls
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
 
-            tChart.Axes.Bottom.AutomaticMaximum = true;//禁用自增长 
             tChart.Axes.Bottom.SetMinMax(0, 10);
             tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
 
@@ -408,6 +446,36 @@ namespace Basic_Controls
             pclChart.Controls.Add(tChart);// 绑定图表位置 
             Chart_Data_Bind();//初始化绑定 线line
             //}));
+        }
+
+
+        /// <summary>
+        /// 初始化重新查看数据
+        /// </summary>
+        private void Chart_DataTable_Init()
+        {
+            tChart = new TChart();
+
+            tChart.Dock = DockStyle.Fill;
+            tChart.Aspect.View3D = false;
+            tChart.Legend.Visible = false;//显示/隐藏线的注释 
+
+            //tChart.Panel.Gradient.Visible = true;
+
+            tChart.Legend.LegendStyle = LegendStyles.Series;
+            tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+
+            tChart.Axes.Bottom.Minimum = 0.00;
+            tChart.Axes.Bottom.AutomaticMaximum = true;
+            tChart.Axes.Bottom.AutomaticMinimum = true;
+            tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
+
+            tChart.Panel.MarginLeft = 10;
+            tChart.Panel.MarginRight = 10;
+            tChart.Panel.MarginBottom = 10;
+            tChart.Panel.MarginTop = 10;
+            pclChart.Controls.Clear();
+            pclChart.Controls.Add(tChart);// 绑定图表位置 
         }
 
         //10秒
@@ -433,6 +501,7 @@ namespace Basic_Controls
 
             double startPosition = tChart.Axes.Left.StartPosition;
             double endPosition = tChart.Axes.Left.EndPosition;
+            tChart.Axes.Custom.Clear();//清除原先画布
             Axis axis;
             for (int i = 0; i < count; i++)
             {
@@ -476,8 +545,9 @@ namespace Basic_Controls
                     axis.Title.Angle = 90;//'标题摆放角度
                 }
 
-                axis.Maximum = 5;//最大值
-                axis.Minimum = -5;//最小值
+                axis.Maximum = 10;//最大值
+                axis.Minimum = -10;//最小值
+
                 tChart.Axes.Custom.Add(axis);
                 listBaseLine[i].CustomVertAxis = axis;
             }
@@ -524,19 +594,129 @@ namespace Basic_Controls
                 throw ex;
             }
         }
-
-        private List<BaseLine> GetVisibleSeries()
+        /// <summary>
+        /// 重新加载图表
+        /// </summary>
+        private void Chart_Data_Lond_Bind(DataTable dt)
         {
-            List<BaseLine> visibleSeries = new List<BaseLine>();
-            for (int i = 0; i < tChart.Series.Count; i++)
+            try
             {
-                tChart.Series[i].CustomVertAxis = null;
-                if (tChart.Series[i].Visible)
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    visibleSeries.Add((BaseLine)tChart.Series[i]);
+                    tChart.Series.Clear();
+
+                    tChart.Refresh();
+                    //震动1路 vline1
+                    if (v1)
+                    {
+                        Line vline1 = new Line();
+                        tChart.Series.Add(vline1);
+
+                        vline1.Title = string.Format("震动曲线{0}", 1);
+                        vline1.YValues.DataMember = "V1";
+                        vline1.XValues.DataMember = "Xwitdh";
+                        vline1.DataSource = dt;
+                    }
+                    //震动2路 vline2
+                    if (v2)
+                    {
+                        Line vline2 = new Line();
+                        tChart.Series.Add(vline2);
+                        vline2.Title = string.Format("震动曲线{0}", 2);
+                        vline2.YValues.DataMember = "V2";
+                        vline2.XValues.DataMember = "Xwitdh";
+                        vline2.DataSource = dt;
+                    }
+                    //震动3路 vline3
+                    if (v3)
+                    {
+                        Line vline3 = new Line();
+                        tChart.Series.Add(vline3);
+                        vline3.Title = string.Format("震动曲线{0}", 3);
+                        vline3.YValues.DataMember = "V3";
+                        vline3.XValues.DataMember = "Xwitdh";
+                        vline3.DataSource = dt;
+                    }
+                    //电流1路 cline1
+                    if (c1)
+                    {
+                        tChart.Series.Add(cline1);
+                        cline1.Title = string.Format("电流曲线{0}", 1);
+                        cline1.YValues.DataMember = "C1";
+                        cline1.XValues.DataMember = "Xwitdh";
+                        cline1.DataSource = dt;
+                    }
+                    //电流2路 cline2
+                    if (c2)
+                    {
+                        Line cline2 = new Line();
+                        tChart.Series.Add(cline2);
+                        cline2.Title = string.Format("电流曲线{0}", 2);
+                        cline2.YValues.DataMember = "C2";
+                        cline2.XValues.DataMember = "Xwitdh";
+                        cline2.DataSource = dt;
+                    }
+                    //电流3路 cline3
+                    if (c3)
+                    {
+                        Line cline3 = new Line();
+                        tChart.Series.Add(cline3);
+                        cline3.Title = string.Format("电流曲线{0}", 3);
+                        cline3.YValues.DataMember = "C3";
+                        cline3.XValues.DataMember = "Xwitdh";
+                        cline3.DataSource = dt;
+                    }
+
+                    //绘制画布
+                    AddCustomAxis(tChart.Series.Count);
+                }
+                else
+                {
+                    return;
                 }
             }
-            return visibleSeries;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 绑定DataTable图表 line 线
+        /// </summary>
+        private void Chart_DataTable_Bind()
+        {
+            try
+            {
+                //DataTable dt = dtnew.Copy();
+                //震动1路 vline1
+                tChart.Series.Add(vline1);
+
+                //震动2路 vline2
+                //Line vline2 = new Line();
+                tChart.Series.Add(vline2);
+
+                //震动3路 vline3
+                //Line vline3 = new Line();
+                tChart.Series.Add(vline3);
+
+                //电流1路 cline1
+                tChart.Series.Add(cline1);
+
+                //电流2路 cline2
+                //Line cline2 = new Line();
+                tChart.Series.Add(cline2);
+
+                //电流3路 cline3
+                //Line cline3 = new Line();
+                tChart.Series.Add(cline3);
+
+                AddCustomAxis(tChart.Series.Count);//绘制画布
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #region 队列刷新动态图表
@@ -603,6 +783,8 @@ namespace Basic_Controls
             Db_Save.Start();//启动线程
 
             #endregion
+
+            Chart_Init();
         }
 
         /// <summary>
@@ -783,7 +965,6 @@ namespace Basic_Controls
             }
         }
 
-
         #endregion
 
         #region SQL 数据库操作
@@ -839,7 +1020,7 @@ namespace Basic_Controls
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
 
-                        XmlHelper.In(model);
+                        XmlHelper.Insert(model);
                         Thread.Sleep(1);
                         if (i == 100)
                         {
@@ -861,23 +1042,68 @@ namespace Basic_Controls
         #endregion
 
         #endregion
+
+
+
         /// <summary>
-        /// xml 存储路径
+        /// 放大
         /// </summary>
-        string path = AppDomain.CurrentDomain.BaseDirectory + XmlHelper.Xml_Path + "\\测试1.xml";
-        private void barLargeButtonItem5_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton1_Click(object sender, EventArgs e)
         {
 
-          
-            XmlHelper.CreateXmlDocument("测试1");
+            //double XMid = ((CursorTool)tChart1.Tools[0]).XValue;
+            double OldXMin = tChart.Axes.Bottom.Minimum;
+            double OldXMax = tChart.Axes.Bottom.Maximum;
+            double XMid = (OldXMin + OldXMax) / 2;
+            double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+            double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+            tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
 
-            XmlHelper.Init();
-            // Test_Data_insert(ee);
         }
-
-        private void barLargeButtonItem4_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        /// <summary>
+        /// 缩小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton2_Click(object sender, EventArgs e)
         {
-
+            //double XMid = ((CursorTool)tChart1.Tools[0]).XValue;
+            double OldXMin = tChart.Axes.Bottom.Minimum;
+            double OldXMax = tChart.Axes.Bottom.Maximum;
+            double XMid = (OldXMin + OldXMax) / 2;
+            double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
+            double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
+            tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
         }
+        private void tChart_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (tChart != null)
+            {
+                var ddd2 = tChart.Tools;
+                var dd = ((CursorTool)tChart.Tools[0]);//有问题
+                var ddd = tChart.Tools[0];
+                
+                double XMid = ((CursorTool)tChart.Tools[0]).XValue;
+                if (e.Delta > 0)
+                {
+                    double OldXMin = tChart.Axes.Bottom.Minimum;
+                    double OldXMax = tChart.Axes.Bottom.Maximum;
+                    double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+                    double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+                    tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                }
+                else
+                {
+                    double OldXMin = tChart.Axes.Bottom.Minimum;
+                    double OldXMax = tChart.Axes.Bottom.Maximum;
+                    double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
+                    double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
+                    tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                }
+            }
+        }
+
     }
 }

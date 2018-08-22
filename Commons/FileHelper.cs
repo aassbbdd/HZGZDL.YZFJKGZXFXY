@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,11 +10,41 @@ namespace DocDecrypt.Common
     public class FileHelper
     {
         private static readonly log4net.ILog _logger = log4net.LogManager.GetLogger("FileHelper");
+        public static string Xml_Path = ConfigurationManager.ConnectionStrings["xml_path"].ConnectionString.ToString();
 
         private static void PrintExcetpion(string errors, Exception ex)
         {
             _logger.ErrorFormat(errors + "    {0} \r\n {1}", ex.Message, ex.StackTrace);
         }
+
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <returns></returns>
+        public static string GetOpenFilePath()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + Xml_Path;
+
+            OpenFileDialog pOpenFileDialog = new OpenFileDialog();
+            pOpenFileDialog.Filter = "所有文件|*.*";//若打开指定类型的文件只需修改Filter，如打开txt文件，改为*.txt即可
+            pOpenFileDialog.Multiselect = false;
+            pOpenFileDialog.Title = "打开文件";
+            if (!FileHelper.IsFileExist(path))//验证文件是否存在
+            {
+                pOpenFileDialog.InitialDirectory = path;
+            }
+
+            if (pOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                path = pOpenFileDialog.FileName;
+            }
+            else
+            {
+                path = "";
+            }
+            return path;
+        }
+
 
         public static string GetTempFileName(string fileName)
         {

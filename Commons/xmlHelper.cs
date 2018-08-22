@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Udp_Agreement;
 
 namespace Commons
 {
@@ -22,17 +23,22 @@ namespace Commons
         /// <summary>
         /// 文件夹名字
         /// </summary>
-        public static string Xml_Path = ConfigurationManager.ConnectionStrings["xml_path"].ConnectionString.ToString();
-        public enum XmlType
-        {
-            File,
-            String
-        }
-        static XElement xele;
-        static string path = "";
-        #endregion
+        private static string Xml_File = ConfigurationManager.ConnectionStrings["xml_path"].ConnectionString.ToString();
 
-        #region  Methods
+        /// <summary>
+        /// 内存数据
+        /// </summary>
+        static XElement xele;
+
+        /// <summary>
+        /// xml 文件路径
+        /// </summary>
+        public static string xmlpath = "";
+        /// <summary>
+        /// 文件名字
+        /// </summary>
+        static string xmlname = "";
+        #endregion
 
         /// <summary>
         ///     创建XML文档
@@ -44,16 +50,18 @@ namespace Commons
         {
             try
             {
-                string path = AppDomain.CurrentDomain.BaseDirectory + Xml_Path + "\\";
-                if (!FileHelper.IsFileExist(path))//验证文件是否存在
+                //文件夹路径
+                xmlpath = AppDomain.CurrentDomain.BaseDirectory + Xml_File + "\\";
+                if (!FileHelper.IsFileExist(xmlpath))//验证文件是否存在
                 {
-                    FileHelper.CreateDirectoy(path);//创建文件夹
+                    FileHelper.CreateDirectoy(xmlpath);//创建文件夹
                 }
-                path = path + "\\" + name + ".xml"; //拼接文件路径
-                if (!FileHelper.IsFileExist(path))//验证文件是否存在
+                xmlpath = xmlpath + "\\" + name + ".xml"; //拼接文件路径
+                if (!FileHelper.IsFileExist(xmlpath))//验证文件是否存在
                 {
                     xele = new XElement("root");
-                    xele.Save(path);
+                    xele.SetAttributeValue("IsCount", "false");//默认数据没转换好
+                    xele.Save(xmlpath);
                 }
             }
             catch (Exception exception)
@@ -61,59 +69,67 @@ namespace Commons
                 //LogHelper.LogError("Error! ", exception);
             }
         }
-
-        public static void Init()
+       
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="name"></param>
+        public static void Init(string name)
         {
-             path = AppDomain.CurrentDomain.BaseDirectory + XmlHelper.Xml_Path + "\\测试1.xml";
-            if (!FileHelper.IsFileExist(path))//验证文件是否存在
-            {
-                FileHelper.CreateDirectoy(path);//创建文件夹
-            }
-             xele = XElement.Load(path);
+            xmlname = name;
+            CreateXmlDocument(name);
+            xele = XElement.Load(xmlpath);
         }
 
-
         #region 新增节点
-
 
         /// <summary>
         /// 1. 功能：新增节点。
         /// 2. 使用条件：将任意节点插入到当前Xml文件中。
         /// </summary>        
         /// <param name="xmlNode">要插入的Xml节点</param>
-        public static void In(Xml_Node_Model model)
+        public static void Insert(Xml_Node_Model model)
         {
+            //插入数据时检查xml文件是否存在
+            CreateXmlDocument(xmlname);
 
-            XElement root = xele.Element("root");
             XElement element = ToXElement(model);
             XElement data = new XElement("Data");
             foreach (var item in model.Data)
             {
-                XElement e = new XElement("Id", item.Id);
-                data.Add(e);
-                data.Add(new XElement("V1", item.V1));
-                data.Add(new XElement("V2", item.V2));
-                data.Add(new XElement("V3", item.V3));
+                XElement e = new XElement(item.GetType().ToString());
+                e.Add(new XElement("Id", item.Id));
 
-                data.Add(new XElement("C1", item.C1));
-                data.Add(new XElement("C2", item.C2));
-                data.Add(new XElement("C3", item.C3));
+                e.Add(new XElement("V1", item.V1));
+                e.Add(new XElement("V2", item.V2));
+                e.Add(new XElement("V3", item.V3));
+
+                e.Add(new XElement("C1", item.C1));
+                e.Add(new XElement("C2", item.C2));
+                e.Add(new XElement("C3", item.C3));
+                data.Add(e);
 
             }
             element.Add(data);
             xele.Add(element);
-          //  xele.Save(path);
+            //  xele.Save(path);
         }
+
+        /// <summary>
+        /// 保存到文档
+        /// </summary>
         public static void Save()
         {
             if (xele != null)
             {
-                xele.Save(path);
-                Init();
+                xele.Save(xmlpath);
+                // Init();
             }
         }
 
+        #endregion
 
+        #region 实体列表转换成 XElement 或string 字符串
         public static string ToXml<T>(IList<T> entities, string rootName = "") where T : new()
         {
             if (entities == null || entities.Count == 0)
@@ -175,7 +191,12 @@ namespace Commons
             return element;
         }
 
-
+        /// <summary>
+        /// 实体转换成 string 字符串
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public static string ToXml<T>(T entity) where T : new()
         {
             if (entity == null)
@@ -188,17 +209,22 @@ namespace Commons
             return element.ToString();
         }
 
+        /// <summary>
+        /// 实体转换成 XElement
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public static XElement ToXElement<T>(T entity)
         {
-          
+
             if (entity == null)
             {
                 return null;
             }
             PropertyInfo[] properties = typeof(T).GetProperties();
             object id = properties[0].GetValue(entity, null);
-            XElement element = new XElement(typeof(T).Name+id.ToString());
-           
+            XElement element = new XElement(typeof(T).Name);
             XElement innerElement = null;
             object propertyValue = null;
 
@@ -252,6 +278,303 @@ namespace Commons
         }
         #endregion
 
+        #region xml 转换成实体
+        /// <summary>
+        /// xml转列表
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="path">xml路径</param>
+        /// <returns></returns>
+        public static List<Xml_Node_Model> Xml_To_List(string path)
+        {
+            try
+            {
+                List<Xml_Node_Model> list = new List<Xml_Node_Model>();
+
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                //判断数据是否已经解析完成
+                string IsCount = root.Attribute("IsCount").Value;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                int index = 0; //index 为索引值
+                foreach (XElement item in eles)
+                {
+                    Xml_Node_Model model = new Xml_Node_Model();
+                    model.Id = item.Element("Id").Value;
+                    model.DataSource = item.Element("DataSource").Value;
+
+                    if (IsCount == "true")
+                    {
+                        model.Data = (from data in item.Element("Data").Descendants("Xml_Element_Model")
+                                      select new Xml_Element_Model
+                                      {
+                                          Xwitdh = data.Element("Xwitdh").Value != null ? String.Empty : data.Element("Xwitdh").Value,
+                                          V1 = data.Element("V1").Value != null ? String.Empty : data.Element("V1").Value,
+                                          V2 = data.Element("V2").Value != null ? String.Empty : data.Element("V2").Value,
+                                          V3 = data.Element("V3").Value != null ? String.Empty : data.Element("V3").Value,
+                                          C1 = data.Element("C1 ").Value != null ? String.Empty : data.Element("C1 ").Value,
+                                          C2 = data.Element("C2 ").Value != null ? String.Empty : data.Element("C2 ").Value,
+                                          C3 = data.Element("C3 ").Value != null ? String.Empty : data.Element("C3 ").Value,
+                                          Id = data.Element("Id ").Value != null ? String.Empty : data.Element("Id ").Value
+                                      }).ToList();
+                    }
+                    else
+                    {
+                        model.Data = Algorithm_Data(model, index);
+                    }
+                    list.Add(model);
+                    index++;
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        static DataTable dt = new DataTable();
+        /// <summary>
+        /// xml转DataTable
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="path">xml路径</param>
+        /// <returns></returns>
+        public static DataTable Xml_To_DataTable(string path)
+        {
+            try
+            {
+                dt = new DataTable();
+                dt.Columns.Add("V1", typeof(string));
+                dt.Columns.Add("V2", typeof(string));
+                dt.Columns.Add("V3", typeof(string));
+                dt.Columns.Add("C1", typeof(string));
+                dt.Columns.Add("C2", typeof(string));
+                dt.Columns.Add("C3", typeof(string));
+                dt.Columns.Add("Id", typeof(string));
+                dt.Columns.Add("Xwitdh", typeof(string));
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                string IsCount = root.Attribute("IsCount").Value;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                int index = 0; //index 为索引值
+                foreach (XElement item in eles)
+                {
+                    if (IsCount == "true")
+                    {
+
+                        IEnumerable<XElement> eChild = item.Element("Data").Descendants("Xml_Element_Model");
+
+                        foreach (XElement xe in eChild)
+                        {
+                            DataRow dr = dt.NewRow();
+
+                            dr["V1"] = xe.Element("V1").Value != null ? String.Empty : xe.Element("V1").Value;
+                            dr["V2"] = xe.Element("V2").Value != null ? String.Empty : xe.Element("V2").Value;
+                            dr["V3"] = xe.Element("V3").Value != null ? String.Empty : xe.Element("V3").Value;
+                            dr["C1"] = xe.Element("C1").Value != null ? String.Empty : xe.Element("C1").Value;
+                            dr["C2"] = xe.Element("C2").Value != null ? String.Empty : xe.Element("C2").Value;
+                            dr["C3"] = xe.Element("C3").Value != null ? String.Empty : xe.Element("C3").Value;
+
+                            dr["Xwitdh"] = xe.Element("Xwitdh").Value != null ? String.Empty : xe.Element("Xwitdh").Value;
+                            dr["Id"] = xe.Element("Id").Value != null ? String.Empty : xe.Element("Id").Value;
+
+                            dt.Rows.Add(dr);
+                        }
+                    }
+                    else
+                    {
+                        Algorithm_To_DataTable(item, index);
+                    }
+                    index++;
+                }
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 计算点位 存储为list
+        /// </summary>
+        private static List<Xml_Element_Model> Algorithm_Data(Xml_Node_Model model, int jinex)
+        {
+            //转成毫秒除数
+            int allnum = 100000;
+            //基本宽度
+            int num = 1;
+            //一组数据总计算次数
+            int count = 80;
+            string data = model.DataSource.Substring(8, model.DataSource.Length - 8);
+            List<Xml_Element_Model> list = new List<Xml_Element_Model>();
+            for (int i = 0; i < count; i++)
+            {
+                Xml_Element_Model newmodel = new Xml_Element_Model();
+                int length = 24 * i;//截取位置
+
+                string Current1 = data.Substring(0 + length, 4);
+                string Current2 = data.Substring(4 + length, 4);
+                string Current3 = data.Substring(8 + length, 4);
+
+                string Vibration1 = data.Substring(12 + length, 4);
+                string Vibration2 = data.Substring(16 + length, 4);
+                string Vibration3 = data.Substring(20 + length, 4);
+                //计算
+                newmodel.C1 = Algorithm.Instance.Current_Algorithm(Current1);
+                newmodel.C2 = Algorithm.Instance.Current_Algorithm(Current2);
+                newmodel.C3 = Algorithm.Instance.Current_Algorithm(Current3);
+
+                newmodel.V1 = Algorithm.Instance.Vibration_Algorithm(Vibration1);
+                newmodel.V2 = Algorithm.Instance.Vibration_Algorithm(Vibration2);
+                newmodel.V3 = Algorithm.Instance.Vibration_Algorithm(Vibration3);
+
+                newmodel.Id = ((jinex * count) + i).ToString();
+                //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                double newXvalue = (double)((jinex * count) + num) / allnum;
+
+                newmodel.Xwitdh = newXvalue.ToString();
+
+                list.Add(newmodel);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 存储为DataTable
+        /// </summary>
+        private static void Algorithm_To_DataTable(XElement model, int jinex)
+        {
+            //转成毫秒除数
+            int allnum = 100000;
+            //基本宽度
+            int num = 1;
+            //一组数据总计算次数
+            int count = 80;
+
+            string DataSource = model.Element("DataSource").Value;
+            string data = DataSource.Substring(8, DataSource.Length - 8);
+
+            for (int i = 0; i < count; i++)
+            {
+                DataRow dr = dt.NewRow();
+
+                int length = 24 * i;//截取位置
+
+                string Current1 = data.Substring(0 + length, 4);
+                string Current2 = data.Substring(4 + length, 4);
+                string Current3 = data.Substring(8 + length, 4);
+
+                string Vibration1 = data.Substring(12 + length, 4);
+                string Vibration2 = data.Substring(16 + length, 4);
+                string Vibration3 = data.Substring(20 + length, 4);
+                //计算
+                dr["C1"] = Algorithm.Instance.Current_Algorithm(Current1);
+                dr["C2"] = Algorithm.Instance.Current_Algorithm(Current2);
+                dr["C3"] = Algorithm.Instance.Current_Algorithm(Current3);
+
+                dr["V1"] = Algorithm.Instance.Vibration_Algorithm(Vibration1);
+                dr["V2"] = Algorithm.Instance.Vibration_Algorithm(Vibration2);
+                dr["V3"] = Algorithm.Instance.Vibration_Algorithm(Vibration3);
+
+                dr["Id"] = ((jinex * count) + i).ToString();
+                //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                double newXvalue = (double)((jinex * count) + num + i) / allnum;
+
+                dr["Xwitdh"] = newXvalue.ToString();
+                dt.Rows.Add(dr);
+            }
+        }
+
+
+        #region 反序列化
+        /// <summary>
+        /// 反序列化
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="xml">XML字符串</param>
+        /// <returns></returns>
+        public static object Deserialize(Type type, string xml)
+        {
+            try
+            {
+                using (StringReader sr = new StringReader(xml))
+                {
+                    XmlSerializer xmldes = new XmlSerializer(type);
+                    return xmldes.Deserialize(sr);
+                }
+            }
+            catch (Exception e)
+            {
+
+                return null;
+            }
+        }
+        /// <summary>
+        /// 反序列化
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static object Deserialize(Type type, Stream stream)
+        {
+            XmlSerializer xmldes = new XmlSerializer(type);
+            return xmldes.Deserialize(stream);
+        }
+        #endregion
+
+        #region 序列化
+        /// <summary>
+        /// 序列化
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <param name="obj">对象</param>
+        /// <returns></returns>
+        public static string Serializer(Type type, object obj)
+        {
+            MemoryStream Stream = new MemoryStream();
+            XmlSerializer xml = new XmlSerializer(type);
+            try
+            {
+                //序列化对象
+                xml.Serialize(Stream, obj);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            Stream.Position = 0;
+            StreamReader sr = new StreamReader(Stream);
+            string str = sr.ReadToEnd();
+
+            sr.Dispose();
+            Stream.Dispose();
+
+            return str;
+        }
+
+        #endregion
         #endregion
     }
 }

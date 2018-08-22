@@ -39,7 +39,7 @@
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem4 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnSaveData = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -78,6 +78,8 @@
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.treeList1 = new DevExpress.XtraTreeList.TreeList();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
@@ -158,7 +160,7 @@
             this.barLargeButtonItem1,
             this.btnAddTest,
             this.btnLond,
-            this.barLargeButtonItem4,
+            this.btnSaveData,
             this.barLargeButtonItem5,
             this.barLargeButtonItem6,
             this.btnPant,
@@ -179,7 +181,7 @@
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.btnAddTest),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnLond),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem4),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveData),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem5),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnPant),
@@ -210,14 +212,14 @@
             this.btnLond.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnLond.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLond_ItemClick);
             // 
-            // barLargeButtonItem4
+            // btnSaveData
             // 
-            this.barLargeButtonItem4.Caption = "保存数据";
-            this.barLargeButtonItem4.Id = 31;
-            this.barLargeButtonItem4.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem4.ImageOptions.Image")));
-            this.barLargeButtonItem4.Name = "barLargeButtonItem4";
-            this.barLargeButtonItem4.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-            this.barLargeButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem4_ItemClick);
+            this.btnSaveData.Caption = "保存数据";
+            this.btnSaveData.Id = 31;
+            this.btnSaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveData.ImageOptions.Image")));
+            this.btnSaveData.Name = "btnSaveData";
+            this.btnSaveData.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            this.btnSaveData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveData_ItemClick);
             // 
             // barLargeButtonItem5
             // 
@@ -226,7 +228,6 @@
             this.barLargeButtonItem5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem5.ImageOptions.Image")));
             this.barLargeButtonItem5.Name = "barLargeButtonItem5";
             this.barLargeButtonItem5.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-            this.barLargeButtonItem5.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem5_ItemClick);
             // 
             // barLargeButtonItem6
             // 
@@ -512,11 +513,31 @@
             this.pclChart.Size = new System.Drawing.Size(655, 520);
             this.pclChart.TabIndex = 30;
             // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Location = new System.Drawing.Point(77, 165);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(65, 42);
+            this.simpleButton1.TabIndex = 35;
+            this.simpleButton1.Text = "放大";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
+            // simpleButton2
+            // 
+            this.simpleButton2.Location = new System.Drawing.Point(77, 234);
+            this.simpleButton2.Name = "simpleButton2";
+            this.simpleButton2.Size = new System.Drawing.Size(65, 42);
+            this.simpleButton2.TabIndex = 36;
+            this.simpleButton2.Text = "缩小";
+            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 633);
+            this.Controls.Add(this.simpleButton2);
+            this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.treeList1);
             this.Controls.Add(this.pclChart);
             this.Controls.Add(this.barDockControlLeft);
@@ -547,7 +568,7 @@
         private DevExpress.XtraBars.Bar bar1;
         private DevExpress.XtraBars.BarLargeButtonItem btnAddTest;
         private DevExpress.XtraBars.BarLargeButtonItem btnLond;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem4;
+        private DevExpress.XtraBars.BarLargeButtonItem btnSaveData;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem5;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem6;
         private DevExpress.XtraBars.BarLargeButtonItem btnPant;
@@ -586,5 +607,7 @@
         private DevExpress.XtraEditors.PanelControl pclChart;
         private DevExpress.XtraBars.BarButtonItem btnETest;
         private DevExpress.XtraBars.BarButtonItem btnSaveImg;
+        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
     }
 }
