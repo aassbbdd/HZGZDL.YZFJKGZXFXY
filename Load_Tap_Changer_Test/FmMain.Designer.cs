@@ -80,6 +80,8 @@
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.lbX = new DevExpress.XtraEditors.LabelControl();
+            this.lbY = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
@@ -531,11 +533,29 @@
             this.simpleButton2.Text = "缩小";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
+            // lbX
+            // 
+            this.lbX.Location = new System.Drawing.Point(83, 324);
+            this.lbX.Name = "lbX";
+            this.lbX.Size = new System.Drawing.Size(81, 18);
+            this.lbX.TabIndex = 41;
+            this.lbX.Text = "labelControl1";
+            // 
+            // lbY
+            // 
+            this.lbY.Location = new System.Drawing.Point(83, 374);
+            this.lbY.Name = "lbY";
+            this.lbY.Size = new System.Drawing.Size(81, 18);
+            this.lbY.TabIndex = 42;
+            this.lbY.Text = "labelControl2";
+            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 633);
+            this.Controls.Add(this.lbY);
+            this.Controls.Add(this.lbX);
             this.Controls.Add(this.simpleButton2);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.treeList1);
@@ -609,5 +629,7 @@
         private DevExpress.XtraBars.BarButtonItem btnSaveImg;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.LabelControl lbY;
+        private DevExpress.XtraEditors.LabelControl lbX;
     }
 }

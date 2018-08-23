@@ -143,14 +143,15 @@ namespace Basic_Controls
             try
             {
                 string filepath = FileHelper.GetOpenFilePath();
-                //List<Xml_Node_Model> list = new List<Xml_Node_Model>();
-                //// List<Xml_Node_Model> listStu = XmlHelper.Xml_To_List(filepath);
-
                 if (!string.IsNullOrEmpty(filepath))
                 {
                     DataTable dt = XmlHelper.Xml_To_DataTable(filepath);
                     Chart_DataTable_Init();
                     Chart_Data_Lond_Bind(dt);
+                    tChart.Refresh();
+                    min = tChart.Axes.Bottom.Minimum;
+                    max = tChart.Axes.Bottom.Maximum;
+                    max = tChart.Axes.Bottom.MaxXValue;
                 }
             }
             catch (Exception ex)
@@ -250,13 +251,26 @@ namespace Basic_Controls
                 SendMessage.udp_Event += new EventHandler<Udp_EventArgs>(Run);
                 //一般协议数据
                 SendMessage.udp_Event_Kind += new EventHandler<Udp_EventArgs>(Run_Kind);
-                this.tChart.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.tChart_MouseWheel);
+                Event_Chart_Bind();
             }
             catch (Exception e)
             {
                 throw;
             }
         }
+
+        /// <summary>
+        /// teechart 图表事件注册
+        /// </summary>
+        private void Event_Chart_Bind()
+        {
+            this.tChart.MouseWheel += new MouseEventHandler(tChart_MouseWheel);
+            this.tChart.MouseMove += new MouseEventHandler(chart_MouseMove);
+            this.tChart.MouseUp += new MouseEventHandler(chart_MouseUp);
+            this.tChart.MouseDown += new MouseEventHandler(chart_MouseDown);
+        }
+
+
         /// <summary>
         /// 事件回调执行方法
         /// </summary>
@@ -380,13 +394,13 @@ namespace Basic_Controls
         #region 控制显示几路波形
         /*震动3路*/
         bool v1 = true;
-        bool v2 = true;
-        bool v3 = true;
+        bool v2 = false;
+        bool v3 = false;
 
         /*电流3路*/
-        bool c1 = true;
-        bool c2 = true;
-        bool c3 = true;
+        bool c1 = false;
+        bool c2 = false;
+        bool c3 = false;
 
         #endregion
 
@@ -443,12 +457,28 @@ namespace Basic_Controls
             tChart.Panel.MarginBottom = 10;
             tChart.Panel.MarginTop = 10;
 
+            tChart.Zoom.Allow = false;
+            ////轴标线
+            //Points pointSeries1 = new Points(tChart.Chart);
+            //CursorTool cursorTool1 = new CursorTool(tChart.Chart);
+            //pointSeries1.FillSampleValues(20);
+            //cursorTool1.Active = true;
+            //cursorTool1.FollowMouse = true;
+            //cursorTool1.Series = pointSeries1;
+            //cursorTool1.Style = CursorToolStyles.Both;
+
+
+
             pclChart.Controls.Add(tChart);// 绑定图表位置 
             Chart_Data_Bind();//初始化绑定 线line
-            //}));
+
+            min = tChart.Axes.Bottom.Minimum;
+            max = tChart.Axes.Bottom.Maximum;
+
         }
 
-
+        double min = 0.0;
+        double max = 0.0;
         /// <summary>
         /// 初始化重新查看数据
         /// </summary>
@@ -474,8 +504,12 @@ namespace Basic_Controls
             tChart.Panel.MarginRight = 10;
             tChart.Panel.MarginBottom = 10;
             tChart.Panel.MarginTop = 10;
+
+            tChart.Zoom.Allow = false;
+
             pclChart.Controls.Clear();
             pclChart.Controls.Add(tChart);// 绑定图表位置 
+            Event_Chart_Bind();
         }
 
         //10秒
@@ -501,7 +535,7 @@ namespace Basic_Controls
 
             double startPosition = tChart.Axes.Left.StartPosition;
             double endPosition = tChart.Axes.Left.EndPosition;
-            tChart.Axes.Custom.Clear();//清除原先画布
+            // tChart.Axes.Custom.Clear();//清除原先画布
             Axis axis;
             for (int i = 0; i < count; i++)
             {
@@ -512,6 +546,8 @@ namespace Basic_Controls
                 axis.EndPosition = endPosition;
                 axis.AutomaticMaximum = false;//最大刻度禁用
                 axis.AutomaticMinimum = false;//最小刻度禁用
+
+
 
                 if (i == 0)
                 {
@@ -688,29 +724,42 @@ namespace Basic_Controls
         {
             try
             {
-                //DataTable dt = dtnew.Copy();
-                //震动1路 vline1
-                tChart.Series.Add(vline1);
+                if (v1)
+                {
+                    //DataTable dt = dtnew.Copy();
+                    //震动1路 vline1
+                    tChart.Series.Add(vline1);
+                }
+                if (v2)
+                {
+                    //震动2路 vline2
+                    //Line vline2 = new Line();
+                    tChart.Series.Add(vline2);
+                }
+                if (v3)
+                {
+                    //震动3路 vline3
+                    //Line vline3 = new Line();
+                    tChart.Series.Add(vline3);
+                }
 
-                //震动2路 vline2
-                //Line vline2 = new Line();
-                tChart.Series.Add(vline2);
-
-                //震动3路 vline3
-                //Line vline3 = new Line();
-                tChart.Series.Add(vline3);
-
-                //电流1路 cline1
-                tChart.Series.Add(cline1);
-
-                //电流2路 cline2
-                //Line cline2 = new Line();
-                tChart.Series.Add(cline2);
-
-                //电流3路 cline3
-                //Line cline3 = new Line();
-                tChart.Series.Add(cline3);
-
+                if (c1)
+                {
+                    //电流1路 cline1
+                    tChart.Series.Add(cline1);
+                }
+                if (c2)
+                {
+                    //电流2路 cline2
+                    //Line cline2 = new Line();
+                    tChart.Series.Add(cline2);
+                }
+                if (c3)
+                {
+                    //电流3路 cline3
+                    //Line cline3 = new Line();
+                    tChart.Series.Add(cline3);
+                }
                 AddCustomAxis(tChart.Series.Count);//绘制画布
             }
             catch (Exception ex)
@@ -1043,8 +1092,6 @@ namespace Basic_Controls
 
         #endregion
 
-
-
         /// <summary>
         /// 放大
         /// </summary>
@@ -1052,8 +1099,6 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-
-            //double XMid = ((CursorTool)tChart1.Tools[0]).XValue;
             double OldXMin = tChart.Axes.Bottom.Minimum;
             double OldXMax = tChart.Axes.Bottom.Maximum;
             double XMid = (OldXMin + OldXMax) / 2;
@@ -1069,7 +1114,6 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void simpleButton2_Click(object sender, EventArgs e)
         {
-            //double XMid = ((CursorTool)tChart1.Tools[0]).XValue;
             double OldXMin = tChart.Axes.Bottom.Minimum;
             double OldXMax = tChart.Axes.Bottom.Maximum;
             double XMid = (OldXMin + OldXMax) / 2;
@@ -1077,33 +1121,119 @@ namespace Basic_Controls
             double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
             tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
         }
+        /// <summary>
+        /// 中键放大缩小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tChart_MouseWheel(object sender, MouseEventArgs e)
         {
             if (tChart != null)
             {
-                var ddd2 = tChart.Tools;
-                var dd = ((CursorTool)tChart.Tools[0]);//有问题
-                var ddd = tChart.Tools[0];
-                
-                double XMid = ((CursorTool)tChart.Tools[0]).XValue;
+                double XMid = tChart.Axes.Bottom.CalcPosPoint(e.X);
+
                 if (e.Delta > 0)
                 {
-                    double OldXMin = tChart.Axes.Bottom.Minimum;
-                    double OldXMax = tChart.Axes.Bottom.Maximum;
-                    double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
-                    double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
-                    tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                    if (aotuzoom < 3)
+                    {
+                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+
+                        double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+                        double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+
+                        tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                        tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+
+                        tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                        aotuzoom++;
+                    }
                 }
                 else
                 {
-                    double OldXMin = tChart.Axes.Bottom.Minimum;
-                    double OldXMax = tChart.Axes.Bottom.Maximum;
-                    double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
-                    double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
-                    tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                    if (aotuzoom > 1)
+                    {
+                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
+                        double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
+                        tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                        tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                        tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                        aotuzoom--;
+                    }else if(aotuzoom==1)
+                    {
+                        tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+                        tChart.Axes.Bottom.SetMinMax(min, max);
+                        aotuzoom = 0;
+                    }
                 }
             }
         }
 
+        private void chart_MouseMove(object sender, MouseEventArgs e)
+        {
+
+            lbX.Text = e.X.ToString();
+            lbY.Text = e.Y.ToString();
+        }
+        /// <summary>
+        /// 鼠标点击时X位置
+        /// </summary>
+        int sx = 0;
+        /// <summary>
+        /// 鼠标点击时Y位置
+        /// </summary>
+        int sy = 0;
+        /// <summary>
+        /// 放大次数 只能放大缩小3次
+        /// </summary>
+        int aotuzoom = 0;
+        /// <summary>
+        /// 点击鼠标事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chart_MouseDown(object sender, MouseEventArgs e)
+        {
+            sx = e.X;
+            sy = e.Y;
+        }
+        /// <summary>
+        /// 松开鼠标事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chart_MouseUp(object sender, MouseEventArgs e)
+        {
+
+            if (tChart != null && tChart.Series.Count > 0)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    // 开始位置大于结束位置    开始位置大于0  是鼠标左键
+                    if ((sx < e.X || sy < e.Y) && sx > 0 && sy > 0)
+                    {
+                        if (aotuzoom < 3)
+                        {
+                            double min = tChart.Axes.Bottom.CalcPosPoint(sx);
+                            double max = tChart.Axes.Bottom.CalcPosPoint(e.X);
+                            tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                            tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                            tChart.Axes.Bottom.SetMinMax(min, max);
+                            aotuzoom++;
+                        }
+                    }
+                    else
+                    {
+                        tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+                        tChart.Axes.Bottom.SetMinMax(min, max);
+                        aotuzoom = 0;
+                    }
+                }
+            }
+
+
+        }
     }
 }
