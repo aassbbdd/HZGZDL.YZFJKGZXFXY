@@ -40,7 +40,6 @@
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSaveData = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -63,7 +62,6 @@
             this.barSubItem3 = new DevExpress.XtraBars.BarSubItem();
             this.barSubItem4 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem21 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -71,20 +69,40 @@
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem6 = new DevExpress.XtraBars.BarButtonItem();
             this.barLinkContainerItem1 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.barButtonItem20 = new DevExpress.XtraBars.BarButtonItem();
             this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.treeList1 = new DevExpress.XtraTreeList.TreeList();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
+            this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
+            this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckC1 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckC2 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
+            this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
+            this.btnClear = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
+            this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // barButtonItem7
@@ -184,7 +202,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnAddTest),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnLond),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveData),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem5),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnPant),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest),
@@ -217,19 +234,12 @@
             // btnSaveData
             // 
             this.btnSaveData.Caption = "保存数据";
+            this.btnSaveData.Enabled = false;
             this.btnSaveData.Id = 31;
             this.btnSaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveData.ImageOptions.Image")));
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnSaveData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveData_ItemClick);
-            // 
-            // barLargeButtonItem5
-            // 
-            this.barLargeButtonItem5.Caption = "保存包络线";
-            this.barLargeButtonItem5.Id = 32;
-            this.barLargeButtonItem5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem5.ImageOptions.Image")));
-            this.barLargeButtonItem5.Name = "barLargeButtonItem5";
-            this.barLargeButtonItem5.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             // 
             // barLargeButtonItem6
             // 
@@ -285,11 +295,7 @@
             this.bar2.FloatLocation = new System.Drawing.Point(433, 255);
             this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.barSubItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem4),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem5),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem7),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem8),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem9),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem10)});
             this.bar2.Offset = 1;
             this.bar2.OptionsBar.AllowQuickCustomization = false;
@@ -403,12 +409,6 @@
             this.barButtonItem21.Name = "barButtonItem21";
             this.barButtonItem21.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem21_ItemClick);
             // 
-            // barButtonItem4
-            // 
-            this.barButtonItem4.Caption = "测试计划构成";
-            this.barButtonItem4.Id = 3;
-            this.barButtonItem4.Name = "barButtonItem4";
-            // 
             // barButtonItem5
             // 
             this.barButtonItem5.Caption = "报告";
@@ -464,6 +464,12 @@
             this.barButtonItem3.Id = 2;
             this.barButtonItem3.Name = "barButtonItem3";
             // 
+            // barButtonItem4
+            // 
+            this.barButtonItem4.Caption = "测试计划构成";
+            this.barButtonItem4.Id = 3;
+            this.barButtonItem4.Name = "barButtonItem4";
+            // 
             // barButtonItem6
             // 
             this.barButtonItem6.Caption = "barButtonItem6";
@@ -496,13 +502,21 @@
             this.barLargeButtonItem1.LargeGlyphHot = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem1.LargeGlyphHot")));
             this.barLargeButtonItem1.Name = "barLargeButtonItem1";
             // 
+            // barLargeButtonItem5
+            // 
+            this.barLargeButtonItem5.Caption = "保存包络线";
+            this.barLargeButtonItem5.Id = 32;
+            this.barLargeButtonItem5.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem5.ImageOptions.Image")));
+            this.barLargeButtonItem5.Name = "barLargeButtonItem5";
+            this.barLargeButtonItem5.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
+            // 
             // treeList1
             // 
             this.treeList1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeList1.Location = new System.Drawing.Point(0, 114);
             this.treeList1.Name = "treeList1";
-            this.treeList1.Size = new System.Drawing.Size(269, 520);
+            this.treeList1.Size = new System.Drawing.Size(226, 520);
             this.treeList1.TabIndex = 25;
             // 
             // pclChart
@@ -510,32 +524,33 @@
             this.pclChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pclChart.Location = new System.Drawing.Point(275, 114);
+            this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pclChart.Location = new System.Drawing.Point(225, 114);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(655, 520);
+            this.pclChart.Size = new System.Drawing.Size(520, 517);
             this.pclChart.TabIndex = 30;
             // 
-            // simpleButton1
+            // btnEnlarge
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(77, 165);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(65, 42);
-            this.simpleButton1.TabIndex = 35;
-            this.simpleButton1.Text = "放大";
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.btnEnlarge.Location = new System.Drawing.Point(8, 165);
+            this.btnEnlarge.Name = "btnEnlarge";
+            this.btnEnlarge.Size = new System.Drawing.Size(54, 28);
+            this.btnEnlarge.TabIndex = 35;
+            this.btnEnlarge.Text = "放大";
+            this.btnEnlarge.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
-            // simpleButton2
+            // btnNarrow
             // 
-            this.simpleButton2.Location = new System.Drawing.Point(77, 234);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(65, 42);
-            this.simpleButton2.TabIndex = 36;
-            this.simpleButton2.Text = "缩小";
-            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+            this.btnNarrow.Location = new System.Drawing.Point(68, 165);
+            this.btnNarrow.Name = "btnNarrow";
+            this.btnNarrow.Size = new System.Drawing.Size(54, 28);
+            this.btnNarrow.TabIndex = 36;
+            this.btnNarrow.Text = "缩小";
+            this.btnNarrow.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // lbX
             // 
-            this.lbX.Location = new System.Drawing.Point(83, 324);
+            this.lbX.Location = new System.Drawing.Point(12, 489);
             this.lbX.Name = "lbX";
             this.lbX.Size = new System.Drawing.Size(81, 18);
             this.lbX.TabIndex = 41;
@@ -543,23 +558,124 @@
             // 
             // lbY
             // 
-            this.lbY.Location = new System.Drawing.Point(83, 374);
+            this.lbY.Location = new System.Drawing.Point(94, 489);
             this.lbY.Name = "lbY";
             this.lbY.Size = new System.Drawing.Size(81, 18);
             this.lbY.TabIndex = 42;
             this.lbY.Text = "labelControl2";
+            // 
+            // panelControl1
+            // 
+            this.panelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl1.Controls.Add(this.btnClear);
+            this.panelControl1.Controls.Add(this.btnReNew);
+            this.panelControl1.Controls.Add(this.btnReLond);
+            this.panelControl1.Controls.Add(this.ckC3);
+            this.panelControl1.Controls.Add(this.ckC2);
+            this.panelControl1.Controls.Add(this.lbY);
+            this.panelControl1.Controls.Add(this.ckC1);
+            this.panelControl1.Controls.Add(this.lbX);
+            this.panelControl1.Controls.Add(this.ckV3);
+            this.panelControl1.Controls.Add(this.btnNarrow);
+            this.panelControl1.Controls.Add(this.ckV2);
+            this.panelControl1.Controls.Add(this.btnEnlarge);
+            this.panelControl1.Controls.Add(this.ckV1);
+            this.panelControl1.Location = new System.Drawing.Point(743, 114);
+            this.panelControl1.Name = "panelControl1";
+            this.panelControl1.Size = new System.Drawing.Size(187, 520);
+            this.panelControl1.TabIndex = 52;
+            // 
+            // ckV1
+            // 
+            this.ckV1.EditValue = true;
+            this.ckV1.Location = new System.Drawing.Point(25, 17);
+            this.ckV1.MenuManager = this.barManager1;
+            this.ckV1.Name = "ckV1";
+            this.ckV1.Properties.Caption = "震动1";
+            this.ckV1.Size = new System.Drawing.Size(75, 22);
+            this.ckV1.TabIndex = 0;
+            // 
+            // ckV2
+            // 
+            this.ckV2.Location = new System.Drawing.Point(25, 45);
+            this.ckV2.MenuManager = this.barManager1;
+            this.ckV2.Name = "ckV2";
+            this.ckV2.Properties.Caption = "震动2";
+            this.ckV2.Size = new System.Drawing.Size(75, 22);
+            this.ckV2.TabIndex = 1;
+            // 
+            // ckV3
+            // 
+            this.ckV3.Location = new System.Drawing.Point(25, 73);
+            this.ckV3.MenuManager = this.barManager1;
+            this.ckV3.Name = "ckV3";
+            this.ckV3.Properties.Caption = "震动3";
+            this.ckV3.Size = new System.Drawing.Size(75, 22);
+            this.ckV3.TabIndex = 2;
+            // 
+            // ckC1
+            // 
+            this.ckC1.Location = new System.Drawing.Point(90, 17);
+            this.ckC1.MenuManager = this.barManager1;
+            this.ckC1.Name = "ckC1";
+            this.ckC1.Properties.Caption = "电流1";
+            this.ckC1.Size = new System.Drawing.Size(75, 22);
+            this.ckC1.TabIndex = 3;
+            // 
+            // ckC2
+            // 
+            this.ckC2.Location = new System.Drawing.Point(90, 45);
+            this.ckC2.MenuManager = this.barManager1;
+            this.ckC2.Name = "ckC2";
+            this.ckC2.Properties.Caption = "电流2";
+            this.ckC2.Size = new System.Drawing.Size(75, 22);
+            this.ckC2.TabIndex = 4;
+            // 
+            // ckC3
+            // 
+            this.ckC3.Location = new System.Drawing.Point(90, 73);
+            this.ckC3.MenuManager = this.barManager1;
+            this.ckC3.Name = "ckC3";
+            this.ckC3.Properties.Caption = "电流3";
+            this.ckC3.Size = new System.Drawing.Size(75, 22);
+            this.ckC3.TabIndex = 5;
+            // 
+            // btnReLond
+            // 
+            this.btnReLond.Location = new System.Drawing.Point(25, 101);
+            this.btnReLond.Name = "btnReLond";
+            this.btnReLond.Size = new System.Drawing.Size(119, 42);
+            this.btnReLond.TabIndex = 43;
+            this.btnReLond.Text = "重新加载波形图";
+            this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
+            // 
+            // btnReNew
+            // 
+            this.btnReNew.Location = new System.Drawing.Point(8, 199);
+            this.btnReNew.Name = "btnReNew";
+            this.btnReNew.Size = new System.Drawing.Size(54, 28);
+            this.btnReNew.TabIndex = 44;
+            this.btnReNew.Text = "还原";
+            this.btnReNew.Click += new System.EventHandler(this.btnReNew_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(68, 199);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(54, 28);
+            this.btnClear.TabIndex = 45;
+            this.btnClear.Text = "清空";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(930, 633);
-            this.Controls.Add(this.lbY);
-            this.Controls.Add(this.lbX);
-            this.Controls.Add(this.simpleButton2);
-            this.Controls.Add(this.simpleButton1);
-            this.Controls.Add(this.treeList1);
+            this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);
+            this.Controls.Add(this.treeList1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -567,12 +683,21 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "界面示例";
+            this.Text = "有载调压开关故障诊断系统(v1.0)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
+            this.panelControl1.ResumeLayout(false);
+            this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,9 +752,19 @@
         private DevExpress.XtraEditors.PanelControl pclChart;
         private DevExpress.XtraBars.BarButtonItem btnETest;
         private DevExpress.XtraBars.BarButtonItem btnSaveImg;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton btnNarrow;
+        private DevExpress.XtraEditors.SimpleButton btnEnlarge;
         private DevExpress.XtraEditors.LabelControl lbY;
         private DevExpress.XtraEditors.LabelControl lbX;
+        private DevExpress.XtraEditors.PanelControl panelControl1;
+        private DevExpress.XtraEditors.CheckEdit ckC3;
+        private DevExpress.XtraEditors.CheckEdit ckC2;
+        private DevExpress.XtraEditors.CheckEdit ckC1;
+        private DevExpress.XtraEditors.CheckEdit ckV3;
+        private DevExpress.XtraEditors.CheckEdit ckV2;
+        private DevExpress.XtraEditors.CheckEdit ckV1;
+        private DevExpress.XtraEditors.SimpleButton btnReLond;
+        private DevExpress.XtraEditors.SimpleButton btnReNew;
+        private DevExpress.XtraEditors.SimpleButton btnClear;
     }
 }

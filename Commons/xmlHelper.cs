@@ -63,13 +63,41 @@ namespace Commons
                     xele.SetAttributeValue("IsCount", "false");//默认数据没转换好
                     xele.Save(xmlpath);
                 }
+
             }
             catch (Exception exception)
             {
                 //LogHelper.LogError("Error! ", exception);
             }
         }
-       
+
+        /// <summary>
+        /// 删除XML文档
+        /// </summary>
+        /// <returns></returns>
+        public static void DeleteXmlDocument(string name)
+        {
+            try
+            {
+                //文件夹路径
+                xmlpath = AppDomain.CurrentDomain.BaseDirectory + Xml_File + "\\";
+                if (!FileHelper.IsFileExist(xmlpath))//验证文件是否存在
+                {
+                    FileHelper.CreateDirectoy(xmlpath);//创建文件夹
+                }
+                xmlpath = xmlpath + "\\" + name + ".xml"; //拼接文件路径
+                if (FileHelper.IsFileExist(xmlpath))//验证文件是否存在
+                {
+                    FileHelper.DeleteFile(xmlpath);
+                }
+
+            }
+            catch (Exception exception)
+            {
+                //LogHelper.LogError("Error! ", exception);
+            }
+        }
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -350,7 +378,7 @@ namespace Commons
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
         /// <returns></returns>
-        public static DataTable Xml_To_DataTable(string path)
+        public static DataTable Xml_To_DataTable(string path, bool[] cks)
         {
             try
             {
@@ -504,6 +532,162 @@ namespace Commons
 
                 dr["Xwitdh"] = newXvalue.ToString();
                 dt.Rows.Add(dr);
+            }
+        }
+
+        /// <summary>        
+        /// 存储为数组 arrey
+        /// </summary>
+        private static void Algorithm_To_Arrey(XElement model, int jinex
+            )
+        {
+            //转成毫秒除数
+            int allnum = 100000;
+            //基本宽度
+            int num = 1;
+            //一组数据总计算次数
+            int count = 80;
+
+            string DataSource = model.Element("DataSource").Value;
+            string data = DataSource.Substring(8, DataSource.Length - 8);
+
+            for (int i = 0; i < count; i++)
+            {
+
+                int length = 24 * i;//截取位置
+
+                string Current1 = data.Substring(0 + length, 4);
+                string Current2 = data.Substring(4 + length, 4);
+                string Current3 = data.Substring(8 + length, 4);
+
+                string Vibration1 = data.Substring(12 + length, 4);
+                string Vibration2 = data.Substring(16 + length, 4);
+                string Vibration3 = data.Substring(20 + length, 4);
+                int id = (jinex * count) + i;
+
+                //计算
+                newcy1[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current1));
+                newcy2[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current2));
+                newcy3[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current3));
+
+                newvy1[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration1));
+                newvy2[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration2));
+                newvy3[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration3));
+
+
+                //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                double newXvalue = (double)((jinex * count) + num + i) / allnum;
+
+
+                newvx1[id] = newvx2[id] = newvx3[id]
+              = newcx1[id] = newcx2[id] = newcx3[id]
+              = newXvalue;
+
+            }
+        }
+
+
+
+
+        static double[] newvx1; static double[] newvy1;
+        static double[] newvx2; static double[] newvy2;
+        static double[] newvx3; static double[] newvy3;
+        static double[] newcx1; static double[] newcy1;
+        static double[] newcx2; static double[] newcy2;
+        static double[] newcx3; static double[] newcy3;
+
+
+        /// <summary>
+        /// xml转DataTable
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="path">xml路径</param>
+        /// <returns></returns>
+        public static void Xml_To_Array(string path, bool[] cks,
+            out double[] vx1, out double[] vy1,
+            out double[] vx2, out double[] vy2,
+            out double[] vx3, out double[] vy3,
+            out double[] cx1, out double[] cy1,
+            out double[] cx2, out double[] cy2,
+            out double[] cx3, out double[] cy3
+            )
+        {
+            try
+            {
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                string IsCount = root.Attribute("IsCount").Value;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                int count = eles.Count() * 80;
+                newvx1 = new double[count]; newvy1 = new double[count];
+                newvx2 = new double[count]; newvy2 = new double[count];
+                newvx3 = new double[count]; newvy3 = new double[count];
+
+                newcx1 = new double[count]; newcy1 = new double[count];
+                newcx2 = new double[count]; newcy2 = new double[count];
+                newcx3 = new double[count]; newcy3 = new double[count];
+
+
+                vx1 = new double[count]; vy1 = new double[count];
+                vx2 = new double[count]; vy2 = new double[count];
+                vx3 = new double[count]; vy3 = new double[count];
+
+                cx1 = new double[count]; cy1 = new double[count];
+                cx2 = new double[count]; cy2 = new double[count];
+                cx3 = new double[count]; cy3 = new double[count];
+
+
+                int index = 0; //index 为索引值
+                foreach (XElement item in eles)
+                {
+                    if (IsCount == "true")
+                    {
+
+                        IEnumerable<XElement> eChild = item.Element("Data").Descendants("Xml_Element_Model");
+                        int i = 0;
+                        foreach (XElement xe in eChild)
+                        {
+                            newvx1[i] = newvx2[i] = newvx3[i]
+                          = newcx1[i] = newcx2[i] = newcx3[i]
+                          = item.Element("Xwitdh").Value != null ? 0.000 : double.Parse(xe.Element("Xwitdh").Value);
+
+                            newvy1[i] = xe.Element("V1").Value != null ? 0 : double.Parse(xe.Element("V1").Value);
+                            newvy3[i] = xe.Element("V2").Value != null ? 0 : double.Parse(xe.Element("V2").Value);
+                            newvy3[i] = xe.Element("V3").Value != null ? 0 : double.Parse(xe.Element("V3").Value);
+                            newcy1[i] = xe.Element("C1").Value != null ? 0 : double.Parse(xe.Element("C1").Value);
+                            newcy3[i] = xe.Element("C2").Value != null ? 0 : double.Parse(xe.Element("C2").Value);
+                            newcy3[i] = xe.Element("C3").Value != null ? 0 : double.Parse(xe.Element("C3").Value);
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        Algorithm_To_Arrey(item, index);
+                    }
+                    index++;
+                }
+
+                vx1 = newvx1; vy1 = newvy1;
+                vx2 = newvx2; vy2 = newvy2;
+                vx3 = newvx3; vy3 = newvy3;
+
+                cx1 = newcx1; cy1 = newcy1;
+                cx2 = newcx2; cy2 = newcy2;
+                cx3 = newcx3; cy3 = newcy3;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
