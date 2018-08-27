@@ -26,6 +26,7 @@ using Commons.XmlModel;
 using System.Xml.Linq;
 using System.Xml;
 using Steema.TeeChart.Tools;
+using DbHelper;
 
 namespace Basic_Controls
 {
@@ -42,7 +43,7 @@ namespace Basic_Controls
             Bind_IsDC();
             Event_Bind();//绑定注册事件
             Chart_Init();//初始化图表
-
+            CreateDb();//生成数据库
         }
         #region 页面初始化参数
 
@@ -127,7 +128,6 @@ namespace Basic_Controls
                 string path = pSaveFileDialog.FileName;
             }
         }
-
 
         /// <summary>
         /// 载入数据
@@ -225,9 +225,14 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
+            // sendUdp(agreement._3_CMD_STOPTESTER);
+            End_Chart();
+
             XmlHelper.DeleteXmlDocument("测试数据1");
             XmlHelper.Init("测试数据1");
             xmlpath = XmlHelper.xmlpath;
+            Thread.Sleep(10);
 
             sendUdp(agreement._2_CMD_STARTTESTER);
             Start_Chart();
@@ -272,9 +277,6 @@ namespace Basic_Controls
 
             if (tChart != null && linlength > 0)
             {
-
-
-
                 vx1 = new double[linlength];
                 vy1 = new double[linlength];
 
@@ -376,8 +378,6 @@ namespace Basic_Controls
         {
             try
             {
-                string data = e.Msg;
-                string head = e.Msg;
                 Invoke(new ThreadStart(delegate ()
                 {
                     MessageBox.Show("设备连接成功");
@@ -426,7 +426,7 @@ namespace Basic_Controls
             tChart.MouseMove += new MouseEventHandler(chart_MouseMove);
             tChart.MouseUp += new MouseEventHandler(chart_MouseUp);
             tChart.MouseDown += new MouseEventHandler(chart_MouseDown);
-          //  tChart.Zoomed += new EventHandler(chart_Zoomed);//自带 放大缩小 事件
+            //  tChart.Zoomed += new EventHandler(chart_Zoomed);//自带 放大缩小 事件
         }
 
         /// <summary>
@@ -542,7 +542,6 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseMove(object sender, MouseEventArgs e)
         {
-
             lbX.Text = e.X.ToString();
             lbY.Text = e.Y.ToString();
         }
@@ -608,6 +607,7 @@ namespace Basic_Controls
         }
 
         #endregion
+
         #region 图表初始化参数配置
 
         /// <summary>
@@ -729,6 +729,15 @@ namespace Basic_Controls
             cline2 = new Line();//电流2
             cline3 = new Line();//电流3
 
+            /// <summary>
+            /// 颜色开始区域
+            /// </summary>
+            colorFrom = 0.0;
+            /// <summary>
+            /// 颜色结束区域
+            /// </summary>
+            colorTo = 10.0;
+
             tChart.Dock = DockStyle.Fill;
             tChart.Aspect.View3D = false;
             tChart.Legend.Visible = false;//显示/隐藏线的注释 
@@ -756,17 +765,10 @@ namespace Basic_Controls
             //cursorTool1.Series = pointSeries1;
             //cursorTool1.Style = CursorToolStyles.Both;
 
-
-
-
-
             Chart_Data_Bind();//初始化绑定 线line
-
             pclChart.Controls.Add(tChart);// 绑定图表位置 
-
             min = tChart.Axes.Bottom.Minimum;
             max = tChart.Axes.Bottom.Maximum;
-
         }
 
         double min = 0.0;
@@ -896,6 +898,13 @@ namespace Basic_Controls
                     //DataTable dt = dtnew.Copy();
                     //震动1路 vline1
                     vline1.Title = string.Format("震动曲线{0}", 1);
+                    //ColorList cl = new ColorList();
+
+
+
+                    //cl.Add("255,127,80");
+
+                    //vline1.Colors = cl;
                     tChart.Series.Add(vline1);
                 }
                 if (v2)
@@ -943,6 +952,7 @@ namespace Basic_Controls
                 throw ex;
             }
         }
+
         /// <summary>
         /// 重新加载图表
         /// </summary>
@@ -1037,8 +1047,6 @@ namespace Basic_Controls
         double[] vx3;
         double[] vy3;
 
-
-
         double[] cx1;
         double[] cy1;
 
@@ -1093,6 +1101,101 @@ namespace Basic_Controls
 
         #region 队列数据处理
 
+        int porintadd = 0;
+
+
+
+        private void Job_Queue3()
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (list_Event.Count > 0)
+                {
+                    list_Event.TryDequeue(out e);//取出队里数据并删除
+                                                 //截取返回数据
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+
+                        int Porints = 80 / LessPoint;
+                        double x = new double();
+                        double y = new double();
+                        double newXvalue = (double)(1 * num * LessPoint) / allnum;
+                        for (int i = 0; i < Porints; i++)
+                        {
+
+                            Vibration_Current vmodel = new Vibration_Current();
+                            Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * i;//截取位置
+
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+
+                            #region 计算保存新数据
+
+                            x = vline1.XValues[vline1.XValues.Count] + newXvalue;//
+                            y = Convert.ToDouble(vmodel1.Vibration1);
+
+                            vline1.Add(x, y);
+
+                            //vx2[linlength - 1] = width;
+                            //vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
+
+                            //vx3[linlength - 1] = width;
+                            //vy3[linlength - 1] = Convert.ToDouble(vmodel1.Vibration3);
+
+                            //cx1[linlength - 1] = width;
+                            //cy1[linlength - 1] = Convert.ToDouble(vmodel1.Current1);
+
+                            //cx2[linlength - 1] = width;
+                            //cy2[linlength - 1] = Convert.ToDouble(vmodel1.Current2);
+
+                            //cx3[linlength - 1] = width;
+                            //cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
+
+                            #endregion
+                            porintadd++;
+                        }
+
+                        #region 数据大于10秒时执行   
+                        //明天测试
+                        if (porintadd >= linlength + 1250 || istrue)
+                        {
+                            porintadd = 0;//归零
+                            istrue = true;//开启进入标识
+                            double swidth = porintadd * newXvalue;//初始位置
+                            double width = swidth;//结束时位置
+                            for (int i = 0; i < 100; i++)
+                            {
+                                width = width + newXvalue;
+                                vline1.Add(width, 0.0);//循环次数的距离
+                            }
+                            ValueList vlist = vline1.ValuesLists[0];
+
+                            vline1.Colors.Clear();
+                            vline1.ColorRange(vlist, (porintadd * newXvalue), width, Color.Red);
+                        }
+                        #endregion
+                    }
+                }
+            }
+        }
+        double sporit;
+        bool istrue = false;
         private void Job_Queue()
         {
             while (isAbort)
@@ -1107,8 +1210,47 @@ namespace Basic_Controls
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
                         //string head = e.Msg.Substring(4, 4);
 
-                        int Porints = 80 / LessPoint;
 
+
+                        #region 数据大于10秒时执行
+
+
+                        //数组里面添加
+                        if (porintadd >= linlength + 1250)//
+                        {
+                            for (int i = 0; i < 100; i++)
+                            {
+                                #region 对数组操作
+                                Porint_Bind(i);
+                                #endregion
+
+                                double width = 10.00;
+                                colorTo = 10.00;//从底部插入颜色区域
+
+                                vx1[linlength - 1] = width;
+                                vy1[linlength - 1] = 0.0;
+
+                                vx2[linlength - 1] = width;
+                                vy2[linlength - 1] = 0.0;
+
+                                vx3[linlength - 1] = width;
+                                vy3[linlength - 1] = 0.0;
+
+                                cx1[linlength - 1] = width;
+                                cy1[linlength - 1] = 0.0;
+
+                                cx2[linlength - 1] = width;
+                                cy2[linlength - 1] = 0.0;
+
+                                cx3[linlength - 1] = width;
+                                cy3[linlength - 1] = 0.0;
+
+                            }
+                            porintadd = 0;//初始化标识
+
+                        }
+                        #endregion
+                        int Porints = 80 / LessPoint;
                         for (int i = 0; i < Porints; i++)
                         {
                             Vibration_Current vmodel = new Vibration_Current();
@@ -1133,6 +1275,11 @@ namespace Basic_Controls
 
                             #region 计算保存新数据
 
+
+                            #region 对数组操作
+                            Porint_Bind();
+                            #endregion
+
                             double width = 10.00;
 
                             vx1[linlength - 1] = width;
@@ -1153,53 +1300,164 @@ namespace Basic_Controls
                             cx3[linlength - 1] = width;
                             cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
                             #endregion
+                            porintadd++;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Job_Queue1()
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (list_Event.Count > 0)
+                {
+                    list_Event.TryDequeue(out e);//取出队里数据并删除
+                                                 //截取返回数据
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                        //string head = e.Msg.Substring(4, 4);
+
+
+
+                        int Porints = 80 / LessPoint;
+                        for (int i = 0; i < Porints; i++)
+                        {
+                            Vibration_Current vmodel = new Vibration_Current();
+                            Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * i;//截取位置
+
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+
+                            #region 计算保存新数据
+
 
                             #region 对数组操作
+                            Porint_Bind();
+                            #endregion
 
-                            for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
-                            {
-                                //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
-                                double newXvalue = (double)(j * num * LessPoint) / allnum;
-                                if (v1)
-                                {
-                                    vx1[j] = newXvalue;
-                                    vy1[j] = vy1[j + 1];
-                                }
-                                if (v2)
-                                {
-                                    vx2[j] = newXvalue;
-                                    vy2[j] = vy2[j + 1];
-                                }
+                            double width = 10.00;
 
-                                if (v3)
-                                {
-                                    vx3[j] = newXvalue;
-                                    vy3[j] = vy3[j + 1];
-                                }
+                            vx1[linlength - 1] = width;
+                            vy1[linlength - 1] = Convert.ToDouble(vmodel1.Vibration1);
 
-                                if (c1)
-                                {
-                                    cx1[j] = newXvalue;
-                                    cy1[j] = cy1[j + 1];
-                                }
+                            vx2[linlength - 1] = width;
+                            vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
 
-                                if (c2)
-                                {
-                                    cx2[j] = newXvalue;
-                                    cy2[j] = cy2[j + 1];
-                                }
+                            vx3[linlength - 1] = width;
+                            vy3[linlength - 1] = Convert.ToDouble(vmodel1.Vibration3);
 
-                                if (c3)
-                                {
-                                    cx3[j] = newXvalue;
-                                    cy3[j] = cy3[j + 1];
-                                }
-                            }
+                            cx1[linlength - 1] = width;
+                            cy1[linlength - 1] = Convert.ToDouble(vmodel1.Current1);
+
+                            cx2[linlength - 1] = width;
+                            cy2[linlength - 1] = Convert.ToDouble(vmodel1.Current2);
+
+                            cx3[linlength - 1] = width;
+                            cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
                             #endregion
                         }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 绑定数据点
+        /// </summary>
+        private void Porint_Bind(int nonenum = -1)
+        {
+            double newPvalue = (double)(1 * num * LessPoint) / allnum;
+            if (colorTo > 0)//判断颜色最大区域大于0才执行
+            {
+                if (colorFrom == 0 && nonenum >= 0)//区分刚开始输入和 数据输入完毕进入结束输入
+                {
+                    colorFrom = colorTo;
+                }
+                else if (nonenum >= 0)//还在插入空白数据 只修改开始区域
+                {
+                    colorFrom = colorFrom - newPvalue;//计算开始区域
+                }
+                else//已经插入完毕开始往前移动
+                {
+                    if (colorFrom > 0)
+                    {
+                        colorFrom = colorFrom - newPvalue;//计算开始区域
+                    }
+                    else
+                    {
+                        colorFrom = 0;
+                    }
+                    if (colorTo > 0)
+                    {
+                        colorTo = colorTo - newPvalue;//计算结束区域
+                    }
+                    else
+                    {
+                        colorTo = 0.00;
+                    }
+                }
+            }
+
+            for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
+            {
+                //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
+                double newXvalue = (double)(j * num * LessPoint) / allnum;
+
+
+                if (v1)
+                {
+                    vx1[j] = newXvalue;
+                    vy1[j] = vy1[j + 1];
+                }
+                if (v2)
+                {
+                    vx2[j] = newXvalue;
+                    vy2[j] = vy2[j + 1];
+                }
+
+                if (v3)
+                {
+                    vx3[j] = newXvalue;
+                    vy3[j] = vy3[j + 1];
+                }
+
+                if (c1)
+                {
+                    cx1[j] = newXvalue;
+                    cy1[j] = cy1[j + 1];
+                }
+
+                if (c2)
+                {
+                    cx2[j] = newXvalue;
+                    cy2[j] = cy2[j + 1];
+                }
+
+                if (c3)
+                {
+                    cx3[j] = newXvalue;
+                    cy3[j] = cy3[j + 1];
+                }
+            }
+
         }
 
         #endregion
@@ -1222,13 +1480,21 @@ namespace Basic_Controls
                         Line_Bind();
                     }));
                     //死循环
-                    Thread.Sleep(150);
+                    Thread.Sleep(15);//多图标使用150单图表使用 150/6 15
                 }
                 catch (Exception ex)
                 {
                 }
             }
         }
+        /// <summary>
+        /// 颜色开始区域
+        /// </summary>
+        double colorFrom = 2.0;
+        /// <summary>
+        /// 颜色结束区域
+        /// </summary>
+        double colorTo = 3.0;
 
         /// <summary>
         /// 绑定 line线
@@ -1238,60 +1504,130 @@ namespace Basic_Controls
             if (v1)
             {
                 vline1.Add(vx1, vy1);
+                //控制颜色
+                ValueList vlist = vline1.ValuesLists[0];
+                vline1.Colors.Clear();
+                vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
             }
             if (v2)
             {
                 vline2.Add(vx2, vy2);
+                //控制颜色
+                ValueList vlist = vline2.ValuesLists[0];
+                vline2.Colors.Clear();
+                vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+
             }
             if (v3)
             {
                 vline3.Add(vx3, vy3);
+                //控制颜色
+                ValueList vlist = vline3.ValuesLists[0];
+                vline3.Colors.Clear();
+                vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+
             }
             if (c1)
             {
                 cline1.Add(cx1, cy1);
+                //控制颜色
+                ValueList vlist = cline1.ValuesLists[0];
+                cline1.Colors.Clear();
+                cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
             }
             if (c2)
             {
                 cline2.Add(cx2, cy2);
+                //控制颜色
+                ValueList vlist = cline2.ValuesLists[0];
+                cline2.Colors.Clear();
+                cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
             }
             if (c3)
             {
                 cline3.Add(cx3, cy3);
+                //控制颜色
+                ValueList vlist = cline3.ValuesLists[0];
+                cline3.Colors.Clear();
+
+                cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
             }
         }
 
         #endregion
 
-        #region SQL 数据库操作
-        public void Test_Data_insert()
+        #region SQL 数据库操作作废
+        //public void Test_Data_insert()
+        //{
+        //    try
+        //    {
+        //        while (true)
+        //        {
+        //            if (Db_Source.Count > 0)
+        //            {
+
+        //                Udp_EventArgs e = new Udp_EventArgs();
+
+        //                Db_Source.TryDequeue(out e);//取出队里数据并删除
+
+        //                DataModel model = new DataModel();
+
+        //                model.head = e.Msg.Substring(4, 4); ;
+        //                model.text = e.Msg;
+        //                model.id = Convert.ToInt32(model.head, 16);
+        //                // Db_Action.Instance.Test_Data_insert(model);
+        //                ListToText.Instance.WriteListToTextFile1(e.Msg + "|");
+
+        //                Thread.Sleep(1);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        /// <summary>
+        /// 生成数据库
+        /// </summary>
+        private void CreateDb()
         {
             try
             {
-                while (true)
+                bool IsCreate = SQLiteHelper.NewDbFile();//生成SQL文件
+                DataSet ds = Db_Select.Instance.Get_All_Table();
+                if (IsCreate || ds.Tables == null || ds.Tables[0].Rows.Count <= 0)
                 {
-                    if (Db_Source.Count > 0)
+                    string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
+                    SQLiteHelper.NewTable(DbStr);
+                    DbStr = Create_Table.Instance.Create_TEST_DATA();
+                    SQLiteHelper.NewTable(DbStr);
+                }
+                else
+                {
+                    DataTable dt = ds.Tables[0];
+
+                    DataRow[] newdt = dt.Select(" name='TEST_COFIGE'");
+
+                    if (newdt.Length == 0)
                     {
-
-                        Udp_EventArgs e = new Udp_EventArgs();
-
-                        Db_Source.TryDequeue(out e);//取出队里数据并删除
-
-                        DataModel model = new DataModel();
-
-                        model.head = e.Msg.Substring(4, 4); ;
-                        model.text = e.Msg;
-                        model.id = Convert.ToInt32(model.head, 16);
-                        // Db_Action.Instance.Test_Data_insert(model);
-                        ListToText.Instance.WriteListToTextFile1(e.Msg + "|");
-
-                        Thread.Sleep(1);
+                        string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
+                        SQLiteHelper.NewTable(DbStr);
                     }
+                    newdt = dt.Select(" name='TEST_DATA'");
+
+                    if (newdt.Length == 0)
+                    {
+                        string DbStr = Create_Table.Instance.Create_TEST_DATA();
+                        SQLiteHelper.NewTable(DbStr);
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                MessageBox.Show(ex.ToString());
             }
         }
 

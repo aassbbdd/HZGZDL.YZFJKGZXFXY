@@ -69,5 +69,32 @@ namespace DbHelper.Sqlite_Db
                 throw ex;
             }
         }
+
+
+        #region 测试计划
+
+        /// <summary>
+        /// 获取所有测试计划
+        /// </summary>
+        /// <returns></returns>
+        public DataTable All_Test_Cofig_Get()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("select * from TEST_COFIGE");
+
+                dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
     }
 }

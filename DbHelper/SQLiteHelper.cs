@@ -91,8 +91,13 @@ namespace DbHelper
                 if (!FileHelper.IsFileExist(path))//验证文件是否存在
                 {
                     SQLiteConnection.CreateFile(path);
+
+                    return true;
                 }
-                return true;
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {

@@ -73,7 +73,7 @@ namespace DbHelper.Sqlite_Db
                                    DJUST                varchar(20)                    null,
                                    DESCRIBE             varchar(2000)                  null,
                                    SCURRENT             varchar(20)                    null,
-                                   EURRENT              varchar(20)                    null,
+                                   ECURRENT              varchar(20)                    null,
                                    TIME_UNIT            varchar(20)                    null,
                                    V1                   varchar(20)                    null,
                                    V2                   varchar(20)                    null,
