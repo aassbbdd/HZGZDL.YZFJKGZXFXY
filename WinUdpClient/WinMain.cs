@@ -14,11 +14,12 @@ using System.Windows.Forms;
 using Commons;
 using Socket_Server;
 using Socket_Server.Udp_Event;
-using Steema.TeeChart;
+
 using Steema.TeeChart.Styles;
 using Udp_Agreement;
 using Udp_Agreement.Model;
 
+using Steema.TeeChart;
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
@@ -1389,5 +1390,71 @@ namespace WindowsFormsApp1
 
         #endregion
 
+        #region zedGraph 图表控件测试
+        ZedGraph.PointPairList list1;//添加数据
+        Random ran;
+
+        public void zedGraph_Init()
+        {
+
+
+            ZedGraph.GraphPane mPane = zd1.GraphPane;//获取索引到GraphPane面板上
+            ran = new Random();//随机种子
+            mPane.XAxis.Title= "waveLength";//X轴标题
+                                            //mPane.XAxis.Min = 0;
+                                            //mPane.XAxis.Max = 10;
+            mPane.XAxis.Min = 0;
+            mPane.XAxis.Max = 10;
+            mPane.YAxis.Title= "A/D";//Y轴标题
+            mPane.Title = "NIRS";//标题
+            //mPane.XAxis.Scale.MaxAuto = true;
+            mPane.XAxis.Type = ZedGraph.AxisType.Ordinal;//出现图表右侧出现空白的情况....
+            list1 = new ZedGraph.PointPairList();//数据点
+            //mPane.XAxis.MaxAuto = true;//容许x轴的自动放大或缩小
+            //mPane.XAxis.MinAuto = false;//容许x轴的自动放大或缩小
+            //mPane.XAxis.MinorStepAuto = false;//容许x轴的自动放大或缩小
+
+
+            for (int i = 0; i < 300; i++)
+            {
+                int x = i;
+                int y = ran.Next(20);
+                list1.Add(x, y);
+
+            }
+            ZedGraph.LineItem mCure = mPane.AddCurve("", list1, Color.Blue, ZedGraph.SymbolType.None);
+            zd1.AxisChange();//画到zedGraphControl1控件中，此句必加
+            zd1.Refresh();//重新刷新
+        }
+        //程序的定时任务，实现界面不断的刷新，频率可以在控件的属性里面设置
+        private void dd()
+        {
+            list1.Clear();//清楚原来数据中的内容
+            //zd1.GraphPane.CurveList.Clear();
+            for (int i = 0; i < 300; i++)
+            {
+                int x = i;
+                int y = ran.Next(20);
+                list1.Add(x, y);
+            }
+            zd1.AxisChange();
+            zd1.Refresh();//重新刷新
+        }
+
+
+
+
+
+        #endregion
+
+        private void simpleButton5_Click(object sender, EventArgs e)
+        {
+            zedGraph_Init();
+        }
+
+        private void simpleButton10_Click(object sender, EventArgs e)
+        {
+            dd();
+        }
     }
 }

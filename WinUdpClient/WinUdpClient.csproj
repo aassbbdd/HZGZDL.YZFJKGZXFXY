@@ -79,6 +79,9 @@
     <Reference Include="TeeChart">
       <HintPath>..\..\..\..\开发组件\teechart\TeeChart.dll</HintPath>
     </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>C:\Users\cai\Downloads\ZedGraph_Control_Test\ZedGraph_Control_Test\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WinMain.cs">

@@ -191,6 +191,7 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.109.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -202,6 +203,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="TeeChart">
       <HintPath>..\WinUdpClient\bin\Debug\TeeChart.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>C:\Users\cai\Downloads\ZedGraph_Control_Test\ZedGraph_Control_Test\ZedGraph.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
             this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+            this.barManager1 = new DevExpress.XtraBars.BarManager();
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -83,26 +82,26 @@
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckC1 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckC2 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
-            this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
-            this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
             this.btnClear = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
+            this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckC2 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckC1 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // barButtonItem7
@@ -586,69 +585,14 @@
             this.panelControl1.Size = new System.Drawing.Size(187, 520);
             this.panelControl1.TabIndex = 52;
             // 
-            // ckV1
+            // btnClear
             // 
-            this.ckV1.EditValue = true;
-            this.ckV1.Location = new System.Drawing.Point(25, 17);
-            this.ckV1.MenuManager = this.barManager1;
-            this.ckV1.Name = "ckV1";
-            this.ckV1.Properties.Caption = "震动1";
-            this.ckV1.Size = new System.Drawing.Size(75, 22);
-            this.ckV1.TabIndex = 0;
-            // 
-            // ckV2
-            // 
-            this.ckV2.Location = new System.Drawing.Point(25, 45);
-            this.ckV2.MenuManager = this.barManager1;
-            this.ckV2.Name = "ckV2";
-            this.ckV2.Properties.Caption = "震动2";
-            this.ckV2.Size = new System.Drawing.Size(75, 22);
-            this.ckV2.TabIndex = 1;
-            // 
-            // ckV3
-            // 
-            this.ckV3.Location = new System.Drawing.Point(25, 73);
-            this.ckV3.MenuManager = this.barManager1;
-            this.ckV3.Name = "ckV3";
-            this.ckV3.Properties.Caption = "震动3";
-            this.ckV3.Size = new System.Drawing.Size(75, 22);
-            this.ckV3.TabIndex = 2;
-            // 
-            // ckC1
-            // 
-            this.ckC1.Location = new System.Drawing.Point(90, 17);
-            this.ckC1.MenuManager = this.barManager1;
-            this.ckC1.Name = "ckC1";
-            this.ckC1.Properties.Caption = "电流1";
-            this.ckC1.Size = new System.Drawing.Size(75, 22);
-            this.ckC1.TabIndex = 3;
-            // 
-            // ckC2
-            // 
-            this.ckC2.Location = new System.Drawing.Point(90, 45);
-            this.ckC2.MenuManager = this.barManager1;
-            this.ckC2.Name = "ckC2";
-            this.ckC2.Properties.Caption = "电流2";
-            this.ckC2.Size = new System.Drawing.Size(75, 22);
-            this.ckC2.TabIndex = 4;
-            // 
-            // ckC3
-            // 
-            this.ckC3.Location = new System.Drawing.Point(90, 73);
-            this.ckC3.MenuManager = this.barManager1;
-            this.ckC3.Name = "ckC3";
-            this.ckC3.Properties.Caption = "电流3";
-            this.ckC3.Size = new System.Drawing.Size(75, 22);
-            this.ckC3.TabIndex = 5;
-            // 
-            // btnReLond
-            // 
-            this.btnReLond.Location = new System.Drawing.Point(25, 101);
-            this.btnReLond.Name = "btnReLond";
-            this.btnReLond.Size = new System.Drawing.Size(119, 42);
-            this.btnReLond.TabIndex = 43;
-            this.btnReLond.Text = "重新加载波形图";
-            this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
+            this.btnClear.Location = new System.Drawing.Point(68, 199);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(54, 28);
+            this.btnClear.TabIndex = 45;
+            this.btnClear.Text = "清空";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnReNew
             // 
@@ -659,14 +603,69 @@
             this.btnReNew.Text = "还原";
             this.btnReNew.Click += new System.EventHandler(this.btnReNew_Click);
             // 
-            // btnClear
+            // btnReLond
             // 
-            this.btnClear.Location = new System.Drawing.Point(68, 199);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(54, 28);
-            this.btnClear.TabIndex = 45;
-            this.btnClear.Text = "清空";
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnReLond.Location = new System.Drawing.Point(25, 101);
+            this.btnReLond.Name = "btnReLond";
+            this.btnReLond.Size = new System.Drawing.Size(119, 42);
+            this.btnReLond.TabIndex = 43;
+            this.btnReLond.Text = "重新加载波形图";
+            this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
+            // 
+            // ckC3
+            // 
+            this.ckC3.Location = new System.Drawing.Point(90, 73);
+            this.ckC3.MenuManager = this.barManager1;
+            this.ckC3.Name = "ckC3";
+            this.ckC3.Properties.Caption = "电流3";
+            this.ckC3.Size = new System.Drawing.Size(75, 22);
+            this.ckC3.TabIndex = 5;
+            // 
+            // ckC2
+            // 
+            this.ckC2.Location = new System.Drawing.Point(90, 45);
+            this.ckC2.MenuManager = this.barManager1;
+            this.ckC2.Name = "ckC2";
+            this.ckC2.Properties.Caption = "电流2";
+            this.ckC2.Size = new System.Drawing.Size(75, 22);
+            this.ckC2.TabIndex = 4;
+            // 
+            // ckC1
+            // 
+            this.ckC1.Location = new System.Drawing.Point(90, 17);
+            this.ckC1.MenuManager = this.barManager1;
+            this.ckC1.Name = "ckC1";
+            this.ckC1.Properties.Caption = "电流1";
+            this.ckC1.Size = new System.Drawing.Size(75, 22);
+            this.ckC1.TabIndex = 3;
+            // 
+            // ckV3
+            // 
+            this.ckV3.Location = new System.Drawing.Point(25, 73);
+            this.ckV3.MenuManager = this.barManager1;
+            this.ckV3.Name = "ckV3";
+            this.ckV3.Properties.Caption = "震动3";
+            this.ckV3.Size = new System.Drawing.Size(75, 22);
+            this.ckV3.TabIndex = 2;
+            // 
+            // ckV2
+            // 
+            this.ckV2.Location = new System.Drawing.Point(25, 45);
+            this.ckV2.MenuManager = this.barManager1;
+            this.ckV2.Name = "ckV2";
+            this.ckV2.Properties.Caption = "震动2";
+            this.ckV2.Size = new System.Drawing.Size(75, 22);
+            this.ckV2.TabIndex = 1;
+            // 
+            // ckV1
+            // 
+            this.ckV1.EditValue = true;
+            this.ckV1.Location = new System.Drawing.Point(25, 17);
+            this.ckV1.MenuManager = this.barManager1;
+            this.ckV1.Name = "ckV1";
+            this.ckV1.Properties.Caption = "震动1";
+            this.ckV1.Size = new System.Drawing.Size(75, 22);
+            this.ckV1.TabIndex = 0;
             // 
             // FmMain
             // 
@@ -692,12 +691,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

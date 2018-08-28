@@ -45,6 +45,7 @@ namespace Basic_Controls
             Chart_Init();//初始化图表
             CreateDb();//生成数据库
         }
+
         #region 页面初始化参数
 
         /// <summary>
@@ -309,7 +310,6 @@ namespace Basic_Controls
                 MessageBox.Show("无数据清理！");
             }
         }
-
 
         bool[] cks = new bool[6];
 
@@ -588,8 +588,6 @@ namespace Basic_Controls
                     }
                 }
             }
-
-
         }
 
         /// <summary>
@@ -639,7 +637,7 @@ namespace Basic_Controls
         /// TChart 控件初始化
         /// </summary>
         private TChart tChart = new TChart();
-        private TChart tChartOld = new TChart();
+        //private TChart tChartOld = new TChart();
         /// <summary>
         /// //计算坐标百分比参数
         /// </summary>
@@ -672,6 +670,7 @@ namespace Basic_Controls
         /// </summary>
         int pnum = 0;
 
+        double newXvalue = 0;
         Line vline1;//震动1
         Line vline2;//震动2
         Line vline3;//震动3
@@ -692,6 +691,14 @@ namespace Basic_Controls
         bool c3 = false;
 
         #endregion
+        /// <summary>
+        /// 放大缩小时 开始区域
+        /// </summary>
+        double min = 0.0;
+        /// <summary>
+        /// 放大缩小时 结束区域
+        /// </summary>
+        double max = 0.0;
 
         /// <summary>
         /// 初始化图表
@@ -703,6 +710,8 @@ namespace Basic_Controls
             linlength = (10 * allnum) / num / LessPoint;
             //计算1秒 点位数量
             pnum = (int)(0.1 * allnum) / num / LessPoint;
+            //计算单点的距离
+            newXvalue = (double)(1 * num * LessPoint) / allnum;
 
             vx1 = new double[linlength];
             vy1 = new double[linlength];
@@ -722,12 +731,26 @@ namespace Basic_Controls
             cx3 = new double[linlength];
             cy3 = new double[linlength];
 
+            // X_Bind();//绑定X轴
+
             vline1 = new Line();//震动1
+            //vline1.VertAxis = VerticalAxis.Both;
+
             vline2 = new Line();//震动2
+            //vline2.VertAxis = VerticalAxis.Right;
+
             vline3 = new Line();//震动3
+            //vline3.VertAxis = VerticalAxis.Right;
+
             cline1 = new Line();//电流1
+            //cline1.VertAxis = VerticalAxis.Right;
+
             cline2 = new Line();//电流2
+            //cline2.VertAxis = VerticalAxis.Right;
+
             cline3 = new Line();//电流3
+            //cline3.VertAxis = VerticalAxis.Right;
+
 
             /// <summary>
             /// 颜色开始区域
@@ -736,7 +759,7 @@ namespace Basic_Controls
             /// <summary>
             /// 颜色结束区域
             /// </summary>
-            colorTo = 10.0;
+            colorTo = 0.0;
 
             tChart.Dock = DockStyle.Fill;
             tChart.Aspect.View3D = false;
@@ -748,9 +771,13 @@ namespace Basic_Controls
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
 
             tChart.Axes.Bottom.SetMinMax(0, 10);
+
             tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
 
-            tChart.Panel.MarginLeft = 10;
+            //tChart.Axes.Bottom.Inverted = true;//控制X轴 顺序还是倒序
+
+
+            tChart.Panel.MarginRight = 10;
             tChart.Panel.MarginRight = 10;
             tChart.Panel.MarginBottom = 10;
             tChart.Panel.MarginTop = 10;
@@ -771,8 +798,6 @@ namespace Basic_Controls
             max = tChart.Axes.Bottom.Maximum;
         }
 
-        double min = 0.0;
-        double max = 0.0;
         /// <summary>
         /// 初始化重新查看数据
         /// </summary>
@@ -797,7 +822,7 @@ namespace Basic_Controls
             //tChart.Axes.Bottom.AutomaticMinimum = true;
             //tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
 
-            //tChart.Panel.MarginLeft = 10;
+            //tChart.Panel.MarginRight = 10;
             //tChart.Panel.MarginRight = 10;
             //tChart.Panel.MarginBottom = 10;
             //tChart.Panel.MarginTop = 10;
@@ -810,6 +835,22 @@ namespace Basic_Controls
             Event_Chart_Bind();
         }
 
+        /// <summary>
+        /// 绑定X轴 10秒
+        /// </summary>
+        private void X_Bind()
+        {
+            vx1[0] = 0;
+            for (int i = 1; i < linlength; i++)
+            {
+                vx1[i] = Math.Round((vx1[i - 1] + newXvalue), 4);
+            }
+            vx2 = vx1;
+            vx3 = vx1;
+            cx1 = vx1;
+            cx2 = vx1;
+            cx3 = vx1;
+        }
         //10秒
         //换算数据包个数 = 10秒/800微秒 10/0.0008
         /// <summary>
@@ -825,6 +866,7 @@ namespace Basic_Controls
             }
 
             double single = (100 - space * (count + 2)) / (count + 1);//单个坐标轴的百分比
+
             tChart.Axes.Left.StartPosition = space;
             tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
             tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
@@ -835,9 +877,6 @@ namespace Basic_Controls
             double endPosition = tChart.Axes.Left.EndPosition;
             // tChart.Axes.Custom.Clear();//清除原先画布
             Axis axis;
-
-
-            int DD = tChart.Series.Count;
 
             for (int i = 0; i < count; i++)
             {
@@ -852,35 +891,7 @@ namespace Basic_Controls
                 axis.Maximum = 10;//最大值
                 axis.Minimum = -10;//最小值
 
-
-                //if (i == 0)
-                //{
-
                 axis.Title.Text = tChart.Series[i].Title;
-                //}
-                //else if (i == 1)
-                //{
-                //    axis.Title.Text = "震动2";
-                //}
-                //else if (i == 2)
-                //{
-                //    axis.Title.Text = "震动3";
-                //}
-                //else if (i == 3)
-                //{
-                //    axis.Title.Text = "电流1";
-                //}
-                //else if (i == 4)
-                //{
-                //    axis.Title.Text = "电流2";
-
-                //}
-                //else if (i == 5)
-                //{
-                //    axis.Title.Text = "电流3";
-                //}
-
-
                 tChart.Axes.Custom.Add(axis);
                 listBaseLine[i].CustomVertAxis = axis;
             }
@@ -895,16 +906,8 @@ namespace Basic_Controls
             {
                 if (v1)
                 {
-                    //DataTable dt = dtnew.Copy();
                     //震动1路 vline1
                     vline1.Title = string.Format("震动曲线{0}", 1);
-                    //ColorList cl = new ColorList();
-
-
-
-                    //cl.Add("255,127,80");
-
-                    //vline1.Colors = cl;
                     tChart.Series.Add(vline1);
                 }
                 if (v2)
@@ -921,7 +924,6 @@ namespace Basic_Controls
                     //Line vline3 = new Line();
                     vline3.Title = string.Format("震动曲线{0}", 3);
                     tChart.Series.Add(vline3);
-
                 }
                 if (c1)
                 {
@@ -1066,7 +1068,8 @@ namespace Basic_Controls
 
             #region 处理队列数据
 
-            thread_List = new Thread(Job_Queue);
+            //thread_List = new Thread(Job_Queue);
+            thread_List = new Thread(Job_Queue3);
             thread_List.IsBackground = true;
             thread_List.Start();//启动线程
 
@@ -1082,9 +1085,9 @@ namespace Basic_Controls
 
             #region 存储数据
 
-            Db_Save = new Thread(Test_Xml_Insert);
-            Db_Save.IsBackground = true;
-            Db_Save.Start();//启动线程
+            //Db_Save = new Thread(Test_Xml_Insert);
+            //Db_Save.IsBackground = true;
+            //Db_Save.Start();//启动线程
 
             #endregion
 
@@ -1103,8 +1106,6 @@ namespace Basic_Controls
 
         int porintadd = 0;
 
-
-
         private void Job_Queue3()
         {
             while (isAbort)
@@ -1121,7 +1122,7 @@ namespace Basic_Controls
                         int Porints = 80 / LessPoint;
                         double x = new double();
                         double y = new double();
-                        double newXvalue = (double)(1 * num * LessPoint) / allnum;
+
                         for (int i = 0; i < Porints; i++)
                         {
 
@@ -1146,11 +1147,19 @@ namespace Basic_Controls
                             vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
 
                             #region 计算保存新数据
-
-                            x = vline1.XValues[vline1.XValues.Count] + newXvalue;//
+                            if (porintadd == 0)
+                            {
+                                x = vx1[porintadd] + newXvalue;//
+                            }
+                            else
+                            {
+                                x = vx1[porintadd - 1] + newXvalue;//
+                            }
                             y = Convert.ToDouble(vmodel1.Vibration1);
 
-                            vline1.Add(x, y);
+                            // vline1.Add(x, y);
+                            vx1[porintadd] = x;
+                            vy1[porintadd] = y;
 
                             //vx2[linlength - 1] = width;
                             //vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
@@ -1172,29 +1181,48 @@ namespace Basic_Controls
                         }
 
                         #region 数据大于10秒时执行   
-                        //明天测试
-                        if (porintadd >= linlength + 1250 || istrue)
+
+                        if (porintadd > linlength - 1)
                         {
                             porintadd = 0;//归零
                             istrue = true;//开启进入标识
-                            double swidth = porintadd * newXvalue;//初始位置
+                            double swidth = 0;//初始位置
                             double width = swidth;//结束时位置
-                            for (int i = 0; i < 100; i++)
+                            for (int i = 0; i < 1250; i++)
                             {
-                                width = width + newXvalue;
-                                vline1.Add(width, 0.0);//循环次数的距离
+                                width = Math.Round(width + newXvalue, 4);
+                                vx1[porintadd + i + 1] = width;
+                                vy1[porintadd + i + 1] = 0.0;
                             }
-                            ValueList vlist = vline1.ValuesLists[0];
-
-                            vline1.Colors.Clear();
-                            vline1.ColorRange(vlist, (porintadd * newXvalue), width, Color.Red);
+                            colorFrom = swidth;
+                            colorTo = width;
+                        }
+                        if (istrue)
+                        {
+                            double swidth = Math.Round(vx1[porintadd], 4);//初始位置
+                            double width = swidth;//结束时位置
+                            for (int i = 0; i < 1250; i++)
+                            {
+                                int length = porintadd + i + 1;
+                                if (length < linlength - 1)
+                                {
+                                    width = Math.Round(width + newXvalue, 4);
+                                    vx1[porintadd + i + 1] = width;
+                                    vy1[porintadd + i + 1] = 0.0;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            colorFrom = swidth;
+                            colorTo = width;
                         }
                         #endregion
                     }
                 }
             }
         }
-        double sporit;
         bool istrue = false;
         private void Job_Queue()
         {
@@ -1209,16 +1237,11 @@ namespace Basic_Controls
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
                         //string head = e.Msg.Substring(4, 4);
-
-
-
                         #region 数据大于10秒时执行
-
-
                         //数组里面添加
-                        if (porintadd >= linlength + 1250)//
+                        if (porintadd >= linlength)//
                         {
-                            for (int i = 0; i < 100; i++)
+                            for (int i = 0; i < 1250; i++)
                             {
                                 #region 对数组操作
                                 Porint_Bind(i);
@@ -1274,7 +1297,6 @@ namespace Basic_Controls
                             vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
 
                             #region 计算保存新数据
-
 
                             #region 对数组操作
                             Porint_Bind();
@@ -1387,7 +1409,7 @@ namespace Basic_Controls
             double newPvalue = (double)(1 * num * LessPoint) / allnum;
             if (colorTo > 0)//判断颜色最大区域大于0才执行
             {
-                if (colorFrom == 0 && nonenum >= 0)//区分刚开始输入和 数据输入完毕进入结束输入
+                if (colorFrom <= 0 && nonenum >= 0)// 数据输入完毕进入结束 输入
                 {
                     colorFrom = colorTo;
                 }
@@ -1401,18 +1423,16 @@ namespace Basic_Controls
                     {
                         colorFrom = colorFrom - newPvalue;//计算开始区域
                     }
-                    else
+                    else if (colorFrom < 0)
                     {
                         colorFrom = 0;
                     }
+
                     if (colorTo > 0)
                     {
                         colorTo = colorTo - newPvalue;//计算结束区域
                     }
-                    else
-                    {
-                        colorTo = 0.00;
-                    }
+
                 }
             }
 
@@ -1480,7 +1500,7 @@ namespace Basic_Controls
                         Line_Bind();
                     }));
                     //死循环
-                    Thread.Sleep(15);//多图标使用150单图表使用 150/6 15
+                    Thread.Sleep(50);//多图标使用150单图表使用 150/6 15
                 }
                 catch (Exception ex)
                 {
@@ -1490,11 +1510,11 @@ namespace Basic_Controls
         /// <summary>
         /// 颜色开始区域
         /// </summary>
-        double colorFrom = 2.0;
+        double colorFrom = 0.0;
         /// <summary>
         /// 颜色结束区域
         /// </summary>
-        double colorTo = 3.0;
+        double colorTo = 0.0;
 
         /// <summary>
         /// 绑定 line线
@@ -1503,11 +1523,17 @@ namespace Basic_Controls
         {
             if (v1)
             {
+                vline1.XValues.Clear();
+                vline1.YValues.Clear();
                 vline1.Add(vx1, vy1);
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = vline1.ValuesLists[0];
+                    vline1.Colors.Clear();
+                    vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
                 //控制颜色
-                ValueList vlist = vline1.ValuesLists[0];
-                vline1.Colors.Clear();
-                vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                //tChart.Refresh();
             }
             if (v2)
             {
