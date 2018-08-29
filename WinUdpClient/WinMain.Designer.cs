@@ -55,9 +55,13 @@
             this.c3 = new DevExpress.XtraEditors.CheckEdit();
             this.v1 = new DevExpress.XtraEditors.CheckEdit();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.zd1 = new ZedGraph.ZedGraphControl();
             this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton10 = new DevExpress.XtraEditors.SimpleButton();
+            this.zd1 = new ZedGraph.ZedGraphControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.simpleButton11 = new DevExpress.XtraEditors.SimpleButton();
+            this.txt16H = new DevExpress.XtraEditors.TextEdit();
+            this.rtbShow = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.txtMsg.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPorit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtIp.Properties)).BeginInit();
@@ -71,6 +75,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.c3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.v1.Properties)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txt16H.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // txtMsg
@@ -190,6 +196,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -340,15 +347,6 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // zd1
-            // 
-            this.zd1.IsShowPointValues = false;
-            this.zd1.Location = new System.Drawing.Point(0, 162);
-            this.zd1.Name = "zd1";
-            this.zd1.PointValueFormat = "G";
-            this.zd1.Size = new System.Drawing.Size(738, 506);
-            this.zd1.TabIndex = 0;
-            // 
             // simpleButton5
             // 
             this.simpleButton5.Location = new System.Drawing.Point(61, 42);
@@ -366,6 +364,56 @@
             this.simpleButton10.TabIndex = 16;
             this.simpleButton10.Text = "停用";
             this.simpleButton10.Click += new System.EventHandler(this.simpleButton10_Click);
+            // 
+            // zd1
+            // 
+            this.zd1.IsShowPointValues = false;
+            this.zd1.Location = new System.Drawing.Point(0, 162);
+            this.zd1.Name = "zd1";
+            this.zd1.PointValueFormat = "G";
+            this.zd1.Size = new System.Drawing.Size(738, 506);
+            this.zd1.TabIndex = 0;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.simpleButton11);
+            this.tabPage4.Controls.Add(this.txt16H);
+            this.tabPage4.Controls.Add(this.rtbShow);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(792, 712);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // simpleButton11
+            // 
+            this.simpleButton11.Location = new System.Drawing.Point(490, 67);
+            this.simpleButton11.Name = "simpleButton11";
+            this.simpleButton11.Size = new System.Drawing.Size(86, 31);
+            this.simpleButton11.TabIndex = 16;
+            this.simpleButton11.Text = "计算";
+            this.simpleButton11.Click += new System.EventHandler(this.simpleButton11_Click);
+            // 
+            // txt16H
+            // 
+            this.txt16H.EditValue = "";
+            this.txt16H.Location = new System.Drawing.Point(58, 74);
+            this.txt16H.Name = "txt16H";
+            this.txt16H.Size = new System.Drawing.Size(398, 24);
+            this.txt16H.TabIndex = 14;
+            // 
+            // rtbShow
+            // 
+            this.rtbShow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbShow.Location = new System.Drawing.Point(58, 119);
+            this.rtbShow.Name = "rtbShow";
+            this.rtbShow.Size = new System.Drawing.Size(676, 571);
+            this.rtbShow.TabIndex = 15;
+            this.rtbShow.Text = "";
             // 
             // Form1
             // 
@@ -391,6 +439,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.c3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.v1.Properties)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txt16H.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -427,6 +477,10 @@
         private ZedGraph.ZedGraphControl zd1;
         private DevExpress.XtraEditors.SimpleButton simpleButton5;
         private DevExpress.XtraEditors.SimpleButton simpleButton10;
+        private System.Windows.Forms.TabPage tabPage4;
+        private DevExpress.XtraEditors.SimpleButton simpleButton11;
+        private DevExpress.XtraEditors.TextEdit txt16H;
+        private System.Windows.Forms.RichTextBox rtbShow;
     }
 }
 

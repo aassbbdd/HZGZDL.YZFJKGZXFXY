@@ -151,7 +151,7 @@ namespace Socket_Server
                             eventArgs.Hearder = "0909";
                             sendmessage = "30FF" + receiveCmd.Substring(4, 4);
                             sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                            Thread.Sleep(2);
+                            Thread.Sleep(0);
                             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                             //string path = AppDomain.CurrentDomain.BaseDirectory;
                             //ListToText.Instance.WriteListToTextFile("", path);

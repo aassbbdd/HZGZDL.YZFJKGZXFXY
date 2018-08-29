@@ -83,9 +83,12 @@ namespace DbHelper.Sqlite_Db
             {
                 DataTable dt = new DataTable();
                 StringBuilder sb = new StringBuilder();
-                sb.Append("select * from TEST_COFIGE");
+                sb.Append(" select * from TEST_COFIGE ");
 
-                dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
+                // dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
+                dt = SQLiteHelper.ExecuteDataSet(sb.ToString()).Tables[0]; 
+
+
                 return dt;
             }
             catch (Exception ex)

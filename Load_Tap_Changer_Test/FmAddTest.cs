@@ -40,7 +40,6 @@ namespace Basic_Controls
         {
             this.Close();
         }
-
         private void rdoGetInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
             string GetType = this.rdoGETINFO.Text;
@@ -144,7 +143,12 @@ namespace Basic_Controls
                 model.ECURRENT = model.GETINFO == "1" ? this.txtEA.Text : "";
                 model.TIME_UNIT = model.GETINFO == "2" ? this.txtGetUnit.Text : "";
 
-                Db_Action.Instance.Test_Cofige_Insert(model);
+                int count = Db_Action.Instance.Test_Cofige_Insert(model);
+
+                if (count >= 1)
+                {
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {

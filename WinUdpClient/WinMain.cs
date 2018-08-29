@@ -57,6 +57,7 @@ namespace WindowsFormsApp1
             this.rtBox.Text = "";
             list = new List<DataModel>();
             Chart_Init();
+            islength = true;
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace WindowsFormsApp1
                 {
                     string path = AppDomain.CurrentDomain.BaseDirectory;
                     ListToText.Instance.WriteListToTextFile(list, path);
-                    ListToText.Instance.WriteListToTextFile1(list, path);
+                    //ListToText.Instance.WriteListToTextFile1(list, path);
                 }
             }
             catch (Exception ex)
@@ -530,17 +531,19 @@ namespace WindowsFormsApp1
 
             #region 处理队列数据
 
-            thread_List = new Thread(Job_Queue3);
+            //thread_List = new Thread(Job_Queue3);//图表正常
+            thread_List = new Thread(Job_Queue);//保存数据
+
             thread_List.IsBackground = true;
-            thread_List.Start(1000);//启动线程
+            thread_List.Start(10);//启动线程
 
             #endregion
 
             #region 绘图线程
 
-            ReChart = new Thread(Refresh_Server);
-            ReChart.IsBackground = true;
-            ReChart.Start(100);//启动线程
+            //ReChart = new Thread(Refresh_Server);
+            //ReChart.IsBackground = true;
+            //ReChart.Start(100);//启动线程
 
             #endregion
         }
@@ -556,666 +559,666 @@ namespace WindowsFormsApp1
         #region 队列数据处理
 
         #region 作废
-        //static int jsq = 0;//计数器 当存储等于1秒时刷一次
-
-        //bool islength = true;//数据是否走完 true否 false是
-        ///// <summary>
-        ///// 处理队列
-        ///// </summary>
-        //private void Job_Queue(object time)
-        //{
-        //    while (isAbort)
-        //    {
-        //        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-        //        if (list_Event.Count > 0)
-        //        {
-        //            list_Event.TryDequeue(out e);//取出队里数据并删除
-        //                                         //截取返回数据
-        //            if (!string.IsNullOrEmpty(e.Hearder))
-        //            {
-        //                string data = e.Msg.Substring(8, e.Msg.Length - 8);
-        //                string head = e.Msg.Substring(4, 4);
-        //                DataModel model = new DataModel();
-        //                model.id = Convert.ToInt32(head, 16);
-        //                model.head = head;
-        //                model.text = e.Msg;
-        //                model.old_data = new List<Vibration_Current>();
-        //                model.new_data = new List<Vibration_Current>();
-
-        //                int Porints = 80 / LessPoint;
-
-        //                for (int i = 0; i < Porints; i++)
-        //                {
-        //                    Vibration_Current vmodel = new Vibration_Current();
-        //                    Vibration_Current vmodel1 = new Vibration_Current();
-        //                    int length = 24 * i;//截取位置
-
-        //                    vmodel.Current1 = data.Substring(0 + length, 4);
-        //                    vmodel.Current2 = data.Substring(4 + length, 4);
-        //                    vmodel.Current3 = data.Substring(8 + length, 4);
-
-        //                    vmodel.Vibration1 = data.Substring(12 + length, 4);
-        //                    vmodel.Vibration2 = data.Substring(16 + length, 4);
-        //                    vmodel.Vibration3 = data.Substring(20 + length, 4);
-        //                    //计算
-        //                    vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
-        //                    vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
-        //                    vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
-
-        //                    vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
-        //                    vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
-        //                    vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
-
-        //                    model.old_data.Add(vmodel);
-        //                    model.new_data.Add(vmodel1);
-
-
-        //                    if (vline1.Count < linlength && islength)
-        //                    {
-        //                        string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
-        //                        string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
-        //                        string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
-        //                        string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
-        //                        string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
-        //                        string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
-        //                        #region line 动态刷新图表数据源
-
-        //                        if (this.v1.Checked)
-        //                        {
-        //                            vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
-        //                        }
-        //                        if (this.v2.Checked)
-        //                        {
-
-        //                            vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
-        //                        }
-        //                        if (this.v3.Checked)
-        //                        {
-        //                            vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
-        //                        }
-        //                        if (this.c1.Checked)
-        //                        {
-        //                            cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
-        //                        }
-        //                        if (this.c2.Checked)
-        //                        {
-        //                            cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
-        //                        }
-        //                        if (this.c3.Checked)
-        //                        {
-        //                            cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
-        //                        }
-        //                        #endregion
-        //                    }
-        //                    else //数据走满后 重新增加数据
-        //                    {
-        //                        // pnum = num * LessPoint;
-
-        //                        islength = false;
-        //                        //isCharAbort = false;
-        //                        //for (int j = 0; j < pnum; j++)
-        //                        //{
-        //                        #region 清除过时数据
-        //                        //vline1.Delete(0);
-        //                        //vline2.Delete(0);
-        //                        //vline3.Delete(0);
-        //                        //cline1.Delete(0);
-        //                        //cline2.Delete(0);
-        //                        //cline3.Delete(0);
-        //                        #endregion
-        //                        #region 计算保存新数据
-
-        //                        //string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动1长度
-        //                        //string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动2长度
-        //                        //string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动3长度
-        //                        //string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流1长度
-        //                        //string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流2长度
-        //                        //string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流3长度
-
-        //                        string width = "10.00";
-
-
-        //                        double vx1 = Convert.ToDouble(width);
-        //                        double vy1 = Convert.ToDouble(vmodel1.Vibration1);
-
-        //                        double vx2 = Convert.ToDouble(width);
-        //                        double vy2 = Convert.ToDouble(vmodel1.Vibration2);
-
-        //                        double vx3 = Convert.ToDouble(width);
-        //                        double vy3 = Convert.ToDouble(vmodel1.Vibration3);
-
-        //                        double cx1 = Convert.ToDouble(width);
-        //                        double cy1 = Convert.ToDouble(vmodel1.Current1);
-
-        //                        double cx2 = Convert.ToDouble(width);
-        //                        double cy2 = Convert.ToDouble(vmodel1.Current2);
-
-        //                        double cx3 = Convert.ToDouble(width);
-        //                        double cy3 = Convert.ToDouble(vmodel1.Current3);
-
-        //                        #endregion
-        //                        //}
-        //                        #region 直接操作line线
-        //                        for (int j = 0; j < vline1.Count - 1; j++)//先将已有数据平移，再将新增数据加入
-        //                        {
-        //                            //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
-        //                            //double range = Math.Round((double)(j * num * LessPoint) / allnum, allnum.ToString().Length);
-        //                            double newXvalue = (double)(j * num * LessPoint) / allnum;
-        //                            if (this.v1.Checked)
-        //                            {
-        //                                var dd = vline1.XValues[j];
-        //                                vline1.XValues[j] = newXvalue;
-        //                                vline1.YValues[j] = vline1.YValues[j + 1];
-        //                            }
-        //                            if (this.v2.Checked)
-        //                            {
-        //                                vline2.XValues[j] = newXvalue;
-        //                                vline2.YValues[j] = vline2.YValues[j + 1];
-        //                            }
-        //                            if (this.v3.Checked)
-        //                            {
-        //                                vline3.XValues[j] = newXvalue;
-        //                                vline3.YValues[j] = vline3.YValues[j + 1];
-        //                            }
-        //                            if (this.c1.Checked)
-        //                            {
-        //                                cline1.XValues[j] = newXvalue;
-        //                                cline1.YValues[j] = cline1.YValues[j + 1];
-        //                            }
-        //                            if (this.c2.Checked)
-        //                            {
-        //                                cline2.XValues[j] = newXvalue;
-        //                                cline2.YValues[j] = cline2.YValues[j + 1];
-        //                            }
-        //                            if (this.c3.Checked)
-        //                            {
-        //                                cline3.XValues[j] = newXvalue;
-        //                                cline3.YValues[j] = cline3.YValues[j + 1];
-        //                            }
-        //                        }
-        //                        #endregion
-
-
-        //                        //再将新增数据加入
-        //                        if (this.v1.Checked)
-        //                        {
-        //                            vline1.XValues[vline1.Count - 1] = vx1;
-        //                            vline1.YValues[vline1.Count - 1] = vy1;
-        //                        }
-        //                        if (this.v2.Checked)
-        //                        {
-        //                            //vline2.Add(vx2, vy2);
-        //                            vline2.XValues[vline2.Count - 1] = vx2;
-        //                            vline2.YValues[vline2.Count - 1] = vy2;
-
-        //                        }
-        //                        if (this.v3.Checked)
-        //                        {
-        //                            // vline3.Add(vx3, vy3);
-        //                            vline3.XValues[vline3.Count - 1] = vx3;
-        //                            vline3.YValues[vline3.Count - 1] = vy3;
-        //                        }
-        //                        if (this.c1.Checked)
-        //                        {
-        //                            //cline1.Add(cx1, cy1);
-        //                            cline1.XValues[cline1.Count - 1] = cx1;
-        //                            cline1.YValues[cline1.Count - 1] = cy1;
-        //                        }
-        //                        if (this.c2.Checked)
-        //                        {
-        //                            //cline2.Add(cx2, cy2);
-        //                            cline2.XValues[cline2.Count - 1] = cx2;
-        //                            cline2.YValues[cline2.Count - 1] = cy2;
-        //                        }
-        //                        if (this.c3.Checked)
-        //                        {
-        //                            //cline3.Add(cx3, cy3);
-        //                            cline3.XValues[cline3.Count - 1] = cx3;
-        //                            cline3.YValues[cline3.Count - 1] = cy3;
-        //                        }
-        //                        //异步方法
-        //                        this.Invoke(new ThreadStart(delegate ()
-        //                        {
-        //                            tChart.Refresh();
-        //                            string path = AppDomain.CurrentDomain.BaseDirectory;
-        //                            ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
-        //                        }));
-
-        //                    }
-
-        //                    //list.Add(model);
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //}
-        //private void Job_Queue1(object time)
-        //{
-        //    while (isAbort)
-        //    {
-        //        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-        //        if (list_Event.Count > 0)
-        //        {
-        //            list_Event.TryDequeue(out e);//取出队里数据并删除
-        //                                         //截取返回数据
-        //            if (!string.IsNullOrEmpty(e.Hearder))
-        //            {
-        //                string data = e.Msg.Substring(8, e.Msg.Length - 8);
-        //                string head = e.Msg.Substring(4, 4);
-        //                DataModel model = new DataModel();
-        //                model.id = Convert.ToInt32(head, 16);
-        //                model.head = head;
-        //                model.text = e.Msg;
-        //                model.old_data = new List<Vibration_Current>();
-        //                model.new_data = new List<Vibration_Current>();
-
-        //                int Porints = 80 / LessPoint;
-
-        //                for (int i = 0; i < Porints; i++)
-        //                {
-        //                    Vibration_Current vmodel = new Vibration_Current();
-        //                    Vibration_Current vmodel1 = new Vibration_Current();
-        //                    int length = 24 * i;//截取位置
-
-        //                    vmodel.Current1 = data.Substring(0 + length, 4);
-        //                    vmodel.Current2 = data.Substring(4 + length, 4);
-        //                    vmodel.Current3 = data.Substring(8 + length, 4);
-
-        //                    vmodel.Vibration1 = data.Substring(12 + length, 4);
-        //                    vmodel.Vibration2 = data.Substring(16 + length, 4);
-        //                    vmodel.Vibration3 = data.Substring(20 + length, 4);
-        //                    //计算
-        //                    vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
-        //                    vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
-        //                    vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
-
-        //                    vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
-        //                    vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
-        //                    vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
-
-        //                    model.old_data.Add(vmodel);
-        //                    model.new_data.Add(vmodel1);
-
-
-        //                    if (vline1.Count < linlength && islength)
-        //                    {
-        //                        string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
-        //                        string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
-        //                        string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
-        //                        string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
-        //                        string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
-        //                        string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
-        //                        #region line 动态刷新图表数据源
-        //                        int line = vline1.Count;//定位
-        //                        if (this.v1.Checked)
-        //                        {
-        //                            vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
-
-        //                            var dd = vx1.Length;
-        //                            vx1[line] = Convert.ToDouble(vwidth1);
-        //                            vy1[line] = Convert.ToDouble(vmodel1.Vibration1);
-
-        //                        }
-        //                        if (this.v2.Checked)
-        //                        {
-        //                            vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
-        //                            vx2[line] = Convert.ToDouble(vwidth2);
-        //                            vy2[line] = Convert.ToDouble(vmodel1.Vibration2);
-        //                        }
-        //                        if (this.v3.Checked)
-        //                        {
-        //                            vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
-        //                            vx3[line] = Convert.ToDouble(vwidth3);
-        //                            vy3[line] = Convert.ToDouble(vmodel1.Vibration3);
-        //                        }
-        //                        if (this.c1.Checked)
-        //                        {
-        //                            cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
-        //                            cx1[line] = Convert.ToDouble(cwidth1);
-        //                            cy1[line] = Convert.ToDouble(vmodel1.Current1);
-        //                        }
-        //                        if (this.c2.Checked)
-        //                        {
-        //                            cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
-        //                            cx2[line] = Convert.ToDouble(cwidth2);
-        //                            cy2[line] = Convert.ToDouble(vmodel1.Current2);
-        //                        }
-        //                        if (this.c3.Checked)
-        //                        {
-        //                            cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
-        //                            cx3[line] = Convert.ToDouble(cwidth3);
-        //                            cy3[line] = Convert.ToDouble(vmodel1.Current3);
-
-        //                        }
-        //                        #endregion
-
-
-
-        //                    }
-        //                    else //数据走满后 重新增加数据
-        //                    {
-        //                        islength = false;
-        //                        //isCharAbort = false;
-        //                        #region 计算保存新数据
-
-        //                        string width = "10.00";
-
-        //                        double vxd1 = Convert.ToDouble(width);
-        //                        double vyd1 = Convert.ToDouble(vmodel1.Vibration1);
-
-        //                        double vxd2 = Convert.ToDouble(width);
-        //                        double vyd2 = Convert.ToDouble(vmodel1.Vibration2);
-
-        //                        double vxd3 = Convert.ToDouble(width);
-        //                        double vyd3 = Convert.ToDouble(vmodel1.Vibration3);
-
-        //                        double cxd1 = Convert.ToDouble(width);
-        //                        double cyd1 = Convert.ToDouble(vmodel1.Current1);
-
-        //                        double cxd2 = Convert.ToDouble(width);
-        //                        double cyd2 = Convert.ToDouble(vmodel1.Current2);
-
-        //                        double cxd3 = Convert.ToDouble(width);
-        //                        double cyd3 = Convert.ToDouble(vmodel1.Current3);
-
-
-        //                        vx1[linlength - 1] = vxd1;
-        //                        vy1[linlength - 1] = vyd1;
-
-        //                        vx2[linlength - 1] = vxd2;
-        //                        vy2[linlength - 1] = vyd2;
-
-        //                        vx3[linlength - 1] = vxd3;
-        //                        vy3[linlength - 1] = vyd3;
-
-        //                        cx1[linlength - 1] = cxd1;
-        //                        cy1[linlength - 1] = cyd1;
-
-        //                        cx2[linlength - 1] = cxd2;
-        //                        cy2[linlength - 1] = cyd2;
-
-        //                        cx3[linlength - 1] = cxd3;
-        //                        cy3[linlength - 1] = cyd3;
-
-
-        //                        #endregion
-
-        //                        #region 对数组操作
-
-        //                        for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
-        //                        {
-        //                            //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
-        //                            //double range = Math.Round((double)(j * num * LessPoint) / allnum, allnum.ToString().Length);
-        //                            double newXvalue = (double)(j * num * LessPoint) / allnum;
-        //                            if (this.v1.Checked)
-        //                            {
-        //                                vx1[j] = newXvalue;
-        //                                vy1[j] = vy1[j + 1];
-        //                            }
-        //                            if (this.v2.Checked)
-        //                            {
-        //                                vx2[j] = newXvalue;
-        //                                vy2[j] = vy2[j + 1];
-        //                            }
-
-        //                            if (this.v3.Checked)
-        //                            {
-        //                                vx3[j] = newXvalue;
-        //                                vy3[j] = vy3[j + 1];
-        //                            }
-
-        //                            if (this.c1.Checked)
-        //                            {
-        //                                cx1[j] = newXvalue;
-        //                                cy1[j] = cy1[j + 1];
-        //                            }
-
-        //                            if (this.c2.Checked)
-        //                            {
-        //                                cx2[j] = newXvalue;
-        //                                cy2[j] = cy2[j + 1];
-        //                            }
-
-        //                            if (this.c3.Checked)
-        //                            {
-        //                                cx3[j] = newXvalue;
-        //                                cy3[j] = cy3[j + 1];
-        //                            }
-        //                        }
-
-
-
-        //                        vline1.Add(vx1, vy1);
-        //                        vline2.Add(vx2, vy2);
-        //                        vline3.Add(vx3, vy3);
-        //                        cline1.Add(cx1, cy1);
-        //                        cline2.Add(cx2, cy2);
-        //                        cline3.Add(cx3, cy3);
-
-        //                        #endregion
-
-
-
-        //                        //异步方法
-        //                        this.Invoke(new ThreadStart(delegate ()
-        //                        {
-        //                            tChart.Refresh();
-        //                            string path = AppDomain.CurrentDomain.BaseDirectory;
-        //                            ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
-        //                        }));
-
-        //                    }
-
-        //                    //list.Add(model);
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //}
-        //private void Job_Queue2(object time)
-        //{
-        //    while (isAbort)
-        //    {
-        //        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-        //        if (list_Event.Count > 0)
-        //        {
-        //            list_Event.TryDequeue(out e);//取出队里数据并删除
-        //                                         //截取返回数据
-        //            if (!string.IsNullOrEmpty(e.Hearder))
-        //            {
-        //                string data = e.Msg.Substring(8, e.Msg.Length - 8);
-        //                string head = e.Msg.Substring(4, 4);
-        //                DataModel model = new DataModel();
-        //                model.id = Convert.ToInt32(head, 16);
-        //                model.head = head;
-        //                model.text = e.Msg;
-        //                model.old_data = new List<Vibration_Current>();
-        //                model.new_data = new List<Vibration_Current>();
-
-        //                int Porints = 80 / LessPoint;
-
-        //                for (int i = 0; i < Porints; i++)
-        //                {
-        //                    Vibration_Current vmodel = new Vibration_Current();
-        //                    Vibration_Current vmodel1 = new Vibration_Current();
-        //                    int length = 24 * i;//截取位置
-
-        //                    vmodel.Current1 = data.Substring(0 + length, 4);
-        //                    vmodel.Current2 = data.Substring(4 + length, 4);
-        //                    vmodel.Current3 = data.Substring(8 + length, 4);
-
-        //                    vmodel.Vibration1 = data.Substring(12 + length, 4);
-        //                    vmodel.Vibration2 = data.Substring(16 + length, 4);
-        //                    vmodel.Vibration3 = data.Substring(20 + length, 4);
-        //                    //计算
-        //                    vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
-        //                    vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
-        //                    vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
-
-        //                    vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
-        //                    vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
-        //                    vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
-
-        //                    model.old_data.Add(vmodel);
-        //                    model.new_data.Add(vmodel1);
-
-
-        //                    //if (vx1.Length < linlength && islength)
-        //                    //{
-        //                    //    string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
-        //                    //    string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
-        //                    //    string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
-        //                    //    string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
-        //                    //    string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
-        //                    //    string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
-        //                    //    #region line 动态刷新图表数据源
-        //                    //    int line = vx1.Length;//定位
-        //                    //    if (this.v1.Checked)
-        //                    //    {
-        //                    //        //vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
-        //                    //        vx1[line] = Convert.ToDouble(vwidth1);
-        //                    //        vy1[line] = Convert.ToDouble(vmodel1.Vibration1);
-
-        //                    //    }
-        //                    //    if (this.v2.Checked)
-        //                    //    {
-        //                    //        //vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
-        //                    //        vx2[line] = Convert.ToDouble(vwidth2);
-        //                    //        vy2[line] = Convert.ToDouble(vmodel1.Vibration2);
-        //                    //    }
-        //                    //    if (this.v3.Checked)
-        //                    //    {
-        //                    //        vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
-        //                    //        vx3[line] = Convert.ToDouble(vwidth3);
-        //                    //        vy3[line] = Convert.ToDouble(vmodel1.Vibration3);
-        //                    //    }
-        //                    //    if (this.c1.Checked)
-        //                    //    {
-        //                    //        //cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
-        //                    //        cx1[line] = Convert.ToDouble(cwidth1);
-        //                    //        cy1[line] = Convert.ToDouble(vmodel1.Current1);
-        //                    //    }
-        //                    //    if (this.c2.Checked)
-        //                    //    {
-        //                    //        cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
-        //                    //        cx2[line] = Convert.ToDouble(cwidth2);
-        //                    //        cy2[line] = Convert.ToDouble(vmodel1.Current2);
-        //                    //    }
-        //                    //    if (this.c3.Checked)
-        //                    //    {
-        //                    //        cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
-        //                    //        cx3[line] = Convert.ToDouble(cwidth3);
-        //                    //        cy3[line] = Convert.ToDouble(vmodel1.Current3);
-
-        //                    //    }
-        //                    //    #endregion
-
-
-
-        //                    //}
-        //                    //else //数据走满后 重新增加数据
-        //                    //{
-
-        //                    //islength = false;
-        //                    //isCharAbort = false;
-        //                    #region 计算保存新数据
-
-        //                    //for(int j=0;j< pnum;j++)
-        //                    //{
-        //                    string width = "10.00";
-
-        //                    vx1[linlength - 1] = Convert.ToDouble(width);
-        //                    vy1[linlength - 1] = Convert.ToDouble(vmodel1.Vibration1);
-
-        //                    vx2[linlength - 1] = Convert.ToDouble(width);
-        //                    vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
-
-        //                    vx3[linlength - 1] = Convert.ToDouble(width);
-        //                    vy3[linlength - 1] = Convert.ToDouble(vmodel1.Vibration3);
-
-        //                    cx1[linlength - 1] = Convert.ToDouble(width);
-        //                    cy1[linlength - 1] = Convert.ToDouble(vmodel1.Current1);
-
-        //                    cx2[linlength - 1] = Convert.ToDouble(width);
-        //                    cy2[linlength - 1] = Convert.ToDouble(vmodel1.Current2);
-
-        //                    cx3[linlength - 1] = Convert.ToDouble(width);
-        //                    cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
-        //                    //}
-        //                    #endregion
-
-        //                    #region 对数组操作
-
-        //                    for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
-        //                    {
-        //                        //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
-        //                        double newXvalue = (double)(j * num * LessPoint) / allnum;
-        //                        if (this.v1.Checked)
-        //                        {
-        //                            vx1[j] = newXvalue;
-        //                            vy1[j] = vy1[j + 1];
-        //                        }
-        //                        if (this.v2.Checked)
-        //                        {
-        //                            vx2[j] = newXvalue;
-        //                            vy2[j] = vy2[j + 1];
-        //                        }
-
-        //                        if (this.v3.Checked)
-        //                        {
-        //                            vx3[j] = newXvalue;
-        //                            vy3[j] = vy3[j + 1];
-        //                        }
-
-        //                        if (this.c1.Checked)
-        //                        {
-        //                            cx1[j] = newXvalue;
-        //                            cy1[j] = cy1[j + 1];
-        //                        }
-
-        //                        if (this.c2.Checked)
-        //                        {
-        //                            cx2[j] = newXvalue;
-        //                            cy2[j] = cy2[j + 1];
-        //                        }
-
-        //                        if (this.c3.Checked)
-        //                        {
-        //                            cx3[j] = newXvalue;
-        //                            cy3[j] = cy3[j + 1];
-        //                        }
-        //                    }
-        //                    //if (jsq == pnum)
-        //                    //{
-        //                    //    //vline1.Add(vx1, vy1);
-        //                    //    //vline2.Add(vx2, vy2);
-        //                    //    //vline3.Add(vx3, vy3);
-        //                    //    //cline1.Add(cx1, cy1);
-        //                    //    //cline2.Add(cx2, cy2);
-        //                    //    //cline3.Add(cx3, cy3);
-        //                    //    jsq = 0;
-        //                    //}
-        //                    #endregion
-        //                    //异步方法
-        //                    //this.Invoke(new ThreadStart(delegate ()
-        //                    //{
-        //                    //    tChart.Refresh();
-        //                    //    string path = AppDomain.CurrentDomain.BaseDirectory;
-        //                    //    ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
-        //                    //}));
-        //                    //    jsq++;
-        //                    //}
-
-        //                    //list.Add(model);
-
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //}
+        static int jsq = 0;//计数器 当存储等于1秒时刷一次
+
+        bool islength = true;//数据是否走完 true否 false是
+        /// <summary>
+        /// 存储数据
+        /// </summary>
+        private void Job_Queue(object time)
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (list_Event.Count > 0)
+                {
+                    list_Event.TryDequeue(out e);//取出队里数据并删除
+                                                 //截取返回数据
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                        string head = e.Msg.Substring(4, 4);
+                        DataModel model = new DataModel();
+                        model.id = Convert.ToInt32(head, 16);
+                        model.head = head;
+                        model.text = e.Msg;
+                        model.old_data = new List<Vibration_Current>();
+                        model.new_data = new List<Vibration_Current>();
+
+                        int Porints = 80 / LessPoint;
+
+                        for (int i = 0; i < Porints; i++)
+                        {
+                            Vibration_Current vmodel = new Vibration_Current();
+                            Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * i;//截取位置
+
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+
+                            model.old_data.Add(vmodel);
+                            model.new_data.Add(vmodel1);
+
+
+                            if (vline1.Count < linlength && islength)
+                            {
+                                string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
+                                string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
+                                string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
+                                string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
+                                string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
+                                string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
+                                #region line 动态刷新图表数据源
+
+                                if (this.v1.Checked)
+                                {
+                                    vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
+                                }
+                                if (this.v2.Checked)
+                                {
+
+                                    vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
+                                }
+                                if (this.v3.Checked)
+                                {
+                                    vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
+                                }
+                                if (this.c1.Checked)
+                                {
+                                    cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
+                                }
+                                if (this.c2.Checked)
+                                {
+                                    cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
+                                }
+                                if (this.c3.Checked)
+                                {
+                                    cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
+                                }
+                                #endregion
+                            }
+                            else //数据走满后 重新增加数据
+                            {
+                                // pnum = num * LessPoint;
+
+                                islength = false;
+                                //isCharAbort = false;
+                                //for (int j = 0; j < pnum; j++)
+                                //{
+                                #region 清除过时数据
+                                //vline1.Delete(0);
+                                //vline2.Delete(0);
+                                //vline3.Delete(0);
+                                //cline1.Delete(0);
+                                //cline2.Delete(0);
+                                //cline3.Delete(0);
+                                #endregion
+                                #region 计算保存新数据
+
+                                //string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动1长度
+                                //string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动2长度
+                                //string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//震动3长度
+                                //string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流1长度
+                                //string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流2长度
+                                //string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(linlength - pnum + j, num, LessPoint, allnum);//电流3长度
+
+                                string width = "10.00";
+
+
+                                double vx1 = Convert.ToDouble(width);
+                                double vy1 = Convert.ToDouble(vmodel1.Vibration1);
+
+                                double vx2 = Convert.ToDouble(width);
+                                double vy2 = Convert.ToDouble(vmodel1.Vibration2);
+
+                                double vx3 = Convert.ToDouble(width);
+                                double vy3 = Convert.ToDouble(vmodel1.Vibration3);
+
+                                double cx1 = Convert.ToDouble(width);
+                                double cy1 = Convert.ToDouble(vmodel1.Current1);
+
+                                double cx2 = Convert.ToDouble(width);
+                                double cy2 = Convert.ToDouble(vmodel1.Current2);
+
+                                double cx3 = Convert.ToDouble(width);
+                                double cy3 = Convert.ToDouble(vmodel1.Current3);
+
+                                #endregion
+                                //}
+                                #region 直接操作line线
+                                for (int j = 0; j < vline1.Count - 1; j++)//先将已有数据平移，再将新增数据加入
+                                {
+                                    //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
+                                    //double range = Math.Round((double)(j * num * LessPoint) / allnum, allnum.ToString().Length);
+                                    double newXvalue = (double)(j * num * LessPoint) / allnum;
+                                    if (this.v1.Checked)
+                                    {
+                                        var dd = vline1.XValues[j];
+                                        vline1.XValues[j] = newXvalue;
+                                        vline1.YValues[j] = vline1.YValues[j + 1];
+                                    }
+                                    if (this.v2.Checked)
+                                    {
+                                        vline2.XValues[j] = newXvalue;
+                                        vline2.YValues[j] = vline2.YValues[j + 1];
+                                    }
+                                    if (this.v3.Checked)
+                                    {
+                                        vline3.XValues[j] = newXvalue;
+                                        vline3.YValues[j] = vline3.YValues[j + 1];
+                                    }
+                                    if (this.c1.Checked)
+                                    {
+                                        cline1.XValues[j] = newXvalue;
+                                        cline1.YValues[j] = cline1.YValues[j + 1];
+                                    }
+                                    if (this.c2.Checked)
+                                    {
+                                        cline2.XValues[j] = newXvalue;
+                                        cline2.YValues[j] = cline2.YValues[j + 1];
+                                    }
+                                    if (this.c3.Checked)
+                                    {
+                                        cline3.XValues[j] = newXvalue;
+                                        cline3.YValues[j] = cline3.YValues[j + 1];
+                                    }
+                                }
+                                #endregion
+
+
+                                //再将新增数据加入
+                                if (this.v1.Checked)
+                                {
+                                    vline1.XValues[vline1.Count - 1] = vx1;
+                                    vline1.YValues[vline1.Count - 1] = vy1;
+                                }
+                                if (this.v2.Checked)
+                                {
+                                    //vline2.Add(vx2, vy2);
+                                    vline2.XValues[vline2.Count - 1] = vx2;
+                                    vline2.YValues[vline2.Count - 1] = vy2;
+
+                                }
+                                if (this.v3.Checked)
+                                {
+                                    // vline3.Add(vx3, vy3);
+                                    vline3.XValues[vline3.Count - 1] = vx3;
+                                    vline3.YValues[vline3.Count - 1] = vy3;
+                                }
+                                if (this.c1.Checked)
+                                {
+                                    //cline1.Add(cx1, cy1);
+                                    cline1.XValues[cline1.Count - 1] = cx1;
+                                    cline1.YValues[cline1.Count - 1] = cy1;
+                                }
+                                if (this.c2.Checked)
+                                {
+                                    //cline2.Add(cx2, cy2);
+                                    cline2.XValues[cline2.Count - 1] = cx2;
+                                    cline2.YValues[cline2.Count - 1] = cy2;
+                                }
+                                if (this.c3.Checked)
+                                {
+                                    //cline3.Add(cx3, cy3);
+                                    cline3.XValues[cline3.Count - 1] = cx3;
+                                    cline3.YValues[cline3.Count - 1] = cy3;
+                                }
+                                //异步方法
+                                //this.Invoke(new ThreadStart(delegate ()
+                                //{
+                                //    tChart.Refresh();
+                                //    string path = AppDomain.CurrentDomain.BaseDirectory;
+                                //    ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
+                                //}));
+
+                            }
+
+                            list.Add(model);
+                        }
+                    }
+
+                }
+            }
+        }
+        private void Job_Queue1(object time)
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (list_Event.Count > 0)
+                {
+                    list_Event.TryDequeue(out e);//取出队里数据并删除
+                                                 //截取返回数据
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                        string head = e.Msg.Substring(4, 4);
+                        DataModel model = new DataModel();
+                        model.id = Convert.ToInt32(head, 16);
+                        model.head = head;
+                        model.text = e.Msg;
+                        model.old_data = new List<Vibration_Current>();
+                        model.new_data = new List<Vibration_Current>();
+
+                        int Porints = 80 / LessPoint;
+
+                        for (int i = 0; i < Porints; i++)
+                        {
+                            Vibration_Current vmodel = new Vibration_Current();
+                            Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * i;//截取位置
+
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+
+                            model.old_data.Add(vmodel);
+                            model.new_data.Add(vmodel1);
+
+
+                            if (vline1.Count < linlength && islength)
+                            {
+                                string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
+                                string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
+                                string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
+                                string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
+                                string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
+                                string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
+                                #region line 动态刷新图表数据源
+                                int line = vline1.Count;//定位
+                                if (this.v1.Checked)
+                                {
+                                    vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
+
+                                    var dd = vx1.Length;
+                                    vx1[line] = Convert.ToDouble(vwidth1);
+                                    vy1[line] = Convert.ToDouble(vmodel1.Vibration1);
+
+                                }
+                                if (this.v2.Checked)
+                                {
+                                    vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
+                                    vx2[line] = Convert.ToDouble(vwidth2);
+                                    vy2[line] = Convert.ToDouble(vmodel1.Vibration2);
+                                }
+                                if (this.v3.Checked)
+                                {
+                                    vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
+                                    vx3[line] = Convert.ToDouble(vwidth3);
+                                    vy3[line] = Convert.ToDouble(vmodel1.Vibration3);
+                                }
+                                if (this.c1.Checked)
+                                {
+                                    cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
+                                    cx1[line] = Convert.ToDouble(cwidth1);
+                                    cy1[line] = Convert.ToDouble(vmodel1.Current1);
+                                }
+                                if (this.c2.Checked)
+                                {
+                                    cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
+                                    cx2[line] = Convert.ToDouble(cwidth2);
+                                    cy2[line] = Convert.ToDouble(vmodel1.Current2);
+                                }
+                                if (this.c3.Checked)
+                                {
+                                    cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
+                                    cx3[line] = Convert.ToDouble(cwidth3);
+                                    cy3[line] = Convert.ToDouble(vmodel1.Current3);
+
+                                }
+                                #endregion
+
+
+
+                            }
+                            else //数据走满后 重新增加数据
+                            {
+                                islength = false;
+                                //isCharAbort = false;
+                                #region 计算保存新数据
+
+                                string width = "10.00";
+
+                                double vxd1 = Convert.ToDouble(width);
+                                double vyd1 = Convert.ToDouble(vmodel1.Vibration1);
+
+                                double vxd2 = Convert.ToDouble(width);
+                                double vyd2 = Convert.ToDouble(vmodel1.Vibration2);
+
+                                double vxd3 = Convert.ToDouble(width);
+                                double vyd3 = Convert.ToDouble(vmodel1.Vibration3);
+
+                                double cxd1 = Convert.ToDouble(width);
+                                double cyd1 = Convert.ToDouble(vmodel1.Current1);
+
+                                double cxd2 = Convert.ToDouble(width);
+                                double cyd2 = Convert.ToDouble(vmodel1.Current2);
+
+                                double cxd3 = Convert.ToDouble(width);
+                                double cyd3 = Convert.ToDouble(vmodel1.Current3);
+
+
+                                vx1[linlength - 1] = vxd1;
+                                vy1[linlength - 1] = vyd1;
+
+                                vx2[linlength - 1] = vxd2;
+                                vy2[linlength - 1] = vyd2;
+
+                                vx3[linlength - 1] = vxd3;
+                                vy3[linlength - 1] = vyd3;
+
+                                cx1[linlength - 1] = cxd1;
+                                cy1[linlength - 1] = cyd1;
+
+                                cx2[linlength - 1] = cxd2;
+                                cy2[linlength - 1] = cyd2;
+
+                                cx3[linlength - 1] = cxd3;
+                                cy3[linlength - 1] = cyd3;
+
+
+                                #endregion
+
+                                #region 对数组操作
+
+                                for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
+                                {
+                                    //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
+                                    //double range = Math.Round((double)(j * num * LessPoint) / allnum, allnum.ToString().Length);
+                                    double newXvalue = (double)(j * num * LessPoint) / allnum;
+                                    if (this.v1.Checked)
+                                    {
+                                        vx1[j] = newXvalue;
+                                        vy1[j] = vy1[j + 1];
+                                    }
+                                    if (this.v2.Checked)
+                                    {
+                                        vx2[j] = newXvalue;
+                                        vy2[j] = vy2[j + 1];
+                                    }
+
+                                    if (this.v3.Checked)
+                                    {
+                                        vx3[j] = newXvalue;
+                                        vy3[j] = vy3[j + 1];
+                                    }
+
+                                    if (this.c1.Checked)
+                                    {
+                                        cx1[j] = newXvalue;
+                                        cy1[j] = cy1[j + 1];
+                                    }
+
+                                    if (this.c2.Checked)
+                                    {
+                                        cx2[j] = newXvalue;
+                                        cy2[j] = cy2[j + 1];
+                                    }
+
+                                    if (this.c3.Checked)
+                                    {
+                                        cx3[j] = newXvalue;
+                                        cy3[j] = cy3[j + 1];
+                                    }
+                                }
+
+
+
+                                vline1.Add(vx1, vy1);
+                                vline2.Add(vx2, vy2);
+                                vline3.Add(vx3, vy3);
+                                cline1.Add(cx1, cy1);
+                                cline2.Add(cx2, cy2);
+                                cline3.Add(cx3, cy3);
+
+                                #endregion
+
+
+
+                                //异步方法
+                                this.Invoke(new ThreadStart(delegate ()
+                                {
+                                    tChart.Refresh();
+                                    string path = AppDomain.CurrentDomain.BaseDirectory;
+                                    ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
+                                }));
+
+                            }
+
+                            list.Add(model);
+                        }
+                    }
+
+                }
+            }
+        }
+        private void Job_Queue2(object time)
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (list_Event.Count > 0)
+                {
+                    list_Event.TryDequeue(out e);//取出队里数据并删除
+                                                 //截取返回数据
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                        string head = e.Msg.Substring(4, 4);
+                        DataModel model = new DataModel();
+                        model.id = Convert.ToInt32(head, 16);
+                        model.head = head;
+                        model.text = e.Msg;
+                        model.old_data = new List<Vibration_Current>();
+                        model.new_data = new List<Vibration_Current>();
+
+                        int Porints = 80 / LessPoint;
+
+                        for (int i = 0; i < Porints; i++)
+                        {
+                            Vibration_Current vmodel = new Vibration_Current();
+                            Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * i;//截取位置
+
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+
+                            model.old_data.Add(vmodel);
+                            model.new_data.Add(vmodel1);
+
+
+                            //if (vx1.Length < linlength && islength)
+                            //{
+                            //    string vwidth1 = Algorithm.Instance.Less_Porint_Algorithm(vline1.Count, num, LessPoint, allnum);//震动1长度
+                            //    string vwidth2 = Algorithm.Instance.Less_Porint_Algorithm(vline2.Count, num, LessPoint, allnum);//震动2长度
+                            //    string vwidth3 = Algorithm.Instance.Less_Porint_Algorithm(vline3.Count, num, LessPoint, allnum);//震动3长度
+                            //    string cwidth1 = Algorithm.Instance.Less_Porint_Algorithm(cline1.Count, num, LessPoint, allnum);//电流1长度
+                            //    string cwidth2 = Algorithm.Instance.Less_Porint_Algorithm(cline2.Count, num, LessPoint, allnum);//电流2长度
+                            //    string cwidth3 = Algorithm.Instance.Less_Porint_Algorithm(cline3.Count, num, LessPoint, allnum);//电流3长度
+                            //    #region line 动态刷新图表数据源
+                            //    int line = vx1.Length;//定位
+                            //    if (this.v1.Checked)
+                            //    {
+                            //        //vline1.Add(Convert.ToDouble(vwidth1), Convert.ToDouble(vmodel1.Vibration1));
+                            //        vx1[line] = Convert.ToDouble(vwidth1);
+                            //        vy1[line] = Convert.ToDouble(vmodel1.Vibration1);
+
+                            //    }
+                            //    if (this.v2.Checked)
+                            //    {
+                            //        //vline2.Add(Convert.ToDouble(vwidth2), Convert.ToDouble(vmodel1.Vibration2));
+                            //        vx2[line] = Convert.ToDouble(vwidth2);
+                            //        vy2[line] = Convert.ToDouble(vmodel1.Vibration2);
+                            //    }
+                            //    if (this.v3.Checked)
+                            //    {
+                            //        vline3.Add(Convert.ToDouble(vwidth3), Convert.ToDouble(vmodel1.Vibration3));
+                            //        vx3[line] = Convert.ToDouble(vwidth3);
+                            //        vy3[line] = Convert.ToDouble(vmodel1.Vibration3);
+                            //    }
+                            //    if (this.c1.Checked)
+                            //    {
+                            //        //cline1.Add(Convert.ToDouble(cwidth1), Convert.ToDouble(vmodel1.Current1));
+                            //        cx1[line] = Convert.ToDouble(cwidth1);
+                            //        cy1[line] = Convert.ToDouble(vmodel1.Current1);
+                            //    }
+                            //    if (this.c2.Checked)
+                            //    {
+                            //        cline2.Add(Convert.ToDouble(cwidth2), Convert.ToDouble(vmodel1.Current2));
+                            //        cx2[line] = Convert.ToDouble(cwidth2);
+                            //        cy2[line] = Convert.ToDouble(vmodel1.Current2);
+                            //    }
+                            //    if (this.c3.Checked)
+                            //    {
+                            //        cline3.Add(Convert.ToDouble(cwidth3), Convert.ToDouble(vmodel1.Current3));
+                            //        cx3[line] = Convert.ToDouble(cwidth3);
+                            //        cy3[line] = Convert.ToDouble(vmodel1.Current3);
+
+                            //    }
+                            //    #endregion
+
+
+
+                            //}
+                            //else //数据走满后 重新增加数据
+                            //{
+
+                            //islength = false;
+                            //isCharAbort = false;
+                            #region 计算保存新数据
+
+                            //for(int j=0;j< pnum;j++)
+                            //{
+                            string width = "10.00";
+
+                            vx1[linlength - 1] = Convert.ToDouble(width);
+                            vy1[linlength - 1] = Convert.ToDouble(vmodel1.Vibration1);
+
+                            vx2[linlength - 1] = Convert.ToDouble(width);
+                            vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
+
+                            vx3[linlength - 1] = Convert.ToDouble(width);
+                            vy3[linlength - 1] = Convert.ToDouble(vmodel1.Vibration3);
+
+                            cx1[linlength - 1] = Convert.ToDouble(width);
+                            cy1[linlength - 1] = Convert.ToDouble(vmodel1.Current1);
+
+                            cx2[linlength - 1] = Convert.ToDouble(width);
+                            cy2[linlength - 1] = Convert.ToDouble(vmodel1.Current2);
+
+                            cx3[linlength - 1] = Convert.ToDouble(width);
+                            cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
+                            //}
+                            #endregion
+
+                            #region 对数组操作
+
+                            for (int j = 0; j < vx1.Length - 1; j++)//先将已有数据平移，再将新增数据加入
+                            {
+                                //往前平移距离 当前序号 j 乘以 num 位移距离 乘以偷点数 LessPoint  除以 到整数位的数量 allnum
+                                double newXvalue = (double)(j * num * LessPoint) / allnum;
+                                if (this.v1.Checked)
+                                {
+                                    vx1[j] = newXvalue;
+                                    vy1[j] = vy1[j + 1];
+                                }
+                                if (this.v2.Checked)
+                                {
+                                    vx2[j] = newXvalue;
+                                    vy2[j] = vy2[j + 1];
+                                }
+
+                                if (this.v3.Checked)
+                                {
+                                    vx3[j] = newXvalue;
+                                    vy3[j] = vy3[j + 1];
+                                }
+
+                                if (this.c1.Checked)
+                                {
+                                    cx1[j] = newXvalue;
+                                    cy1[j] = cy1[j + 1];
+                                }
+
+                                if (this.c2.Checked)
+                                {
+                                    cx2[j] = newXvalue;
+                                    cy2[j] = cy2[j + 1];
+                                }
+
+                                if (this.c3.Checked)
+                                {
+                                    cx3[j] = newXvalue;
+                                    cy3[j] = cy3[j + 1];
+                                }
+                            }
+                            //if (jsq == pnum)
+                            //{
+                            //    //vline1.Add(vx1, vy1);
+                            //    //vline2.Add(vx2, vy2);
+                            //    //vline3.Add(vx3, vy3);
+                            //    //cline1.Add(cx1, cy1);
+                            //    //cline2.Add(cx2, cy2);
+                            //    //cline3.Add(cx3, cy3);
+                            //    jsq = 0;
+                            //}
+                            #endregion
+                            //异步方法
+                            //this.Invoke(new ThreadStart(delegate ()
+                            //{
+                            //    tChart.Refresh();
+                            //    string path = AppDomain.CurrentDomain.BaseDirectory;
+                            //    ListToText.Instance.WriteListToTextFile(DateTime.Now.ToString("O"), path);
+                            //}));
+                            //    jsq++;
+                            //}
+
+                            //list.Add(model);
+
+                        }
+                    }
+
+                }
+            }
+        }
         #endregion
         private void Job_Queue3(object time)
         {
@@ -1340,7 +1343,7 @@ namespace WindowsFormsApp1
             {
                 try
                 {
-                   Thread.Sleep(1);
+                    Thread.Sleep(1);
                     // 异步方法
                     this.Invoke(new ThreadStart(delegate ()
                         {
@@ -1400,12 +1403,12 @@ namespace WindowsFormsApp1
 
             ZedGraph.GraphPane mPane = zd1.GraphPane;//获取索引到GraphPane面板上
             ran = new Random();//随机种子
-            mPane.XAxis.Title= "waveLength";//X轴标题
-                                            //mPane.XAxis.Min = 0;
-                                            //mPane.XAxis.Max = 10;
+            mPane.XAxis.Title = "waveLength";//X轴标题
+                                             //mPane.XAxis.Min = 0;
+                                             //mPane.XAxis.Max = 10;
             mPane.XAxis.Min = 0;
             mPane.XAxis.Max = 10;
-            mPane.YAxis.Title= "A/D";//Y轴标题
+            mPane.YAxis.Title = "A/D";//Y轴标题
             mPane.Title = "NIRS";//标题
             //mPane.XAxis.Scale.MaxAuto = true;
             mPane.XAxis.Type = ZedGraph.AxisType.Ordinal;//出现图表右侧出现空白的情况....
@@ -1455,6 +1458,26 @@ namespace WindowsFormsApp1
         private void simpleButton10_Click(object sender, EventArgs e)
         {
             dd();
+        }
+
+
+        /// <summary>
+        /// 计算
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton11_Click(object sender, EventArgs e)
+        {
+
+            string c = Algorithm.Instance.Current_Algorithm(txt16H.Text);
+            string v = Algorithm.Instance.Vibration_Algorithm(txt16H.Text);
+
+
+            this.rtbShow.Text = this.rtbShow.Text + " v 震动" + txt16H.Text + ":" + v + "\n";
+            this.rtbShow.Text = this.rtbShow.Text + " c 电流" + txt16H.Text + ":" + c + "\n";
+
+
+
         }
     }
 }

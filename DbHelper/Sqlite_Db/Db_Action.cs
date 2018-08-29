@@ -82,7 +82,7 @@ namespace DbHelper.Sqlite_Db
         /// <summary>
         /// 插入 测试计划 
         /// </summary>
-        public void Test_Cofige_Insert(Test_Plan model)
+        public int Test_Cofige_Insert(Test_Plan model)
         {
             try
             {
@@ -212,6 +212,9 @@ namespace DbHelper.Sqlite_Db
 
 
                 int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
+
+                return count;
+
             }
             catch (Exception ex)
             {

@@ -66,7 +66,7 @@ namespace DbHelper.Sqlite_Db
                                    TEST_NUM             integer                        null,
                                    SPLACE               varchar(50)                    null,
                                    OILTEMP              varchar(50)                    null,
-                                   TEST_TIME            datetime                       null,
+                                   TEST_TIME            varchar(50)                       null,
                                    TEST_TYPE            varchar(20)                    null,
                                    GETINFO              varchar(20)                    null,
                                    TESTSTAGE            varchar(20)                    null,

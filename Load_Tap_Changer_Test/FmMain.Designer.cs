@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
             this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -75,7 +76,7 @@
             this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.treeList1 = new DevExpress.XtraTreeList.TreeList();
+            this.treeList = new DevExpress.XtraTreeList.TreeList();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
             this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
@@ -92,7 +93,7 @@
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.treeList1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.treeList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
@@ -233,7 +234,6 @@
             // btnSaveData
             // 
             this.btnSaveData.Caption = "保存数据";
-            this.btnSaveData.Enabled = false;
             this.btnSaveData.Id = 31;
             this.btnSaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveData.ImageOptions.Image")));
             this.btnSaveData.Name = "btnSaveData";
@@ -509,14 +509,14 @@
             this.barLargeButtonItem5.Name = "barLargeButtonItem5";
             this.barLargeButtonItem5.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             // 
-            // treeList1
+            // treeList
             // 
-            this.treeList1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.treeList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeList1.Location = new System.Drawing.Point(0, 114);
-            this.treeList1.Name = "treeList1";
-            this.treeList1.Size = new System.Drawing.Size(226, 520);
-            this.treeList1.TabIndex = 25;
+            this.treeList.Location = new System.Drawing.Point(0, 114);
+            this.treeList.Name = "treeList";
+            this.treeList.Size = new System.Drawing.Size(226, 520);
+            this.treeList.TabIndex = 25;
             // 
             // pclChart
             // 
@@ -674,7 +674,7 @@
             this.ClientSize = new System.Drawing.Size(930, 633);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);
-            this.Controls.Add(this.treeList1);
+            this.Controls.Add(this.treeList);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -686,7 +686,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.treeList1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.treeList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
@@ -747,7 +747,7 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItem20;
         private DevExpress.XtraBars.BarCheckItem barCheckItem2;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem1;
-        private DevExpress.XtraTreeList.TreeList treeList1;
+        private DevExpress.XtraTreeList.TreeList treeList;
         private DevExpress.XtraEditors.PanelControl pclChart;
         private DevExpress.XtraBars.BarButtonItem btnETest;
         private DevExpress.XtraBars.BarButtonItem btnSaveImg;

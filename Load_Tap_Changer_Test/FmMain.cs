@@ -27,6 +27,7 @@ using System.Xml.Linq;
 using System.Xml;
 using Steema.TeeChart.Tools;
 using DbHelper;
+using System.Configuration;
 
 namespace Basic_Controls
 {
@@ -35,7 +36,6 @@ namespace Basic_Controls
         public FmMain()
         {
             InitializeComponent();
-
         }
 
         private void FmMain_Load(object sender, EventArgs e)
@@ -52,6 +52,11 @@ namespace Basic_Controls
         /// xml 存储路径
         /// </summary>
         string xmlpath = "";
+
+        /// <summary>
+        /// 接收数据开关
+        /// </summary>
+        bool IsSaveData = false;
 
         /// <summary>
         /// 协议对应参数
@@ -84,31 +89,29 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnAddTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            int index = 0;
-            using (FmTestSelect form = new FmTestSelect())
+            //int index = 0;
+            //using (FmTestSelect form = new FmTestSelect())
+            //{
+            //    form.ShowDialog();
+            //    index = form.index;
+            //}
+
+            //if (index == 1)// 加载一个存在的测试计划
+            //{
+
+            //}
+            //else if (index == 2)//加载分析测试数据
+            //{
+
+            //}
+            //else if (index == 3)///新建测试计划
+            //{
+            using (FmAddTest form = new FmAddTest())
             {
                 form.ShowDialog();
-                index = form.index;
             }
+            //}
 
-            if (index == 1)// 加载一个存在的测试计划
-            {
-
-            }
-            else if (index == 2)//加载分析测试数据
-            {
-
-            }
-            else if (index == 3)///新建测试计划
-            {
-                using (FmAddTest form = new FmAddTest())
-                {
-                    form.ShowDialog();
-                }
-            }
-            else//使用默认测试计划
-            {
-            }
         }
 
         /// <summary>
@@ -118,16 +121,17 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSaveData_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            SaveFileDialog pSaveFileDialog = new SaveFileDialog
-            {
-                Title = "保存为:",
-                RestoreDirectory = true,
-                Filter = "所有文件(*.*)|*.*"
-            };//同打开文件，也可指定任意类型的文件
-            if (pSaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string path = pSaveFileDialog.FileName;
-            }
+            //SaveFileDialog pSaveFileDialog = new SaveFileDialog
+            //{
+            //    Title = "保存为:",
+            //    RestoreDirectory = true,
+            //    Filter = "所有文件(*.*)|*.*"
+            //};//同打开文件，也可指定任意类型的文件
+            //if (pSaveFileDialog.ShowDialog() == DialogResult.OK)
+            //{
+            //    string path = pSaveFileDialog.FileName;
+            //}
+            IsSaveData = true;
         }
 
         /// <summary>
@@ -204,7 +208,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnCTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            Tester_List_Bind();
         }
 
         /// <summary>
@@ -217,6 +221,7 @@ namespace Basic_Controls
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
             panelControl1.Enabled = true;
+            IsSaveData = false;
         }
 
         /// <summary>
@@ -227,7 +232,6 @@ namespace Basic_Controls
         private void btnSTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
 
-            // sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
 
             XmlHelper.DeleteXmlDocument("测试数据1");
@@ -236,6 +240,10 @@ namespace Basic_Controls
             Thread.Sleep(10);
 
             sendUdp(agreement._2_CMD_STARTTESTER);
+            //清空Y轴
+            tChart.Series.RemoveAllSeries();
+            //清空Y轴
+            tChart.Axes.Custom.Clear();
             Start_Chart();
             panelControl1.Enabled = false;
         }
@@ -250,13 +258,15 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnReLond_Click(object sender, EventArgs e)
         {
+            //更新波形通道
             Bind_IsDC();
-            tChart.Series.Clear();
+            //清空Y轴
+            tChart.Series.RemoveAllSeries();
+            //清空Y轴
             tChart.Axes.Custom.Clear();
             Chart_Data_Lond_Bind();
             tChart.Refresh();
         }
-
 
         /// <summary>
         /// 放大缩小数据
@@ -275,9 +285,10 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
-
             if (tChart != null && linlength > 0)
             {
+                Porint_List = new ConcurrentQueue<Udp_EventArgs>();
+                Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
                 vx1 = new double[linlength];
                 vy1 = new double[linlength];
 
@@ -334,15 +345,19 @@ namespace Basic_Controls
             cks[3] = c3;
         }
         #endregion
-        #endregion
 
+        #endregion
+        /// <summary>
+        /// s设备IP
+        /// </summary>
+        string DvIp = ConfigurationManager.ConnectionStrings["DvIp"].ConnectionString.ToString();
         #region 调用方法
         /// <summary>
         /// 发送协议
         /// </summary>
         private void sendUdp(string msg)
         {
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("192.168.1.5"), 4000);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(DvIp), 4000);
             //if (!string.IsNullOrEmpty(txtIp.Text) && !string.IsNullOrEmpty(txtPorit.Text))
             //{
             //    ipep = new IPEndPoint(IPAddress.Parse(txtIp.Text), Convert.ToInt32(txtPorit.Text));
@@ -400,9 +415,13 @@ namespace Basic_Controls
             try
             {
                 //绘图
-                list_Event.Enqueue(e);
-                //数据存储
-                Db_Source.Enqueue(e);
+                Porint_List.Enqueue(e);
+
+                if (IsSaveData)
+                {
+                    //数据存储
+                    Save_Db_Source.Enqueue(e);
+                }
             }
             catch (Exception exception)
             {
@@ -629,15 +648,10 @@ namespace Basic_Controls
         Thread thread_List;
 
         /// <summary>
-        /// 刷新时间图表
-        /// </summary>
-        int Sleep_Time = 0;
-
-        /// <summary>
         /// TChart 控件初始化
         /// </summary>
         private TChart tChart = new TChart();
-        //private TChart tChartOld = new TChart();
+
         /// <summary>
         /// //计算坐标百分比参数
         /// </summary>
@@ -734,22 +748,22 @@ namespace Basic_Controls
             // X_Bind();//绑定X轴
 
             vline1 = new Line();//震动1
-            //vline1.VertAxis = VerticalAxis.Both;
+                                //vline1.VertAxis = VerticalAxis.Both;
 
             vline2 = new Line();//震动2
-            //vline2.VertAxis = VerticalAxis.Right;
+                                //vline2.VertAxis = VerticalAxis.Right;
 
             vline3 = new Line();//震动3
-            //vline3.VertAxis = VerticalAxis.Right;
+                                //vline3.VertAxis = VerticalAxis.Right;
 
             cline1 = new Line();//电流1
-            //cline1.VertAxis = VerticalAxis.Right;
+                                //cline1.VertAxis = VerticalAxis.Right;
 
             cline2 = new Line();//电流2
-            //cline2.VertAxis = VerticalAxis.Right;
+                                //cline2.VertAxis = VerticalAxis.Right;
 
             cline3 = new Line();//电流3
-            //cline3.VertAxis = VerticalAxis.Right;
+                                //cline3.VertAxis = VerticalAxis.Right;
 
 
             /// <summary>
@@ -777,7 +791,7 @@ namespace Basic_Controls
             //tChart.Axes.Bottom.Inverted = true;//控制X轴 顺序还是倒序
 
 
-            tChart.Panel.MarginRight = 10;
+            tChart.Panel.MarginLeft = 10;
             tChart.Panel.MarginRight = 10;
             tChart.Panel.MarginBottom = 10;
             tChart.Panel.MarginTop = 10;
@@ -1032,11 +1046,24 @@ namespace Basic_Controls
         /// <summary>
         /// 绘图队列
         /// </summary>
-        ConcurrentQueue<Udp_EventArgs> list_Event = new ConcurrentQueue<Udp_EventArgs>();
+        ConcurrentQueue<Udp_EventArgs> Porint_List = new ConcurrentQueue<Udp_EventArgs>();
         /// <summary>
         /// 存储数据队列
         /// </summary>
-        ConcurrentQueue<Udp_EventArgs> Db_Source = new ConcurrentQueue<Udp_EventArgs>();
+        ConcurrentQueue<Udp_EventArgs> Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
+
+        /// <summary>
+        /// 计量当前数据执行次数 （刷新清除横线时使用 重要） 停止发送数据后要归零
+        /// </summary>
+        int porintadd = 0;
+        /// <summary>
+        /// 颜色开始区域
+        /// </summary>
+        double colorFrom = 0.0;
+        /// <summary>
+        /// 颜色结束区域
+        /// </summary>
+        double colorTo = 0.0;
 
         #region  line x y轴 数据源
 
@@ -1084,11 +1111,12 @@ namespace Basic_Controls
             #endregion
 
             #region 存储数据
-
-            //Db_Save = new Thread(Test_Xml_Insert);
-            //Db_Save.IsBackground = true;
-            //Db_Save.Start();//启动线程
-
+            if (IsSaveData)
+            {
+                Db_Save = new Thread(Test_Xml_Insert);
+                Db_Save.IsBackground = true;
+                Db_Save.Start();//启动线程
+            }
             #endregion
 
             Chart_Init();
@@ -1099,22 +1127,27 @@ namespace Basic_Controls
         /// </summary>
         private void End_Chart()
         {
+            porintadd = 0;
             isAbort = false;
         }
 
         #region 队列数据处理
-
-        int porintadd = 0;
-
+        /// <summary>
+        /// 判断是否刚开始 走图形 是为false 否为true 
+        /// </summary>
+        bool istrue = false;
+        /// <summary>
+        /// 前往后走图形
+        /// </summary>
         private void Job_Queue3()
         {
             while (isAbort)
             {
                 Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-                if (list_Event.Count > 0)
+                if (Porint_List.Count > 0)
                 {
-                    list_Event.TryDequeue(out e);//取出队里数据并删除
-                                                 //截取返回数据
+                    Porint_List.TryDequeue(out e);//取出队里数据并删除
+                                                  //截取返回数据
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
@@ -1128,7 +1161,7 @@ namespace Basic_Controls
 
                             Vibration_Current vmodel = new Vibration_Current();
                             Vibration_Current vmodel1 = new Vibration_Current();
-                            int length = 24 * i;//截取位置
+                            int length = 24 * (i + 1);//截取位置
 
                             vmodel.Current1 = data.Substring(0 + length, 4);
                             vmodel.Current2 = data.Substring(4 + length, 4);
@@ -1138,13 +1171,13 @@ namespace Basic_Controls
                             vmodel.Vibration2 = data.Substring(16 + length, 4);
                             vmodel.Vibration3 = data.Substring(20 + length, 4);
                             //计算
-                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
-                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
-                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+                            double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
+                            double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
+                            double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
 
-                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
-                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
-                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
+                            double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
+                            double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
+                            double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
 
                             #region 计算保存新数据
                             if (porintadd == 0)
@@ -1155,26 +1188,23 @@ namespace Basic_Controls
                             {
                                 x = vx1[porintadd - 1] + newXvalue;//
                             }
-                            y = Convert.ToDouble(vmodel1.Vibration1);
-
-                            // vline1.Add(x, y);
                             vx1[porintadd] = x;
-                            vy1[porintadd] = y;
+                            vy1[porintadd] = Convert.ToDouble(Vibration1);
 
-                            //vx2[linlength - 1] = width;
-                            //vy2[linlength - 1] = Convert.ToDouble(vmodel1.Vibration2);
+                            vx2[porintadd] = x;
+                            vy2[porintadd] = Convert.ToDouble(Vibration2);
 
-                            //vx3[linlength - 1] = width;
-                            //vy3[linlength - 1] = Convert.ToDouble(vmodel1.Vibration3);
+                            vx3[porintadd] = x;
+                            vy3[porintadd] = Convert.ToDouble(Vibration3);
 
-                            //cx1[linlength - 1] = width;
-                            //cy1[linlength - 1] = Convert.ToDouble(vmodel1.Current1);
+                            cx1[porintadd] = x;
+                            cy1[porintadd] = Convert.ToDouble(Current1);
 
-                            //cx2[linlength - 1] = width;
-                            //cy2[linlength - 1] = Convert.ToDouble(vmodel1.Current2);
+                            cx2[porintadd] = x;
+                            cy2[porintadd] = Convert.ToDouble(Current2);
 
-                            //cx3[linlength - 1] = width;
-                            //cy3[linlength - 1] = Convert.ToDouble(vmodel1.Current3);
+                            cx3[porintadd] = x;
+                            cy3[porintadd] = Convert.ToDouble(Current3);
 
                             #endregion
                             porintadd++;
@@ -1188,11 +1218,12 @@ namespace Basic_Controls
                             istrue = true;//开启进入标识
                             double swidth = 0;//初始位置
                             double width = swidth;//结束时位置
-                            for (int i = 0; i < 1250; i++)
+                            for (int i = 0; i < 500; i++)
                             {
                                 width = Math.Round(width + newXvalue, 4);
-                                vx1[porintadd + i + 1] = width;
-                                vy1[porintadd + i + 1] = 0.0;
+                                //vx1[porintadd + i + 1] = width;
+                                //vy1[porintadd + i + 1] = 0.0;
+                                Data_Bind(i, width);
                             }
                             colorFrom = swidth;
                             colorTo = width;
@@ -1201,14 +1232,15 @@ namespace Basic_Controls
                         {
                             double swidth = Math.Round(vx1[porintadd], 4);//初始位置
                             double width = swidth;//结束时位置
-                            for (int i = 0; i < 1250; i++)
+                            for (int i = 0; i < 500; i++)
                             {
                                 int length = porintadd + i + 1;
                                 if (length < linlength - 1)
                                 {
                                     width = Math.Round(width + newXvalue, 4);
-                                    vx1[porintadd + i + 1] = width;
-                                    vy1[porintadd + i + 1] = 0.0;
+                                    //vx1[porintadd + i + 1] = width;
+                                    //vy1[porintadd + i + 1] = 0.0;
+                                    Data_Bind(i, width);
                                 }
                                 else
                                 {
@@ -1223,16 +1255,41 @@ namespace Basic_Controls
                 }
             }
         }
-        bool istrue = false;
+
+        private void Data_Bind(int index, double width)
+        {
+            vx1[porintadd + index + 1] = width;
+            vy1[porintadd + index + 1] = 0.0;
+
+            vx2[porintadd + index + 1] = width;
+            vy2[porintadd + index + 1] = 0.0;
+
+            vx3[porintadd + index + 1] = width;
+            vy3[porintadd + index + 1] = 0.0;
+
+            cx1[porintadd + index + 1] = width;
+            cy1[porintadd + index + 1] = 0.0;
+
+            cx2[porintadd + index + 1] = width;
+            cy2[porintadd + index + 1] = 0.0;
+
+            cx3[porintadd + index + 1] = width;
+            cy3[porintadd + index + 1] = 0.0;
+
+        }
+
+        /// <summary>
+        /// 后往前走数据
+        /// </summary>
         private void Job_Queue()
         {
             while (isAbort)
             {
                 Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-                if (list_Event.Count > 0)
+                if (Porint_List.Count > 0)
                 {
-                    list_Event.TryDequeue(out e);//取出队里数据并删除
-                                                 //截取返回数据
+                    Porint_List.TryDequeue(out e);//取出队里数据并删除
+                                                  //截取返回数据
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
@@ -1334,16 +1391,14 @@ namespace Basic_Controls
             while (isAbort)
             {
                 Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-                if (list_Event.Count > 0)
+                if (Porint_List.Count > 0)
                 {
-                    list_Event.TryDequeue(out e);//取出队里数据并删除
-                                                 //截取返回数据
+                    Porint_List.TryDequeue(out e);//取出队里数据并删除
+                                                  //截取返回数据
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
                         //string head = e.Msg.Substring(4, 4);
-
-
 
                         int Porints = 80 / LessPoint;
                         for (int i = 0; i < Porints; i++)
@@ -1500,21 +1555,13 @@ namespace Basic_Controls
                         Line_Bind();
                     }));
                     //死循环
-                    Thread.Sleep(50);//多图标使用150单图表使用 150/6 15
+                    Thread.Sleep(150);//多图标使用150单图表使用 150/6 15
                 }
                 catch (Exception ex)
                 {
                 }
             }
         }
-        /// <summary>
-        /// 颜色开始区域
-        /// </summary>
-        double colorFrom = 0.0;
-        /// <summary>
-        /// 颜色结束区域
-        /// </summary>
-        double colorTo = 0.0;
 
         /// <summary>
         /// 绑定 line线
@@ -1537,46 +1584,68 @@ namespace Basic_Controls
             }
             if (v2)
             {
+                vline2.XValues.Clear();
+                vline2.YValues.Clear();
                 vline2.Add(vx2, vy2);
                 //控制颜色
-                ValueList vlist = vline2.ValuesLists[0];
-                vline2.Colors.Clear();
-                vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
-
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = vline2.ValuesLists[0];
+                    vline2.Colors.Clear();
+                    vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
             }
             if (v3)
             {
+                vline3.XValues.Clear();
+                vline3.YValues.Clear();
                 vline3.Add(vx3, vy3);
                 //控制颜色
-                ValueList vlist = vline3.ValuesLists[0];
-                vline3.Colors.Clear();
-                vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
-
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = vline3.ValuesLists[0];
+                    vline3.Colors.Clear();
+                    vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
             }
             if (c1)
             {
+                cline1.XValues.Clear();
+                cline1.YValues.Clear();
                 cline1.Add(cx1, cy1);
                 //控制颜色
-                ValueList vlist = cline1.ValuesLists[0];
-                cline1.Colors.Clear();
-                cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = cline1.ValuesLists[0];
+                    cline1.Colors.Clear();
+                    cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
             }
             if (c2)
             {
+                cline2.XValues.Clear();
+                cline2.YValues.Clear();
                 cline2.Add(cx2, cy2);
                 //控制颜色
-                ValueList vlist = cline2.ValuesLists[0];
-                cline2.Colors.Clear();
-                cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = cline2.ValuesLists[0];
+                    cline2.Colors.Clear();
+                    cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
             }
             if (c3)
             {
+                cline3.XValues.Clear();
+                cline3.YValues.Clear();
                 cline3.Add(cx3, cy3);
                 //控制颜色
-                ValueList vlist = cline3.ValuesLists[0];
-                cline3.Colors.Clear();
-
-                cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                if (colorTo > 0 || colorFrom > 0)
+                {
+                    ValueList vlist = cline3.ValuesLists[0];
+                    cline3.Colors.Clear();
+                    cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                }
             }
         }
 
@@ -1633,22 +1702,18 @@ namespace Basic_Controls
                 else
                 {
                     DataTable dt = ds.Tables[0];
-
                     DataRow[] newdt = dt.Select(" name='TEST_COFIGE'");
-
                     if (newdt.Length == 0)
                     {
                         string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
                         SQLiteHelper.NewTable(DbStr);
                     }
                     newdt = dt.Select(" name='TEST_DATA'");
-
                     if (newdt.Length == 0)
                     {
                         string DbStr = Create_Table.Instance.Create_TEST_DATA();
                         SQLiteHelper.NewTable(DbStr);
                     }
-
                 }
             }
             catch (Exception ex)
@@ -1668,13 +1733,13 @@ namespace Basic_Controls
             try
             {
                 int i = 1;
-                while (isAbort || Db_Source.Count > 0)
+                while (isAbort || Save_Db_Source.Count > 0)
                 {
-                    if (Db_Source.Count > 0)
+                    if (Save_Db_Source.Count > 0)
                     {
                         Udp_EventArgs e = new Udp_EventArgs();
 
-                        Db_Source.TryDequeue(out e);//取出队里数据并删除
+                        Save_Db_Source.TryDequeue(out e);//取出队里数据并删除
                         Xml_Node_Model model = new Xml_Node_Model();
                         model.Id = e.Msg.Substring(4, 4); ;
                         model.DataSource = e.Msg;
@@ -1690,7 +1755,6 @@ namespace Basic_Controls
                         i++;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -1698,10 +1762,22 @@ namespace Basic_Controls
             }
         }
 
-
         #endregion
 
         #endregion
+
+        #endregion
+
+        #region 绑定测试计划
+
+        public void Tester_List_Bind()
+        {
+
+            DataTable dt = Db_Select.Instance.All_Test_Cofig_Get();
+
+        }
+
+
 
         #endregion
 

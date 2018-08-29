@@ -50,52 +50,63 @@ namespace Commons
         //将List转换为TXT文件
         public void WriteListToTextFile(List<DataModel> list, string txtFile)
         {
-            FileStream fs;
-            if (File.Exists(txtFile))
+            try
             {
-                // MessageBox.Show("文件存在");
-                fs = new FileStream(txtFile + "\\TestTxt.txt", FileMode.Open, FileAccess.Write);
-            }
-            else
-            {
-                // MessageBox.Show("无此文件");
-                fs = new FileStream(txtFile + "\\TestTxt.txt", FileMode.OpenOrCreate, FileAccess.Write);
-            }
-            //创建一个文件流，用以写入或者创建一个StreamWriter
-
-            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);//转码
-            sw.Flush();
-            //使用StreamWriter来往文件中写入内容
-            sw.BaseStream.Seek(0, SeekOrigin.Begin);
-
-            var nlist = list.OrderByDescending(x => x.id);
-
-            foreach (DataModel item in nlist)
-            {
-                sw.WriteLine("序号：" + item.id);
-                sw.WriteLine("序号16：" + item.head);
-
-                sw.WriteLine("文本：" + item.text);
-                sw.WriteLine("开始解析---------------------------------------------------------------------------------");
-
-                for (int i = 0; i < item.old_data.Count; i++)
+                FileStream fs;
+                if (File.Exists(txtFile))
                 {
-                    sw.WriteLine("电流1: " + item.old_data[i].Current1 + " :" + item.new_data[i].Current1);
-                    sw.WriteLine("电流2: " + item.old_data[i].Current2 + " :" + item.new_data[i].Current2);
-                    sw.WriteLine("电流3: " + item.old_data[i].Current3 + " :" + item.new_data[i].Current3);
+                    // MessageBox.Show("文件存在");
+                    fs = new FileStream(txtFile + "\\TestTxt.txt", FileMode.Open, FileAccess.Write);
+                }
+                else
+                {
+                    // MessageBox.Show("无此文件");
+                    fs = new FileStream(txtFile + "\\TestTxt.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                }
+                //创建一个文件流，用以写入或者创建一个StreamWriter
 
-                    sw.WriteLine("震动1: " + item.old_data[i].Vibration1 + " :" + item.new_data[i].Vibration1);
-                    sw.WriteLine("震动2: " + item.old_data[i].Vibration2 + " :" + item.new_data[i].Vibration2);
-                    sw.WriteLine("震动3: " + item.old_data[i].Vibration3 + " :" + item.new_data[i].Vibration3);
-                };
-                sw.WriteLine("结束解析---------------------------------------------------------------------------------");
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);//转码
+                sw.Flush();
+                //使用StreamWriter来往文件中写入内容
+                sw.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                var nlist = list.OrderByDescending(x => x.id);
+
+                foreach (DataModel item in nlist)
+                {
+                    sw.WriteLine("序号：" + item.id);
+                    //sw.WriteLine("序号16：" + item.head);
+
+                    sw.WriteLine("文本：" + item.text);
+                    sw.WriteLine("开始解析---------------------------------------------------------------------------------");
+
+                    for (int i = 0; i < item.old_data.Count; i++)
+                    {
+                        //sw.WriteLine("电流1: " + item.old_data[i].Current1 + " :" + item.new_data[i].Current1);
+                        //sw.WriteLine("电流2: " + item.old_data[i].Current2 + " :" + item.new_data[i].Current2);
+                        //sw.WriteLine("电流3: " + item.old_data[i].Current3 + " :" + item.new_data[i].Current3);
+
+                        sw.WriteLine("震动1: " + item.old_data[i].Vibration1 + " :" + item.new_data[i].Vibration1);
+                        //sw.WriteLine("震动2: " + item.old_data[i].Vibration2 + " :" + item.new_data[i].Vibration2);
+                        //sw.WriteLine("震动3: " + item.old_data[i].Vibration3 + " :" + item.new_data[i].Vibration3);
+                    };
+                    sw.WriteLine("结束解析---------------------------------------------------------------------------------");
+
+                }
+
+                //关闭此文件
+                sw.Flush();
+                sw.Close();
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
 
             }
+            finally
+            {
 
-            //关闭此文件
-            sw.Flush();
-            sw.Close();
-            fs.Close();
+            }
         }
 
 
@@ -148,12 +159,12 @@ namespace Commons
             string path = txtFile + "TestTxttext.txt";
             if (File.Exists(path))
             {
-                sw = new StreamWriter(path, true,Encoding.UTF8);//转码
+                sw = new StreamWriter(path, true, Encoding.UTF8);//转码
 
                 //创建一个文件流，用以写入或者创建一个StreamWriter
                 sw.Flush();
                 //使用StreamWriter来往文件中写入内容
-             //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
+                //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
                 sw.WriteLine(DateTime.Now.ToString("O") + " : " + text);
                 //关闭此文件
                 sw.Flush();
@@ -193,7 +204,7 @@ namespace Commons
                 sw.Flush();
                 //使用StreamWriter来往文件中写入内容
                 //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
-                sw.WriteLine( text);
+                sw.WriteLine(text);
                 //关闭此文件
                 sw.Flush();
                 sw.Close();
