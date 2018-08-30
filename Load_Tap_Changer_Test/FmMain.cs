@@ -28,6 +28,9 @@ using System.Xml;
 using Steema.TeeChart.Tools;
 using DbHelper;
 using System.Configuration;
+using DbHelper.Db_Model;
+using DevExpress.XtraTreeList.Nodes;
+using DevExpress.XtraTreeList;
 
 namespace Basic_Controls
 {
@@ -44,6 +47,7 @@ namespace Basic_Controls
             Event_Bind();//绑定注册事件
             Chart_Init();//初始化图表
             CreateDb();//生成数据库
+            Tester_List_Bind();//获取测试计划绑定到页面树
         }
 
         #region 页面初始化参数
@@ -89,29 +93,11 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnAddTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //int index = 0;
-            //using (FmTestSelect form = new FmTestSelect())
-            //{
-            //    form.ShowDialog();
-            //    index = form.index;
-            //}
-
-            //if (index == 1)// 加载一个存在的测试计划
-            //{
-
-            //}
-            //else if (index == 2)//加载分析测试数据
-            //{
-
-            //}
-            //else if (index == 3)///新建测试计划
-            //{
             using (FmAddTest form = new FmAddTest())
             {
                 form.ShowDialog();
             }
-            //}
-
+            Tester_List_Bind();
         }
 
         /// <summary>
@@ -216,7 +202,7 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnETest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void btnStopTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
@@ -347,11 +333,14 @@ namespace Basic_Controls
         #endregion
 
         #endregion
+        #region 调用方法
+
         /// <summary>
         /// s设备IP
         /// </summary>
         string DvIp = ConfigurationManager.ConnectionStrings["DvIp"].ConnectionString.ToString();
-        #region 调用方法
+
+
         /// <summary>
         /// 发送协议
         /// </summary>
@@ -1768,18 +1757,109 @@ namespace Basic_Controls
 
         #endregion
 
-        #region 绑定测试计划
+        #region 页面控件数据操作
 
+        #region 绑定测试计划
+        /// <summary>
+        /// 获取测试计划绑定到页面树
+        /// </summary>
         public void Tester_List_Bind()
         {
-
-            DataTable dt = Db_Select.Instance.All_Test_Cofig_Get();
-
+            List<Test_Plan> list = Db_Select.Instance.All_Test_Cofig_Get();
+            treeList.DataSource = list;
+            treeList.Refresh();
         }
 
+        #endregion
 
+        /// <summary>
+        /// 单击树 行获取 行信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
+        {
+            string id = e.Node.GetValue("ID").ToString();
+            string NAME = e.Node.GetValue("DVNAME").ToString();
+            string PNAME = e.Node.GetValue("PARENTID").ToString();
+        }
+
+        /// <summary>
+        /// 双击修改 该条内容
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeList_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left && e.Clicks == 2)
+            {
+                //确定双击区域是否在 treelist范围里面
+                TreeListHitInfo hitInfo = (sender as TreeList).CalcHitInfo(new Point(e.X, e.Y));
+                TreeListNode node = hitInfo.Node;
+
+                if (node != null)
+                {
+                    //取得选定行信息  
+                    Test_Plan model = Test_Plan_Bind(node);
+                    using (FmAddTest form = new FmAddTest(model))
+                    {
+                        form.ShowDialog();
+                    }
+                    Tester_List_Bind();
+                }
+            }
+        }
+        /// <summary>
+        /// 绑定选中行数据到实体
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private Test_Plan Test_Plan_Bind(TreeListNode node)
+        {
+            try
+            {
+                Test_Plan model = new Test_Plan();
+                model.DVNAME = node.GetValue("DVNAME").ToString();
+                model.DVPOSITION = node.GetValue("DVPOSITION").ToString();
+                model.DVID = node.GetValue("DVID").ToString();
+                model.TESTER = node.GetValue("TESTER").ToString();
+                model.OLTC_TS = node.GetValue("OLTC_TS").ToString();
+
+                model.CONTACT_NUM = node.GetValue("CONTACT_NUM").ToString();
+                model.TEST_NUM = node.GetValue("TEST_NUM").ToString();
+                model.SPLACE = node.GetValue("SPLACE").ToString();
+                model.OILTEMP = node.GetValue("OILTEMP").ToString();
+                model.TEST_TIME = node.GetValue("TEST_TIME").ToString();
+
+                model.TEST_TYPE = node.GetValue("TEST_TYPE").ToString();
+                model.GETINFO = node.GetValue("GETINFO").ToString();
+                model.TESTSTAGE = node.GetValue("TESTSTAGE").ToString();
+                model.DJUST = node.GetValue("DJUST").ToString();
+                model.DESCRIBE = node.GetValue("DESCRIBE").ToString();
+
+                model.SCURRENT = node.GetValue("SCURRENT").ToString();
+                model.ECURRENT = node.GetValue("ECURRENT").ToString();
+                model.TIME_UNIT = node.GetValue("TIME_UNIT").ToString();
+                model.V1 = node.GetValue("V1").ToString();
+                model.V2 = node.GetValue("V2").ToString();
+
+                model.V3 = node.GetValue("V3").ToString();
+                model.C1 = node.GetValue("C1").ToString();
+                model.C2 = node.GetValue("C2").ToString();
+                model.C3 = node.GetValue("C3").ToString();
+                model.PARENTID = node.GetValue("PARENTID").ToString();
+                model.ID = node.GetValue("ID").ToString();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         #endregion
+
 
     }
 }

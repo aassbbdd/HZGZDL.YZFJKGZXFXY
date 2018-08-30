@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.radioGroup1 = new DevExpress.XtraEditors.RadioGroup();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.txtCONTACT_NUM = new DevExpress.XtraEditors.TextEdit();
@@ -50,8 +50,6 @@
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.txtDescribe = new DevExpress.XtraEditors.MemoEdit();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.textEdit8 = new DevExpress.XtraEditors.TextEdit();
-            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
             this.rdoTEST_TYPE = new DevExpress.XtraEditors.RadioGroup();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.ckwh = new DevExpress.XtraEditors.CheckEdit();
@@ -88,9 +86,11 @@
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
+            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
+            this.lbHearder = new DevExpress.XtraEditors.LabelControl();
+            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCONTACT_NUM.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOLTC_TS.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTESTER.Properties)).BeginInit();
@@ -101,7 +101,6 @@
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescribe.Properties)).BeginInit();
             this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit8.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdoTEST_TYPE.Properties)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckwh.Properties)).BeginInit();
@@ -128,12 +127,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.txtDVNAME);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.labelControl8);
             this.groupBox1.Controls.Add(this.labelControl7);
@@ -142,7 +143,6 @@
             this.groupBox1.Controls.Add(this.txtTESTER);
             this.groupBox1.Controls.Add(this.txtDVID);
             this.groupBox1.Controls.Add(this.txtDVPOSITION);
-            this.groupBox1.Controls.Add(this.txtDVNAME);
             this.groupBox1.Controls.Add(this.labelControl6);
             this.groupBox1.Controls.Add(this.labelControl5);
             this.groupBox1.Controls.Add(this.labelControl4);
@@ -160,26 +160,20 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.radioGroup1);
-            this.groupBox4.Location = new System.Drawing.Point(317, 41);
+            this.groupBox4.Controls.Add(this.lbHearder);
+            this.groupBox4.Controls.Add(this.labelControl17);
+            this.groupBox4.Location = new System.Drawing.Point(317, 45);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(273, 124);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "触头名";
             // 
-            // radioGroup1
-            // 
-            this.radioGroup1.Location = new System.Drawing.Point(0, 25);
-            this.radioGroup1.Name = "radioGroup1";
-            this.radioGroup1.Size = new System.Drawing.Size(273, 93);
-            this.radioGroup1.TabIndex = 0;
-            // 
             // labelControl8
             // 
             this.labelControl8.Appearance.ForeColor = System.Drawing.Color.Red;
             this.labelControl8.Appearance.Options.UseForeColor = true;
-            this.labelControl8.Location = new System.Drawing.Point(84, 147);
+            this.labelControl8.Location = new System.Drawing.Point(84, 151);
             this.labelControl8.Name = "labelControl8";
             this.labelControl8.Size = new System.Drawing.Size(8, 18);
             this.labelControl8.TabIndex = 13;
@@ -197,35 +191,39 @@
             // 
             // txtCONTACT_NUM
             // 
-            this.txtCONTACT_NUM.Location = new System.Drawing.Point(134, 145);
+            this.txtCONTACT_NUM.Location = new System.Drawing.Point(134, 149);
             this.txtCONTACT_NUM.Name = "txtCONTACT_NUM";
+            this.txtCONTACT_NUM.Properties.Mask.EditMask = "[0-9]*";
+            this.txtCONTACT_NUM.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.txtCONTACT_NUM.Size = new System.Drawing.Size(124, 24);
             this.txtCONTACT_NUM.TabIndex = 11;
+            this.txtCONTACT_NUM.EditValueChanged += new System.EventHandler(this.txtCONTACT_NUM_EditValueChanged);
+            this.txtCONTACT_NUM.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCONTACT_NUM_KeyDown);
             // 
             // txtOLTC_TS
             // 
-            this.txtOLTC_TS.Location = new System.Drawing.Point(134, 119);
+            this.txtOLTC_TS.Location = new System.Drawing.Point(134, 123);
             this.txtOLTC_TS.Name = "txtOLTC_TS";
             this.txtOLTC_TS.Size = new System.Drawing.Size(124, 24);
             this.txtOLTC_TS.TabIndex = 10;
             // 
             // txtTESTER
             // 
-            this.txtTESTER.Location = new System.Drawing.Point(134, 93);
+            this.txtTESTER.Location = new System.Drawing.Point(134, 97);
             this.txtTESTER.Name = "txtTESTER";
             this.txtTESTER.Size = new System.Drawing.Size(124, 24);
             this.txtTESTER.TabIndex = 9;
             // 
             // txtDVID
             // 
-            this.txtDVID.Location = new System.Drawing.Point(134, 67);
+            this.txtDVID.Location = new System.Drawing.Point(134, 71);
             this.txtDVID.Name = "txtDVID";
             this.txtDVID.Size = new System.Drawing.Size(124, 24);
             this.txtDVID.TabIndex = 8;
             // 
             // txtDVPOSITION
             // 
-            this.txtDVPOSITION.Location = new System.Drawing.Point(134, 41);
+            this.txtDVPOSITION.Location = new System.Drawing.Point(134, 45);
             this.txtDVPOSITION.Name = "txtDVPOSITION";
             this.txtDVPOSITION.Size = new System.Drawing.Size(124, 24);
             this.txtDVPOSITION.TabIndex = 7;
@@ -234,14 +232,14 @@
             // 
             this.txtDVNAME.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDVNAME.Location = new System.Drawing.Point(134, 15);
+            this.txtDVNAME.Location = new System.Drawing.Point(134, 14);
             this.txtDVNAME.Name = "txtDVNAME";
             this.txtDVNAME.Size = new System.Drawing.Size(456, 24);
             this.txtDVNAME.TabIndex = 6;
             // 
             // labelControl6
             // 
-            this.labelControl6.Location = new System.Drawing.Point(6, 148);
+            this.labelControl6.Location = new System.Drawing.Point(6, 152);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(79, 18);
             this.labelControl6.TabIndex = 5;
@@ -249,7 +247,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(6, 125);
+            this.labelControl5.Location = new System.Drawing.Point(6, 129);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(86, 18);
             this.labelControl5.TabIndex = 4;
@@ -257,7 +255,7 @@
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(6, 99);
+            this.labelControl4.Location = new System.Drawing.Point(6, 103);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(124, 18);
             this.labelControl4.TabIndex = 3;
@@ -265,7 +263,7 @@
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(6, 73);
+            this.labelControl3.Location = new System.Drawing.Point(6, 77);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(79, 18);
             this.labelControl3.TabIndex = 2;
@@ -273,7 +271,7 @@
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(6, 47);
+            this.labelControl2.Location = new System.Drawing.Point(6, 51);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(79, 18);
             this.labelControl2.TabIndex = 1;
@@ -344,8 +342,6 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.textEdit8);
-            this.groupBox8.Controls.Add(this.labelControl17);
             this.groupBox8.Controls.Add(this.rdoTEST_TYPE);
             this.groupBox8.Location = new System.Drawing.Point(6, 128);
             this.groupBox8.Name = "groupBox8";
@@ -353,21 +349,6 @@
             this.groupBox8.TabIndex = 20;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "测试类型";
-            // 
-            // textEdit8
-            // 
-            this.textEdit8.Location = new System.Drawing.Point(128, 106);
-            this.textEdit8.Name = "textEdit8";
-            this.textEdit8.Size = new System.Drawing.Size(57, 24);
-            this.textEdit8.TabIndex = 18;
-            // 
-            // labelControl17
-            // 
-            this.labelControl17.Location = new System.Drawing.Point(8, 109);
-            this.labelControl17.Name = "labelControl17";
-            this.labelControl17.Size = new System.Drawing.Size(50, 18);
-            this.labelControl17.TabIndex = 6;
-            this.labelControl17.Text = "触头数:";
             // 
             // rdoTEST_TYPE
             // 
@@ -704,6 +685,21 @@
             this.ckV1.Size = new System.Drawing.Size(62, 22);
             this.ckV1.TabIndex = 0;
             // 
+            // labelControl17
+            // 
+            this.labelControl17.Location = new System.Drawing.Point(16, 29);
+            this.labelControl17.Name = "labelControl17";
+            this.labelControl17.Size = new System.Drawing.Size(75, 18);
+            this.labelControl17.TabIndex = 12;
+            this.labelControl17.Text = "触头序号：";
+            // 
+            // lbHearder
+            // 
+            this.lbHearder.Location = new System.Drawing.Point(97, 29);
+            this.lbHearder.Name = "lbHearder";
+            this.lbHearder.Size = new System.Drawing.Size(0, 18);
+            this.lbHearder.TabIndex = 13;
+            // 
             // FmAddTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -720,10 +716,11 @@
             this.Name = "FmAddTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "新建测试计划";
+            this.Load += new System.EventHandler(this.FmAddTest_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).EndInit();
+            this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCONTACT_NUM.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOLTC_TS.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTESTER.Properties)).EndInit();
@@ -735,8 +732,6 @@
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtDescribe.Properties)).EndInit();
             this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit8.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdoTEST_TYPE.Properties)).EndInit();
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ckwh.Properties)).EndInit();
@@ -764,6 +759,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -790,7 +786,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl7;
         private DevExpress.XtraEditors.LabelControl labelControl8;
         private System.Windows.Forms.GroupBox groupBox4;
-        private DevExpress.XtraEditors.RadioGroup radioGroup1;
         private DevExpress.XtraEditors.RadioGroup rdoGETINFO;
         private DevExpress.XtraEditors.TextEdit txtSA;
         private DevExpress.XtraEditors.LabelControl labelControl9;
@@ -826,9 +821,10 @@
         private DevExpress.XtraEditors.CheckEdit cktest2;
         private DevExpress.XtraEditors.CheckEdit cktest1;
         private System.Windows.Forms.GroupBox groupBox9;
-        private DevExpress.XtraEditors.TextEdit textEdit8;
-        private DevExpress.XtraEditors.LabelControl labelControl17;
         private DevExpress.XtraEditors.MemoEdit txtDescribe;
         private DevExpress.XtraEditors.LabelControl labelControl18;
+        private DevExpress.XtraEditors.LabelControl lbHearder;
+        private DevExpress.XtraEditors.LabelControl labelControl17;
+        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
     }
 }

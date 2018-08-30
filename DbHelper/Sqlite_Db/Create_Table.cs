@@ -57,6 +57,8 @@ namespace DbHelper.Sqlite_Db
             sbsql.Append(@"   create table TEST_COFIGE
                                 (
                                    ID                  integer       not null          primary key autoincrement,
+
+                                   PARENTID               varchar(20)                   null,
                                    DVNAME               varchar(200)                   null,
                                    DVPOSITION           varchar(200)                   null,
                                    DVID                 varchar(20)                    null,

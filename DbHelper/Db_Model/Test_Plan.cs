@@ -14,7 +14,12 @@ namespace DbHelper.Db_Model
         /// <summary>
         /// 序号
         /// </summary>
-        public int ID { get; set; }
+        public string ID { get; set; }
+
+        /// <summary>
+        /// 子元素
+        /// </summary>
+        public string PARENTID { get; set; }
 
         /// <summary>
         /// 设备名字
