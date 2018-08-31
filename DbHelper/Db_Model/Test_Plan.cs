@@ -117,7 +117,10 @@ namespace DbHelper.Db_Model
         public string C1 { get; set; }
         public string C2 { get; set; }
         public string C3 { get; set; }
-
+        /// <summary>
+        /// 修改添加标识 1新增2修改
+        /// </summary>
+        public string ISEDIT { get; set; }
 
     }
 }

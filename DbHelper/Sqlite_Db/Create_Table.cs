@@ -49,12 +49,12 @@ namespace DbHelper.Sqlite_Db
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        public string Create_TEST_COFIGE()
+        public string Create_TEST_CONFIGE()
         {
             StringBuilder sbsql = new StringBuilder();
-            sbsql.Append("drop table if exists TEST_COFIGE; ");
+            sbsql.Append("drop table if exists TEST_CONFIGE; ");
 
-            sbsql.Append(@"   create table TEST_COFIGE
+            sbsql.Append(@"   create table TEST_CONFIGE
                                 (
                                    ID                  integer       not null          primary key autoincrement,
 

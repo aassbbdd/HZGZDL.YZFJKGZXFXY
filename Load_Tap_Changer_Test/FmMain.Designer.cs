@@ -41,6 +41,7 @@
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSaveData = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem2 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnSaveImg = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem3 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem4 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -88,17 +89,12 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem6 = new DevExpress.XtraBars.BarButtonItem();
-            this.barLinkContainerItem1 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.barButtonItem20 = new DevExpress.XtraBars.BarButtonItem();
-            this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
             this.barLargeButtonItem1 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barListItem1 = new DevExpress.XtraBars.BarListItem();
-            this.barLargeButtonItem19 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
             this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
@@ -116,8 +112,14 @@
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
             this.treeList = new DevExpress.XtraTreeList.TreeList();
             this.ID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.删除 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.barLargeButtonItem9 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.pc2 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -129,7 +131,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.删除)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pc2)).BeginInit();
+            this.pc2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // barButtonItem7
@@ -177,11 +183,8 @@
             this.barManager1.Form = this;
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.barButtonItem1,
-            this.barButtonItem2,
-            this.barButtonItem3,
             this.barButtonItem4,
             this.barButtonItem5,
-            this.barButtonItem6,
             this.barButtonItem7,
             this.barButtonItem8,
             this.barSubItem1,
@@ -189,7 +192,6 @@
             this.barButtonItem10,
             this.barButtonItem11,
             this.barButtonItem12,
-            this.barLinkContainerItem1,
             this.barButtonItem13,
             this.barButtonItem14,
             this.barButtonItem15,
@@ -202,7 +204,6 @@
             this.barSubItem2,
             this.barSubItem3,
             this.barSubItem4,
-            this.barCheckItem2,
             this.barButtonItem21,
             this.barLargeButtonItem1,
             this.btnAddTest,
@@ -233,13 +234,14 @@
             this.barLargeButtonItem16,
             this.barLargeButtonItem17,
             this.barLargeButtonItem18,
-            this.barLargeButtonItem19,
             this.barLargeButtonItem20,
             this.barLargeButtonItem21,
             this.barLargeButtonItem22,
-            this.barLargeButtonItem23});
+            this.barLargeButtonItem23,
+            this.btnSaveImg,
+            this.barButtonItem2});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 105;
+            this.barManager1.MaxItemId = 107;
             // 
             // bar1
             // 
@@ -253,6 +255,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnLond),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveData),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSaveImg, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem3, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem4, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -313,6 +316,14 @@
             this.barLargeButtonItem2.Id = 85;
             this.barLargeButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem2.ImageOptions.Image")));
             this.barLargeButtonItem2.Name = "barLargeButtonItem2";
+            // 
+            // btnSaveImg
+            // 
+            this.btnSaveImg.Caption = "存图片";
+            this.btnSaveImg.Id = 105;
+            this.btnSaveImg.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveImg.ImageOptions.Image")));
+            this.btnSaveImg.Name = "btnSaveImg";
+            this.btnSaveImg.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSaveImg_ItemClick);
             // 
             // barLargeButtonItem3
             // 
@@ -651,47 +662,17 @@
             this.barButtonItem1.Name = "barButtonItem1";
             this.barButtonItem1.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.Caption;
             // 
-            // barButtonItem2
-            // 
-            this.barButtonItem2.Caption = "barButtonItem2";
-            this.barButtonItem2.Id = 1;
-            this.barButtonItem2.Name = "barButtonItem2";
-            // 
-            // barButtonItem3
-            // 
-            this.barButtonItem3.Caption = "barButtonItem3";
-            this.barButtonItem3.Id = 2;
-            this.barButtonItem3.Name = "barButtonItem3";
-            // 
             // barButtonItem4
             // 
             this.barButtonItem4.Caption = "测试计划构成";
             this.barButtonItem4.Id = 3;
             this.barButtonItem4.Name = "barButtonItem4";
             // 
-            // barButtonItem6
-            // 
-            this.barButtonItem6.Caption = "barButtonItem6";
-            this.barButtonItem6.Id = 5;
-            this.barButtonItem6.Name = "barButtonItem6";
-            // 
-            // barLinkContainerItem1
-            // 
-            this.barLinkContainerItem1.Caption = "barLinkContainerItem1";
-            this.barLinkContainerItem1.Id = 13;
-            this.barLinkContainerItem1.Name = "barLinkContainerItem1";
-            // 
             // barButtonItem20
             // 
             this.barButtonItem20.Caption = "barButtonItem20";
             this.barButtonItem20.Id = 22;
             this.barButtonItem20.Name = "barButtonItem20";
-            // 
-            // barCheckItem2
-            // 
-            this.barCheckItem2.Caption = "barCheckItem2";
-            this.barCheckItem2.Id = 26;
-            this.barCheckItem2.Name = "barCheckItem2";
             // 
             // barLargeButtonItem1
             // 
@@ -715,11 +696,12 @@
             this.barListItem1.Id = 96;
             this.barListItem1.Name = "barListItem1";
             // 
-            // barLargeButtonItem19
+            // barButtonItem2
             // 
-            this.barLargeButtonItem19.Caption = "barLargeButtonItem19";
-            this.barLargeButtonItem19.Id = 100;
-            this.barLargeButtonItem19.Name = "barLargeButtonItem19";
+            this.barButtonItem2.Caption = "删除";
+            this.barButtonItem2.Id = 106;
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 
             // pclChart
             // 
@@ -727,9 +709,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pclChart.Location = new System.Drawing.Point(225, 112);
+            this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(1088, 517);
+            this.pclChart.Size = new System.Drawing.Size(1095, 517);
             this.pclChart.TabIndex = 30;
             // 
             // btnEnlarge
@@ -785,7 +767,7 @@
             this.panelControl1.Controls.Add(this.ckV1);
             this.panelControl1.Location = new System.Drawing.Point(1311, 112);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(187, 520);
+            this.panelControl1.Size = new System.Drawing.Size(187, 517);
             this.panelControl1.TabIndex = 52;
             // 
             // btnClear
@@ -872,26 +854,34 @@
             // 
             // treeList
             // 
-            this.treeList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeList.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.ID});
+            this.treeList.Cursor = System.Windows.Forms.Cursors.Default;
             this.treeList.CustomizationFormBounds = new System.Drawing.Rectangle(1309, 565, 220, 265);
-            this.treeList.Location = new System.Drawing.Point(0, 112);
+            this.treeList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeList.Location = new System.Drawing.Point(2, 2);
             this.treeList.Name = "treeList";
             this.treeList.OptionsBehavior.PopulateServiceColumns = true;
+            this.treeList.OptionsMenu.ShowConditionalFormattingItem = true;
+            this.treeList.OptionsView.ShowIndicator = false;
             this.treeList.ParentFieldName = "PARENTID";
             this.treeList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemTextEdit1});
-            this.treeList.Size = new System.Drawing.Size(219, 517);
+            this.删除,
+            this.repositoryItemButtonEdit1});
+            this.treeList.SelectImageList = this.imageList;
+            this.treeList.Size = new System.Drawing.Size(214, 513);
             this.treeList.TabIndex = 57;
+            this.treeList.GetSelectImage += new DevExpress.XtraTreeList.GetSelectImageEventHandler(this.treeList_GetSelectImage);
             this.treeList.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeList_FocusedNodeChanged);
+            this.treeList.CustomDrawNodeImages += new DevExpress.XtraTreeList.CustomDrawNodeImagesEventHandler(this.treeList_CustomDrawNodeImages);
             this.treeList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeList_MouseDown);
+            this.treeList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeList_MouseUp);
             // 
             // ID
             // 
             this.ID.Caption = "设备名字";
             this.ID.FieldName = "DVNAME";
+            this.ID.MinWidth = 34;
             this.ID.Name = "ID";
             this.ID.OptionsColumn.AllowEdit = false;
             this.ID.OptionsColumn.AllowMove = false;
@@ -899,10 +889,28 @@
             this.ID.Visible = true;
             this.ID.VisibleIndex = 0;
             // 
-            // repositoryItemTextEdit1
+            // 删除
             // 
-            this.repositoryItemTextEdit1.AutoHeight = false;
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            this.删除.AutoHeight = false;
+            this.删除.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.删除.Name = "删除";
+            // 
+            // repositoryItemButtonEdit1
+            // 
+            this.repositoryItemButtonEdit1.AutoHeight = false;
+            this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "1.jpg");
+            this.imageList.Images.SetKeyName(1, "2.jpg");
+            this.imageList.Images.SetKeyName(2, "3.jpg");
+            this.imageList.Images.SetKeyName(3, "4.jpg");
             // 
             // barLargeButtonItem9
             // 
@@ -910,12 +918,47 @@
             this.barLargeButtonItem9.Id = 89;
             this.barLargeButtonItem9.Name = "barLargeButtonItem9";
             // 
+            // pc2
+            // 
+            this.pc2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pc2.Controls.Add(this.treeList);
+            this.pc2.Controls.Add(this.labelControl1);
+            this.pc2.Controls.Add(this.labelControl2);
+            this.pc2.Location = new System.Drawing.Point(0, 112);
+            this.pc2.Name = "pc2";
+            this.pc2.Size = new System.Drawing.Size(218, 517);
+            this.pc2.TabIndex = 53;
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(94, 489);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(81, 18);
+            this.labelControl1.TabIndex = 42;
+            this.labelControl1.Text = "labelControl2";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(12, 489);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(81, 18);
+            this.labelControl2.TabIndex = 41;
+            this.labelControl2.Text = "labelControl1";
+            // 
+            // popupMenu
+            // 
+            this.popupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            this.popupMenu.Manager = this.barManager1;
+            this.popupMenu.Name = "popupMenu";
+            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1498, 633);
-            this.Controls.Add(this.treeList);
+            this.Controls.Add(this.pc2);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);
             this.Controls.Add(this.barDockControlLeft);
@@ -940,7 +983,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.删除)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pc2)).EndInit();
+            this.pc2.ResumeLayout(false);
+            this.pc2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -983,12 +1031,7 @@
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem6;
-        private DevExpress.XtraBars.BarLinkContainerItem barLinkContainerItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem20;
-        private DevExpress.XtraBars.BarCheckItem barCheckItem2;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem1;
         private DevExpress.XtraEditors.PanelControl pclChart;
 
@@ -1008,7 +1051,6 @@
         private DevExpress.XtraEditors.SimpleButton btnClear;
         private DevExpress.XtraTreeList.TreeList treeList;
         private DevExpress.XtraTreeList.Columns.TreeListColumn ID;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem22;
         private DevExpress.XtraBars.BarButtonItem barButtonItem23;
         private DevExpress.XtraBars.BarButtonItem barButtonItem24;
@@ -1033,8 +1075,16 @@
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem20;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem21;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem22;
-        private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem19;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem9;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem23;
+        private DevExpress.XtraEditors.PanelControl pc2;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraBars.BarLargeButtonItem btnSaveImg;
+        private System.Windows.Forms.ImageList imageList;
+        private DevExpress.XtraBars.PopupMenu popupMenu;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit 删除;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
     }
 }

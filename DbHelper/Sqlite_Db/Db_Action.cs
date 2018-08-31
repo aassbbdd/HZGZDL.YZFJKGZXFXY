@@ -82,12 +82,12 @@ namespace DbHelper.Sqlite_Db
         /// <summary>
         /// 插入 测试计划 
         /// </summary>
-        public int Test_Cofige_Insert(Test_Plan model)
+        public int Test_Confige_Insert(Test_Plan model)
         {
             try
             {
                 string strsql = @"
-                                insert into TEST_COFIGE(
+                                insert into TEST_CONFIGE(
       
                                                      DVNAME    
                                                     ,DVPOSITION
@@ -214,7 +214,14 @@ namespace DbHelper.Sqlite_Db
                 parameters[23].Value = string.IsNullOrEmpty(model.C3) ? "" : model.C3;
                 parameters[24].Value = model.PARENTID;
 
-                int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
+                int count = 0;
+                SQLiteHelper.ExecuteScalar(strsql, CommandType.Text, parameters);
+
+                DataTable dt = Get_Desc_Table();
+                if (dt != null)
+                {
+                    count = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                }
                 return count;
             }
             catch (Exception ex)
@@ -223,16 +230,15 @@ namespace DbHelper.Sqlite_Db
             }
         }
 
-
         /// <summary>
         /// 修改 测试计划 
         /// </summary>
-        public int Test_Cofige_Edit(Test_Plan model)
+        public int Test_Confige_Edit(Test_Plan model)
         {
             try
             {
                 string strsql = @"
-                                update TEST_COFIGE set 
+                                update TEST_CONFIGE set 
       
                                                      DVNAME=@DVNAME
                                                     ,DVPOSITION=@DVPOSITION
@@ -334,7 +340,7 @@ namespace DbHelper.Sqlite_Db
                 parameters[25].Value = model.ID;
 
                 int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
-                return count;
+                return Convert.ToInt32(model.ID);
             }
             catch (Exception ex)
             {
@@ -342,7 +348,48 @@ namespace DbHelper.Sqlite_Db
             }
         }
 
+        /// <summary>
+        /// 删除计划
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public string Test_Confige_Del(Test_Plan model)
+        {
+            try
+            {
+                int count = 0;
+                StringBuilder sbsql = new StringBuilder();
+                sbsql.Append("delete from  TEST_CONFIGE ");
+                                            
+                sbsql.Append("where ID='" + model.ID + "' ");
+                count = SQLiteHelper.ExecuteNonQuery(sbsql.ToString(), CommandType.Text, null);
+                return count.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
+        /// <summary>
+        /// 获取倒序第一行数据
+        /// </summary>
+        /// <returns></returns>
+        private DataTable Get_Desc_Table()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                StringBuilder sbsql = new StringBuilder();
+                sbsql.Append("select * from TEST_CONFIGE     order by ID desc  limit  1  ");
+                dt = SQLiteHelper.ExecuteDataTable(sbsql.ToString());
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         #endregion
     }

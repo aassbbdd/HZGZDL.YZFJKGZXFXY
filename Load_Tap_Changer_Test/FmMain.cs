@@ -66,7 +66,15 @@ namespace Basic_Controls
         /// 协议对应参数
         /// </summary>
         Tester_Agreement agreement = new Tester_Agreement();
+        /// <summary>
+        /// s设备IP
+        /// </summary>
+        string DvIp = ConfigurationManager.ConnectionStrings["DvIp"].ConnectionString.ToString();
 
+        /// <summary>
+        /// 获取焦点行
+        /// </summary>
+        TreeListNode publicnode;
         #endregion
 
         #region 按键
@@ -93,11 +101,23 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnAddTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            using (FmAddTest form = new FmAddTest())
+            TreeListNode node = treeList.FocusedNode;
+            Test_Plan model = new Test_Plan();
+            if (node != null)
+            {
+                model = Test_Plan_Bind(node);
+            }
+            model.ISEDIT = "1";
+            string id = "";
+            model.PARENTID = "0";
+            using (FmAddTest form = new FmAddTest(model))
             {
                 form.ShowDialog();
+                id = form.id;
             }
             Tester_List_Bind();
+
+            Set_Foucs(id);
         }
 
         /// <summary>
@@ -194,7 +214,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnCTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Tester_List_Bind();
+            //Tester_List_Bind();
         }
 
         /// <summary>
@@ -207,6 +227,8 @@ namespace Basic_Controls
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
             panelControl1.Enabled = true;
+            pc2.Enabled = true;
+
             IsSaveData = false;
         }
 
@@ -218,10 +240,25 @@ namespace Basic_Controls
         private void btnSTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
 
-            End_Chart();
+            if (publicnode == null)
+            {
+                MessageBox.Show("请在左侧选择测试计划");
+                return;
+            }
 
-            XmlHelper.DeleteXmlDocument("测试数据1");
-            XmlHelper.Init("测试数据1");
+            End_Chart();
+            #region 生成测试配置信息
+            Test_Plan model = Test_Plan_Bind(publicnode);
+            model.PARENTID = model.ID;
+            model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            Db_Action.Instance.Test_Confige_Insert(model);
+            //生成后刷新树
+            treeList.Refresh();
+            #endregion
+            string filename = model.DVNAME;
+
+            XmlHelper.DeleteXmlDocument(filename);
+            XmlHelper.Init(filename);
             xmlpath = XmlHelper.xmlpath;
             Thread.Sleep(10);
 
@@ -232,6 +269,7 @@ namespace Basic_Controls
             tChart.Axes.Custom.Clear();
             Start_Chart();
             panelControl1.Enabled = false;
+            pc2.Enabled = false;
         }
 
         #endregion
@@ -293,12 +331,12 @@ namespace Basic_Controls
                 cx3 = new double[linlength];
                 cy3 = new double[linlength];
 
-                vline1.Clear();//.Add(vx1, vy1);//震动1
-                vline2.Clear();//.Add(vx2, vy2);//震动2
-                vline3.Clear();//.Add(vx3, vy3);//震动3
-                cline1.Clear();//.Add(cx1, cy1);//电流1
-                cline2.Clear();//.Add(cx2, cy2);//电流2
-                cline3.Clear();//.Add(cx3, cy3);//电流3
+                vline1.Clear();
+                vline2.Clear();
+                vline3.Clear();
+                cline1.Clear();
+                cline2.Clear();
+                cline3.Clear();
 
                 tChart.Refresh();
             }
@@ -335,10 +373,6 @@ namespace Basic_Controls
         #endregion
         #region 调用方法
 
-        /// <summary>
-        /// s设备IP
-        /// </summary>
-        string DvIp = ConfigurationManager.ConnectionStrings["DvIp"].ConnectionString.ToString();
 
 
         /// <summary>
@@ -661,7 +695,7 @@ namespace Basic_Controls
         /// <summary>
         /// 偷点数量 80能除尽数量 进行偷点
         /// </summary>
-        int LessPoint = 80;//
+        int LessPoint = 40;//
 
         /// <summary>
         ///总点数=10秒/（单点长度*偷点数）
@@ -672,7 +706,9 @@ namespace Basic_Controls
         ///  //计算1秒 点位数量
         /// </summary>
         int pnum = 0;
-
+        /// <summary>
+        /// 单个点位的长度
+        /// </summary>
         double newXvalue = 0;
         Line vline1;//震动1
         Line vline2;//震动2
@@ -693,7 +729,6 @@ namespace Basic_Controls
         bool c2 = false;
         bool c3 = false;
 
-        #endregion
         /// <summary>
         /// 放大缩小时 开始区域
         /// </summary>
@@ -702,6 +737,8 @@ namespace Basic_Controls
         /// 放大缩小时 结束区域
         /// </summary>
         double max = 0.0;
+
+        #endregion
 
         /// <summary>
         /// 初始化图表
@@ -734,25 +771,18 @@ namespace Basic_Controls
             cx3 = new double[linlength];
             cy3 = new double[linlength];
 
-            // X_Bind();//绑定X轴
 
             vline1 = new Line();//震动1
-                                //vline1.VertAxis = VerticalAxis.Both;
 
             vline2 = new Line();//震动2
-                                //vline2.VertAxis = VerticalAxis.Right;
 
             vline3 = new Line();//震动3
-                                //vline3.VertAxis = VerticalAxis.Right;
 
             cline1 = new Line();//电流1
-                                //cline1.VertAxis = VerticalAxis.Right;
 
             cline2 = new Line();//电流2
-                                //cline2.VertAxis = VerticalAxis.Right;
 
             cline3 = new Line();//电流3
-                                //cline3.VertAxis = VerticalAxis.Right;
 
 
             /// <summary>
@@ -768,8 +798,8 @@ namespace Basic_Controls
             tChart.Aspect.View3D = false;
             tChart.Legend.Visible = false;//显示/隐藏线的注释 
 
-            //tChart.Panel.Gradient.Visible = true;
-            tChart.Header.Text = "有载调压开关故障诊断系统波形";
+            // tChart.Header.Text = "有载调压开关故障诊断系统波形";
+
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
 
@@ -778,7 +808,6 @@ namespace Basic_Controls
             tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
 
             //tChart.Axes.Bottom.Inverted = true;//控制X轴 顺序还是倒序
-
 
             tChart.Panel.MarginLeft = 10;
             tChart.Panel.MarginRight = 10;
@@ -806,35 +835,10 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_DataTable_Init()
         {
-            // tChart = new TChart();
             Bind_IsDC();
             tChart.Series.Clear();
             tChart.Axes.Custom.Clear();
-
-            //tChart.Dock = DockStyle.Fill;
-            //tChart.Aspect.View3D = false;
-            //tChart.Legend.Visible = false;//显示/隐藏线的注释 
-
-            ////tChart.Panel.Gradient.Visible = true;
-
-            //tChart.Legend.LegendStyle = LegendStyles.Series;
-            //tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
-
-            //tChart.Axes.Bottom.Minimum = 0.00;
-            //tChart.Axes.Bottom.AutomaticMaximum = true;
-            //tChart.Axes.Bottom.AutomaticMinimum = true;
-            //tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
-
-            //tChart.Panel.MarginRight = 10;
-            //tChart.Panel.MarginRight = 10;
-            //tChart.Panel.MarginBottom = 10;
-            //tChart.Panel.MarginTop = 10;
-
             tChart.Zoom.Allow = false;
-
-            //pclChart.Controls.Clear();
-            //pclChart.Controls.Add(tChart);// 绑定图表位置 
-
             Event_Chart_Bind();
         }
 
@@ -1116,15 +1120,18 @@ namespace Basic_Controls
         /// </summary>
         private void End_Chart()
         {
+            istrue = false;
             porintadd = 0;
             isAbort = false;
         }
 
         #region 队列数据处理
+
         /// <summary>
         /// 判断是否刚开始 走图形 是为false 否为true 
         /// </summary>
         bool istrue = false;
+
         /// <summary>
         /// 前往后走图形
         /// </summary>
@@ -1150,7 +1157,7 @@ namespace Basic_Controls
 
                             Vibration_Current vmodel = new Vibration_Current();
                             Vibration_Current vmodel1 = new Vibration_Current();
-                            int length = 24 * (i + 1);//截取位置
+                            int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
                             vmodel.Current1 = data.Substring(0 + length, 4);
                             vmodel.Current2 = data.Substring(4 + length, 4);
@@ -1683,7 +1690,7 @@ namespace Basic_Controls
                 DataSet ds = Db_Select.Instance.Get_All_Table();
                 if (IsCreate || ds.Tables == null || ds.Tables[0].Rows.Count <= 0)
                 {
-                    string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
+                    string DbStr = Create_Table.Instance.Create_TEST_CONFIGE();
                     SQLiteHelper.NewTable(DbStr);
                     DbStr = Create_Table.Instance.Create_TEST_DATA();
                     SQLiteHelper.NewTable(DbStr);
@@ -1691,10 +1698,10 @@ namespace Basic_Controls
                 else
                 {
                     DataTable dt = ds.Tables[0];
-                    DataRow[] newdt = dt.Select(" name='TEST_COFIGE'");
+                    DataRow[] newdt = dt.Select(" name='TEST_CONFIGE'");
                     if (newdt.Length == 0)
                     {
-                        string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
+                        string DbStr = Create_Table.Instance.Create_TEST_CONFIGE();
                         SQLiteHelper.NewTable(DbStr);
                     }
                     newdt = dt.Select(" name='TEST_DATA'");
@@ -1761,27 +1768,38 @@ namespace Basic_Controls
 
         #region 绑定测试计划
         /// <summary>
-        /// 获取测试计划绑定到页面树
+        /// 绑定测试计划
         /// </summary>
         public void Tester_List_Bind()
         {
             List<Test_Plan> list = Db_Select.Instance.All_Test_Cofig_Get();
             treeList.DataSource = list;
+
+
+
             treeList.Refresh();
+            treeList.ExpandAll();
         }
 
         #endregion
 
         /// <summary>
-        /// 单击树 行获取 行信息
+        /// 单击树 行获取 行信息 并修改图表标题
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
-            string id = e.Node.GetValue("ID").ToString();
-            string NAME = e.Node.GetValue("DVNAME").ToString();
-            string PNAME = e.Node.GetValue("PARENTID").ToString();
+            // treeList.OptionsView.ShowIndicator = false;
+            if (e.Node.Selected)
+            {
+                if (treeList.Appearance.FocusedCell.BackColor != Color.SteelBlue)
+                {
+                    treeList.Appearance.FocusedCell.BackColor = Color.SteelBlue;
+                };
+                publicnode = e.Node;
+                tChart.Header.Text = e.Node.GetValue("DVNAME").ToString();
+            }
         }
 
         /// <summary>
@@ -1791,7 +1809,6 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_MouseDown(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left && e.Clicks == 2)
             {
                 //确定双击区域是否在 treelist范围里面
@@ -1802,13 +1819,59 @@ namespace Basic_Controls
                 {
                     //取得选定行信息  
                     Test_Plan model = Test_Plan_Bind(node);
+                    model.ISEDIT = "2";
+                    if (model.PARENTID != "0")
+                    {
+                        return;
+                    }
                     using (FmAddTest form = new FmAddTest(model))
                     {
                         form.ShowDialog();
                     }
                     Tester_List_Bind();
+
+                    Set_Foucs(model.ID);
                 }
             }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                treeList.ContextMenuStrip = null;
+                TreeListHitInfo hInfo = treeList.CalcHitInfo(new Point(e.X, e.Y));
+                TreeListNode node = hInfo.Node;
+                treeList.FocusedNode = node;
+                if (node != null)
+                {
+                    Point point = new Point(e.X, e.Y); //右键菜单弹出的位置
+                    popupMenu.ShowPopup(barManager1, point);
+                }
+            }
+        }
+        /// <summary>
+        /// treelist 鼠标事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeList_MouseUp(object sender, MouseEventArgs e)
+        {
+            TreeList tree = sender as TreeList;
+            if (e.Button == MouseButtons.Right
+                    && ModifierKeys == Keys.None
+                    && treeList.State == TreeListState.Regular)
+            {
+                Point p = new Point(Cursor.Position.X, Cursor.Position.Y);
+                TreeListHitInfo hitInfo = tree.CalcHitInfo(e.Location);
+                if (hitInfo.HitInfoType == HitInfoType.Cell)
+                {
+                    tree.SetFocusedNode(hitInfo.Node);
+                }
+
+                if (tree.FocusedNode != null)
+                {
+                    popupMenu.ShowPopup(p);
+                }
+            }
+
         }
         /// <summary>
         /// 绑定选中行数据到实体
@@ -1858,7 +1921,64 @@ namespace Basic_Controls
             }
         }
 
+        /// <summary>
+        /// 获取指定节点焦点
+        /// </summary>
+        /// <param name="Id"></param>
+        private void Set_Foucs(string Id)
+        {
+            List<TreeListNode> list = treeList.GetNodeList();
+            foreach (TreeListNode n in list)
+            {
+                if (n.GetValue("ID").ToString() == Id)
+                {
+                    treeList.SetFocusedNode(n);
+                    treeList.Refresh();
+                    break;
+                }
+            }
+        }
+
         #endregion
+
+        private void treeList_GetSelectImage(object sender, GetSelectImageEventArgs e)
+        {
+            if (e.Node.GetValue("PARENTID").ToString() == "0")
+            {
+                e.NodeImageIndex = 2;
+            }
+            else
+            {
+                e.NodeImageIndex = 3;
+            }
+
+        }
+
+        private void treeList_CustomDrawNodeImages(object sender, CustomDrawNodeImagesEventArgs e)
+        {
+            if (e.Node.Nodes.Count > 0)
+            {
+                if (e.Node.Expanded)
+                {
+                    e.SelectImageIndex = 2;
+                    return;
+                }
+                e.SelectImageIndex = 1;
+            }
+            else
+            {
+                e.SelectImageIndex = 0;
+            }
+        }
+
+        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+            Test_Plan model = Test_Plan_Bind(publicnode);
+            Db_Action.Instance.Test_Confige_Del(model);
+
+            treeList.Refresh();
+        }
 
 
     }
