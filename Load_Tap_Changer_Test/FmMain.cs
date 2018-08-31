@@ -270,6 +270,7 @@ namespace Basic_Controls
             Start_Chart();
             panelControl1.Enabled = false;
             pc2.Enabled = false;
+           
         }
 
         #endregion

@@ -263,7 +263,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem8, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem10, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem11),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem11, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem12),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem13),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem14),
@@ -355,6 +355,7 @@
             // 
             this.barLargeButtonItem8.Caption = "图标";
             this.barLargeButtonItem8.Id = 89;
+            this.barLargeButtonItem8.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._2;
             this.barLargeButtonItem8.Name = "barLargeButtonItem8";
             // 
             // barLargeButtonItem10
@@ -375,6 +376,7 @@
             // 
             this.barLargeButtonItem11.Caption = "图标";
             this.barLargeButtonItem11.Id = 91;
+            this.barLargeButtonItem11.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1;
             this.barLargeButtonItem11.Name = "barLargeButtonItem11";
             // 
             // barLargeButtonItem12
@@ -631,7 +633,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1498, 111);
+            this.barDockControlTop.Size = new System.Drawing.Size(959, 111);
             // 
             // barDockControlBottom
             // 
@@ -639,13 +641,13 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 633);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1498, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(959, 0);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1498, 111);
+            this.barDockControlRight.Location = new System.Drawing.Point(959, 111);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 522);
             // 
@@ -711,7 +713,7 @@
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(1095, 517);
+            this.pclChart.Size = new System.Drawing.Size(556, 517);
             this.pclChart.TabIndex = 30;
             // 
             // btnEnlarge
@@ -765,7 +767,7 @@
             this.panelControl1.Controls.Add(this.ckV2);
             this.panelControl1.Controls.Add(this.btnEnlarge);
             this.panelControl1.Controls.Add(this.ckV1);
-            this.panelControl1.Location = new System.Drawing.Point(1311, 112);
+            this.panelControl1.Location = new System.Drawing.Point(772, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 517);
             this.panelControl1.TabIndex = 52;
@@ -957,7 +959,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1498, 633);
+            this.ClientSize = new System.Drawing.Size(959, 633);
             this.Controls.Add(this.pc2);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);
