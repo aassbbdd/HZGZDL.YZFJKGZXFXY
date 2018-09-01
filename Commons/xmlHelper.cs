@@ -119,26 +119,26 @@ namespace Commons
         public static void Insert(Xml_Node_Model model)
         {
             //插入数据时检查xml文件是否存在
-            CreateXmlDocument(xmlname);
+         //   CreateXmlDocument(xmlname);
 
             XElement element = ToXElement(model);
-            XElement data = new XElement("Data");
-            foreach (var item in model.Data)
-            {
-                XElement e = new XElement(item.GetType().ToString());
-                e.Add(new XElement("Id", item.Id));
+            //XElement data = new XElement("Data");
+            //foreach (var item in model.Data)
+            //{
+            //    XElement e = new XElement(item.GetType().ToString());
+            //    e.Add(new XElement("Id", item.Id));
 
-                e.Add(new XElement("V1", item.V1));
-                e.Add(new XElement("V2", item.V2));
-                e.Add(new XElement("V3", item.V3));
+            //    e.Add(new XElement("V1", item.V1));
+            //    e.Add(new XElement("V2", item.V2));
+            //    e.Add(new XElement("V3", item.V3));
 
-                e.Add(new XElement("C1", item.C1));
-                e.Add(new XElement("C2", item.C2));
-                e.Add(new XElement("C3", item.C3));
-                data.Add(e);
+            //    e.Add(new XElement("C1", item.C1));
+            //    e.Add(new XElement("C2", item.C2));
+            //    e.Add(new XElement("C3", item.C3));
+            //    data.Add(e);
 
-            }
-            element.Add(data);
+            //}
+            //element.Add(data);
             xele.Add(element);
             //  xele.Save(path);
         }
@@ -585,10 +585,6 @@ namespace Commons
 
             }
         }
-
-
-
-
         static double[] newvx1; static double[] newvy1;
         static double[] newvx2; static double[] newvy2;
         static double[] newvx3; static double[] newvy3;

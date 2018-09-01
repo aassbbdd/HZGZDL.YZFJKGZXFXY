@@ -287,14 +287,6 @@ namespace Basic_Controls
 
                 if (oldmodel.ISEDIT == "1")
                 {
-                    //if (this.ckIsTop.Checked)
-                    //{
-                    //    model.PARENTID = "0";
-                    //}
-                    //else
-                    //{
-                    //    model.PARENTID = oldmodel.ID;
-                    //}
                     count = Db_Action.Instance.Test_Confige_Insert(model);
                 }
                 else

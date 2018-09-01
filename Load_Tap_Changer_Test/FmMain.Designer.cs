@@ -101,6 +101,7 @@
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.LBxmlCount = new DevExpress.XtraEditors.LabelControl();
             this.btnClear = new DevExpress.XtraEditors.SimpleButton();
             this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
             this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
@@ -120,6 +121,9 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -754,6 +758,10 @@
             // 
             this.panelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl1.Controls.Add(this.labelControl4);
+            this.panelControl1.Controls.Add(this.labelControl3);
+            this.panelControl1.Controls.Add(this.LBPrintCount);
+            this.panelControl1.Controls.Add(this.LBxmlCount);
             this.panelControl1.Controls.Add(this.btnClear);
             this.panelControl1.Controls.Add(this.btnReNew);
             this.panelControl1.Controls.Add(this.btnReLond);
@@ -771,6 +779,14 @@
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 517);
             this.panelControl1.TabIndex = 52;
+            // 
+            // LBxmlCount
+            // 
+            this.LBxmlCount.Location = new System.Drawing.Point(85, 292);
+            this.LBxmlCount.Name = "LBxmlCount";
+            this.LBxmlCount.Size = new System.Drawing.Size(81, 18);
+            this.LBxmlCount.TabIndex = 46;
+            this.LBxmlCount.Text = "labelControl1";
             // 
             // btnClear
             // 
@@ -955,6 +971,30 @@
             this.popupMenu.Manager = this.barManager1;
             this.popupMenu.Name = "popupMenu";
             // 
+            // LBPrintCount
+            // 
+            this.LBPrintCount.Location = new System.Drawing.Point(85, 331);
+            this.LBPrintCount.Name = "LBPrintCount";
+            this.LBPrintCount.Size = new System.Drawing.Size(81, 18);
+            this.LBPrintCount.TabIndex = 47;
+            this.LBPrintCount.Text = "labelControl1";
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(12, 292);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(75, 18);
+            this.labelControl3.TabIndex = 48;
+            this.labelControl3.Text = "存储数量：";
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(12, 331);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(75, 18);
+            this.labelControl4.TabIndex = 49;
+            this.labelControl4.Text = "绘图点数：";
+            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -1088,5 +1128,9 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit 删除;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
+        private DevExpress.XtraEditors.LabelControl LBxmlCount;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.XtraEditors.LabelControl LBPrintCount;
     }
 }

@@ -75,6 +75,7 @@ namespace Basic_Controls
         /// 获取焦点行
         /// </summary>
         TreeListNode publicnode;
+        Test_Plan pub_Test_Plan;
         #endregion
 
         #region 按键
@@ -137,7 +138,7 @@ namespace Basic_Controls
             //{
             //    string path = pSaveFileDialog.FileName;
             //}
-            IsSaveData = true;
+            //IsSaveData = true;
         }
 
         /// <summary>
@@ -162,6 +163,8 @@ namespace Basic_Controls
                        out cx2, out cy2,
                        out cx3, out cy3
                         );
+
+
 
                     Chart_DataTable_Init();
                     Chart_Data_Lond_Bind();
@@ -226,10 +229,12 @@ namespace Basic_Controls
         {
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
-            panelControl1.Enabled = true;
-            pc2.Enabled = true;
-
-            IsSaveData = false;
+            Invoke(new ThreadStart(delegate ()
+            {
+                panelControl1.Enabled = true;
+                pc2.Enabled = true;
+                IsSaveData = false;
+            }));
         }
 
         /// <summary>
@@ -270,7 +275,6 @@ namespace Basic_Controls
             Start_Chart();
             panelControl1.Enabled = false;
             pc2.Enabled = false;
-           
         }
 
         #endregion
@@ -374,8 +378,6 @@ namespace Basic_Controls
         #endregion
         #region 调用方法
 
-
-
         /// <summary>
         /// 发送协议
         /// </summary>
@@ -440,12 +442,16 @@ namespace Basic_Controls
             {
                 //绘图
                 Porint_List.Enqueue(e);
-
-                if (IsSaveData)
+                Invoke(new ThreadStart(delegate ()
                 {
-                    //数据存储
-                    Save_Db_Source.Enqueue(e);
-                }
+                    LBPrintCount.Text = Porint_List.Count.ToString();
+                }));
+             
+                //if (IsSaveData)
+                //{
+                //    //数据存储
+                //    Save_Db_Source.Enqueue(e);
+                //}
             }
             catch (Exception exception)
             {
@@ -697,11 +703,24 @@ namespace Basic_Controls
         /// 偷点数量 80能除尽数量 进行偷点
         /// </summary>
         int LessPoint = 40;//
+        /// <summary>
+        /// 总的秒数 默认10秒
+        /// </summary>
+        int alltime = 10;
 
         /// <summary>
         ///总点数=10秒/（单点长度*偷点数）
         /// </summary>
         static int linlength = 0;
+
+        /// <summary>
+        /// 初始化参数
+        /// </summary>
+        private void init_Chart_Config(int newalltime, int newLessPoint)
+        {
+            alltime = newalltime;
+            LessPoint = newLessPoint;
+        }
 
         /// <summary>
         ///  //计算1秒 点位数量
@@ -746,9 +765,18 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_Init()
         {
+            Chart_Config();//初始化图表
+            Chart_Data_Bind();//初始化绑定 线line
+            pclChart.Controls.Add(tChart);// 绑定图表位置 
+        }
+        /// <summary>
+        /// 图片配置初始化
+        /// </summary>
+        private void Chart_Config()
+        {
             tChart.Series.Clear();
-            //总点数=10秒/（单点长度*偷点数）
-            linlength = (10 * allnum) / num / LessPoint;
+            //总点数=alltime执行秒数  （默认10秒）/（单点长度*偷点数）
+            linlength = (alltime * allnum) / num / LessPoint;
             //计算1秒 点位数量
             pnum = (int)(0.1 * allnum) / num / LessPoint;
             //计算单点的距离
@@ -804,7 +832,8 @@ namespace Basic_Controls
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
 
-            tChart.Axes.Bottom.SetMinMax(0, 10);
+            //默认10秒
+            tChart.Axes.Bottom.SetMinMax(0, alltime);
 
             tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
 
@@ -825,8 +854,6 @@ namespace Basic_Controls
             //cursorTool1.Series = pointSeries1;
             //cursorTool1.Style = CursorToolStyles.Both;
 
-            Chart_Data_Bind();//初始化绑定 线line
-            pclChart.Controls.Add(tChart);// 绑定图表位置 
             min = tChart.Axes.Bottom.Minimum;
             max = tChart.Axes.Bottom.Maximum;
         }
@@ -846,21 +873,22 @@ namespace Basic_Controls
         /// <summary>
         /// 绑定X轴 10秒
         /// </summary>
-        private void X_Bind()
-        {
-            vx1[0] = 0;
-            for (int i = 1; i < linlength; i++)
-            {
-                vx1[i] = Math.Round((vx1[i - 1] + newXvalue), 4);
-            }
-            vx2 = vx1;
-            vx3 = vx1;
-            cx1 = vx1;
-            cx2 = vx1;
-            cx3 = vx1;
-        }
+        //private void X_Bind()
+        //{
+        //    vx1[0] = 0;
+        //    for (int i = 1; i < linlength; i++)
+        //    {
+        //        vx1[i] = Math.Round((vx1[i - 1] + newXvalue), 4);
+        //    }
+        //    vx2 = vx1;
+        //    vx3 = vx1;
+        //    cx1 = vx1;
+        //    cx2 = vx1;
+        //    cx3 = vx1;
+        //}
         //10秒
         //换算数据包个数 = 10秒/800微秒 10/0.0008
+
         /// <summary>
         /// 添加若干个自定义坐标轴 绘制 图表画布
         /// </summary>
@@ -998,6 +1026,8 @@ namespace Basic_Controls
                 //电流1路 cline1
                 if (c1)
                 {
+
+                    cline1 = new Line();
                     tChart.Series.Add(cline1);
                     cline1.Title = string.Format("电流曲线{0}", 1);
                     cline1.Add(cx1, cy1);
@@ -1090,7 +1120,14 @@ namespace Basic_Controls
             #region 处理队列数据
 
             //thread_List = new Thread(Job_Queue);
-            thread_List = new Thread(Job_Queue3);
+            if (pub_Test_Plan.GETINFO == "2")
+            {
+                thread_List = new Thread(Job_Queue_01);
+            }
+            else
+            {
+                thread_List = new Thread(Job_Queue_02);
+            }
             thread_List.IsBackground = true;
             thread_List.Start();//启动线程
 
@@ -1105,12 +1142,12 @@ namespace Basic_Controls
             #endregion
 
             #region 存储数据
-            if (IsSaveData)
-            {
-                Db_Save = new Thread(Test_Xml_Insert);
-                Db_Save.IsBackground = true;
-                Db_Save.Start();//启动线程
-            }
+            //if (IsSaveData)
+            //{
+            Db_Save = new Thread(Test_Xml_Insert);
+            Db_Save.IsBackground = true;
+            Db_Save.Start();//启动线程
+            //}
             #endregion
 
             Chart_Init();
@@ -1134,9 +1171,22 @@ namespace Basic_Controls
         bool istrue = false;
 
         /// <summary>
-        /// 前往后走图形
+        /// 是否触发开关存储
         /// </summary>
-        private void Job_Queue3()
+        bool SCURRENT = false;
+        /// <summary>
+        /// 触头触发数
+        /// </summary>
+        int topnum = 0;
+        /// <summary>
+        /// 总触头数
+        /// </summary>
+        int alltopnum = 0;
+
+        /// <summary>
+        /// 前往后走图形 按时间走波形
+        /// </summary>
+        private void Job_Queue_01()
         {
             while (isAbort)
             {
@@ -1155,7 +1205,235 @@ namespace Basic_Controls
 
                         for (int i = 0; i < Porints; i++)
                         {
+                            Vibration_Current vmodel = new Vibration_Current();
+                            //  Vibration_Current vmodel1 = new Vibration_Current();
+                            int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
+                            vmodel.Current1 = data.Substring(0 + length, 4);
+                            vmodel.Current2 = data.Substring(4 + length, 4);
+                            vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            //计算
+                            //double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
+                            //double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
+                            //double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
+
+                            //double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
+                            //double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
+                            //double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
+
+                            //否 存储
+                            #region 判断电流是否启动 先判断是
+
+                            //判断数据是否超标了
+                            if (porintadd >= linlength)
+                            {//是停止
+                                Thread.Sleep(50);
+                                btnStopTest_ItemClick(null, null);
+                                return;
+                            }
+                            else
+                            {
+                                if (i == 0)
+                                {
+                                    // Save_Db_Source.Enqueue(e);
+                                }
+                            }
+
+                            #endregion
+
+                            #region 计算保存新数据
+
+                            x = Get_Pub_S_X();
+                            if (v1)
+                            {
+                                //计算
+                                double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
+                                vx1[porintadd] = x;
+                                vy1[porintadd] = Vibration1;
+                            }
+                            if (v2)
+                            {
+                                double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
+
+                                vx2[porintadd] = x;
+                                vy2[porintadd] = Vibration2;
+                            }
+                            if (v3)
+                            {
+                                double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
+
+                                vx3[porintadd] = x;
+                                vy3[porintadd] = Vibration3;
+                            }
+                            if (c1)
+                            {
+                                double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
+
+                                cx1[porintadd] = x;
+                                cy1[porintadd] = Current1;
+                            }
+                            if (c2)
+                            {
+                                double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
+                                cx2[porintadd] = x;
+                                cy2[porintadd] = Current2;
+                            }
+                            if (c3)
+                            {
+                                double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
+                                cx3[porintadd] = x;
+                                cy3[porintadd] = Current3;
+                            }
+                            #endregion
+                            porintadd++;
+                        }
+                        #region 数据大于10秒时执行   不需要执行这个
+                        //if (pub_Test_Plan.GETINFO == "1")
+                        //{
+                        //    if (porintadd > linlength - 1)
+                        //    {
+                        //        porintadd = 0;//归零
+                        //        istrue = true;//开启进入标识
+                        //        double swidth = 0;//初始位置
+                        //        double width = swidth;//结束时位置
+                        //        for (int i = 0; i < 500; i++)
+                        //        {
+                        //            width = Math.Round(width + newXvalue, 4);
+
+                        //            Data_Bind(i, width);
+                        //        }
+                        //        colorFrom = swidth;
+                        //        colorTo = width;
+                        //    }
+                        //    if (istrue)
+                        //    {
+                        //        double swidth = Math.Round(vx1[porintadd], 4);//初始位置
+                        //        double width = swidth;//结束时位置
+                        //        for (int i = 0; i < 500; i++)
+                        //        {
+                        //            int length = porintadd + i + 1;
+                        //            if (length < linlength - 1)
+                        //            {
+                        //                width = Math.Round(width + newXvalue, 4);
+                        //                Data_Bind(i, width);
+                        //            }
+                        //            else
+                        //            {
+                        //                break;
+                        //            }
+                        //        }
+
+                        //        colorFrom = swidth;
+                        //        colorTo = width;
+                        //    }
+                        //}
+                        #endregion
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取X轴下一个点位的位置
+        /// </summary>
+        /// <returns></returns>
+        private double Get_Pub_S_X()
+        {
+            try
+            {
+                double x = 0;
+                if (porintadd == 0)
+                {
+                    if (v1)
+                    {
+                        x = vx1[porintadd] + newXvalue;
+                    }
+                    else if (v2)
+                    {
+                        x = vx2[porintadd] + newXvalue;
+                    }
+                    else if (v3)
+                    {
+                        x = vx3[porintadd] + newXvalue;
+                    }
+                    if (c1)
+                    {
+                        x = cx1[porintadd] + newXvalue;
+                    }
+                    else if (c2)
+                    {
+                        x = cx2[porintadd] + newXvalue;
+                    }
+                    else if (c3)
+                    {
+                        x = cx3[porintadd] + newXvalue;
+                    }
+
+                }
+                else
+                {
+                    if (v1)
+                    {
+                        x = vx1[porintadd - 1] + newXvalue;
+                    }
+                    else if (v2)
+                    {
+                        x = vx2[porintadd - 1] + newXvalue;
+                    }
+                    else if (v3)
+                    {
+                        x = vx3[porintadd - 1] + newXvalue;
+                    }
+                    if (c1)
+                    {
+                        x = cx1[porintadd - 1] + newXvalue;
+                    }
+                    else if (c2)
+                    {
+                        x = cx2[porintadd - 1] + newXvalue;
+                    }
+                    else if (c3)
+                    {
+                        x = cx3[porintadd - 1] + newXvalue;
+                    }
+                }
+
+
+                return x;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 前往后走图形电流触发波形
+        /// </summary>
+        private void Job_Queue_02()
+        {
+            while (isAbort)
+            {
+                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                if (Porint_List.Count > 0)
+                {
+                    Porint_List.TryDequeue(out e);//取出队里数据并删除
+                                                  //截取返回数据
+                    
+                    if (!string.IsNullOrEmpty(e.Hearder))
+                    {
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+
+                        int Porints = 80 / LessPoint;
+                        double x = new double();
+                        double y = new double();
+
+
+                        for (int i = 0; i < Porints; i++)
+                        {
                             Vibration_Current vmodel = new Vibration_Current();
                             Vibration_Current vmodel1 = new Vibration_Current();
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
@@ -1167,47 +1445,97 @@ namespace Basic_Controls
                             vmodel.Vibration1 = data.Substring(12 + length, 4);
                             vmodel.Vibration2 = data.Substring(16 + length, 4);
                             vmodel.Vibration3 = data.Substring(20 + length, 4);
-                            //计算
-                            double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
-                            double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
-                            double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
 
-                            double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
-                            double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
-                            double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
 
+
+                            //否 存储
+                            #region 判断电流是否启动 电流存储
+                            if (pub_Test_Plan.GETINFO == "1")
+                            {
+                                //double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
+                                //double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
+                                ////开始存数据
+                                //if (Current1 >= setSCURRENT && !SCURRENT)
+                                //{
+                                //    SCURRENT = false;
+                                //}
+                                ////结束存数据
+                                //if (Current1 >= setECURRENT && SCURRENT)
+                                //{
+                                //    topnum += 1;
+                                //    SCURRENT = true;
+                                //}
+
+                                //if (SCURRENT)
+                                //{
+                                //    if (i == 0)
+                                //    {
+                                //        Save_Db_Source.Enqueue(e);
+                                //    }
+                                //}
+
+                            }
+                            #endregion
                             #region 计算保存新数据
-                            if (porintadd == 0)
+                            //if (porintadd == 0)
+                            //{
+                            //    x = vx1[porintadd] + newXvalue;//
+                            //}
+                            //else
+                            //{
+                            //    x = vx1[porintadd - 1] + newXvalue;//
+                            //}
+                            x = Get_Pub_S_X();
+                            if (v1)
                             {
-                                x = vx1[porintadd] + newXvalue;//
+                                //计算
+                                double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
+
+                                vx1[porintadd] = x;
+                                vy1[porintadd] = Vibration1;
                             }
-                            else
+                            if (v2)
                             {
-                                x = vx1[porintadd - 1] + newXvalue;//
+                                double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
+
+                                vx2[porintadd] = x;
+                                vy2[porintadd] = Vibration2;
                             }
-                            vx1[porintadd] = x;
-                            vy1[porintadd] = Convert.ToDouble(Vibration1);
+                            if (v3)
+                            {
+                                double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
 
-                            vx2[porintadd] = x;
-                            vy2[porintadd] = Convert.ToDouble(Vibration2);
+                                vx3[porintadd] = x;
+                                vy3[porintadd] = Vibration3;
+                            }
+                            if (c1)
+                            {
+                                double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
 
-                            vx3[porintadd] = x;
-                            vy3[porintadd] = Convert.ToDouble(Vibration3);
-
-                            cx1[porintadd] = x;
-                            cy1[porintadd] = Convert.ToDouble(Current1);
-
-                            cx2[porintadd] = x;
-                            cy2[porintadd] = Convert.ToDouble(Current2);
-
-                            cx3[porintadd] = x;
-                            cy3[porintadd] = Convert.ToDouble(Current3);
+                                cx1[porintadd] = x;
+                                cy1[porintadd] = Current1;
+                            }
+                            if (c2)
+                            {
+                                double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
+                                cx2[porintadd] = x;
+                                cy2[porintadd] = Current2;
+                            }
+                            if (c3)
+                            {
+                                double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
+                                cx3[porintadd] = x;
+                                cy3[porintadd] = Current3;
+                            }
 
                             #endregion
                             porintadd++;
+
+
                         }
 
-                        #region 数据大于10秒时执行   
+
+                        #region 数据大于10秒时执行   不需要执行这个
 
                         if (porintadd > linlength - 1)
                         {
@@ -1218,8 +1546,6 @@ namespace Basic_Controls
                             for (int i = 0; i < 500; i++)
                             {
                                 width = Math.Round(width + newXvalue, 4);
-                                //vx1[porintadd + i + 1] = width;
-                                //vy1[porintadd + i + 1] = 0.0;
                                 Data_Bind(i, width);
                             }
                             colorFrom = swidth;
@@ -1227,7 +1553,36 @@ namespace Basic_Controls
                         }
                         if (istrue)
                         {
-                            double swidth = Math.Round(vx1[porintadd], 4);//初始位置
+
+                            //公共初始位置
+                            double pubwidth = 0;
+
+                            if (v1)
+                            {
+                                pubwidth = vx1[porintadd];
+                            }
+                            else if (v2)
+                            {
+                                pubwidth = vx2[porintadd];
+                            }
+                            else if (v3)
+                            {
+                                pubwidth = vx3[porintadd];
+                            }
+                            if (c1)
+                            {
+                                pubwidth = cx1[porintadd];
+                            }
+                            else if (c2)
+                            {
+                                pubwidth = cx2[porintadd];
+                            }
+                            else if (c3)
+                            {
+                                pubwidth = cx3[porintadd];
+                            }
+                            //double swidth = Math.Round(vx1[porintadd], 4);//初始位置
+                            double swidth = Math.Round(pubwidth, 4);//初始位置
                             double width = swidth;//结束时位置
                             for (int i = 0; i < 500; i++)
                             {
@@ -1235,8 +1590,6 @@ namespace Basic_Controls
                                 if (length < linlength - 1)
                                 {
                                     width = Math.Round(width + newXvalue, 4);
-                                    //vx1[porintadd + i + 1] = width;
-                                    //vy1[porintadd + i + 1] = 0.0;
                                     Data_Bind(i, width);
                                 }
                                 else
@@ -1291,7 +1644,7 @@ namespace Basic_Controls
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
                         //string head = e.Msg.Substring(4, 4);
-                        #region 数据大于10秒时执行
+                        #region 数据大于 alltime 当前秒数 （默认10秒）时执行
                         //数组里面添加
                         if (porintadd >= linlength)//
                         {
@@ -1301,8 +1654,8 @@ namespace Basic_Controls
                                 Porint_Bind(i);
                                 #endregion
 
-                                double width = 10.00;
-                                colorTo = 10.00;//从底部插入颜色区域
+                                double width = alltime;
+                                colorTo = alltime;//从底部插入颜色区域
 
                                 vx1[linlength - 1] = width;
                                 vy1[linlength - 1] = 0.0;
@@ -1356,7 +1709,7 @@ namespace Basic_Controls
                             Porint_Bind();
                             #endregion
 
-                            double width = 10.00;
+                            double width = alltime;
 
                             vx1[linlength - 1] = width;
                             vy1[linlength - 1] = Convert.ToDouble(vmodel1.Vibration1);
@@ -1427,7 +1780,7 @@ namespace Basic_Controls
                             Porint_Bind();
                             #endregion
 
-                            double width = 10.00;
+                            double width = alltime;
 
                             vx1[linlength - 1] = width;
                             vy1[linlength - 1] = Convert.ToDouble(vmodel1.Vibration1);
@@ -1744,14 +2097,33 @@ namespace Basic_Controls
 
                         XmlHelper.Insert(model);
                         Thread.Sleep(1);
-                        if (i == 100)
+                        if (i == 2000)
                         {
                             XmlHelper.Save();
                             i = 1;
                         };
+
+                        Invoke(new ThreadStart(delegate ()
+                        {
+                            try
+                            {
+                                LBxmlCount.Text = Save_Db_Source.Count.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }));
+
                         i++;
                     }
+
                 }
+                if (!isAbort)
+                {
+                    XmlHelper.Save();
+                }
+
             }
             catch (Exception ex)
             {
@@ -1799,7 +2171,22 @@ namespace Basic_Controls
                     treeList.Appearance.FocusedCell.BackColor = Color.SteelBlue;
                 };
                 publicnode = e.Node;
-                tChart.Header.Text = e.Node.GetValue("DVNAME").ToString();
+                pub_Test_Plan = Test_Plan_Bind(publicnode);
+                tChart.Header.Text = pub_Test_Plan.DVNAME;
+
+                if (pub_Test_Plan.GETINFO == "2")
+                {
+                    alltime = string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT) ? alltime : Convert.ToInt32(pub_Test_Plan.TIME_UNIT);
+                    init_Chart_Config(alltime, 40);
+                    Chart_Init();
+                }
+                else
+                {
+                    init_Chart_Config(10, 40);
+                    //以电流达到1A存数据 小于等于0.1A结束
+                    topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
+                    Chart_Init();
+                }
             }
         }
 
@@ -1810,6 +2197,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_MouseDown(object sender, MouseEventArgs e)
         {
+            //双击左键弹出页面用
             if (e.Button == MouseButtons.Left && e.Clicks == 2)
             {
                 //确定双击区域是否在 treelist范围里面
@@ -1835,6 +2223,7 @@ namespace Basic_Controls
                 }
             }
 
+            //以下是鼠标右键删除用
             if (e.Button == MouseButtons.Right)
             {
                 treeList.ContextMenuStrip = null;
@@ -1855,24 +2244,23 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_MouseUp(object sender, MouseEventArgs e)
         {
-            TreeList tree = sender as TreeList;
+            //单击选中并且改变背景色
             if (e.Button == MouseButtons.Right
                     && ModifierKeys == Keys.None
                     && treeList.State == TreeListState.Regular)
             {
+                TreeList tree = sender as TreeList;
                 Point p = new Point(Cursor.Position.X, Cursor.Position.Y);
                 TreeListHitInfo hitInfo = tree.CalcHitInfo(e.Location);
                 if (hitInfo.HitInfoType == HitInfoType.Cell)
                 {
                     tree.SetFocusedNode(hitInfo.Node);
                 }
-
                 if (tree.FocusedNode != null)
                 {
                     popupMenu.ShowPopup(p);
                 }
             }
-
         }
         /// <summary>
         /// 绑定选中行数据到实体
