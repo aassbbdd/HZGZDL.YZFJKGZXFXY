@@ -257,7 +257,7 @@ namespace Basic_Controls
             Test_Plan model = Test_Plan_Bind(publicnode);
             model.PARENTID = model.ID;
             model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-            model.ID= Db_Action.Instance.Test_Confige_Insert(model).ToString();
+            model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
             Tester_List_Bind();
 
             //生成后刷新树
@@ -2217,6 +2217,70 @@ namespace Basic_Controls
                     //以电流达到1A存数据 小于等于0.1A结束
                     topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
                     Chart_Init();
+                }
+
+                if (pub_Test_Plan.V1 == "1")
+                {
+                    this.ckV1.Checked = true;
+                    v1 = true;
+                }
+                else
+                {
+                    this.ckV1.Checked = false;
+                    v1 = false;
+                }
+                if (pub_Test_Plan.V2 == "1")
+                {
+                    this.ckV2.Checked = true;
+                    v2 = true;
+                }
+                else
+                {
+                    this.ckV2.Checked = false;
+                    v2 = false;
+                }
+
+                if (pub_Test_Plan.V3 == "1")
+                {
+                    this.ckV3.Checked = true;
+                    v3 = true;
+                }
+                else
+                {
+                    this.ckV3.Checked = false;
+                    v3 = false;
+                }
+
+                if (pub_Test_Plan.C1 == "1")
+                {
+                    this.ckC1.Checked = true;
+                    c1 = true;
+                }
+                else
+                {
+                    this.ckC1.Checked = false;
+                    c1 = false;
+                }
+                if (pub_Test_Plan.C2 == "1")
+                {
+                    this.ckC2.Checked = true;
+                    c2 = true;
+                }
+                else
+                {
+                    this.ckC2.Checked = false;
+                    c2 = false;
+                }
+
+                if (pub_Test_Plan.C3 == "1")
+                {
+                    this.ckC3.Checked = true;
+                    c3 = true;
+                }
+                else
+                {
+                    this.ckC3.Checked = false;
+                    c3 = false;
                 }
             }
         }

@@ -59,7 +59,7 @@ namespace DbHelper.Sqlite_Db
             {
 
                 StringBuilder sbsql = new StringBuilder();
-                sbsql.Append("select * from TEST_DATA  order by  DATAID ;");
+                sbsql.Append("select * from TEST_DATA  order by  DATAID  ;");
                 DataSet ds = SQLiteHelper.ExecuteDataSet(sbsql.ToString());
 
                 return ds.Tables[0];
@@ -84,7 +84,7 @@ namespace DbHelper.Sqlite_Db
             {
                 DataTable dt = new DataTable();
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from TEST_CONFIGE ");
+                sb.Append(" select * from TEST_CONFIGE  order by ID desc");
                 dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
                 return Test_Plan_Bind(dt);
             }
