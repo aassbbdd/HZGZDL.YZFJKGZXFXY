@@ -225,7 +225,6 @@
             this.txtCONTACT_NUM.Size = new System.Drawing.Size(162, 24);
             this.txtCONTACT_NUM.TabIndex = 11;
             this.txtCONTACT_NUM.EditValueChanged += new System.EventHandler(this.txtCONTACT_NUM_EditValueChanged);
-            this.txtCONTACT_NUM.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCONTACT_NUM_KeyDown);
             // 
             // txtOLTC_TS
             // 

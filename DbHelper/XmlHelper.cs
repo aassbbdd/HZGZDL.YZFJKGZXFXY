@@ -1,4 +1,5 @@
-﻿using Commons.XmlModel;
+﻿using DbHelper.Db_Model;
+using DbHelper.XmlModel;
 using DocDecrypt.Common;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using Udp_Agreement;
 
-namespace Commons
+namespace DbHelper
 {
     public static class XmlHelper
     {
@@ -102,11 +103,13 @@ namespace Commons
         /// 初始化
         /// </summary>
         /// <param name="name"></param>
-        public static void Init(string name, Test_Plan )
+        public static void Init(string name, Test_Plan model)
         {
             xmlname = name;
             CreateXmlDocument(name);
             xele = XElement.Load(xmlpath);
+            model.ISEDIT = "";
+            Init_Config(model);
         }
 
         #region 新增节点
@@ -119,7 +122,7 @@ namespace Commons
         public static void Insert(Xml_Node_Model model)
         {
             //插入数据时检查xml文件是否存在
-         //   CreateXmlDocument(xmlname);
+            //   CreateXmlDocument(xmlname);
 
             XElement element = ToXElement(model);
             //XElement data = new XElement("Data");
@@ -141,6 +144,21 @@ namespace Commons
             //element.Add(data);
             xele.Add(element);
             //  xele.Save(path);
+        }
+
+
+        /// <summary>
+        /// 1. 功能：新增节点。
+        /// 2. 使用条件：将任意节点插入到当前Xml文件中。
+        /// </summary>        
+        /// <param name="xmlNode">要插入的Xml节点</param>
+        public static void Init_Config(Test_Plan model)
+        {
+            //插入数据时检查xml文件是否存在
+
+            XElement element = ToXElement(model);
+
+            xele.Add(element);
         }
 
         /// <summary>
@@ -245,7 +263,6 @@ namespace Commons
         /// <returns></returns>
         public static XElement ToXElement<T>(T entity)
         {
-
             if (entity == null)
             {
                 return null;
@@ -307,6 +324,38 @@ namespace Commons
         #endregion
 
         #region xml 转换成实体
+
+        /// <summary>
+        /// xml转实体
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="path">xml路径</param>
+        /// <returns></returns>
+        public static Test_Plan Xml_To_Model(string path)
+        {
+            try
+            {
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                XElement ele = root.Element("Test_Plan");
+                Test_Plan model = new Test_Plan();
+                model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// xml转列表
         /// </summary>

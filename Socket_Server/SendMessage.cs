@@ -116,7 +116,17 @@ namespace Socket_Server
                         receiveCmd = string.Empty;
                     }
                 }
+                
             }
+            if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+            {
+                Udp_EventArgs eventArgs = new Udp_EventArgs();
+                eventArgs.Msg = "连接超时";
+                eventArgs.Hearder = "-1";
+                udp_Event_Kind("", eventArgs);
+                return;
+            }
+
         }
 
         /// <summary>
@@ -132,8 +142,8 @@ namespace Socket_Server
 
             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
             IPEndPoint receivePoint = new IPEndPoint(IPAddress.Any, 0);
-
-            while (continueLoop)
+            DateTime startTime = DateTime.Now;
+            while (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= outTime * 1000)
             {
                 if (sendUdpClient.Client.Available > 0)
                 {
@@ -151,15 +161,23 @@ namespace Socket_Server
                             eventArgs.Hearder = "0909";
                             sendmessage = "30FF" + receiveCmd.Substring(4, 4);
                             sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                            Thread.Sleep(0);
+                           // Thread.Sleep(0);
                             sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                             //string path = AppDomain.CurrentDomain.BaseDirectory;
                             //ListToText.Instance.WriteListToTextFile("", path);
                             udp_Event("", eventArgs);
+                            startTime = DateTime.Now;
                         }
                     }
 
                 }
+            }
+            if(continueLoop&&DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+            {
+                Udp_EventArgs eventArgs = new Udp_EventArgs();
+                eventArgs.Msg = "连接超时";
+                eventArgs.Hearder = "-1";
+                udp_Event_Kind("", eventArgs);
             }
         }
 

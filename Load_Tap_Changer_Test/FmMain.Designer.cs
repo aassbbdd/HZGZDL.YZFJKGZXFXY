@@ -101,6 +101,9 @@
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
             this.LBxmlCount = new DevExpress.XtraEditors.LabelControl();
             this.btnClear = new DevExpress.XtraEditors.SimpleButton();
             this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
@@ -121,9 +124,6 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -268,7 +268,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem10, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem11, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem12),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem12, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem13),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem14),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest),
@@ -276,12 +276,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem15),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem16),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem17),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem18),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem20),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem21),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem22),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem23)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem17, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem18, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem20, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem21, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem22, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem23, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar1.OptionsBar.AllowQuickCustomization = false;
             this.bar1.OptionsBar.DrawDragBorder = false;
             this.bar1.OptionsBar.UseWholeRow = true;
@@ -353,26 +353,28 @@
             // 
             this.barLargeButtonItem7.Caption = "图标";
             this.barLargeButtonItem7.Id = 88;
+            this.barLargeButtonItem7.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.字母i2;
             this.barLargeButtonItem7.Name = "barLargeButtonItem7";
             // 
             // barLargeButtonItem8
             // 
             this.barLargeButtonItem8.Caption = "图标";
             this.barLargeButtonItem8.Id = 89;
-            this.barLargeButtonItem8.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._2;
+            this.barLargeButtonItem8.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目6;
             this.barLargeButtonItem8.Name = "barLargeButtonItem8";
             // 
             // barLargeButtonItem10
             // 
             this.barLargeButtonItem10.Caption = "图标";
             this.barLargeButtonItem10.Id = 90;
+            this.barLargeButtonItem10.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._3函数;
             this.barLargeButtonItem10.Name = "barLargeButtonItem10";
             // 
             // btnPant
             // 
             this.btnPant.Caption = "心跳";
             this.btnPant.Id = 83;
-            this.btnPant.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnPant.ImageOptions.Image")));
+            this.btnPant.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.勾;
             this.btnPant.Name = "btnPant";
             this.btnPant.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPant_ItemClick);
             // 
@@ -380,13 +382,14 @@
             // 
             this.barLargeButtonItem11.Caption = "图标";
             this.barLargeButtonItem11.Id = 91;
-            this.barLargeButtonItem11.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1;
+            this.barLargeButtonItem11.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._3;
             this.barLargeButtonItem11.Name = "barLargeButtonItem11";
             // 
             // barLargeButtonItem12
             // 
             this.barLargeButtonItem12.Caption = "图标";
             this.barLargeButtonItem12.Id = 92;
+            this.barLargeButtonItem12.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.Arrow_next3;
             this.barLargeButtonItem12.Name = "barLargeButtonItem12";
             // 
             // barLargeButtonItem13
@@ -442,36 +445,42 @@
             // 
             this.barLargeButtonItem17.Caption = "图标";
             this.barLargeButtonItem17.Id = 98;
+            this.barLargeButtonItem17.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标12;
             this.barLargeButtonItem17.Name = "barLargeButtonItem17";
             // 
             // barLargeButtonItem18
             // 
             this.barLargeButtonItem18.Caption = "图标";
             this.barLargeButtonItem18.Id = 99;
+            this.barLargeButtonItem18.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标17;
             this.barLargeButtonItem18.Name = "barLargeButtonItem18";
             // 
             // barLargeButtonItem20
             // 
             this.barLargeButtonItem20.Caption = "图标";
             this.barLargeButtonItem20.Id = 101;
+            this.barLargeButtonItem20.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1529;
             this.barLargeButtonItem20.Name = "barLargeButtonItem20";
             // 
             // barLargeButtonItem21
             // 
             this.barLargeButtonItem21.Caption = "图标";
             this.barLargeButtonItem21.Id = 102;
+            this.barLargeButtonItem21.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1537;
             this.barLargeButtonItem21.Name = "barLargeButtonItem21";
             // 
             // barLargeButtonItem22
             // 
             this.barLargeButtonItem22.Caption = "图标";
             this.barLargeButtonItem22.Id = 103;
+            this.barLargeButtonItem22.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目18;
             this.barLargeButtonItem22.Name = "barLargeButtonItem22";
             // 
             // barLargeButtonItem23
             // 
             this.barLargeButtonItem23.Caption = "图标";
             this.barLargeButtonItem23.Id = 104;
+            this.barLargeButtonItem23.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标T;
             this.barLargeButtonItem23.Name = "barLargeButtonItem23";
             // 
             // bar2
@@ -637,7 +646,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(959, 111);
+            this.barDockControlTop.Size = new System.Drawing.Size(1469, 111);
             // 
             // barDockControlBottom
             // 
@@ -645,13 +654,13 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 633);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(959, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1469, 0);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(959, 111);
+            this.barDockControlRight.Location = new System.Drawing.Point(1469, 111);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 522);
             // 
@@ -717,7 +726,7 @@
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(556, 517);
+            this.pclChart.Size = new System.Drawing.Size(1066, 517);
             this.pclChart.TabIndex = 30;
             // 
             // btnEnlarge
@@ -775,10 +784,34 @@
             this.panelControl1.Controls.Add(this.ckV2);
             this.panelControl1.Controls.Add(this.btnEnlarge);
             this.panelControl1.Controls.Add(this.ckV1);
-            this.panelControl1.Location = new System.Drawing.Point(772, 112);
+            this.panelControl1.Location = new System.Drawing.Point(1282, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 517);
             this.panelControl1.TabIndex = 52;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(12, 331);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(75, 18);
+            this.labelControl4.TabIndex = 49;
+            this.labelControl4.Text = "绘图点数：";
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(12, 292);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(75, 18);
+            this.labelControl3.TabIndex = 48;
+            this.labelControl3.Text = "存储数量：";
+            // 
+            // LBPrintCount
+            // 
+            this.LBPrintCount.Location = new System.Drawing.Point(85, 331);
+            this.LBPrintCount.Name = "LBPrintCount";
+            this.LBPrintCount.Size = new System.Drawing.Size(81, 18);
+            this.LBPrintCount.TabIndex = 47;
+            this.LBPrintCount.Text = "labelControl1";
             // 
             // LBxmlCount
             // 
@@ -971,35 +1004,11 @@
             this.popupMenu.Manager = this.barManager1;
             this.popupMenu.Name = "popupMenu";
             // 
-            // LBPrintCount
-            // 
-            this.LBPrintCount.Location = new System.Drawing.Point(85, 331);
-            this.LBPrintCount.Name = "LBPrintCount";
-            this.LBPrintCount.Size = new System.Drawing.Size(81, 18);
-            this.LBPrintCount.TabIndex = 47;
-            this.LBPrintCount.Text = "labelControl1";
-            // 
-            // labelControl3
-            // 
-            this.labelControl3.Location = new System.Drawing.Point(12, 292);
-            this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(75, 18);
-            this.labelControl3.TabIndex = 48;
-            this.labelControl3.Text = "存储数量：";
-            // 
-            // labelControl4
-            // 
-            this.labelControl4.Location = new System.Drawing.Point(12, 331);
-            this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(75, 18);
-            this.labelControl4.TabIndex = 49;
-            this.labelControl4.Text = "绘图点数：";
-            // 
             // FmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(959, 633);
+            this.ClientSize = new System.Drawing.Size(1469, 633);
             this.Controls.Add(this.pc2);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);

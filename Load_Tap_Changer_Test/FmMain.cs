@@ -22,7 +22,7 @@ using Steema.TeeChart.Export;
 using DocDecrypt.Common;
 using DbHelper.Sqlite_Db;
 using Commons;
-using Commons.XmlModel;
+
 using System.Xml.Linq;
 using System.Xml;
 using Steema.TeeChart.Tools;
@@ -31,6 +31,7 @@ using System.Configuration;
 using DbHelper.Db_Model;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList;
+using DbHelper.XmlModel;
 
 namespace Basic_Controls
 {
@@ -108,17 +109,25 @@ namespace Basic_Controls
             {
                 model = Test_Plan_Bind(node);
             }
-            model.ISEDIT = "1";
-            string id = "";
-            model.PARENTID = "0";
-            using (FmAddTest form = new FmAddTest(model))
+            if (model.PARENTID == "0")
             {
-                form.ShowDialog();
-                id = form.id;
+                model.ISEDIT = "1";
+                string id = "";
+                using (FmAddTest form = new FmAddTest(model))
+                {
+                    form.ShowDialog();
+                    if (form.DialogResult == DialogResult.OK)
+                    {
+                        id = form.id;
+                        Tester_List_Bind();
+                        Set_Foucs(id);
+                    }
+                }
             }
-            Tester_List_Bind();
-
-            Set_Foucs(id);
+            else
+            {
+                MessageBox.Show("请选择主测试计划!");
+            }
         }
 
         /// <summary>
@@ -152,6 +161,7 @@ namespace Basic_Controls
             try
             {
                 string filepath = FileHelper.GetOpenFilePath();
+                Test_Plan model = XmlHelper.Xml_To_Model(filepath);
                 if (!string.IsNullOrEmpty(filepath))
                 {
                     //  DataTable dt = XmlHelper.Xml_To_DataTable(filepath, cks);
@@ -163,8 +173,6 @@ namespace Basic_Controls
                        out cx2, out cy2,
                        out cx3, out cy3
                         );
-
-
 
                     Chart_DataTable_Init();
                     Chart_Data_Lond_Bind();
@@ -229,12 +237,7 @@ namespace Basic_Controls
         {
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
-            Invoke(new ThreadStart(delegate ()
-            {
-                panelControl1.Enabled = true;
-                pc2.Enabled = true;
-                IsSaveData = false;
-            }));
+
         }
 
         /// <summary>
@@ -244,26 +247,25 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
             if (publicnode == null)
             {
                 MessageBox.Show("请在左侧选择测试计划");
                 return;
             }
-
             End_Chart();
             #region 生成测试配置信息
             Test_Plan model = Test_Plan_Bind(publicnode);
             model.PARENTID = model.ID;
             model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-            Db_Action.Instance.Test_Confige_Insert(model);
+            model.ID= Db_Action.Instance.Test_Confige_Insert(model).ToString();
+            Tester_List_Bind();
+
             //生成后刷新树
             treeList.Refresh();
-            #endregion
-            string filename = model.DVNAME;
 
-            XmlHelper.DeleteXmlDocument(filename);
-            XmlHelper.Init(filename);
+            #endregion
+            XmlHelper.DeleteXmlDocument(model.DVNAME);
+            XmlHelper.Init(model.DVNAME, model);
             xmlpath = XmlHelper.xmlpath;
             Thread.Sleep(10);
 
@@ -375,7 +377,24 @@ namespace Basic_Controls
         }
         #endregion
 
+        #region 树形右键
+
+        /// <summary>
+        /// 删除计划
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Test_Plan model = Test_Plan_Bind(publicnode);
+            Db_Action.Instance.Test_Confige_Del(model);
+            Tester_List_Bind();
+        }
+
         #endregion
+
+        #endregion
+
         #region 调用方法
 
         /// <summary>
@@ -421,12 +440,23 @@ namespace Basic_Controls
             {
                 Invoke(new ThreadStart(delegate ()
                 {
-                    MessageBox.Show("设备连接成功");
+                    if (e.Hearder == "00FF00FF")
+                    {
+                        MessageBox.Show("设备连接成功");
+                    }
+                    else if (e.Hearder == "-1")
+                    {
+                        MessageBox.Show("设备通信超时！");
+
+                        // 通信超时后停止操作 
+                        End_Chart();
+
+                    }
                 }));
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine(exception);
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -446,16 +476,15 @@ namespace Basic_Controls
                 {
                     LBPrintCount.Text = Porint_List.Count.ToString();
                 }));
-             
                 //if (IsSaveData)
                 //{
                 //    //数据存储
                 //    Save_Db_Source.Enqueue(e);
                 //}
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Console.WriteLine(exception);
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -765,6 +794,9 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_Init()
         {
+            tChart.Series.Clear();
+            tChart.Axes.Custom.Clear();
+
             Chart_Config();//初始化图表
             Chart_Data_Bind();//初始化绑定 线line
             pclChart.Controls.Add(tChart);// 绑定图表位置 
@@ -1161,6 +1193,13 @@ namespace Basic_Controls
             istrue = false;
             porintadd = 0;
             isAbort = false;
+            // 通信超时后还原页面属性
+            Invoke(new ThreadStart(delegate ()
+            {
+                panelControl1.Enabled = true;
+                pc2.Enabled = true;
+                IsSaveData = false;
+            }));
         }
 
         #region 队列数据处理
@@ -1239,7 +1278,7 @@ namespace Basic_Controls
                             {
                                 if (i == 0)
                                 {
-                                    // Save_Db_Source.Enqueue(e);
+                                    Save_Db_Source.Enqueue(e);
                                 }
                             }
 
@@ -1422,7 +1461,7 @@ namespace Basic_Controls
                 {
                     Porint_List.TryDequeue(out e);//取出队里数据并删除
                                                   //截取返回数据
-                    
+
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
@@ -1450,31 +1489,29 @@ namespace Basic_Controls
 
                             //否 存储
                             #region 判断电流是否启动 电流存储
-                            if (pub_Test_Plan.GETINFO == "1")
-                            {
-                                //double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
-                                //double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
-                                ////开始存数据
-                                //if (Current1 >= setSCURRENT && !SCURRENT)
-                                //{
-                                //    SCURRENT = false;
-                                //}
-                                ////结束存数据
-                                //if (Current1 >= setECURRENT && SCURRENT)
-                                //{
-                                //    topnum += 1;
-                                //    SCURRENT = true;
-                                //}
+                            //double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
+                            //double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
+                            ////开始存数据
+                            //if (Current1 >= setSCURRENT && !SCURRENT)
+                            //{
+                            //    SCURRENT = false;
+                            //}
+                            ////结束存数据
+                            //if (Current1 >= setECURRENT && SCURRENT)
+                            //{
+                            //    topnum += 1;
+                            //    SCURRENT = true;
+                            //}
 
-                                //if (SCURRENT)
-                                //{
-                                //    if (i == 0)
-                                //    {
-                                //        Save_Db_Source.Enqueue(e);
-                                //    }
-                                //}
+                            //if (SCURRENT)
+                            //{
+                            //    if (i == 0)
+                            //    {
+                            //        Save_Db_Source.Enqueue(e);
+                            //    }
+                            //}
 
-                            }
+
                             #endregion
                             #region 计算保存新数据
                             //if (porintadd == 0)
@@ -2096,13 +2133,12 @@ namespace Basic_Controls
                         model.Data = new List<Xml_Element_Model>();
 
                         XmlHelper.Insert(model);
-                        Thread.Sleep(1);
+                        //  Thread.Sleep(1);
                         if (i == 2000)
                         {
                             XmlHelper.Save();
                             i = 1;
                         };
-
                         Invoke(new ThreadStart(delegate ()
                         {
                             try
@@ -2117,13 +2153,11 @@ namespace Basic_Controls
 
                         i++;
                     }
-
                 }
                 if (!isAbort)
                 {
                     XmlHelper.Save();
                 }
-
             }
             catch (Exception ex)
             {
@@ -2147,9 +2181,6 @@ namespace Basic_Controls
         {
             List<Test_Plan> list = Db_Select.Instance.All_Test_Cofig_Get();
             treeList.DataSource = list;
-
-
-
             treeList.Refresh();
             treeList.ExpandAll();
         }
@@ -2330,6 +2361,11 @@ namespace Basic_Controls
 
         #endregion
 
+        /// <summary>
+        /// 树形图表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeList_GetSelectImage(object sender, GetSelectImageEventArgs e)
         {
             if (e.Node.GetValue("PARENTID").ToString() == "0")
@@ -2343,6 +2379,11 @@ namespace Basic_Controls
 
         }
 
+        /// <summary>
+        /// 树形图表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeList_CustomDrawNodeImages(object sender, CustomDrawNodeImagesEventArgs e)
         {
             if (e.Node.Nodes.Count > 0)
@@ -2359,16 +2400,6 @@ namespace Basic_Controls
                 e.SelectImageIndex = 0;
             }
         }
-
-        private void barButtonItem2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-
-            Test_Plan model = Test_Plan_Bind(publicnode);
-            Db_Action.Instance.Test_Confige_Del(model);
-
-            treeList.Refresh();
-        }
-
 
     }
 }

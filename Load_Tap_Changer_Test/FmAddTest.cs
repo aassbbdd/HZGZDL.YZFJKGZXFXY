@@ -39,6 +39,31 @@ namespace Basic_Controls
             }
         }
 
+        #region 执行方法
+
+        /// <summary>
+        /// 判断采样信息
+        /// </summary>
+        private void Get_Info_Type()
+        {
+            string GetType = this.rdoGETINFO.Text;
+            if (GetType == "1")
+            {
+                this.txtGetUnit.Enabled = false;
+                this.txtSA.Enabled = true;
+                this.txtEA.Enabled = true;
+            }
+            else
+            {
+                this.txtGetUnit.Enabled = true;
+                this.txtSA.Enabled = false;
+                this.txtEA.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// 初始化绑定页面数据
+        /// </summary>
         private void Page_Data_Bind()
         {
             string dvname = oldmodel.DVNAME;
@@ -56,6 +81,9 @@ namespace Basic_Controls
             this.txtTEST_NUM.Text = oldmodel.TEST_NUM;
             this.cmbSPLACE.Text = oldmodel.SPLACE;
             this.txtOILTEMP.Text = oldmodel.OILTEMP;
+
+            //判断采样信息是那种状态
+            Get_Info_Type();
 
             //this.txtTEST_TIME.Text = oldmodel.TEST_TIME;
             this.txtTEST_TIME.Text = DateTime.Now.ToString("yyyy-MM-dd");
@@ -146,43 +174,6 @@ namespace Basic_Controls
             if (oldmodel.C3 == "1")
             {
                 this.ckC3.Checked = true;
-            }
-        }
-
-
-        /// <summary>
-        /// 保存
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            Save();
-            // CreateDb();
-        }
-        /// <summary>
-        /// 取消
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-        private void rdoGetInfo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string GetType = this.rdoGETINFO.Text;
-            if (GetType == "1")
-            {
-                this.txtGetUnit.Enabled = false;
-                this.txtSA.Enabled = true;
-                this.txtEA.Enabled = true;
-            }
-            else
-            {
-                this.txtGetUnit.Enabled = true;
-                this.txtSA.Enabled = false;
-                this.txtEA.Enabled = false;
             }
         }
 
@@ -307,17 +298,54 @@ namespace Basic_Controls
         }
 
         #endregion
+
+
+        #endregion
+
+        #region 按键事件
+        /// <summary>
+        /// 保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            Save();
+            this.DialogResult = DialogResult.OK;
+            // CreateDb();
+        }
+        /// <summary>
+        /// 取消
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// 判断采样信息是那种状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rdoGetInfo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //判断采样信息是那种状态
+            Get_Info_Type();
+        }
+
         /// <summary>
         /// 输入文字自动循环
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void txtCONTACT_NUM_KeyDown(object sender, KeyEventArgs e)
-        {
-            string CONTACT_NUM = this.txtCONTACT_NUM.Text;
+        //private void txtCONTACT_NUM_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    string CONTACT_NUM = this.txtCONTACT_NUM.Text;
 
-            // if()
-        }
+        //    // if()
+        //}
 
         /// <summary>
         /// 输入文字自动循环
@@ -342,5 +370,8 @@ namespace Basic_Controls
             }
 
         }
+        #endregion
+
+
     }
 }

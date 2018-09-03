@@ -214,15 +214,15 @@ namespace DbHelper.Sqlite_Db
                 parameters[23].Value = string.IsNullOrEmpty(model.C3) ? "" : model.C3;
                 parameters[24].Value = model.PARENTID;
 
-                int count = 0;
+                int id = 0;
                 SQLiteHelper.ExecuteScalar(strsql, CommandType.Text, parameters);
 
                 DataTable dt = Get_Desc_Table();
                 if (dt != null)
                 {
-                    count = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
+                    id = Convert.ToInt32(dt.Rows[0]["ID"].ToString());
                 }
-                return count;
+                return id;
             }
             catch (Exception ex)
             {
@@ -360,8 +360,7 @@ namespace DbHelper.Sqlite_Db
                 int count = 0;
                 StringBuilder sbsql = new StringBuilder();
                 sbsql.Append("delete from  TEST_CONFIGE ");
-                                            
-                sbsql.Append("where ID='" + model.ID + "' ");
+                sbsql.Append("where ID='" + model.ID + "' or PARENTID='" + model.ID + "' ");
                 count = SQLiteHelper.ExecuteNonQuery(sbsql.ToString(), CommandType.Text, null);
                 return count.ToString();
             }

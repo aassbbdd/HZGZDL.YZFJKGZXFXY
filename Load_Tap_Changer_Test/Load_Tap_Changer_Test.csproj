@@ -286,8 +286,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ImgIcon\1.jpg" />
+    <Content Include="ImgIcon\1529.bmp" />
+    <Content Include="ImgIcon\1530.bmp" />
+    <Content Include="ImgIcon\1537.bmp" />
+    <Content Include="ImgIcon\1547.bmp" />
     <Content Include="ImgIcon\2.jpg" />
+    <Content Include="ImgIcon\3.bmp" />
     <Content Include="ImgIcon\3函数.bmp" />
+    <Content Include="ImgIcon\Arrow next3.bmp" />
+    <Content Include="ImgIcon\Favorite.bmp" />
+    <Content Include="ImgIcon\函数.bmp" />
+    <Content Include="ImgIcon\勾.bmp" />
+    <Content Include="ImgIcon\勾2.bmp" />
+    <Content Include="ImgIcon\勾3.bmp" />
+    <Content Include="ImgIcon\图标12.bmp" />
+    <Content Include="ImgIcon\图标13.bmp" />
+    <Content Include="ImgIcon\图标14.bmp" />
+    <Content Include="ImgIcon\图标15.bmp" />
+    <Content Include="ImgIcon\图标16.bmp" />
+    <Content Include="ImgIcon\图标17.bmp" />
+    <Content Include="ImgIcon\图标T.bmp" />
+    <Content Include="ImgIcon\字母I1.bmp" />
+    <Content Include="ImgIcon\字母i2.bmp" />
+    <Content Include="ImgIcon\设置图标.bmp" />
+    <Content Include="ImgIcon\项目1525.bmp" />
+    <Content Include="ImgIcon\项目18.bmp" />
+    <Content Include="ImgIcon\项目6.bmp" />
+    <Content Include="ImgIcon\项目7.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.1\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.1\build\net46\System.Data.SQLite.Core.targets')" />

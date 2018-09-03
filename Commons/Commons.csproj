@@ -68,8 +68,6 @@
     <Compile Include="ListToText.cs" />
     <Compile Include="ProtocolUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XmlHelper.cs" />
-    <Compile Include="XmlModel\Xml_Node_Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Udp_Agreement\Udp_Agreement.csproj">

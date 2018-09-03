@@ -70,6 +70,8 @@
     <Compile Include="Sqlite_Db\Create_Table.cs" />
     <Compile Include="Sqlite_Db\Db_Action.cs" />
     <Compile Include="Sqlite_Db\Db_Select.cs" />
+    <Compile Include="XmlHelper.cs" />
+    <Compile Include="XmlModel\Xml_Node_Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
