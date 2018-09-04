@@ -361,8 +361,10 @@ namespace Basic_Controls
                 for (int i = 1; i <= CONTACT_NUM; i++)
                 {
                     heardnum += i.ToString() + ",";
+                    cmbSPLACE.Properties.Items.Add(i);
                 }
                 this.lbHearder.Text = heardnum;
+
             }
             else
             {

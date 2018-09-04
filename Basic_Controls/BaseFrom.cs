@@ -19,6 +19,7 @@ namespace Basic_Controls
         public BaseFrom()
         {
             InitializeComponent();
+            tChart1.Aspect.View3D = false;
         }
 
         string path = "";

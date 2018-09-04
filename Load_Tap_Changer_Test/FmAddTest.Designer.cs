@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDVNAME = new DevExpress.XtraEditors.TextEdit();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -88,7 +87,7 @@
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
-            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
+            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager();
             this.ckIsTop = new DevExpress.XtraEditors.CheckEdit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDVNAME.Properties)).BeginInit();
@@ -260,7 +259,7 @@
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(79, 18);
             this.labelControl6.TabIndex = 5;
-            this.labelControl6.Text = "6)触头数量:";
+            this.labelControl6.Text = "6)档位数量:";
             // 
             // labelControl5
             // 
@@ -493,13 +492,6 @@
             this.cmbSPLACE.Name = "cmbSPLACE";
             this.cmbSPLACE.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbSPLACE.Properties.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6"});
             this.cmbSPLACE.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cmbSPLACE.Size = new System.Drawing.Size(162, 24);
             this.cmbSPLACE.TabIndex = 13;

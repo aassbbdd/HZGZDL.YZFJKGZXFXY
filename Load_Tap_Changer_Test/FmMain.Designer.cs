@@ -95,7 +95,10 @@
             this.barLargeButtonItem5 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barListItem1 = new DevExpress.XtraBars.BarListItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
+            this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
             this.lbX = new DevExpress.XtraEditors.LabelControl();
@@ -125,7 +128,9 @@
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
+            this.pclChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
@@ -176,6 +181,7 @@
             // 
             // barManager1
             // 
+            this.barManager1.AllowCustomization = false;
             this.barManager1.AllowShowToolbarsPopup = false;
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
             this.bar1,
@@ -243,9 +249,12 @@
             this.barLargeButtonItem22,
             this.barLargeButtonItem23,
             this.btnSaveImg,
-            this.barButtonItem2});
+            this.barButtonItem2,
+            this.barEditItem1});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 107;
+            this.barManager1.MaxItemId = 108;
+            this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemTextEdit1});
             // 
             // bar1
             // 
@@ -497,7 +506,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem22),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem23),
             new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem24),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem10)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem10, DevExpress.XtraBars.BarItemPaintStyle.Standard)});
             this.bar2.Offset = 1;
             this.bar2.OptionsBar.AllowQuickCustomization = false;
             this.bar2.OptionsBar.DrawDragBorder = false;
@@ -718,16 +727,39 @@
             this.barButtonItem2.Name = "barButtonItem2";
             this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
             // 
+            // barEditItem1
+            // 
+            this.barEditItem1.Caption = "barEditItem1";
+            this.barEditItem1.Edit = this.repositoryItemTextEdit1;
+            this.barEditItem1.Id = 107;
+            this.barEditItem1.Name = "barEditItem1";
+            // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            // 
             // pclChart
             // 
             this.pclChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pclChart.Controls.Add(this.label1);
             this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Name = "pclChart";
             this.pclChart.Size = new System.Drawing.Size(1066, 517);
             this.pclChart.TabIndex = 30;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(154, 382);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 18);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "浮标";
             // 
             // btnEnlarge
             // 
@@ -1017,13 +1049,17 @@
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "FmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "有载调压开关故障诊断系统(v1.0)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).EndInit();
+            this.pclChart.ResumeLayout(false);
+            this.pclChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
@@ -1141,5 +1177,8 @@
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.LabelControl LBPrintCount;
+        private System.Windows.Forms.Label label1;
+        private DevExpress.XtraBars.BarEditItem barEditItem1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
     }
 }

@@ -44,6 +44,9 @@ namespace Basic_Controls
 
         private void FmMain_Load(object sender, EventArgs e)
         {
+            //barManager1.ToolTipController.ca
+            //this.MaximizeBox = false;//使最大化窗口失效
+            // this.MinimizeBox = false;//使最小化窗口失效
             Bind_IsDC();
             Event_Bind();//绑定注册事件
             Chart_Init();//初始化图表
@@ -52,6 +55,56 @@ namespace Basic_Controls
         }
 
         #region 页面初始化参数
+
+        //protected override void WndProc(ref Message m)
+        //{
+        //    if (m.Msg == 0x112)
+        //    {
+        //        switch ((int)m.WParam)
+        //        {
+        //            //禁止双击标题栏关闭窗体
+        //            case 0xF063:
+        //            case 0xF093:
+        //                m.WParam = IntPtr.Zero;
+        //                break;
+
+        //            //禁止拖拽标题栏还原窗体
+        //            case 0xF012:
+        //            case 0xF010:
+        //                m.WParam = IntPtr.Zero;
+        //                break;
+
+        //            //禁止双击标题栏
+        //            case 0xf122:
+        //                m.WParam = IntPtr.Zero;
+        //                break;
+
+        //            ////禁止关闭按钮
+        //            //case 0xF060:
+        //            //    m.WParam = IntPtr.Zero;
+        //            //    break;
+
+        //            ////禁止最小化按钮
+        //            //case 0xf020:
+        //            //    m.WParam = IntPtr.Zero;
+        //            //    break;
+
+        //            ////禁止最大化按钮
+        //            //case 0xf030:
+        //            //    m.WParam = IntPtr.Zero;
+        //            //    break;
+
+        //            ////禁止还原按钮
+        //            //case 0xf120:
+        //            //    m.WParam = IntPtr.Zero;
+
+        //            //    //this.WindowState = FormWindowState.Maximized;
+        //            //    break;
+        //        }
+        //    }
+        //    base.WndProc(ref m);
+        //}
+
 
         /// <summary>
         /// xml 存储路径
@@ -225,7 +278,55 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnCTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //Tester_List_Bind();
+            try
+            {
+                if (publicnode == null)
+                {
+                    MessageBox.Show("请在左侧选择测试计划");
+                    return;
+                }
+                End_Chart();
+                #region 生成测试配置信息
+
+                string PARENTID = publicnode.GetValue("PARENTID").ToString();
+                Test_Plan model = new Test_Plan();
+                if (PARENTID == "0")
+                {
+                    model = Test_Plan_Bind(publicnode);
+                }
+                else
+                {
+                    TreeListNode node = Select_Top_Node(PARENTID);
+                    model = Test_Plan_Bind(node);
+                }
+                model.PARENTID = model.ID;
+                model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
+
+                Tester_List_Bind();
+
+                //生成后刷新树
+                treeList.Refresh();
+
+                #endregion
+                XmlHelper.DeleteXmlDocument(model.DVNAME);
+                XmlHelper.Init(model.DVNAME, model);
+                xmlpath = XmlHelper.xmlpath;
+                Thread.Sleep(10);
+
+                sendUdp(agreement._2_CMD_STARTTESTER);
+                //清空Y轴
+                tChart.Series.RemoveAllSeries();
+                //清空Y轴
+                tChart.Axes.Custom.Clear();
+                Start_Chart();
+                panelControl1.Enabled = false;
+                pc2.Enabled = false;
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -247,36 +348,55 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (publicnode == null)
+            try
             {
-                MessageBox.Show("请在左侧选择测试计划");
-                return;
+                if (publicnode == null)
+                {
+                    MessageBox.Show("请在左侧选择测试计划");
+                    return;
+                }
+                End_Chart();
+                #region 生成测试配置信息
+
+                string PARENTID = publicnode.GetValue("PARENTID").ToString();
+                Test_Plan model = new Test_Plan();
+                if (PARENTID == "0")
+                {
+                    model = Test_Plan_Bind(publicnode);
+                }
+                else
+                {
+                    TreeListNode node = Select_Top_Node(PARENTID);
+                    model = Test_Plan_Bind(node);
+                }
+                model.PARENTID = model.ID;
+                model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
+
+                Tester_List_Bind();
+
+                //生成后刷新树
+                treeList.Refresh();
+
+                #endregion
+                XmlHelper.DeleteXmlDocument(model.DVNAME);
+                XmlHelper.Init(model.DVNAME, model);
+                xmlpath = XmlHelper.xmlpath;
+                Thread.Sleep(10);
+
+                sendUdp(agreement._2_CMD_STARTTESTER);
+                //清空Y轴
+                tChart.Series.RemoveAllSeries();
+                //清空Y轴
+                tChart.Axes.Custom.Clear();
+                Start_Chart();
+                panelControl1.Enabled = false;
+                pc2.Enabled = false;
             }
-            End_Chart();
-            #region 生成测试配置信息
-            Test_Plan model = Test_Plan_Bind(publicnode);
-            model.PARENTID = model.ID;
-            model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-            model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
-            Tester_List_Bind();
-
-            //生成后刷新树
-            treeList.Refresh();
-
-            #endregion
-            XmlHelper.DeleteXmlDocument(model.DVNAME);
-            XmlHelper.Init(model.DVNAME, model);
-            xmlpath = XmlHelper.xmlpath;
-            Thread.Sleep(10);
-
-            sendUdp(agreement._2_CMD_STARTTESTER);
-            //清空Y轴
-            tChart.Series.RemoveAllSeries();
-            //清空Y轴
-            tChart.Axes.Custom.Clear();
-            Start_Chart();
-            panelControl1.Enabled = false;
-            pc2.Enabled = false;
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
         }
 
         #endregion
@@ -863,6 +983,12 @@ namespace Basic_Controls
 
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+            tChart.Axes.Bottom.Title.Text = "时间单位:秒(sec)";
+
+
+            //tChart.Axes.Bottom.Labels.Tag = "sec";
+            //tChart.Axes.Bottom.Labels.
+
 
             //默认10秒
             tChart.Axes.Bottom.SetMinMax(0, alltime);
@@ -873,7 +999,7 @@ namespace Basic_Controls
 
             tChart.Panel.MarginLeft = 10;
             tChart.Panel.MarginRight = 10;
-            tChart.Panel.MarginBottom = 10;
+            tChart.Panel.MarginBottom = 5;
             tChart.Panel.MarginTop = 10;
 
             tChart.Zoom.Allow = false;
@@ -1213,12 +1339,14 @@ namespace Basic_Controls
         /// 是否触发开关存储
         /// </summary>
         bool SCURRENT = false;
+
         /// <summary>
-        /// 触头触发数
+        /// 当前档位
         /// </summary>
         int topnum = 0;
+
         /// <summary>
-        /// 总触头数
+        /// 总档位数
         /// </summary>
         int alltopnum = 0;
 
@@ -1439,8 +1567,6 @@ namespace Basic_Controls
                         x = cx3[porintadd - 1] + newXvalue;
                     }
                 }
-
-
                 return x;
             }
             catch (Exception ex)
@@ -1460,7 +1586,6 @@ namespace Basic_Controls
                 if (Porint_List.Count > 0)
                 {
                     Porint_List.TryDequeue(out e);//取出队里数据并删除
-                                                  //截取返回数据
 
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
@@ -1469,12 +1594,9 @@ namespace Basic_Controls
                         int Porints = 80 / LessPoint;
                         double x = new double();
                         double y = new double();
-
-
                         for (int i = 0; i < Porints; i++)
                         {
                             Vibration_Current vmodel = new Vibration_Current();
-                            Vibration_Current vmodel1 = new Vibration_Current();
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
                             vmodel.Current1 = data.Substring(0 + length, 4);
@@ -1485,43 +1607,8 @@ namespace Basic_Controls
                             vmodel.Vibration2 = data.Substring(16 + length, 4);
                             vmodel.Vibration3 = data.Substring(20 + length, 4);
 
+                            #region 计算保存新点位数据
 
-
-                            //否 存储
-                            #region 判断电流是否启动 电流存储
-                            //double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
-                            //double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
-                            ////开始存数据
-                            //if (Current1 >= setSCURRENT && !SCURRENT)
-                            //{
-                            //    SCURRENT = false;
-                            //}
-                            ////结束存数据
-                            //if (Current1 >= setECURRENT && SCURRENT)
-                            //{
-                            //    topnum += 1;
-                            //    SCURRENT = true;
-                            //}
-
-                            //if (SCURRENT)
-                            //{
-                            //    if (i == 0)
-                            //    {
-                            //        Save_Db_Source.Enqueue(e);
-                            //    }
-                            //}
-
-
-                            #endregion
-                            #region 计算保存新数据
-                            //if (porintadd == 0)
-                            //{
-                            //    x = vx1[porintadd] + newXvalue;//
-                            //}
-                            //else
-                            //{
-                            //    x = vx1[porintadd - 1] + newXvalue;//
-                            //}
                             x = Get_Pub_S_X();
                             if (v1)
                             {
@@ -1567,12 +1654,8 @@ namespace Basic_Controls
 
                             #endregion
                             porintadd++;
-
-
                         }
-
-
-                        #region 数据大于10秒时执行   不需要执行这个
+                        #region 数据大于10秒时执行 横条删除效果
 
                         if (porintadd > linlength - 1)
                         {
@@ -1590,10 +1673,8 @@ namespace Basic_Controls
                         }
                         if (istrue)
                         {
-
                             //公共初始位置
                             double pubwidth = 0;
-
                             if (v1)
                             {
                                 pubwidth = vx1[porintadd];
@@ -1638,11 +1719,71 @@ namespace Basic_Controls
                             colorTo = width;
                         }
                         #endregion
+
+                        Current_Open(data);
+
+                        if (SCURRENT)
+                        {
+                            Save_Db_Source.Enqueue(e);
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 判断电流是否开始或结束
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void Current_Open(string data)
+        {
+            for (int i = 0; i < 80; i++)
+            {
+                Vibration_Current vmodel = new Vibration_Current();
+                int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
+
+                vmodel.Current1 = data.Substring(0 + length, 4);
+                vmodel.Current2 = data.Substring(4 + length, 4);
+                vmodel.Current3 = data.Substring(8 + length, 4);
+
+                //否 存储
+                #region 判断电流是否启动 电流存储
+                double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
+                double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
+
+                double Current1 = Convert.ToDouble(vmodel.Current1);
+
+                #endregion
+
+                //开始存数据
+                if (Current1 >= setSCURRENT && !SCURRENT)
+                {
+                    SCURRENT = true;
+                    return;
+                }
+                //结束存数据
+                if (Current1 >= setECURRENT && SCURRENT)
+                {
+                    if (topnum <= alltopnum)
+                    {
+                        topnum += 1;
+                        SCURRENT = false;
+                        return;
+                    }
+                    else
+                    {
+                        //结束
+                        return;
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// 绑定数数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="width"></param>
         private void Data_Bind(int index, double width)
         {
             vx1[porintadd + index + 1] = width;
@@ -2209,14 +2350,23 @@ namespace Basic_Controls
                 {
                     alltime = string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT) ? alltime : Convert.ToInt32(pub_Test_Plan.TIME_UNIT);
                     init_Chart_Config(alltime, 40);
-                    Chart_Init();
+                    //Chart_Init();
                 }
                 else
                 {
                     init_Chart_Config(10, 40);
                     //以电流达到1A存数据 小于等于0.1A结束
                     topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
-                    Chart_Init();
+                    alltopnum= Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
+                    //Chart_Init();
+                }
+                if (pub_Test_Plan.GETINFO == "1")
+                {
+                    btnCTest.Enabled = false;
+                }
+                else
+                {
+                    btnCTest.Enabled = true;
                 }
 
                 if (pub_Test_Plan.V1 == "1")
@@ -2282,6 +2432,7 @@ namespace Basic_Controls
                     this.ckC3.Checked = false;
                     c3 = false;
                 }
+                Chart_Init();
             }
         }
 
@@ -2332,6 +2483,7 @@ namespace Basic_Controls
                 }
             }
         }
+
         /// <summary>
         /// treelist 鼠标事件
         /// </summary>
@@ -2357,6 +2509,7 @@ namespace Basic_Controls
                 }
             }
         }
+
         /// <summary>
         /// 绑定选中行数据到实体
         /// </summary>
@@ -2403,6 +2556,25 @@ namespace Basic_Controls
             {
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// 获取指定节点
+        /// </summary>
+        /// <param name="Id"></param>
+        private TreeListNode Select_Top_Node(string Id)
+        {
+            TreeListNode node = null;
+            List<TreeListNode> list = treeList.GetNodeList();
+            foreach (TreeListNode n in list)
+            {
+                if (n.GetValue("ID").ToString() == Id)
+                {
+                    node = n;
+                    break;
+                }
+            }
+            return node;
         }
 
         /// <summary>

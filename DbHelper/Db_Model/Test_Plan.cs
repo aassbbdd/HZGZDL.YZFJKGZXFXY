@@ -47,7 +47,7 @@ namespace DbHelper.Db_Model
         public string OLTC_TS { get; set; }
 
         /// <summary>
-        /// 触头数量
+        /// 档位总数量
         /// </summary>
         public string CONTACT_NUM { get; set; }
 

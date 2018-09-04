@@ -193,7 +193,7 @@ namespace Commons
         {
             FileStream fs;
             StreamWriter sw;
-            string path = AppDomain.CurrentDomain.BaseDirectory + "TestTxttext.txt";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "log.txt";
 
 
             if (File.Exists(path))
@@ -204,7 +204,7 @@ namespace Commons
                 sw.Flush();
                 //使用StreamWriter来往文件中写入内容
                 //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
-                sw.WriteLine(text);
+                sw.WriteLine(DateTime.Now.ToString()+":"+ text);
                 //关闭此文件
                 sw.Flush();
                 sw.Close();
