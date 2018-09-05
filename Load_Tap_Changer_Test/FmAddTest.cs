@@ -259,7 +259,7 @@ namespace Basic_Controls
                 model.DESCRIBE = this.txtDescribe.Text;
 
                 model.GETINFO = this.rdoGETINFO.Text;
-                model.SCURRENT = model.GETINFO == "1" ? "" : this.txtSA.Text;
+                model.SCURRENT = model.GETINFO == "1" ? this.txtSA.Text : "" ;
                 model.ECURRENT = model.GETINFO == "1" ? this.txtEA.Text : "";
                 model.TIME_UNIT = model.GETINFO == "2" ? this.txtGetUnit.Text : "";
                 model.PARENTID = oldmodel.PARENTID;

@@ -303,6 +303,16 @@ namespace Load_Tap_Changer_Test.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 项目4 {
+            get {
+                object obj = ResourceManager.GetObject("项目4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 项目6 {
             get {
                 object obj = ResourceManager.GetObject("项目6", resourceCulture);

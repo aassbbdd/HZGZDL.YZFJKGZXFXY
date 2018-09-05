@@ -118,65 +118,41 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="3函数" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\3函数.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="1529" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\1529.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="1530" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\1530.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="1537" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\1537.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="1547" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\1547.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Arrow next3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\Arrow next3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Favorite" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\Favorite.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="勾" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\勾.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="勾2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\勾2.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="勾3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\勾3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="函数" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\函数.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="设置图标" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\设置图标.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="图标12" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\图标12.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="图标13" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\图标13.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="图标14" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\图标14.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="图标15" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\图标15.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="图标16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\图标16.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Favorite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\Favorite.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1547" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\1547.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="勾" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\勾.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="3函数" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\3函数.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="勾3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\勾3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1530" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\1530.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="图标17" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\图标17.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="图标T" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\图标T.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="项目1525" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\项目1525.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="设置图标" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\设置图标.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="项目6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\项目6.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,16 +160,43 @@
   <data name="项目7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\项目7.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="图标12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\图标12.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="项目18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\项目18.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="项目1525" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ImgIcon\项目1525.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="字母I1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\字母I1.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="图标13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\图标13.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Arrow next3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\Arrow next3.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1529" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\1529.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="函数" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\函数.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="图标14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\图标14.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="字母i2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ImgIcon\字母i2.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="图标15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\图标15.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="图标T" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\图标T.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="勾2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\勾2.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="项目4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ImgIcon\项目4.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

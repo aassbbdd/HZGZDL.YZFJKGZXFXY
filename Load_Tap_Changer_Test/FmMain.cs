@@ -32,6 +32,8 @@ using DbHelper.Db_Model;
 using DevExpress.XtraTreeList.Nodes;
 using DevExpress.XtraTreeList;
 using DbHelper.XmlModel;
+using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace Basic_Controls
 {
@@ -47,11 +49,16 @@ namespace Basic_Controls
             //barManager1.ToolTipController.ca
             //this.MaximizeBox = false;//使最大化窗口失效
             // this.MinimizeBox = false;//使最小化窗口失效
-            Bind_IsDC();
-            Event_Bind();//绑定注册事件
-            Chart_Init();//初始化图表
-            CreateDb();//生成数据库
-            Tester_List_Bind();//获取测试计划绑定到页面树
+            //更新波形通道
+            if (Bind_IsDC())
+            {
+                Event_Bind();//绑定注册事件
+                Chart_Init();//初始化图表
+                CreateDb();//生成数据库
+                Tester_List_Bind();//获取测试计划绑定到页面树
+            }
+            //测试连接通信
+            sendUdp(agreement._1_CMD_HEARTBEAT);
         }
 
         #region 页面初始化参数
@@ -129,6 +136,10 @@ namespace Basic_Controls
         /// 获取焦点行
         /// </summary>
         TreeListNode publicnode;
+
+        /// <summary>
+        /// 焦点行实体
+        /// </summary>
         Test_Plan pub_Test_Plan;
         #endregion
 
@@ -249,18 +260,39 @@ namespace Basic_Controls
 
         private void btnSaveImg_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "TestLineImage";
+            string path = FileHelper.Local_Path_Get() + "TestLineImage";
             FileHelper.CreateDirectoy(path);
             //文件夹名字
             string filename = DateTime.Now.ToString("d");
             path = path + "\\" + filename;
             FileHelper.CreateDirectoy(path);
             string imgname = "\\" + DateTime.Now.ToString("HHmmss") + ".png";
-
-            tChart.Export.Image.PNG.Width = 800;
-            tChart.Export.Image.PNG.Height = 600;
-
             tChart.Export.Image.PNG.Save(path + "\\" + imgname);
+
+            #region 截屏 暂时不用
+            //Rectangle ScreenArea = System.Windows.Forms.Screen.GetBounds(this);
+            //int width1 = ScreenArea.Width; //屏幕宽度 
+            //int height1 = ScreenArea.Height; //屏幕高度
+
+            //System.Drawing.Rectangle rec = Screen.GetWorkingArea(this);
+
+            //int SH = rec.Height;
+
+            //int SW = rec.Width;
+
+            //int SH1 = Screen.PrimaryScreen.Bounds.Height;
+
+            //int SW1 = Screen.PrimaryScreen.Bounds.Width;
+
+
+            //Bitmap bit = new Bitmap(width1, height1);//实例化一个和窗体一样大的bitmap
+            //Graphics g = Graphics.FromImage(bit);
+            //g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+            //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(width1, height1));//保存整个窗体为图片
+            //                                                                                                       //g.CopyFromScreen(panel游戏区 .PointToScreen(Point.Empty), Point.Empty, panel游戏区.Size);//只保存某个控件（这里是panel游戏区）
+            //bit.Save(path + "weiboTemp.png");//默认保存格式为PNG，保存成jpg格式质量不是很好
+
+            #endregion
         }
         /// <summary>
         /// 心跳测试
@@ -280,48 +312,7 @@ namespace Basic_Controls
         {
             try
             {
-                if (publicnode == null)
-                {
-                    MessageBox.Show("请在左侧选择测试计划");
-                    return;
-                }
-                End_Chart();
-                #region 生成测试配置信息
-
-                string PARENTID = publicnode.GetValue("PARENTID").ToString();
-                Test_Plan model = new Test_Plan();
-                if (PARENTID == "0")
-                {
-                    model = Test_Plan_Bind(publicnode);
-                }
-                else
-                {
-                    TreeListNode node = Select_Top_Node(PARENTID);
-                    model = Test_Plan_Bind(node);
-                }
-                model.PARENTID = model.ID;
-                model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-                model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
-
-                Tester_List_Bind();
-
-                //生成后刷新树
-                treeList.Refresh();
-
-                #endregion
-                XmlHelper.DeleteXmlDocument(model.DVNAME);
-                XmlHelper.Init(model.DVNAME, model);
-                xmlpath = XmlHelper.xmlpath;
-                Thread.Sleep(10);
-
-                sendUdp(agreement._2_CMD_STARTTESTER);
-                //清空Y轴
-                tChart.Series.RemoveAllSeries();
-                //清空Y轴
-                tChart.Axes.Custom.Clear();
-                Start_Chart();
-                panelControl1.Enabled = false;
-                pc2.Enabled = false;
+                Send_Config();
             }
             catch (Exception ex)
             {
@@ -338,9 +329,11 @@ namespace Basic_Controls
         {
             sendUdp(agreement._3_CMD_STOPTESTER);
             End_Chart();
-
         }
-
+        /// <summary>
+        /// 按钮开始测试标识 用来阻断 点击计划树触发事件
+        /// </summary>
+        bool isBtnTest = true;
         /// <summary>
         /// 开始测试
         /// </summary>
@@ -350,33 +343,49 @@ namespace Basic_Controls
         {
             try
             {
-                if (publicnode == null)
-                {
-                    MessageBox.Show("请在左侧选择测试计划");
-                    return;
-                }
+
+                Send_Config();
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 开始测试基本配置
+        /// </summary>
+        private void Send_Config()
+        {
+            if (publicnode == null)
+            {
+                MessageBox.Show("请在左侧选择测试计划");
+                return;
+            }
+            if (Bind_IsDC())
+            {
                 End_Chart();
                 #region 生成测试配置信息
 
-                string PARENTID = publicnode.GetValue("PARENTID").ToString();
                 Test_Plan model = new Test_Plan();
-                if (PARENTID == "0")
+                if (pub_Test_Plan.PARENTID == "0")
                 {
                     model = Test_Plan_Bind(publicnode);
                 }
                 else
                 {
-                    TreeListNode node = Select_Top_Node(PARENTID);
+                    TreeListNode node = Select_Top_Node(pub_Test_Plan.PARENTID);
                     model = Test_Plan_Bind(node);
                 }
                 model.PARENTID = model.ID;
                 model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
+                isBtnTest = false;
 
                 Tester_List_Bind();
 
                 //生成后刷新树
-                treeList.Refresh();
+                // treeList.Refresh();
 
                 #endregion
                 XmlHelper.DeleteXmlDocument(model.DVNAME);
@@ -385,19 +394,11 @@ namespace Basic_Controls
                 Thread.Sleep(10);
 
                 sendUdp(agreement._2_CMD_STARTTESTER);
-                //清空Y轴
-                tChart.Series.RemoveAllSeries();
-                //清空Y轴
-                tChart.Axes.Custom.Clear();
+
                 Start_Chart();
-                panelControl1.Enabled = false;
-                pc2.Enabled = false;
-            }
-            catch (Exception ex)
-            {
-                ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }
         }
+
 
         #endregion
 
@@ -410,13 +411,14 @@ namespace Basic_Controls
         private void btnReLond_Click(object sender, EventArgs e)
         {
             //更新波形通道
-            Bind_IsDC();
-            //清空Y轴
-            tChart.Series.RemoveAllSeries();
-            //清空Y轴
-            tChart.Axes.Custom.Clear();
-            Chart_Data_Lond_Bind();
-            tChart.Refresh();
+            if (Bind_IsDC())
+            {
+                //清空Y轴
+                tChart.Series.RemoveAllSeries();
+                //清空Y轴
+                tChart.Axes.Custom.Clear();
+                Chart_Data_Lond_Bind();
+            }
         }
 
         /// <summary>
@@ -426,7 +428,10 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnReNew_Click(object sender, EventArgs e)
         {
-            tChart.Zoom.Undo();
+            //tChart.Zoom.Undo();
+            tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+            tChart.Axes.Bottom.SetMinMax(min, max);
+            aotuzoom = 0;
         }
 
         /// <summary>
@@ -478,7 +483,7 @@ namespace Basic_Controls
         /// <summary>
         /// 保定数据通道是否开启
         /// </summary>
-        private void Bind_IsDC()
+        private bool Bind_IsDC()
         {
             v1 = ckV1.Checked;
             v2 = ckV2.Checked;
@@ -494,6 +499,16 @@ namespace Basic_Controls
             cks[1] = c1;
             cks[2] = c2;
             cks[3] = c3;
+            if (v1 || v2 || v3 || c1 || c2 || c3)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("请勾选左侧电流震动");
+                return false;
+            }
+
         }
         #endregion
 
@@ -515,7 +530,7 @@ namespace Basic_Controls
 
         #endregion
 
-        #region 调用方法
+        #region 协议调用方法
 
         /// <summary>
         /// 发送协议
@@ -523,11 +538,31 @@ namespace Basic_Controls
         private void sendUdp(string msg)
         {
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(DvIp), 4000);
-            //if (!string.IsNullOrEmpty(txtIp.Text) && !string.IsNullOrEmpty(txtPorit.Text))
-            //{
-            //    ipep = new IPEndPoint(IPAddress.Parse(txtIp.Text), Convert.ToInt32(txtPorit.Text));
-            //}
-            SendMessage.SendMsgStart(msg, ipep);
+            string ip = GetIpAddress();
+
+            if (ip == DvIp)
+            {
+                MessageBox.Show("本机IP和设备IP相同，请修改本机IP。");
+                return;
+            }
+            else
+            {
+                SendMessage.SendMsgStart(msg, ipep);
+            }
+        }
+
+        /// <summary>
+        /// 获取本机IP
+        /// </summary>
+        /// <returns></returns>
+        private string GetIpAddress()
+        {
+            string hostName = Dns.GetHostName();   //获取本机名
+            IPHostEntry localhost = Dns.GetHostByName(hostName);    //方法已过期，可以获取IPv4的地址
+                                                                    //IPHostEntry localhost = Dns.GetHostEntry(hostName);   //获取IPv6地址
+            IPAddress localaddr = localhost.AddressList[0];
+
+            return localaddr.ToString();
         }
 
         /// <summary>
@@ -562,6 +597,7 @@ namespace Basic_Controls
                 {
                     if (e.Hearder == "00FF00FF")
                     {
+                        Open_Type("1");
                         MessageBox.Show("设备连接成功");
                     }
                     else if (e.Hearder == "-1")
@@ -570,7 +606,7 @@ namespace Basic_Controls
 
                         // 通信超时后停止操作 
                         End_Chart();
-
+                        Open_Type("0");
                     }
                 }));
             }
@@ -578,6 +614,25 @@ namespace Basic_Controls
             {
                 Console.WriteLine(ex);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// 修改页面通信状态
+        /// </summary>
+        /// <param name="type"></param>
+        private void Open_Type(string type)
+        {
+            string str = FileHelper.Local_Path_Get();
+            if (type == "0")
+            {
+                this.pcOpen.Load(str + "ImgIcon\\Favorite.bmp");
+                this.lbOpen.Text = "设备未连接";
+            }
+            else
+            {
+                this.pcOpen.Load(str + "ImgIcon\\项目1525.bmp");
+                this.lbOpen.Text = "设备已连接";
             }
         }
 
@@ -834,7 +889,7 @@ namespace Basic_Controls
         /// <summary>
         /// //计算坐标百分比参数
         /// </summary>
-        private int space = 5;
+        private int space = 7;
 
         /// <summary>
         /// //将显示宽度转换为整数
@@ -1021,11 +1076,14 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_DataTable_Init()
         {
-            Bind_IsDC();
-            tChart.Series.Clear();
-            tChart.Axes.Custom.Clear();
-            tChart.Zoom.Allow = false;
-            Event_Chart_Bind();
+            //更新波形通道
+            if (Bind_IsDC())
+            {
+                tChart.Series.Clear();
+                tChart.Axes.Custom.Clear();
+                tChart.Zoom.Allow = false;
+                Event_Chart_Bind();
+            }
         }
 
         /// <summary>
@@ -1082,10 +1140,24 @@ namespace Basic_Controls
                 axis.AutomaticMaximum = false;//最大刻度禁用
                 axis.AutomaticMinimum = false;//最小刻度禁用
                 axis.Title.Angle = 90;//'标题摆放角度
-                axis.Maximum = 10;//最大值
-                axis.Minimum = -10;//最小值
+                //axis.Maximum = 10;//最大值
+                //axis.Minimum = -10;//最小值
 
-                axis.Title.Text = tChart.Series[i].Title;
+                string title = tChart.Series[i].Title;
+
+                axis.Title.Text = title;
+                if (title.Substring(0, 2) == "电流")
+                {
+                    axis.Maximum = 5;//最大值
+                    axis.Minimum = -5;//最小值
+                }
+                else
+                {
+                    axis.Maximum = 10;//最大值
+                    axis.Minimum = -10;//最小值
+                }
+
+
                 tChart.Axes.Custom.Add(axis);
                 listBaseLine[i].CustomVertAxis = axis;
             }
@@ -1102,6 +1174,7 @@ namespace Basic_Controls
                 {
                     //震动1路 vline1
                     vline1.Title = string.Format("震动曲线{0}", 1);
+
                     tChart.Series.Add(vline1);
                 }
                 if (v2)
@@ -1216,6 +1289,9 @@ namespace Basic_Controls
 
                 //绘制画布
                 AddCustomAxis(tChart.Series.Count);
+                tChart.Refresh();
+
+
             }
             catch (Exception ex)
             {
@@ -1273,6 +1349,12 @@ namespace Basic_Controls
         /// </summary>
         private void Start_Chart()
         {
+            //清空Y轴
+            tChart.Series.RemoveAllSeries();
+            //清空Y轴
+            tChart.Axes.Custom.Clear();
+            panelControl1.Enabled = false;
+            pc2.Enabled = false;
             isAbort = true;
 
             #region 处理队列数据
@@ -1305,7 +1387,7 @@ namespace Basic_Controls
             Db_Save = new Thread(Test_Xml_Insert);
             Db_Save.IsBackground = true;
             Db_Save.Start();//启动线程
-            //}
+                            //}
             #endregion
 
             Chart_Init();
@@ -1319,6 +1401,7 @@ namespace Basic_Controls
             istrue = false;
             porintadd = 0;
             isAbort = false;
+
             // 通信超时后还原页面属性
             Invoke(new ThreadStart(delegate ()
             {
@@ -1326,6 +1409,8 @@ namespace Basic_Controls
                 pc2.Enabled = true;
                 IsSaveData = false;
             }));
+            //Tester_List_Bind();
+            isBtnTest = true;
         }
 
         #region 队列数据处理
@@ -1739,8 +1824,10 @@ namespace Basic_Controls
         {
             for (int i = 0; i < 80; i++)
             {
+
+                int lengtht = data.Length;
                 Vibration_Current vmodel = new Vibration_Current();
-                int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
+                int length = 24 * i;//截取位置 +1 默认不取第一个点位
 
                 vmodel.Current1 = data.Substring(0 + length, 4);
                 vmodel.Current2 = data.Substring(4 + length, 4);
@@ -1751,27 +1838,33 @@ namespace Basic_Controls
                 double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
                 double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
 
-                double Current1 = Convert.ToDouble(vmodel.Current1);
+                double Current = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
 
                 #endregion
 
                 //开始存数据
-                if (Current1 >= setSCURRENT && !SCURRENT)
+                if (Current >= setSCURRENT && !SCURRENT)
                 {
                     SCURRENT = true;
+                    if (topnum.ToString() == pub_Test_Plan.SPLACE)
+                    {
+                        tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
+                    }
                     return;
                 }
-                //结束存数据
-                if (Current1 >= setECURRENT && SCURRENT)
+                //结束存数据 问题 结束电流  太多负值电流
+                if (Current <= setECURRENT && SCURRENT)
                 {
                     if (topnum <= alltopnum)
                     {
                         topnum += 1;
                         SCURRENT = false;
+                        tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
                         return;
                     }
                     else
                     {
+                        //发送停止协议
                         //结束
                         return;
                     }
@@ -2335,6 +2428,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
+
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
@@ -2351,88 +2445,92 @@ namespace Basic_Controls
                     alltime = string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT) ? alltime : Convert.ToInt32(pub_Test_Plan.TIME_UNIT);
                     init_Chart_Config(alltime, 40);
                     //Chart_Init();
+                    btnCTest.Enabled = false;
                 }
                 else
                 {
                     init_Chart_Config(10, 40);
                     //以电流达到1A存数据 小于等于0.1A结束
                     topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
-                    alltopnum= Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
+                    alltopnum = Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
                     //Chart_Init();
-                }
-                if (pub_Test_Plan.GETINFO == "1")
-                {
-                    btnCTest.Enabled = false;
-                }
-                else
-                {
                     btnCTest.Enabled = true;
                 }
 
-                if (pub_Test_Plan.V1 == "1")
+                if (isBtnTest)
                 {
-                    this.ckV1.Checked = true;
-                    v1 = true;
-                }
-                else
-                {
-                    this.ckV1.Checked = false;
-                    v1 = false;
-                }
-                if (pub_Test_Plan.V2 == "1")
-                {
-                    this.ckV2.Checked = true;
-                    v2 = true;
-                }
-                else
-                {
-                    this.ckV2.Checked = false;
-                    v2 = false;
+                    if (pub_Test_Plan.V1 == "1")
+                    {
+                        this.ckV1.Checked = true;
+                        v1 = true;
+                    }
+                    else
+                    {
+                        this.ckV1.Checked = false;
+                        v1 = false;
+                    }
+                    if (pub_Test_Plan.V2 == "1")
+                    {
+                        this.ckV2.Checked = true;
+                        v2 = true;
+                    }
+                    else
+                    {
+                        this.ckV2.Checked = false;
+                        v2 = false;
+                    }
+
+                    if (pub_Test_Plan.V3 == "1")
+                    {
+                        this.ckV3.Checked = true;
+                        v3 = true;
+                    }
+                    else
+                    {
+                        this.ckV3.Checked = false;
+                        v3 = false;
+                    }
+
+                    if (pub_Test_Plan.C1 == "1")
+                    {
+                        this.ckC1.Checked = true;
+                        c1 = true;
+                    }
+                    else
+                    {
+                        this.ckC1.Checked = false;
+                        c1 = false;
+                    }
+                    if (pub_Test_Plan.C2 == "1")
+                    {
+                        this.ckC2.Checked = true;
+                        c2 = true;
+                    }
+                    else
+                    {
+                        this.ckC2.Checked = false;
+                        c2 = false;
+                    }
+
+                    if (pub_Test_Plan.C3 == "1")
+                    {
+                        this.ckC3.Checked = true;
+                        c3 = true;
+                    }
+                    else
+                    {
+                        this.ckC3.Checked = false;
+                        c3 = false;
+                    }
                 }
 
-                if (pub_Test_Plan.V3 == "1")
-                {
-                    this.ckV3.Checked = true;
-                    v3 = true;
-                }
-                else
-                {
-                    this.ckV3.Checked = false;
-                    v3 = false;
-                }
-
-                if (pub_Test_Plan.C1 == "1")
-                {
-                    this.ckC1.Checked = true;
-                    c1 = true;
-                }
-                else
-                {
-                    this.ckC1.Checked = false;
-                    c1 = false;
-                }
-                if (pub_Test_Plan.C2 == "1")
-                {
-                    this.ckC2.Checked = true;
-                    c2 = true;
-                }
-                else
-                {
-                    this.ckC2.Checked = false;
-                    c2 = false;
-                }
-
-                if (pub_Test_Plan.C3 == "1")
-                {
-                    this.ckC3.Checked = true;
-                    c3 = true;
-                }
-                else
-                {
-                    this.ckC3.Checked = false;
-                    c3 = false;
-                }
                 Chart_Init();
+
+                //获取存储数据路径
+                if (pub_Test_Plan.PARENTID != "0")
+                {
+                    string path = "";
+                }
             }
         }
 
@@ -2595,10 +2693,8 @@ namespace Basic_Controls
             }
         }
 
-        #endregion
-
         /// <summary>
-        /// 树形图表
+        /// 树形图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2612,11 +2708,10 @@ namespace Basic_Controls
             {
                 e.NodeImageIndex = 3;
             }
-
         }
 
         /// <summary>
-        /// 树形图表
+        /// 树形图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2637,5 +2732,6 @@ namespace Basic_Controls
             }
         }
 
+        #endregion
     }
 }

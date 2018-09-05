@@ -44,6 +44,16 @@ namespace DocDecrypt.Common
             }
             return path;
         }
+        /// <summary>
+        /// 获取当前运行程序文件夹路径
+        /// </summary>
+        public static string  Local_Path_Get()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            return path;
+        }
+
 
 
         public static string GetTempFileName(string fileName)

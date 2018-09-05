@@ -323,7 +323,9 @@
     <Content Include="ImgIcon\3.bmp" />
     <Content Include="ImgIcon\3函数.bmp" />
     <Content Include="ImgIcon\Arrow next3.bmp" />
-    <Content Include="ImgIcon\Favorite.bmp" />
+    <Content Include="ImgIcon\Favorite.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\函数.bmp" />
     <Content Include="ImgIcon\勾.bmp" />
     <Content Include="ImgIcon\勾2.bmp" />
@@ -338,8 +340,11 @@
     <Content Include="ImgIcon\字母I1.bmp" />
     <Content Include="ImgIcon\字母i2.bmp" />
     <Content Include="ImgIcon\设置图标.bmp" />
-    <Content Include="ImgIcon\项目1525.bmp" />
+    <Content Include="ImgIcon\项目1525.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\项目18.bmp" />
+    <Content Include="ImgIcon\项目4.ico" />
     <Content Include="ImgIcon\项目6.bmp" />
     <Content Include="ImgIcon\项目7.bmp" />
   </ItemGroup>

@@ -98,12 +98,17 @@
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.lbOpen = new DevExpress.XtraEditors.LabelControl();
+            this.pcOpen = new System.Windows.Forms.PictureBox();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
@@ -133,6 +138,7 @@
             this.pclChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
@@ -177,7 +183,7 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 111);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 522);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 842);
             // 
             // barManager1
             // 
@@ -258,6 +264,11 @@
             // 
             // bar1
             // 
+            this.bar1.BarAppearance.Disabled.BackColor = System.Drawing.Color.White;
+            this.bar1.BarAppearance.Hovered.BackColor = System.Drawing.Color.White;
+            this.bar1.BarAppearance.Normal.BackColor = System.Drawing.Color.White;
+            this.bar1.BarAppearance.Pressed.BackColor = System.Drawing.Color.White;
+            this.bar1.BarAppearance.Pressed.Options.UseBackColor = true;
             this.bar1.BarName = "Tools";
             this.bar1.DockCol = 0;
             this.bar1.DockRow = 1;
@@ -411,6 +422,7 @@
             // 
             this.barLargeButtonItem14.Caption = "图标";
             this.barLargeButtonItem14.Id = 94;
+            this.barLargeButtonItem14.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目4;
             this.barLargeButtonItem14.Name = "barLargeButtonItem14";
             // 
             // btnSTest
@@ -494,6 +506,7 @@
             // 
             // bar2
             // 
+            this.bar2.BarAppearance.Normal.BackColor = System.Drawing.Color.White;
             this.bar2.BarName = "Main menu";
             this.bar2.DockCol = 0;
             this.bar2.DockRow = 0;
@@ -661,7 +674,7 @@
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 633);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 953);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Size = new System.Drawing.Size(1469, 0);
             // 
@@ -671,7 +684,7 @@
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(1469, 111);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 522);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 842);
             // 
             // barButtonItem1
             // 
@@ -744,22 +757,63 @@
             this.pclChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pclChart.Appearance.BackColor = System.Drawing.Color.White;
+            this.pclChart.Appearance.Options.UseBackColor = true;
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pclChart.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pclChart.Controls.Add(this.label4);
+            this.pclChart.Controls.Add(this.label3);
+            this.pclChart.Controls.Add(this.label2);
             this.pclChart.Controls.Add(this.label1);
             this.pclChart.Location = new System.Drawing.Point(218, 112);
+            this.pclChart.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(1066, 517);
+            this.pclChart.Size = new System.Drawing.Size(1066, 837);
             this.pclChart.TabIndex = 30;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(148, 710);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(38, 18);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "浮标";
+            this.label4.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(104, 710);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 18);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "浮标";
+            this.label3.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(148, 728);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 18);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "浮标";
+            this.label2.Visible = false;
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(154, 382);
+            this.label1.Location = new System.Drawing.Point(104, 728);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "浮标";
+            this.label1.Visible = false;
             // 
             // btnEnlarge
             // 
@@ -781,7 +835,7 @@
             // 
             // lbX
             // 
-            this.lbX.Location = new System.Drawing.Point(12, 489);
+            this.lbX.Location = new System.Drawing.Point(6, 400);
             this.lbX.Name = "lbX";
             this.lbX.Size = new System.Drawing.Size(81, 18);
             this.lbX.TabIndex = 41;
@@ -789,7 +843,7 @@
             // 
             // lbY
             // 
-            this.lbY.Location = new System.Drawing.Point(94, 489);
+            this.lbY.Location = new System.Drawing.Point(88, 400);
             this.lbY.Name = "lbY";
             this.lbY.Size = new System.Drawing.Size(81, 18);
             this.lbY.TabIndex = 42;
@@ -799,6 +853,11 @@
             // 
             this.panelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
+            this.panelControl1.Appearance.Options.UseBackColor = true;
+            this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.lbOpen);
+            this.panelControl1.Controls.Add(this.pcOpen);
             this.panelControl1.Controls.Add(this.labelControl4);
             this.panelControl1.Controls.Add(this.labelControl3);
             this.panelControl1.Controls.Add(this.LBPrintCount);
@@ -818,12 +877,34 @@
             this.panelControl1.Controls.Add(this.ckV1);
             this.panelControl1.Location = new System.Drawing.Point(1282, 112);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(187, 517);
+            this.panelControl1.Size = new System.Drawing.Size(187, 837);
             this.panelControl1.TabIndex = 52;
+            // 
+            // lbOpen
+            // 
+            this.lbOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbOpen.Location = new System.Drawing.Point(103, 811);
+            this.lbOpen.Name = "lbOpen";
+            this.lbOpen.Size = new System.Drawing.Size(81, 18);
+            this.lbOpen.TabIndex = 51;
+            this.lbOpen.Text = "labelControl1";
+            // 
+            // pcOpen
+            // 
+            this.pcOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcOpen.ErrorImage = null;
+            this.pcOpen.Image = global::Load_Tap_Changer_Test.Properties.Resources._1537;
+            this.pcOpen.Location = new System.Drawing.Point(77, 809);
+            this.pcOpen.MaximumSize = new System.Drawing.Size(20, 20);
+            this.pcOpen.MinimumSize = new System.Drawing.Size(20, 20);
+            this.pcOpen.Name = "pcOpen";
+            this.pcOpen.Size = new System.Drawing.Size(20, 20);
+            this.pcOpen.TabIndex = 50;
+            this.pcOpen.TabStop = false;
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(12, 331);
+            this.labelControl4.Location = new System.Drawing.Point(10, 329);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(75, 18);
             this.labelControl4.TabIndex = 49;
@@ -831,7 +912,7 @@
             // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(12, 292);
+            this.labelControl3.Location = new System.Drawing.Point(10, 290);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(75, 18);
             this.labelControl3.TabIndex = 48;
@@ -839,7 +920,7 @@
             // 
             // LBPrintCount
             // 
-            this.LBPrintCount.Location = new System.Drawing.Point(85, 331);
+            this.LBPrintCount.Location = new System.Drawing.Point(83, 329);
             this.LBPrintCount.Name = "LBPrintCount";
             this.LBPrintCount.Size = new System.Drawing.Size(81, 18);
             this.LBPrintCount.TabIndex = 47;
@@ -847,7 +928,7 @@
             // 
             // LBxmlCount
             // 
-            this.LBxmlCount.Location = new System.Drawing.Point(85, 292);
+            this.LBxmlCount.Location = new System.Drawing.Point(83, 290);
             this.LBxmlCount.Name = "LBxmlCount";
             this.LBxmlCount.Size = new System.Drawing.Size(81, 18);
             this.LBxmlCount.TabIndex = 46;
@@ -937,6 +1018,16 @@
             // 
             // treeList
             // 
+            this.treeList.Appearance.Empty.BackColor = System.Drawing.Color.White;
+            this.treeList.Appearance.Empty.Options.UseBackColor = true;
+            this.treeList.Appearance.HeaderPanel.BackColor = System.Drawing.Color.Blue;
+            this.treeList.Appearance.HeaderPanel.Options.UseBackColor = true;
+            this.treeList.Appearance.HeaderPanelBackground.BackColor = System.Drawing.Color.White;
+            this.treeList.Appearance.HeaderPanelBackground.Options.UseBackColor = true;
+            this.treeList.Appearance.Row.BackColor = System.Drawing.Color.White;
+            this.treeList.Appearance.Row.Options.UseBackColor = true;
+            this.treeList.AppearancePrint.BandPanel.BackColor = System.Drawing.Color.Blue;
+            this.treeList.AppearancePrint.BandPanel.Options.UseBackColor = true;
             this.treeList.Columns.AddRange(new DevExpress.XtraTreeList.Columns.TreeListColumn[] {
             this.ID});
             this.treeList.Cursor = System.Windows.Forms.Cursors.Default;
@@ -952,7 +1043,7 @@
             this.删除,
             this.repositoryItemButtonEdit1});
             this.treeList.SelectImageList = this.imageList;
-            this.treeList.Size = new System.Drawing.Size(214, 513);
+            this.treeList.Size = new System.Drawing.Size(214, 833);
             this.treeList.TabIndex = 57;
             this.treeList.GetSelectImage += new DevExpress.XtraTreeList.GetSelectImageEventHandler(this.treeList_GetSelectImage);
             this.treeList.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeList_FocusedNodeChanged);
@@ -1010,7 +1101,7 @@
             this.pc2.Controls.Add(this.labelControl2);
             this.pc2.Location = new System.Drawing.Point(0, 112);
             this.pc2.Name = "pc2";
-            this.pc2.Size = new System.Drawing.Size(218, 517);
+            this.pc2.Size = new System.Drawing.Size(218, 837);
             this.pc2.TabIndex = 53;
             // 
             // labelControl1
@@ -1038,9 +1129,11 @@
             // 
             // FmMain
             // 
+            this.Appearance.BackColor = System.Drawing.Color.White;
+            this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1469, 633);
+            this.ClientSize = new System.Drawing.Size(1469, 953);
             this.Controls.Add(this.pc2);
             this.Controls.Add(this.panelControl1);
             this.Controls.Add(this.pclChart);
@@ -1049,7 +1142,7 @@
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MinimumSize = new System.Drawing.Size(100, 100);
+            this.MinimumSize = new System.Drawing.Size(1024, 800);
             this.Name = "FmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "有载调压开关故障诊断系统(v1.0)";
@@ -1063,6 +1156,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
@@ -1180,5 +1274,10 @@
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraBars.BarEditItem barEditItem1;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
+        private System.Windows.Forms.PictureBox pcOpen;
+        private DevExpress.XtraEditors.LabelControl lbOpen;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -107,6 +107,8 @@ namespace Socket_Server
                         receiveCmd = ProtocolUtil.byteToHexStr(recData);
 
                         Udp_EventArgs eventArgs = new Udp_EventArgs();
+
+                        eventArgs.Hearder = receiveCmd.Substring(0,8);
                         eventArgs.Msg = receiveCmd;
                         udp_Event_Kind("", eventArgs);
                         continueLoop = false;
