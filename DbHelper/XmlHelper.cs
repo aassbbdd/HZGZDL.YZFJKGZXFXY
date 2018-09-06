@@ -121,31 +121,17 @@ namespace DbHelper
         /// <param name="xmlNode">要插入的Xml节点</param>
         public static void Insert(Xml_Node_Model model)
         {
-            //插入数据时检查xml文件是否存在
-            //   CreateXmlDocument(xmlname);
-
-            XElement element = ToXElement(model);
-            //XElement data = new XElement("Data");
-            //foreach (var item in model.Data)
-            //{
-            //    XElement e = new XElement(item.GetType().ToString());
-            //    e.Add(new XElement("Id", item.Id));
-
-            //    e.Add(new XElement("V1", item.V1));
-            //    e.Add(new XElement("V2", item.V2));
-            //    e.Add(new XElement("V3", item.V3));
-
-            //    e.Add(new XElement("C1", item.C1));
-            //    e.Add(new XElement("C2", item.C2));
-            //    e.Add(new XElement("C3", item.C3));
-            //    data.Add(e);
-
-            //}
-            //element.Add(data);
-            xele.Add(element);
-            //  xele.Save(path);
+            if (model.Id == "1")
+            {
+                XElement element = new XElement("fgx", "--------------------------" + model.DataSource + "--------------------------");
+                xele.Add(element);
+            }
+            else
+            {
+                XElement element = ToXElement(model);
+                xele.Add(element);
+            }
         }
-
 
         /// <summary>
         /// 1. 功能：新增节点。
@@ -155,9 +141,7 @@ namespace DbHelper
         public static void Init_Config(Test_Plan model)
         {
             //插入数据时检查xml文件是否存在
-
             XElement element = ToXElement(model);
-
             xele.Add(element);
         }
 
