@@ -330,9 +330,61 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnStopTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            sendUdp(agreement._3_CMD_STOPTESTER);
-            End_Chart();
+            Stop_Test(false);
         }
+        /// <summary>
+        /// 停止测试功能
+        /// </summary>
+        /// <param name="isIN"></param>
+        private void Stop_Test(bool isIN)
+        {
+            try
+            {
+                sendUdp(agreement._3_CMD_STOPTESTER);
+               
+                if (Db_Save != null)
+                {
+                    while (Save_Db_Source.Count >0)
+                    {
+
+                    }
+
+                    Db_Save.Abort();
+                }
+                if (thread_List != null)
+                {
+                    thread_List.Abort();
+                }
+                if (ReChart != null)
+                {
+                    ReChart.Abort();
+                }
+                if (isIN)
+                {
+                    if (IsOpensTest && topnum <= alltopnum)
+                    {
+                        // 通信超时后还原页面属性
+                        Invoke(new ThreadStart(delegate ()
+                        {
+                            Send_Config();
+                        }));
+                    }
+                    else
+                    {
+                        isIN = false;
+                    }
+                }
+                else
+                {
+                    End_Chart();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// 按钮开始测试标识 用来阻断 点击计划树触发事件
         /// </summary>
@@ -368,6 +420,7 @@ namespace Basic_Controls
         {
             try
             {
+                //连续测试加个循环
                 IsOpensTest = true;
                 Send_Config();
             }
@@ -402,9 +455,11 @@ namespace Basic_Controls
                     model = Test_Plan_Bind(node);
                 }
                 model.PARENTID = model.ID;
-                model.DVNAME += "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                model.DVNAME += "_" + topnum.ToString() + "--" + (topnum + 1).ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
                 isBtnTest = false;
+
+                tChart.Header.Text = pub_Test_Plan.DVNAME;
 
                 Tester_List_Bind();
 
@@ -422,7 +477,6 @@ namespace Basic_Controls
                 Start_Chart();
             }
         }
-
 
         #endregion
 
@@ -671,6 +725,10 @@ namespace Basic_Controls
             {
                 //绘图
                 Porint_List.Enqueue(e);
+                if (Top_End_Data.Count < 1250)
+                {
+                    Top_End_Data.Enqueue(e);
+                }
                 Invoke(new ThreadStart(delegate ()
                 {
                     LBPrintCount.Text = Porint_List.Count.ToString();
@@ -1335,6 +1393,11 @@ namespace Basic_Controls
         ConcurrentQueue<Udp_EventArgs> Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
 
         /// <summary>
+        /// 存储头尾展示线1秒
+        /// </summary>
+        ConcurrentQueue<Udp_EventArgs> Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
+
+        /// <summary>
         /// 计量当前数据执行次数 （刷新清除横线时使用 重要） 停止发送数据后要归零
         /// </summary>
         int porintadd = 0;
@@ -1386,6 +1449,13 @@ namespace Basic_Controls
             pc2.Enabled = false;
             isAbort = true;
 
+            Porint_List = new ConcurrentQueue<Udp_EventArgs>();
+
+            Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
+
+
+            Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
+
             #region 处理队列数据
 
             //thread_List = new Thread(Job_Queue);
@@ -1411,6 +1481,8 @@ namespace Basic_Controls
             #endregion
 
             #region 存储数据
+
+
             //if (IsSaveData)
             //{
             Db_Save = new Thread(Test_Xml_Insert);
@@ -1431,6 +1503,7 @@ namespace Basic_Controls
             porintadd = 0;
             isAbort = false;
             Current_Config();
+
             // 通信超时后还原页面属性
             Invoke(new ThreadStart(delegate ()
             {
@@ -1464,10 +1537,6 @@ namespace Basic_Controls
         /// </summary>
         int alltopnum = 0;
 
-
-
-
-
         /// <summary>
         /// 前往后走图形 按时间走波形
         /// </summary>
@@ -1494,21 +1563,24 @@ namespace Basic_Controls
                             //  Vibration_Current vmodel1 = new Vibration_Current();
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
-                            vmodel.Current1 = data.Substring(0 + length, 4);
-                            vmodel.Current2 = data.Substring(4 + length, 4);
-                            vmodel.Current3 = data.Substring(8 + length, 4);
 
-                            vmodel.Vibration1 = data.Substring(12 + length, 4);
-                            vmodel.Vibration2 = data.Substring(16 + length, 4);
-                            vmodel.Vibration3 = data.Substring(20 + length, 4);
-                            //计算
-                            //double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
-                            //double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
-                            //double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
+                            //新板子
+                            vmodel.Vibration1 = data.Substring(0 + length, 4);
+                            vmodel.Vibration2 = data.Substring(4 + length, 4);
+                            vmodel.Vibration3 = data.Substring(8 + length, 4);
 
-                            //double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
-                            //double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
-                            //double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
+                            vmodel.Current1 = data.Substring(12 + length, 4);
+                            vmodel.Current2 = data.Substring(16 + length, 4);
+                            vmodel.Current3 = data.Substring(20 + length, 4);
+
+
+                            //vmodel.Current1 = data.Substring(0 + length, 4);
+                            //vmodel.Current2 = data.Substring(4 + length, 4);
+                            //vmodel.Current3 = data.Substring(8 + length, 4);
+
+                            //vmodel.Vibration1 = data.Substring(12 + length, 4);
+                            //vmodel.Vibration2 = data.Substring(16 + length, 4);
+                            //vmodel.Vibration3 = data.Substring(20 + length, 4);
 
                             //否 存储
                             #region 判断电流是否启动 先判断是
@@ -1517,7 +1589,7 @@ namespace Basic_Controls
                             if (porintadd >= linlength)
                             {//是停止
                                 Thread.Sleep(50);
-                                btnStopTest_ItemClick(null, null);
+                                Stop_Test(false);
                                 return;
                             }
                             else
@@ -1576,47 +1648,7 @@ namespace Basic_Controls
                             #endregion
                             porintadd++;
                         }
-                        #region 数据大于10秒时执行   不需要执行这个
-                        //if (pub_Test_Plan.GETINFO == "1")
-                        //{
-                        //    if (porintadd > linlength - 1)
-                        //    {
-                        //        porintadd = 0;//归零
-                        //        istrue = true;//开启进入标识
-                        //        double swidth = 0;//初始位置
-                        //        double width = swidth;//结束时位置
-                        //        for (int i = 0; i < 500; i++)
-                        //        {
-                        //            width = Math.Round(width + newXvalue, 4);
 
-                        //            Data_Bind(i, width);
-                        //        }
-                        //        colorFrom = swidth;
-                        //        colorTo = width;
-                        //    }
-                        //    if (istrue)
-                        //    {
-                        //        double swidth = Math.Round(vx1[porintadd], 4);//初始位置
-                        //        double width = swidth;//结束时位置
-                        //        for (int i = 0; i < 500; i++)
-                        //        {
-                        //            int length = porintadd + i + 1;
-                        //            if (length < linlength - 1)
-                        //            {
-                        //                width = Math.Round(width + newXvalue, 4);
-                        //                Data_Bind(i, width);
-                        //            }
-                        //            else
-                        //            {
-                        //                break;
-                        //            }
-                        //        }
-
-                        //        colorFrom = swidth;
-                        //        colorTo = width;
-                        //    }
-                        //}
-                        #endregion
                     }
                 }
             }
@@ -1693,11 +1725,10 @@ namespace Basic_Controls
             }
         }
 
-
         /// <summary>
         /// 开始前后存1秒数据 前 1250 后1250 *2 =2500
         /// </summary>
-        int around = 1;
+       //int around = 1;
         /// <summary>
         /// 开始前后是否存数据开关 true 开 false 关
         /// </summary>
@@ -1712,6 +1743,10 @@ namespace Basic_Controls
         /// </summary>
         double countCurrent1 = 0.0;
 
+        /// <summary>
+        /// 电流触发前后秒数 刚开始存1秒  后面结束一次 存2秒
+        /// </summary>
+        int AroundSecond = 1;
 
         /// <summary>
         /// 前往后走图形电流触发波形
@@ -1727,11 +1762,11 @@ namespace Basic_Controls
                     if (!string.IsNullOrEmpty(e.Hearder))
                     {
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
-                        DataModel model = new DataModel();
-                        model.head = e.Hearder;
-                        model.text = e.Msg;
-                        model.new_data = new List<Vibration_Current>();
-                        model.old_data = new List<Vibration_Current>();
+                        //DataModel model = new DataModel();
+                        //model.head = e.Hearder;
+                        //model.text = e.Msg;
+                        //model.new_data = new List<Vibration_Current>();
+                        //model.old_data = new List<Vibration_Current>();
 
                         int Porints = 80 / LessPoint;
                         double x = new double();
@@ -1742,29 +1777,30 @@ namespace Basic_Controls
 
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
-                            vmodel.Current1 = data.Substring(0 + length, 4);
-                            vmodel.Current2 = data.Substring(4 + length, 4);
-                            vmodel.Current3 = data.Substring(8 + length, 4);
+                            //新板子
+                            vmodel.Vibration1 = data.Substring(0 + length, 4);
+                            vmodel.Vibration2 = data.Substring(4 + length, 4);
+                            vmodel.Vibration3 = data.Substring(8 + length, 4);
 
-                            vmodel.Vibration1 = data.Substring(12 + length, 4);
-                            vmodel.Vibration2 = data.Substring(16 + length, 4);
-                            vmodel.Vibration3 = data.Substring(20 + length, 4);
+                            vmodel.Current1 = data.Substring(12 + length, 4);
+                            vmodel.Current2 = data.Substring(16 + length, 4);
+                            vmodel.Current3 = data.Substring(20 + length, 4);
 
                             #region 存文本检查数据用
-                            Vibration_Current vmodel1 = new Vibration_Current();
+                            //Vibration_Current vmodel1 = new Vibration_Current();
 
-                            vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
-                            vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
-                            vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
-
-
-                            vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
-                            vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
-                            vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+                            //vmodel1.Vibration1 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration1);
+                            //vmodel1.Vibration2 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration2);
+                            //vmodel1.Vibration3 = Algorithm.Instance.Vibration_Algorithm(vmodel.Vibration3);
 
 
-                            model.old_data.Add(vmodel);
-                            model.old_data.Add(vmodel1);
+                            //vmodel1.Current1 = Algorithm.Instance.Current_Algorithm(vmodel.Current1);
+                            //vmodel1.Current2 = Algorithm.Instance.Current_Algorithm(vmodel.Current2);
+                            //vmodel1.Current3 = Algorithm.Instance.Current_Algorithm(vmodel.Current3);
+
+
+                            //model.old_data.Add(vmodel);
+                            //model.old_data.Add(vmodel1);
                             #endregion
 
                             #region 计算保存新点位数据
@@ -1815,7 +1851,7 @@ namespace Basic_Controls
                             #endregion
                             porintadd++;
                         }
-                        list.Add(model);
+                        //  list.Add(model);
                         #region 数据大于10秒时执行 横条删除效果
 
                         if (porintadd > linlength - 1)
@@ -1883,59 +1919,49 @@ namespace Basic_Controls
                         //运算 电流是否达到开启值
                         Current_Open(data);
 
-                        //明天测试。。。
                         if (SCURRENT)//true 电流到达开启值  
                         {
                             //储存数量 10秒  
                             Save_Db_Source.Enqueue(e);
                             //到达10秒后 SCURRENT=false isaround=true
+                            Invoke(new ThreadStart(delegate ()
+                            {
+                                try
+                                {
+                                    blSavePorint.Text = CurrentNum.ToString();
+                                }
+                                catch (Exception ex)
+                                {
+                                }
+                            }));
                             CurrentNum++;
-                            if (CurrentNum >= 12500)
+                            if (CurrentNum > 12500) //存储达到 12500条 10秒的数据时
                             {
-                                SCURRENT = false;
-                                isaround = true;
-                                around = 1;
-                                CurrentNum = 1;
+                                SCURRENT = false;//关闭有效波段存储
+                                topnum++;
+                                this.BeginInvoke(new MethodInvoker(() =>
+                                {
+                                    Stop_Test(true);
+                                }));
+
+                                break;
                             }
                         }
-                        else//false 电流未达到 开始存储 1秒开始前电流 和结束后1秒电流
+                        else
                         {
-                            if (around <= 1250 && isaround)
+                            if (AroundSecond == 2)//电流到达关闭值
                             {
-                                if (around == 1)
+                                SCURRENT = false;//关闭有效波段存储
+                                // 异步方法
+                                this.BeginInvoke(new MethodInvoker(() =>
                                 {
-                                    Udp_EventArgs Ie = new Udp_EventArgs();
-                                    Ie.Hearder = "1";
-                                    Ie.Msg = "分割线开始";
-                                    Save_Db_Source.Enqueue(Ie);
-                                }
-                                Save_Db_Source.Enqueue(e);
-                                if (around == 1250)
-                                {
-                                    Udp_EventArgs Ie = new Udp_EventArgs();
-                                    Ie.Hearder = "1";
-                                    Ie.Msg = "分割线结束";
-                                    Save_Db_Source.Enqueue(Ie);
-                                }
-                                around++;
-                            }
-                            else
-                            {
-                                around = 1;
-                                isaround = false;
-                                if (IsOpensTest)//连续还是单次
-                                {
-                                    if (topnum >= alltopnum)
-                                    {
-                                        End_Chart();
-                                    }
-                                }
-                                else
-                                {
-                                    End_Chart();
-                                }
+                                    topnum++;
+                                    Stop_Test(true);
+                                }));
+                                break;
                             }
                         }
+
                     }
                 }
             }
@@ -1948,9 +1974,19 @@ namespace Basic_Controls
         {
             operation = 0;
             SCURRENT = false;
-            isaround = true;
+
             countCurrent1 = 0;
-            around = 1;
+            // around = 1;
+            CurrentNum = 1;
+            AroundSecond = 1;
+            if (pub_Test_Plan.GETINFO == "2")
+            {
+                isaround = false;
+            }
+            else
+            {
+                isaround = true;
+            }
         }
 
         /// <summary>
@@ -1960,11 +1996,7 @@ namespace Basic_Controls
         /// <returns></returns>
         private void Current_Open(string data)
         {
-            double Current = 0.0;
-            //否 存储
-            #region 判断电流是否启动 电流存储
-            double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
-            double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
+
             //数据需要重新计算
             /*
              运算公式   (x1*x1)+(x2*x2)+...(xn*xn)   //计算平方 n为2000
@@ -1975,55 +2007,70 @@ namespace Basic_Controls
 
             for (int i = 0; i < 80; i++)
             {
+                double Current = 0.0;
                 int lengtht = data.Length;
                 Vibration_Current vmodel = new Vibration_Current();
                 int length = 24 * i;//截取位置 +1 默认不取第一个点位
 
-                vmodel.Current1 = data.Substring(0 + length, 4);
-                vmodel.Current2 = data.Substring(4 + length, 4);
-                vmodel.Current3 = data.Substring(8 + length, 4);
+
+                //新板子
+                vmodel.Current1 = data.Substring(12 + length, 4);
+                vmodel.Current2 = data.Substring(16 + length, 4);
+                vmodel.Current3 = data.Substring(20 + length, 4);
+
+                //vmodel.Current1 = data.Substring(0 + length, 4);
+                //vmodel.Current2 = data.Substring(4 + length, 4);
+                //vmodel.Current3 = data.Substring(8 + length, 4);
 
                 Current = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
 
                 countCurrent1 += Current * Current;
+
                 operation++;
                 if (operation >= 2000)
                 {
+
+                    //否 存储
+                    #region 判断电流是否启动 电流存储
+                    double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
+                    double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
+
                     double Current1 = Math.Abs(Math.Sqrt(countCurrent1 / 2000));
                     //double Sqrt = Math.Sqrt(countCurrent1 / 2000);
                     //string LogStr = "Sqrt:" + Sqrt.ToString() + "  Current1: " + Current1.ToString();
                     //ListToText.Instance.WriteListToTextFile1(LogStr);
 
                     //开始存数据 条件1： 判断是否达到电流启动 ，条件2：判断是电流启动 条件3 判断当前档位是否到达最大档位
-                    if (Current1 >= setSCURRENT && !SCURRENT && topnum <= alltopnum)
+                    //if ((Current1 >= setSCURRENT && !SCURRENT && topnum <= alltopnum) && CurrentNum == 1)
+                    if (Current1 >= setSCURRENT && !SCURRENT)
                     {
-                        isaround = false;
                         SCURRENT = true;
-                        if (topnum.ToString() == pub_Test_Plan.SPLACE)
-                        {
-                            tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
-                        }
+                        //if (topnum.ToString() == pub_Test_Plan.SPLACE)
+                        //{
+                        //    tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
+                        //}
                         // return;
                     }
                     //结束存数据   条件1： 判断是否达到电流关闭 ，条件2：判断是电流关闭
-                    if (Current1 <= setECURRENT && SCURRENT)
+                    if (Current1 <= setECURRENT && SCURRENT || CurrentNum == 12500)
                     {
                         //判断当前档位是否到达最大档位
-                        if (topnum <= alltopnum)
-                        {
-                            topnum += 1;
-                            SCURRENT = false;
-                            isaround = true;
+                        //if (topnum <= alltopnum)
+                        //{
+                        //    topnum += 1;
+                        SCURRENT = false;
+                        isaround = true;
+                        AroundSecond = 2;//第二次开始存2秒电流数据
+                        //tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
+                        // return;
+                        //}
+                        //else
+                        //{
+                        //    //发送停止协议
+                        //    //结束
+                        //    //return;
+                        //}
 
-                            tChart.Header.Text = pub_Test_Plan.DVNAME + topnum.ToString() + "--" + (topnum + 1).ToString();
-                            // return;
-                        }
-                        else
-                        {
-                            //发送停止协议
-                            //结束
-                            //return;
-                        }
                     }
                     //运算完成后恢复初始值
                     operation = 1;
@@ -2514,29 +2561,20 @@ namespace Basic_Controls
             try
             {
                 int i = 0;
-                while (isAbort || Save_Db_Source.Count > 0)
+                while (isAbort)
                 {
                     if (Save_Db_Source.Count > 0)
                     {
                         Udp_EventArgs e = new Udp_EventArgs();
-
                         Save_Db_Source.TryDequeue(out e);//取出队里数据并删除
-                        if (e.Hearder == "1")//=1 是插入分割线
-                        {
-                            Xml_Node_Model model = new Xml_Node_Model();
-                            model.Id = e.Hearder;
-                            model.DataSource = e.Msg;
-                            XmlHelper.Insert(model);
-                        }
-                        else
-                        {
-                            Xml_Node_Model model = new Xml_Node_Model();
-                            model.Id = e.Msg.Substring(4, 4);
-                            model.DataSource = e.Msg;
-                            model.Data = new List<Xml_Element_Model>();
 
-                            XmlHelper.Insert(model);
-                        }
+                        Xml_Node_Model model = new Xml_Node_Model();
+                        model.Id = e.Msg.Substring(4, 4);
+                        model.DataSource = e.Msg;
+                        model.Data = new List<Xml_Element_Model>();
+
+                        XmlHelper.Insert(model);
+
                         //  Thread.Sleep(1);
                         if (i == 2000)
                         {
@@ -2557,9 +2595,59 @@ namespace Basic_Controls
 
                         i++;
                     }
+                    if (isaround)//插入分割线
+                    {
+                        while (Top_End_Data.Count < 1250 || Save_Db_Source.Count <= 0)
+                        {
+
+                        }
+
+                        Xml_Node_Model model = new Xml_Node_Model();
+                        model.DataSource = "分割线开始";
+                        model.Id = "1";
+                        XmlHelper.Insert(model);
+                        for (int j = 0; j < AroundSecond; j++)
+                        {
+                            foreach (Udp_EventArgs e in Top_End_Data)
+                            {
+                                model = new Xml_Node_Model();
+                                model.Id = e.Msg.Substring(4, 4);
+                                model.DataSource = e.Msg;
+                                model.Data = new List<Xml_Element_Model>();
+                                XmlHelper.Insert(model);
+                            }
+                        }
+                        model = new Xml_Node_Model();
+                        model.Id = "1";
+                        model.DataSource = "分割线结束";
+                        XmlHelper.Insert(model);
+
+                        XmlHelper.Save();
+                        isaround = false;
+                    }
                 }
                 if (!isAbort)
                 {
+                    Xml_Node_Model model = new Xml_Node_Model();
+                    model.DataSource = "分割线开始";
+                    model.Id = "1";
+                    XmlHelper.Insert(model);
+                    for (int j = 0; j < AroundSecond; j++)
+                    {
+                        foreach (Udp_EventArgs e in Top_End_Data)
+                        {
+                            model = new Xml_Node_Model();
+                            model.Id = e.Msg.Substring(4, 4);
+                            model.DataSource = e.Msg;
+                            model.Data = new List<Xml_Element_Model>();
+                            XmlHelper.Insert(model);
+                        }
+                    }
+                    model = new Xml_Node_Model();
+                    model.Id = "1";
+                    model.DataSource = "分割线结束";
+                    XmlHelper.Insert(model);
+
                     XmlHelper.Save();
                 }
             }
@@ -2584,9 +2672,11 @@ namespace Basic_Controls
         public void Tester_List_Bind()
         {
             List<Test_Plan> list = Db_Select.Instance.All_Test_Cofig_Get();
+
             treeList.DataSource = list;
             treeList.Refresh();
             treeList.ExpandAll();
+
         }
 
         #endregion
@@ -2620,9 +2710,12 @@ namespace Basic_Controls
                 else
                 {
                     init_Chart_Config(10, 40);
-                    //以电流达到1A存数据 小于等于0.1A结束
-                    topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
-                    alltopnum = Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
+                    if (isBtnTest)
+                    {
+                        //以电流达到1A存数据 小于等于0.1A结束
+                        topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
+                        alltopnum = Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
+                    }
                     //Chart_Init();
                     btnCTest.Enabled = true;
                 }

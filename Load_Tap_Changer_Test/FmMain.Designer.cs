@@ -132,6 +132,8 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.blSavePorint = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
@@ -856,6 +858,8 @@
             this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
             this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.labelControl5);
+            this.panelControl1.Controls.Add(this.blSavePorint);
             this.panelControl1.Controls.Add(this.lbOpen);
             this.panelControl1.Controls.Add(this.pcOpen);
             this.panelControl1.Controls.Add(this.labelControl4);
@@ -1127,6 +1131,22 @@
             this.popupMenu.Manager = this.barManager1;
             this.popupMenu.Name = "popupMenu";
             // 
+            // labelControl5
+            // 
+            this.labelControl5.Location = new System.Drawing.Point(12, 364);
+            this.labelControl5.Name = "labelControl5";
+            this.labelControl5.Size = new System.Drawing.Size(75, 18);
+            this.labelControl5.TabIndex = 53;
+            this.labelControl5.Text = "已存点数：";
+            // 
+            // blSavePorint
+            // 
+            this.blSavePorint.Location = new System.Drawing.Point(85, 364);
+            this.blSavePorint.Name = "blSavePorint";
+            this.blSavePorint.Size = new System.Drawing.Size(81, 18);
+            this.blSavePorint.TabIndex = 52;
+            this.blSavePorint.Text = "labelControl1";
+            // 
             // FmMain
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1279,5 +1299,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.LabelControl blSavePorint;
     }
 }
