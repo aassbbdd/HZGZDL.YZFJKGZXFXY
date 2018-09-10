@@ -119,6 +119,14 @@ namespace DbHelper.Sqlite_Db
                                                     ,C3        
                                                     ,PARENTID
 
+                                                    ,TEST_BASE_C        
+                                                    ,TEST_SINGLE_DOUBLE 
+                                                    ,DOUBLE_SP          
+                                                    ,DOUBLE_EP         
+                                                    ,SINGLE_P  
+
+                                                    ,TEST_ORDER         
+                                                    ,COUNT_BASE_C       
                                 )values(
                                                      @DVNAME    
                                                     ,@DVPOSITION
@@ -149,6 +157,15 @@ namespace DbHelper.Sqlite_Db
                                                     ,@C2        
                                                     ,@C3     
                                                     ,@PARENTID
+
+                                                    ,@TEST_BASE_C        
+                                                    ,@TEST_SINGLE_DOUBLE 
+                                                    ,@DOUBLE_SP          
+                                                    ,@DOUBLE_EP         
+                                                    ,@SINGLE_P     
+
+                                                    ,@TEST_ORDER         
+                                                    ,@COUNT_BASE_C 
                                 )
                                 ";
 
@@ -177,34 +194,43 @@ namespace DbHelper.Sqlite_Db
                      ,new SQLiteParameter("V1",DbType.String)
                      ,new SQLiteParameter("V2",DbType.String)
 
-                    ,new SQLiteParameter("V3",DbType.String)
+                     ,new SQLiteParameter("V3",DbType.String)
                      ,new SQLiteParameter("C1",DbType.String)
                      ,new SQLiteParameter("C2",DbType.String)
                      ,new SQLiteParameter("C3",DbType.String)
                      ,new SQLiteParameter("PARENTID",DbType.String)
+
+                     ,new SQLiteParameter("TEST_BASE_C",DbType.String)
+                     ,new SQLiteParameter("TEST_SINGLE_DOUBLE",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_SP",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_EP",DbType.String)
+                     ,new SQLiteParameter("SINGLE_P",DbType.String)
+                     ,new SQLiteParameter("TEST_ORDER",DbType.String)
+                     ,new SQLiteParameter("COUNT_BASE_C",DbType.String)
+
                 };
 
-                parameters[0].Value = model.DVNAME;
-                parameters[1].Value = model.DVPOSITION;
-                parameters[2].Value = model.DVID;
-                parameters[3].Value = model.TESTER;
-                parameters[4].Value = model.OLTC_TS;
+                parameters[0].Value = string.IsNullOrEmpty(model.DVNAME) ? "" : model.DVNAME;
+                parameters[1].Value = string.IsNullOrEmpty(model.DVPOSITION) ? "" : model.DVPOSITION;
+                parameters[2].Value = string.IsNullOrEmpty(model.DVID) ? "" : model.DVID;
+                parameters[3].Value = string.IsNullOrEmpty(model.TESTER) ? "" : model.TESTER;
+                parameters[4].Value = string.IsNullOrEmpty(model.OLTC_TS) ? "" : model.OLTC_TS;
 
-                parameters[5].Value = model.CONTACT_NUM;
-                parameters[6].Value = model.TEST_NUM;
-                parameters[7].Value = model.SPLACE;
-                parameters[8].Value = model.OILTEMP;
-                parameters[9].Value = model.TEST_TIME;
+                parameters[5].Value = string.IsNullOrEmpty(model.CONTACT_NUM) ? "" : model.CONTACT_NUM;
+                parameters[6].Value = string.IsNullOrEmpty(model.TEST_NUM) ? "" : model.TEST_NUM;
+                parameters[7].Value = string.IsNullOrEmpty(model.SPLACE) ? "" : model.SPLACE;
+                parameters[8].Value = string.IsNullOrEmpty(model.OILTEMP) ? "" : model.OILTEMP;
+                parameters[9].Value = string.IsNullOrEmpty(model.TEST_TIME) ? "" : model.TEST_TIME;
 
-                parameters[10].Value = model.TEST_TYPE;
-                parameters[11].Value = model.GETINFO;
-                parameters[12].Value = model.TESTSTAGE;
+                parameters[10].Value = string.IsNullOrEmpty(model.TEST_TYPE) ? "" : model.TEST_TYPE;
+                parameters[11].Value = string.IsNullOrEmpty(model.GETINFO) ? "" : model.GETINFO;
+                parameters[12].Value = string.IsNullOrEmpty(model.TESTSTAGE) ? "" : model.TESTSTAGE;
                 parameters[13].Value = string.IsNullOrEmpty(model.DJUST) ? "" : model.DJUST;
-                parameters[14].Value = model.DESCRIBE;
+                parameters[14].Value = string.IsNullOrEmpty(model.DESCRIBE) ? "" : model.DESCRIBE;
 
-                parameters[15].Value = model.SCURRENT;
-                parameters[16].Value = model.ECURRENT;
-                parameters[17].Value = model.TIME_UNIT;
+                parameters[15].Value = string.IsNullOrEmpty(model.SCURRENT) ? "" : model.SCURRENT;
+                parameters[16].Value = string.IsNullOrEmpty(model.ECURRENT) ? "" : model.ECURRENT;
+                parameters[17].Value = string.IsNullOrEmpty(model.TIME_UNIT) ? "" : model.TIME_UNIT;
                 parameters[18].Value = string.IsNullOrEmpty(model.V1) ? "" : model.V1;
                 parameters[19].Value = string.IsNullOrEmpty(model.V2) ? "" : model.V2;
 
@@ -213,6 +239,16 @@ namespace DbHelper.Sqlite_Db
                 parameters[22].Value = string.IsNullOrEmpty(model.C2) ? "" : model.C2;
                 parameters[23].Value = string.IsNullOrEmpty(model.C3) ? "" : model.C3;
                 parameters[24].Value = model.PARENTID;
+
+                parameters[25].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "" : model.TEST_BASE_C;
+
+                parameters[26].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "" : model.TEST_SINGLE_DOUBLE;
+                parameters[27].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "" : model.DOUBLE_SP;
+                parameters[28].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
+                parameters[29].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "" : model.SINGLE_P;
+
+                parameters[30].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "" : model.TEST_ORDER;
+                parameters[31].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
 
                 int id = 0;
                 SQLiteHelper.ExecuteScalar(strsql, CommandType.Text, parameters);
@@ -270,6 +306,14 @@ namespace DbHelper.Sqlite_Db
                                                     ,C3=@C3
                                                     ,PARENTID=@PARENTID
 
+                                                    ,DOUBLE_SP=@DOUBLE_SP
+                                                    ,DOUBLE_EP=@DOUBLE_EP
+                                                    ,SINGLE_P=@SINGLE_P
+                                                    ,TEST_ORDER=@TEST_ORDER
+                                                    ,COUNT_BASE_C=@COUNT_BASE_C
+                                                    ,TEST_BASE_C=@TEST_BASE_C
+                                                    ,TEST_SINGLE_DOUBLE=@TEST_SINGLE_DOUBLE 
+
                               where ID=@ID
                                 ";
 
@@ -305,6 +349,14 @@ namespace DbHelper.Sqlite_Db
                      ,new SQLiteParameter("PARENTID",DbType.String)
 
                      ,new SQLiteParameter("ID",DbType.Int32)
+
+                     ,new SQLiteParameter("DOUBLE_SP",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_EP",DbType.String)
+                     ,new SQLiteParameter("SINGLE_P",DbType.String)
+                     ,new SQLiteParameter("TEST_ORDER",DbType.String)
+                     ,new SQLiteParameter("COUNT_BASE_C",DbType.String)
+                     ,new SQLiteParameter("TEST_BASE_C",DbType.String)
+                     ,new SQLiteParameter("TEST_SINGLE_DOUBLE",DbType.String)
                 };
 
                 parameters[0].Value = model.DVNAME;
@@ -338,6 +390,15 @@ namespace DbHelper.Sqlite_Db
                 parameters[24].Value = model.PARENTID;
 
                 parameters[25].Value = model.ID;
+
+                parameters[26].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "" : model.DOUBLE_SP;
+                parameters[27].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
+                parameters[28].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "" : model.SINGLE_P;
+
+                parameters[29].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "" : model.TEST_ORDER;
+                parameters[30].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
+                parameters[31].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "" : model.TEST_BASE_C;
+                parameters[32].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "" : model.TEST_SINGLE_DOUBLE;
 
                 int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
                 return Convert.ToInt32(model.ID);

@@ -87,7 +87,6 @@
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
-            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager();
             this.ckIsTop = new DevExpress.XtraEditors.CheckEdit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDVNAME.Properties)).BeginInit();
@@ -128,7 +127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckIsTop.Properties)).BeginInit();
             this.SuspendLayout();
             // 
@@ -565,6 +563,8 @@
             // 
             this.txtGetUnit.Location = new System.Drawing.Point(146, 64);
             this.txtGetUnit.Name = "txtGetUnit";
+            this.txtGetUnit.Properties.Mask.EditMask = "[0-9]*";
+            this.txtGetUnit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.txtGetUnit.Size = new System.Drawing.Size(37, 24);
             this.txtGetUnit.TabIndex = 17;
             // 
@@ -572,6 +572,7 @@
             // 
             this.txtEA.Location = new System.Drawing.Point(283, 39);
             this.txtEA.Name = "txtEA";
+            this.txtEA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
             this.txtEA.Size = new System.Drawing.Size(37, 24);
             this.txtEA.TabIndex = 15;
             // 
@@ -579,6 +580,8 @@
             // 
             this.txtSA.Location = new System.Drawing.Point(186, 39);
             this.txtSA.Name = "txtSA";
+            this.txtSA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
+            this.txtSA.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.txtSA.Size = new System.Drawing.Size(37, 24);
             this.txtSA.TabIndex = 12;
             // 
@@ -787,7 +790,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckIsTop.Properties)).EndInit();
             this.ResumeLayout(false);
 
@@ -853,7 +855,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl18;
         private DevExpress.XtraEditors.LabelControl lbHearder;
         private DevExpress.XtraEditors.LabelControl labelControl17;
-        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
         private DevExpress.XtraEditors.CheckEdit ckIsTop;
         private DevExpress.XtraEditors.DateEdit txtTEST_TIME;
     }

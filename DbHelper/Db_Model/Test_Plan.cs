@@ -122,6 +122,39 @@ namespace DbHelper.Db_Model
         /// </summary>
         public string ISEDIT { get; set; }
 
+        /// <summary>
+        ///测试基准电流
+        /// </summary>
+        public string TEST_BASE_C { get; set; }
+
+        /// <summary>
+        /// 单侧还是连续测试 1连续 2单次
+        /// </summary>
+        public string TEST_SINGLE_DOUBLE { get; set; }
+
+        /// <summary>
+        /// 连续测试开始位置
+        /// </summary>
+        public string DOUBLE_SP { get; set; }
+
+        /// <summary>
+        /// 连续测试结束位置
+        /// </summary>
+        public string DOUBLE_EP { get; set; }
+
+        /// <summary>
+        /// 单次测试位置
+        /// </summary>
+        public string SINGLE_P { get; set; }
+
+        /// <summary>
+        /// 单次测试顺序 1前往后 2 后往前
+        /// </summary>
+        public string TEST_ORDER { get; set; }
+
+        /// <summary>
+        /// 计算基准电流  1 电流1 2 电流2  3 电流3
+        /// </summary>
+        public string COUNT_BASE_C { get; set; }
     }
 }
-

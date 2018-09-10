@@ -82,7 +82,16 @@ namespace DbHelper.Sqlite_Db
                                    V3                   varchar(20)                    null,
                                    C1                   varchar(20)                    null,
                                    C2                   varchar(20)                    null,
-                                   C3                   varchar(20)                    null
+                                   C3                   varchar(20)                    null,
+
+                                   TEST_BASE_C          varchar(20)                    null,
+                                   TEST_SINGLE_DOUBLE   varchar(20)                    null,
+                                   DOUBLE_SP            varchar(20)                    null,
+                                   DOUBLE_EP           varchar(20)                    null,
+                                   SINGLE_P             varchar(20)                    null,
+                                   TEST_ORDER           varchar(20)                    null,
+                                   COUNT_BASE_C         varchar(20)                    null
+
                                 )");
 
             return sbsql.ToString();

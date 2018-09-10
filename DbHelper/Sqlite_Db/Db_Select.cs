@@ -86,7 +86,15 @@ namespace DbHelper.Sqlite_Db
                 StringBuilder sb = new StringBuilder();
                 sb.Append(" select * from TEST_CONFIGE  order by ID desc");
                 dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
-                return Test_Plan_Bind(dt);
+                if(dt.Rows.Count>0)
+                {
+                    return Test_Plan_Bind(dt);
+                }
+                else
+                {
+                    return null;
+                }
+               
             }
             catch (Exception ex)
             {
@@ -135,6 +143,16 @@ namespace DbHelper.Sqlite_Db
                     item.C3 = dr["C3"].ToString();
 
                     item.PARENTID = dr["PARENTID"].ToString();
+                    item.TEST_BASE_C = dr["TEST_BASE_C"].ToString();
+                    item.TEST_SINGLE_DOUBLE = dr["TEST_SINGLE_DOUBLE"].ToString();
+                    item.DOUBLE_SP = dr["DOUBLE_SP"].ToString();
+                    item.DOUBLE_EP = dr["DOUBLE_EP"].ToString();
+
+                    item.SINGLE_P = dr["SINGLE_P"].ToString();
+                    item.TEST_ORDER = dr["TEST_ORDER"].ToString();
+                    item.COUNT_BASE_C = dr["COUNT_BASE_C"].ToString();
+
+
                     list.Add(item);
                 }
 

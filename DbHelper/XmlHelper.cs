@@ -259,28 +259,38 @@ namespace DbHelper
 
             foreach (PropertyInfo property in properties)
             {
-                string type = property.GetValue(entity).GetType().Name;
-                if (type.ToLower() == "string" || type.ToLower() == "int32" || type.ToLower() == "double")//判断属性是否是基本类型比如strin int double 若是，则建立节点并赋值
+                var IsVauleNull = property.GetValue(entity);
+                if (IsVauleNull == null)
                 {
                     propertyValue = property.GetValue(entity, null);
                     innerElement = new XElement(property.Name, propertyValue);
                     element.Add(innerElement);
                 }
-                //else //否则，递归运行Process函数
-                //{
-                //    var t= typeof(T);
-                //    var dd= t.GetProperty("Data");
+                else
+                {
+                    string type = property.GetValue(entity).GetType().Name;
+                    if (type.ToLower() == "string" || type.ToLower() == "int32" || type.ToLower() == "double")//判断属性是否是基本类型比如strin int double 若是，则建立节点并赋值
+                    {
+                        propertyValue = property.GetValue(entity, null);
+                        innerElement = new XElement(property.Name, propertyValue);
+                        element.Add(innerElement);
+                    }
 
-                //    //string colType = property.PropertyType.GenericParameterAttributes.ToString();
-                //    //if (colType == typeof(List<Xml_Node_Model>))
-                //    //{
-                //        object obj = property.GetValue(entity, null);
-                //        List<Xml_Node_Model> iml = (List<Xml_Node_Model>)obj;
-                //        element.Add(ToXElement<Xml_Node_Model>(iml));
-                //    //}
+                    //else //否则，递归运行Process函数
+                    //{
+                    //    var t= typeof(T);
+                    //    var dd= t.GetProperty("Data");
 
-                //}
+                    //    //string colType = property.PropertyType.GenericParameterAttributes.ToString();
+                    //    //if (colType == typeof(List<Xml_Node_Model>))
+                    //    //{
+                    //        object obj = property.GetValue(entity, null);
+                    //        List<Xml_Node_Model> iml = (List<Xml_Node_Model>)obj;
+                    //        element.Add(ToXElement<Xml_Node_Model>(iml));
+                    //    //}
 
+                    //}
+                }
             }
 
             return element;

@@ -34,6 +34,7 @@ using DevExpress.XtraTreeList;
 using DbHelper.XmlModel;
 using System.IO;
 using System.Drawing.Drawing2D;
+using Load_Tap_Changer_Test;
 
 namespace Basic_Controls
 {
@@ -112,11 +113,10 @@ namespace Basic_Controls
         //    base.WndProc(ref m);
         //}
 
-
         /// <summary>
         /// xml 存储路径
         /// </summary>
-        string xmlpath = "";
+      //  string xmlpath = "";
 
         /// <summary>
         /// 接收数据开关
@@ -144,7 +144,7 @@ namespace Basic_Controls
         /// <summary>
         /// 焦点行实体
         /// </summary>
-        Test_Plan pub_Test_Plan;
+        Test_Plan pub_Test_Plan = new Test_Plan();
         #endregion
 
         #region 按键
@@ -177,7 +177,7 @@ namespace Basic_Controls
             {
                 model = Test_Plan_Bind(node);
             }
-            if (model.PARENTID == "0")
+            if (model.PARENTID == "0" || this.treeList.DataSource == null)
             {
                 model.ISEDIT = "1";
                 string id = "";
@@ -341,10 +341,14 @@ namespace Basic_Controls
             try
             {
                 sendUdp(agreement._3_CMD_STOPTESTER);
-               
+
+                End_Chart();
+
+                Thread.Sleep(1000);
                 if (Db_Save != null)
                 {
-                    while (Save_Db_Source.Count >0)
+                    DateTime startTime = DateTime.Now;
+                    while (Save_Db_Source.Count > 0 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= 5 * 1000)
                     {
 
                     }
@@ -366,7 +370,7 @@ namespace Basic_Controls
                         // 通信超时后还原页面属性
                         Invoke(new ThreadStart(delegate ()
                         {
-                            Send_Config();
+                            Send_Config(2);
                         }));
                     }
                     else
@@ -374,10 +378,10 @@ namespace Basic_Controls
                         isIN = false;
                     }
                 }
-                else
-                {
-                    End_Chart();
-                }
+                //else
+                //{
+                //    End_Chart();
+                //}
             }
             catch (Exception ex)
             {
@@ -391,7 +395,7 @@ namespace Basic_Controls
         bool isBtnTest = true;
 
         /// <summary>
-        /// 标识是开始
+        /// 标识是连续测试还是单次测试
         /// </summary>
         bool IsOpensTest = false;
         /// <summary>
@@ -403,7 +407,7 @@ namespace Basic_Controls
         {
             try
             {
-                IsOpensTest = false;
+                //IsOpensTest = false;
                 Send_Config();
             }
             catch (Exception ex)
@@ -421,7 +425,7 @@ namespace Basic_Controls
             try
             {
                 //连续测试加个循环
-                IsOpensTest = true;
+                // IsOpensTest = true;
                 Send_Config();
             }
             catch (Exception ex)
@@ -432,7 +436,7 @@ namespace Basic_Controls
         /// <summary>
         /// 开始测试基本配置
         /// </summary>
-        private void Send_Config()
+        private void Send_Config(int SINGLE_DOUBLE = 1)
         {
             if (publicnode == null)
             {
@@ -454,26 +458,46 @@ namespace Basic_Controls
                     TreeListNode node = Select_Top_Node(pub_Test_Plan.PARENTID);
                     model = Test_Plan_Bind(node);
                 }
-                model.PARENTID = model.ID;
-                model.DVNAME += "_" + topnum.ToString() + "--" + (topnum + 1).ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-                model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
+
+                pub_Test_Plan.ISEDIT = "1";
+                string id = "";
+                if (SINGLE_DOUBLE == 1)
+                {
+
+                    using (FmTestConfig form = new FmTestConfig(model))
+                    {
+                        form.ShowDialog();
+                        if (form.DialogResult == DialogResult.OK)
+                        {
+                            id = form.id;
+                            model.DVNAME = form.DvName;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    model.PARENTID = model.ID;
+                    model.DVNAME += "_" + topnum.ToString() + "--" + (topnum + 1).ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                    model.ID = Db_Action.Instance.Test_Confige_Insert(model).ToString();
+                    id = model.ID;
+                }
+
                 isBtnTest = false;
-
                 tChart.Header.Text = pub_Test_Plan.DVNAME;
-
                 Tester_List_Bind();
-
-                //生成后刷新树
-                // treeList.Refresh();
+                Set_Foucs(id);
 
                 #endregion
                 XmlHelper.DeleteXmlDocument(model.DVNAME);
                 XmlHelper.Init(model.DVNAME, model);
-                xmlpath = XmlHelper.xmlpath;
-                Thread.Sleep(10);
+                //   xmlpath = XmlHelper.xmlpath;
+                //Thread.Sleep(10);
 
                 sendUdp(agreement._2_CMD_STARTTESTER);
-
                 Start_Chart();
             }
         }
@@ -1453,7 +1477,6 @@ namespace Basic_Controls
 
             Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
 
-
             Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
 
             #region 处理队列数据
@@ -1588,9 +1611,13 @@ namespace Basic_Controls
                             //判断数据是否超标了
                             if (porintadd >= linlength)
                             {//是停止
-                                Thread.Sleep(50);
-                                Stop_Test(false);
-                                return;
+                                this.BeginInvoke(new MethodInvoker(() =>
+                                {
+                                    Stop_Test(true);
+                                }));
+
+                                break;
+
                             }
                             else
                             {
@@ -1961,7 +1988,6 @@ namespace Basic_Controls
                                 break;
                             }
                         }
-
                     }
                 }
             }
@@ -2495,7 +2521,7 @@ namespace Basic_Controls
 
         //                DataModel model = new DataModel();
 
-        //                model.head = e.Msg.Substring(4, 4); ;
+        //                model.head = e.Msg.Substring(4, 4); ; 
         //                model.text = e.Msg;
         //                model.id = Convert.ToInt32(model.head, 16);
         //                // Db_Action.Instance.Test_Data_insert(model);
@@ -2561,21 +2587,57 @@ namespace Basic_Controls
             try
             {
                 int i = 0;
-                while (isAbort)
+                Xml_Node_Model model = new Xml_Node_Model();
+                #region 开始插入分割线
+                //if (isaround)//插入分割线
+                //{
+                while (Top_End_Data.Count < 1250)// 有进入死循环的 概率秒开秒关
+                {
+                    if (!isAbort)//如果线程都关闭 了，还在循环则 结束循环
+                    {
+                        break;
+                    }
+                }
+
+                model.DataSource = "分割线开始";
+                model.Id = "1";
+                XmlHelper.Insert(model);
+                for (int j = 0; j < AroundSecond; j++)
+                {
+                    foreach (Udp_EventArgs e in Top_End_Data)
+                    {
+                        model = new Xml_Node_Model();
+                        model.Id = e.Msg.Substring(4, 4);
+                        model.DataSource = e.Msg;
+                        model.Data = new List<Xml_Element_Model>();
+                        XmlHelper.Insert(model);
+                    }
+                }
+                model = new Xml_Node_Model();
+                model.Id = "1";
+                model.DataSource = "分割线结束";
+                XmlHelper.Insert(model);
+
+                XmlHelper.Save();
+                isaround = false;
+                //}
+
+                #endregion
+                //插入波形数据 条件一  一直插入 或 条件二 只要还有数据一直插入
+                while (isAbort || Save_Db_Source.Count > 0)
                 {
                     if (Save_Db_Source.Count > 0)
                     {
                         Udp_EventArgs e = new Udp_EventArgs();
                         Save_Db_Source.TryDequeue(out e);//取出队里数据并删除
 
-                        Xml_Node_Model model = new Xml_Node_Model();
+                        model = new Xml_Node_Model();
                         model.Id = e.Msg.Substring(4, 4);
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
 
                         XmlHelper.Insert(model);
 
-                        //  Thread.Sleep(1);
                         if (i == 2000)
                         {
                             XmlHelper.Save();
@@ -2589,67 +2651,40 @@ namespace Basic_Controls
                             }
                             catch (Exception ex)
                             {
-
+                                string dd = ex.ToString();
                             }
                         }));
 
                         i++;
                     }
-                    if (isaround)//插入分割线
-                    {
-                        while (Top_End_Data.Count < 1250 || Save_Db_Source.Count <= 0)
-                        {
 
-                        }
-
-                        Xml_Node_Model model = new Xml_Node_Model();
-                        model.DataSource = "分割线开始";
-                        model.Id = "1";
-                        XmlHelper.Insert(model);
-                        for (int j = 0; j < AroundSecond; j++)
-                        {
-                            foreach (Udp_EventArgs e in Top_End_Data)
-                            {
-                                model = new Xml_Node_Model();
-                                model.Id = e.Msg.Substring(4, 4);
-                                model.DataSource = e.Msg;
-                                model.Data = new List<Xml_Element_Model>();
-                                XmlHelper.Insert(model);
-                            }
-                        }
-                        model = new Xml_Node_Model();
-                        model.Id = "1";
-                        model.DataSource = "分割线结束";
-                        XmlHelper.Insert(model);
-
-                        XmlHelper.Save();
-                        isaround = false;
-                    }
                 }
-                if (!isAbort)
+                #region 结束后插入分割线
+                //if (!isAbort && Save_Db_Source.Count <= 0)
+                //{
+                model = new Xml_Node_Model();
+                model.DataSource = "分割线开始";
+                model.Id = "1";
+                XmlHelper.Insert(model);
+                for (int j = 0; j < AroundSecond; j++)
                 {
-                    Xml_Node_Model model = new Xml_Node_Model();
-                    model.DataSource = "分割线开始";
-                    model.Id = "1";
-                    XmlHelper.Insert(model);
-                    for (int j = 0; j < AroundSecond; j++)
+                    foreach (Udp_EventArgs e in Top_End_Data)
                     {
-                        foreach (Udp_EventArgs e in Top_End_Data)
-                        {
-                            model = new Xml_Node_Model();
-                            model.Id = e.Msg.Substring(4, 4);
-                            model.DataSource = e.Msg;
-                            model.Data = new List<Xml_Element_Model>();
-                            XmlHelper.Insert(model);
-                        }
+                        model = new Xml_Node_Model();
+                        model.Id = e.Msg.Substring(4, 4);
+                        model.DataSource = e.Msg;
+                        model.Data = new List<Xml_Element_Model>();
+                        XmlHelper.Insert(model);
                     }
-                    model = new Xml_Node_Model();
-                    model.Id = "1";
-                    model.DataSource = "分割线结束";
-                    XmlHelper.Insert(model);
-
-                    XmlHelper.Save();
                 }
+                model = new Xml_Node_Model();
+                model.Id = "1";
+                model.DataSource = "分割线结束";
+                XmlHelper.Insert(model);
+
+                XmlHelper.Save();
+                //}
+                #endregion
             }
             catch (Exception ex)
             {
@@ -2704,22 +2739,22 @@ namespace Basic_Controls
                 {
                     alltime = string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT) ? alltime : Convert.ToInt32(pub_Test_Plan.TIME_UNIT);
                     init_Chart_Config(alltime, 40);
-                    //Chart_Init();
                     btnCTest.Enabled = false;
                 }
                 else
                 {
                     init_Chart_Config(10, 40);
+                    btnCTest.Enabled = true;
                     if (isBtnTest)
                     {
-                        //以电流达到1A存数据 小于等于0.1A结束
-                        topnum = Convert.ToInt32(pub_Test_Plan.SPLACE);
-                        alltopnum = Convert.ToInt32(pub_Test_Plan.CONTACT_NUM);
+                        if (pub_Test_Plan.PARENTID != "0")
+                        {
+                            topnum = Convert.ToInt32(pub_Test_Plan.DOUBLE_SP);
+                            alltopnum = Convert.ToInt32(pub_Test_Plan.DOUBLE_EP);
+                            IsOpensTest = true;
+                        }
                     }
-                    //Chart_Init();
-                    btnCTest.Enabled = true;
                 }
-
                 if (isBtnTest)
                 {
                     if (pub_Test_Plan.V1 == "1")
@@ -2911,6 +2946,17 @@ namespace Basic_Controls
                 model.C3 = node.GetValue("C3").ToString();
                 model.PARENTID = node.GetValue("PARENTID").ToString();
                 model.ID = node.GetValue("ID").ToString();
+
+
+                model.TEST_BASE_C = node.GetValue("TEST_BASE_C").ToString();
+                model.TEST_SINGLE_DOUBLE = node.GetValue("TEST_SINGLE_DOUBLE").ToString();
+                model.DOUBLE_SP = node.GetValue("DOUBLE_SP").ToString();
+                model.DOUBLE_EP = node.GetValue("DOUBLE_EP").ToString();
+
+                model.SINGLE_P = node.GetValue("SINGLE_P").ToString();
+                model.TEST_ORDER = node.GetValue("TEST_ORDER").ToString();
+                model.COUNT_BASE_C = node.GetValue("COUNT_BASE_C").ToString();
+
                 return model;
             }
             catch (Exception ex)
