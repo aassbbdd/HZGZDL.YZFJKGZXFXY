@@ -24,9 +24,20 @@ namespace Load_Tap_Changer_Test
             InitializeComponent();
             oldmodel = model;
         }
-        Test_Plan oldmodel;
+        public Test_Plan oldmodel;
         public string id;
         public string DvName;
+        public string topnum;
+        public string alltopnum;
+        /// <summary>
+        /// 基础电流
+        /// </summary>
+        public int I;
+        /// <summary>
+        /// 判断基础电流
+        /// </summary>
+        public string COUNT_BASE_C;
+
 
         private void FmTestConfig_Load(object sender, EventArgs e)
         {
@@ -47,12 +58,17 @@ namespace Load_Tap_Changer_Test
                 this.txtGetUnit.Enabled = false;
                 this.txtSA.Enabled = true;
                 this.txtEA.Enabled = true;
+                this.rdoTestType.Enabled = true;
             }
             else
             {
                 this.txtGetUnit.Enabled = true;
                 this.txtSA.Enabled = false;
                 this.txtEA.Enabled = false;
+
+                this.rdoTestType.SelectedIndex = 1;
+                this.rdoTestType.Enabled = false;
+                Get_Test_Type();
             }
         }
 
@@ -151,7 +167,6 @@ namespace Load_Tap_Changer_Test
 
         }
 
-
         #region  保存数据库
 
         /// <summary>
@@ -161,20 +176,20 @@ namespace Load_Tap_Changer_Test
         {
             try
             {
-                Test_Plan model = new Test_Plan();
                 string TestType = rdoTestType.Text;
-                model.PARENTID = oldmodel.ID;
+
+                oldmodel.PARENTID = oldmodel.ID;
                 if (TestType == "1")
                 {
                     int SPlace = Convert.ToInt32(this.txtSPlace.Text);
                     int EPlace = Convert.ToInt32(this.txtEPlace.Text);
                     if (EPlace > SPlace)
                     {
-                        model.DVNAME = oldmodel.DVNAME + "_" + SPlace + "-" + (SPlace + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + SPlace + "-" + (SPlace + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     }
                     else
                     {
-                        model.DVNAME = oldmodel.DVNAME + "_" + EPlace + "-" + (EPlace - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + EPlace + "-" + (EPlace - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     }
                 }
                 else
@@ -182,40 +197,47 @@ namespace Load_Tap_Changer_Test
                     int Place = Convert.ToInt32(this.CmbPlace.Text);
                     if (RdoOrder.Text == "1")
                     {
-                        model.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     }
                     else
                     {
-                        model.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     }
                 }
 
-                DvName = model.DVNAME;
-                model.GETINFO = this.rdoGETINFO.Text;
-                model.SCURRENT = model.GETINFO == "1" ? this.txtSA.Text : "";
-                model.ECURRENT = model.GETINFO == "1" ? this.txtEA.Text : "";
-                model.TIME_UNIT = model.GETINFO == "2" ? this.txtGetUnit.Text : "";
+                DvName = oldmodel.DVNAME;
+                oldmodel.GETINFO = this.rdoGETINFO.Text;
+                oldmodel.SCURRENT = oldmodel.GETINFO == "1" ? this.txtSA.Text : "";
+                oldmodel.ECURRENT = oldmodel.GETINFO == "1" ? this.txtEA.Text : "";
+                oldmodel.TIME_UNIT = oldmodel.GETINFO == "2" ? this.txtGetUnit.Text : "";
 
-                model.V1 = ckV1.Checked ? "1" : "0";
-                model.V2 = ckV2.Checked ? "1" : "0";
-                model.V3 = ckV3.Checked ? "1" : "0";
+                oldmodel.V1 = ckV1.Checked ? "1" : "0";
+                oldmodel.V2 = ckV2.Checked ? "1" : "0";
+                oldmodel.V3 = ckV3.Checked ? "1" : "0";
 
-                model.C1 = ckC1.Checked ? "1" : "0";
-                model.C2 = ckC2.Checked ? "1" : "0";
-                model.C3 = ckC3.Checked ? "1" : "0";
+                oldmodel.C1 = ckC1.Checked ? "1" : "0";
+                oldmodel.C2 = ckC2.Checked ? "1" : "0";
+                oldmodel.C3 = ckC3.Checked ? "1" : "0";
 
-                model.TEST_BASE_C = this.cmbBaseC.Text;
-                model.TEST_SINGLE_DOUBLE = this.rdoTestType.Text;
-                model.DOUBLE_SP = this.txtSPlace.Text;
-                model.DOUBLE_EP = this.txtEPlace.Text;
-                model.SINGLE_P = this.CmbPlace.Text;
+                oldmodel.TEST_BASE_C = this.cmbBaseC.Text;
+                oldmodel.TEST_SINGLE_DOUBLE = this.rdoTestType.Text;
+                oldmodel.DOUBLE_SP = this.txtSPlace.Text;
+                oldmodel.DOUBLE_EP = this.txtEPlace.Text;
+                oldmodel.SINGLE_P = this.CmbPlace.Text;
 
-                model.TEST_ORDER = this.RdoOrder.Text;
-                model.COUNT_BASE_C = this.RdoBaseC.Text;
-                model.ISEDIT = "1";
+                oldmodel.TEST_ORDER = this.RdoOrder.Text;
+                oldmodel.COUNT_BASE_C = this.RdoBaseC.Text;
+                oldmodel.ISEDIT = "1";
+
+                COUNT_BASE_C = oldmodel.COUNT_BASE_C;
+                I = Convert.ToInt32(oldmodel.TEST_BASE_C);
+
+                topnum = oldmodel.TEST_SINGLE_DOUBLE == "2" ? "0" : oldmodel.DOUBLE_SP;
+                alltopnum = oldmodel.TEST_SINGLE_DOUBLE == "2" ? "0" : oldmodel.DOUBLE_EP;
+
                 int count = 0;
 
-                count = Db_Action.Instance.Test_Confige_Insert(model);
+                count = Db_Action.Instance.Test_Confige_Insert(oldmodel);
 
                 if (count >= 1)
                 {
@@ -230,7 +252,6 @@ namespace Load_Tap_Changer_Test
         }
 
         #endregion
-
 
         #endregion
 

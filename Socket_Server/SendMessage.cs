@@ -108,7 +108,7 @@ namespace Socket_Server
 
                         Udp_EventArgs eventArgs = new Udp_EventArgs();
 
-                        eventArgs.Hearder = receiveCmd.Substring(0,8);
+                        eventArgs.Hearder = receiveCmd.Substring(0, 8);
                         eventArgs.Msg = receiveCmd;
                         udp_Event_Kind("", eventArgs);
                         continueLoop = false;
@@ -118,7 +118,7 @@ namespace Socket_Server
                         receiveCmd = string.Empty;
                     }
                 }
-                
+
             }
             if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
             {
@@ -163,18 +163,15 @@ namespace Socket_Server
                             eventArgs.Hearder = "0909";
                             sendmessage = "30FF" + receiveCmd.Substring(4, 4);
                             sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                           // Thread.Sleep(0);
-                            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
-                            //string path = AppDomain.CurrentDomain.BaseDirectory;
-                            //ListToText.Instance.WriteListToTextFile("", path);
                             udp_Event("", eventArgs);
+                            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                             startTime = DateTime.Now;
                         }
                     }
 
                 }
             }
-            if(continueLoop&&DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+            if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
             {
                 Udp_EventArgs eventArgs = new Udp_EventArgs();
                 eventArgs.Msg = "连接超时";

@@ -599,23 +599,23 @@ namespace DbHelper
 
                 int length = 24 * i;//截取位置
 
-                string Current1 = data.Substring(0 + length, 4);
-                string Current2 = data.Substring(4 + length, 4);
-                string Current3 = data.Substring(8 + length, 4);
+                string Current1 = data.Substring(12 + length, 4);
+                string Current2 = data.Substring(16 + length, 4);
+                string Current3 = data.Substring(20 + length, 4);
 
-                string Vibration1 = data.Substring(12 + length, 4);
-                string Vibration2 = data.Substring(16 + length, 4);
-                string Vibration3 = data.Substring(20 + length, 4);
+                string Vibration1 = data.Substring(0 + length, 4);
+                string Vibration2 = data.Substring(4 + length, 4);
+                string Vibration3 = data.Substring(8 + length, 4);
                 int id = (jinex * count) + i;
 
                 //计算
-                newcy1[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current1));
-                newcy2[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current2));
-                newcy3[id] = double.Parse(Algorithm.Instance.Current_Algorithm(Current3));
+                newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1,I);
+                newcy2[id] = Algorithm.Instance.Current_Algorithm_Double(Current2,I);
+                newcy3[id] = Algorithm.Instance.Current_Algorithm_Double(Current3,I);
 
-                newvy1[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration1));
-                newvy2[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration2));
-                newvy3[id] = double.Parse(Algorithm.Instance.Vibration_Algorithm(Vibration3));
+                newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                newvy2[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                newvy3[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
 
 
                 //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
@@ -634,7 +634,7 @@ namespace DbHelper
         static double[] newcx1; static double[] newcy1;
         static double[] newcx2; static double[] newcy2;
         static double[] newcx3; static double[] newcy3;
-
+        static int I;
 
         /// <summary>
         /// xml转DataTable
@@ -666,6 +666,10 @@ namespace DbHelper
                 string IsCount = root.Attribute("IsCount").Value;
 
                 IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                XElement ele = root.Element("Test_Plan");
+
+                I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
 
                 int count = eles.Count() * 80;
                 newvx1 = new double[count]; newvy1 = new double[count];

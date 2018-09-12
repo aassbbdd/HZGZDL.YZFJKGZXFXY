@@ -206,12 +206,28 @@ namespace WindowsFormsApp1
         {
             try
             {
+                e.Msg = "---GetDate: " + DateTime.Now.ToString("yyyyMMddHHmmssfff") + " -- "+e.Msg;
                 list_Event.Enqueue(e);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
                 throw;
+            }
+        }
+
+        private void Save_Data_Log()
+        {
+            while(isAbort)
+            {
+                if(list_Event.Count>0)
+                {
+                    Udp_EventArgs e = new Udp_EventArgs();
+
+                    list_Event.TryDequeue(out e);
+                    ListToText.Instance.WriteListToTextFile1(e.Msg);
+                }
+
             }
         }
 
@@ -231,6 +247,10 @@ namespace WindowsFormsApp1
         /// </summary>
         Thread ReChart;
 
+        /// <summary>
+        /// 保存日志
+        /// </summary>
+        Thread Save_Log;
         /// <summary>
         /// 处理队列线程
         /// </summary>
@@ -532,10 +552,10 @@ namespace WindowsFormsApp1
             #region 处理队列数据
 
             //thread_List = new Thread(Job_Queue3);//图表正常
-            thread_List = new Thread(Job_Queue);//保存数据
+            //thread_List = new Thread(Job_Queue);//保存数据
 
-            thread_List.IsBackground = true;
-            thread_List.Start(10);//启动线程
+            //thread_List.IsBackground = true;
+            //thread_List.Start(10);//启动线程
 
             #endregion
 
@@ -543,9 +563,18 @@ namespace WindowsFormsApp1
 
             //ReChart = new Thread(Refresh_Server);
             //ReChart.IsBackground = true;
-            //ReChart.Start(100);//启动线程
+            //ReChart.Start();//启动线程
 
             #endregion
+
+            #region 保存日志
+
+            Save_Log = new Thread(Save_Data_Log);
+            Save_Log.IsBackground = true;
+            Save_Log.Start();//启动线程
+
+            #endregion
+
         }
 
         /// <summary>

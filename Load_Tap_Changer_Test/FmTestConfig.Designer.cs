@@ -369,6 +369,7 @@
             // 
             // txtEA
             // 
+            this.txtEA.EditValue = "0.3";
             this.txtEA.Location = new System.Drawing.Point(283, 26);
             this.txtEA.Name = "txtEA";
             this.txtEA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
@@ -378,6 +379,7 @@
             // 
             // txtSA
             // 
+            this.txtSA.EditValue = "0.7";
             this.txtSA.Location = new System.Drawing.Point(186, 26);
             this.txtSA.Name = "txtSA";
             this.txtSA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
