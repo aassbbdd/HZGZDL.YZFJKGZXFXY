@@ -476,7 +476,10 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FmTestConfig";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "配置测试内容";
             this.Load += new System.EventHandler(this.FmTestConfig_Load);
             this.groupBox3.ResumeLayout(false);

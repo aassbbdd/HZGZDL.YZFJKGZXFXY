@@ -225,7 +225,7 @@ namespace WindowsFormsApp1
                     Udp_EventArgs e = new Udp_EventArgs();
 
                     list_Event.TryDequeue(out e);
-                    ListToText.Instance.WriteListToTextFile1(e.Msg);
+                    //ListToText.Instance.WriteListToTextFile1(e.Msg);
                 }
 
             }

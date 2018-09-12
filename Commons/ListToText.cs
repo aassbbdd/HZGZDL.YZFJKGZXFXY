@@ -204,7 +204,7 @@ namespace Commons
                 sw.Flush();
                 //使用StreamWriter来往文件中写入内容
                 //   sw.BaseStream.Seek(0, SeekOrigin.Begin);
-                sw.WriteLine(DateTime.Now.ToString()+":  "+ text);
+                sw.WriteLine(DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff") + ":  " + text);
                 //关闭此文件
                 sw.Flush();
                 sw.Close();

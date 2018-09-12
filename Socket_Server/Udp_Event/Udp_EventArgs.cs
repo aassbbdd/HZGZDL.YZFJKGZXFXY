@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Socket_Server.Udp_Event
 {
-    public class Udp_EventArgs: EventArgs
+    public class Udp_EventArgs : EventArgs
     {
         //存储一个字符串  
         public string Msg
@@ -17,6 +17,14 @@ namespace Socket_Server.Udp_Event
 
         ////头部  
         public string Hearder
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 添加时间
+        /// </summary>
+        public string AddDate
         {
             get;
             set;

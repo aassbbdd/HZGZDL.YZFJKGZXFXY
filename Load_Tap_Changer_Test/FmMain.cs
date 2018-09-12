@@ -445,6 +445,7 @@ namespace Basic_Controls
         /// </summary>
         private void Send_Config(int SINGLE_DOUBLE = 1)
         {
+            runNum = 0;
             if (publicnode == null)
             {
                 MessageBox.Show("请在左侧选择测试计划");
@@ -752,6 +753,7 @@ namespace Basic_Controls
             }
         }
 
+        int runNum = 0;
         /// <summary>
         /// 事件回调执行方法
         /// </summary>
@@ -767,15 +769,25 @@ namespace Basic_Controls
                 {
                     Top_End_Data.Enqueue(e);
                 }
-                Invoke(new ThreadStart(delegate ()
-                {
-                    LBPrintCount.Text = Porint_List.Count.ToString();
-                }));
+                //Invoke(new ThreadStart(delegate ()
+                //{
+                //    LBPrintCount.Text = Porint_List.Count.ToString();
+                //}));
                 //if (IsSaveData)
                 //{
                 //    //数据存储
                 //    Save_Db_Source.Enqueue(e);
                 //}
+                //if (runNum < 1250)
+                //{
+                //    Save_Db_Source.Enqueue(e);
+                //}
+                //else
+                //{
+
+                //}
+
+                //runNum++;
             }
             catch (Exception ex)
             {
@@ -1017,7 +1029,7 @@ namespace Basic_Controls
 
         /// <summary>
         /// 单点距离 乘以 allnum 转换系数（100000） 最后转换为点位是 除去 allnum 
-        /// //数据显示宽度  1秒=0.000001秒* 800微秒  0.0008毫秒 0.000001 * 800
+        /// //数据显示宽度  1秒=0.000002秒* 800微秒  0.0008毫秒 0.000001 * 800
         ///1个数据包 800微秒 0.0008  一个包80个数据点  每个点 10微秒 0.00001秒 
         /// </summary>
         int num = 1;
@@ -1025,11 +1037,12 @@ namespace Basic_Controls
         /// <summary>
         /// 偷点数量 80能除尽数量 进行偷点
         /// </summary>
-        int LessPoint = 40;//
+        int LessPoint = 80;
+
         /// <summary>
         /// 总的秒数 默认10秒
         /// </summary>
-        int alltime = 10;
+        int alltime = 1;
 
         /// <summary>
         ///总点数=10秒/（单点长度*偷点数）
@@ -1041,10 +1054,10 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="newalltime">Y轴长度以秒为换算单位</param>
         /// <param name="newLessPoint">漏点数</param>
-        private void init_Chart_Config(int newalltime, int newLessPoint)
+        private void init_Chart_Config(int newalltime)
         {
             alltime = newalltime;
-            LessPoint = newLessPoint;
+            // LessPoint = newLessPoint;
         }
 
         /// <summary>
@@ -1636,9 +1649,11 @@ namespace Basic_Controls
 
             while (isAbort)
             {
-                Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+
                 if (Porint_List.Count > 0)
                 {
+                    
+                    Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
                     Porint_List.TryDequeue(out e);//取出队里数据并删除
                                                   //截取返回数据
                     if (!string.IsNullOrEmpty(e.Hearder))
@@ -1655,13 +1670,13 @@ namespace Basic_Controls
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
 
                             //新板子
-                            vmodel.Vibration1 = data.Substring(0 + length, 4);
-                            vmodel.Vibration2 = data.Substring(4 + length, 4);
-                            vmodel.Vibration3 = data.Substring(8 + length, 4);
+                            //vmodel.Vibration1 = data.Substring(0 + length, 4);
+                            //vmodel.Vibration2 = data.Substring(4 + length, 4);
+                            //vmodel.Vibration3 = data.Substring(8 + length, 4);
 
-                            vmodel.Current1 = data.Substring(12 + length, 4);
-                            vmodel.Current2 = data.Substring(16 + length, 4);
-                            vmodel.Current3 = data.Substring(20 + length, 4);
+                            //vmodel.Current1 = data.Substring(12 + length, 4);
+                            //vmodel.Current2 = data.Substring(16 + length, 4);
+                            //vmodel.Current3 = data.Substring(20 + length, 4);
 
 
                             //否 存储
@@ -1674,9 +1689,7 @@ namespace Basic_Controls
                                 {
                                     Stop_Test(false);
                                 }));
-
                                 break;
-
                             }
                             else
                             {
@@ -1694,6 +1707,9 @@ namespace Basic_Controls
                             x = porintadd * newXvalue;
                             if (v1)
                             {
+                                vmodel.Vibration1 = data.Substring(0 + length, 4);
+
+
                                 //计算
                                 double Vibration1 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration1);
                                 v1x[addNum] = x;
@@ -1709,6 +1725,8 @@ namespace Basic_Controls
                             }
                             if (v2)
                             {
+                                vmodel.Vibration2 = data.Substring(4 + length, 4);
+
                                 double Vibration2 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration2);
 
                                 v2x[addNum] = x;
@@ -1723,6 +1741,8 @@ namespace Basic_Controls
                             }
                             if (v3)
                             {
+                                vmodel.Vibration3 = data.Substring(8 + length, 4);
+
                                 double Vibration3 = Algorithm.Instance.Vibration_Algorithm_Double(vmodel.Vibration3);
 
                                 v3x[addNum] = x;
@@ -1737,6 +1757,9 @@ namespace Basic_Controls
                             }
                             if (c1)
                             {
+
+                                vmodel.Current1 = data.Substring(12 + length, 4);
+
                                 double Current1 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current1);
                                 c1x[addNum] = x;
                                 c1y[addNum] = Current1;
@@ -1751,6 +1774,8 @@ namespace Basic_Controls
                             }
                             if (c2)
                             {
+                                vmodel.Current2 = data.Substring(16 + length, 4);
+
                                 double Current2 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current2);
                                 c2x[addNum] = x;
                                 c2y[addNum] = Current2;
@@ -1765,6 +1790,7 @@ namespace Basic_Controls
                             }
                             if (c3)
                             {
+                                vmodel.Current3 = data.Substring(20 + length, 4);
                                 double Current3 = Algorithm.Instance.Current_Algorithm_Double(vmodel.Current3);
                                 c3x[addNum] = x;
                                 c3y[addNum] = Current3;
@@ -1787,8 +1813,6 @@ namespace Basic_Controls
                             {
                                 addNum++;
                             }
-
-
                             porintadd++;
                             //Invoke(new ThreadStart(delegate ()
                             //{
@@ -1806,10 +1830,17 @@ namespace Basic_Controls
 
 
                         }
-
                     }
                 }
             }
+
+            vline1.Add(v1x, v1y, true);
+            vline2.Add(v2x, v2y, true);
+            vline3.Add(v3x, v3y, true);
+
+            cline1.Add(c1x, c1y, true);
+            cline2.Add(c2x, c2y, true);
+            cline3.Add(c3x, c3y, true);
         }
         /// <summary>
         /// 获取X轴下一个点位的位置
@@ -2140,8 +2171,6 @@ namespace Basic_Controls
         /// <param name="width"></param>
         private void Data_Bind(int index, double width)
         {
-
-
             vx1[porintadd + index + 1] = width;
             vy1[porintadd + index + 1] = 0.0;
 
@@ -2450,6 +2479,15 @@ namespace Basic_Controls
                     }
                 }
             }
+
+
+            vline1.Add(v1x, v1y, true);
+            vline2.Add(v2x, v2y, true);
+            vline3.Add(v3x, v3y, true);
+
+            cline1.Add(c1x, c1y, true);
+            cline2.Add(c2x, c2y, true);
+            cline3.Add(c3x, c3y, true);
         }
 
         /// <summary>
@@ -2817,6 +2855,7 @@ namespace Basic_Controls
                     foreach (Udp_EventArgs e in Top_End_Data)
                     {
                         model = new Xml_Node_Model();
+                        //  model.AddDate = e.AddDate;
                         model.Id = e.Msg.Substring(4, 4);
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
@@ -2843,6 +2882,7 @@ namespace Basic_Controls
 
                         model = new Xml_Node_Model();
                         model.Id = e.Msg.Substring(4, 4);
+                        model.AddDate = e.AddDate;
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
 
@@ -2949,12 +2989,12 @@ namespace Basic_Controls
                     {
                         alltime = string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT) ? alltime : Convert.ToInt32(pub_Test_Plan.TIME_UNIT);
                     }
-                    init_Chart_Config(alltime, 40);
+                    init_Chart_Config(alltime);
                     btnCTest.Enabled = false;
                 }
                 else
                 {
-                    init_Chart_Config(alltime, 40);
+                    init_Chart_Config(alltime);
                     btnCTest.Enabled = true;
                     if (isBtnTest)//只有不执行的时候才能进去
 

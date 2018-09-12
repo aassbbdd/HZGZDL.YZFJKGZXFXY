@@ -73,9 +73,12 @@ namespace Socket_Server
                     Thread.Sleep(100);
                     threadSendStert.Abort();
                 }
-
+                
+                
                 //启动发送线程  开始测试时一直保持运行
                 threadSendStert = new Thread(SendMessages1);
+               threadSendStert.Priority = ThreadPriority.Highest;
+                
                 threadSendStert.IsBackground = true;
                 threadSendStert.Start(sendMsg);
 
@@ -137,46 +140,54 @@ namespace Socket_Server
         /// <param name="sendMsg"></param>
         private static void SendMessages1(object sendMsg)
         {
-            string receiveCmd = string.Empty; //接收到信息
-
-            string sendmessage = (string)sendMsg;
-            byte[] sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-
-            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
-            IPEndPoint receivePoint = new IPEndPoint(IPAddress.Any, 0);
-            DateTime startTime = DateTime.Now;
-            while (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= outTime * 1000)
+            try
             {
-                if (sendUdpClient.Client.Available > 0)
+                string receiveCmd = string.Empty; //接收到信息
+
+                string sendmessage = (string)sendMsg;
+                byte[] sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+
+                sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                IPEndPoint receivePoint = new IPEndPoint(IPAddress.Any, 0);
+                DateTime startTime = DateTime.Now;
+                int i = 0;
+                while (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= outTime * 1000)
                 {
-                    /* 接收UPD返回数据，并进行处理 */
-                    byte[] recData = sendUdpClient.Receive(ref receivePoint);
-                    receiveCmd = ProtocolUtil.byteToHexStr(recData);
-
-                    Udp_EventArgs eventArgs = new Udp_EventArgs();
-                    eventArgs.Msg = receiveCmd;
-
-                    if (!string.IsNullOrEmpty(receiveCmd))//判断 回复包不为空时调用
+                    if (sendUdpClient.Client.Available > 0)
                     {
+                        Udp_EventArgs eventArgs = new Udp_EventArgs();
+                        /* 接收UPD返回数据，并进行处理 */
+                        byte[] recData = sendUdpClient.Receive(ref receivePoint);
+                        receiveCmd = ProtocolUtil.byteToHexStr(recData);
+
                         if (receiveCmd.Substring(0, 4) == "0909")//判断是测试回复协议
                         {
-                            eventArgs.Hearder = "0909";
-                            sendmessage = "30FF" + receiveCmd.Substring(4, 4);
-                            sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                            udp_Event("", eventArgs);
-                            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
-                            startTime = DateTime.Now;
-                        }
-                    }
+                            //sendmessage = "30FF" + receiveCmd.Substring(4, 4);
+                            //sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+                            //sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
 
+                            eventArgs.Msg = receiveCmd;
+                            startTime = DateTime.Now;
+                            eventArgs.Hearder = "0909";
+                            eventArgs.AddDate = startTime.ToString("yyyyMMdd HH:mm:ss.fff");
+                            udp_Event("", eventArgs);
+
+                            i++;
+                            //ListToText.Instance.WriteListToTextFile1(sendmessage);
+                        }
+                        
+                    }
                 }
-            }
-            if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+                if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+                {
+                    Udp_EventArgs eventArgs = new Udp_EventArgs();
+                    eventArgs.Msg = "连接超时";
+                    eventArgs.Hearder = "-1";
+                    udp_Event_Kind("", eventArgs);
+                }
+            }catch(Exception ex)
             {
-                Udp_EventArgs eventArgs = new Udp_EventArgs();
-                eventArgs.Msg = "连接超时";
-                eventArgs.Hearder = "-1";
-                udp_Event_Kind("", eventArgs);
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }
         }
 

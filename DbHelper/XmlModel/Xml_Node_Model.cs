@@ -28,6 +28,11 @@ namespace DbHelper.XmlModel
         public string DataSource { get; set; }
 
         /// <summary>
+        /// 添加时间
+        /// </summary>
+        [XmlAttribute(AttributeName = "AddDate")]
+        public string AddDate { get; set; }
+        /// <summary>
         /// 数据
         /// </summary>
         [XmlElement(ElementName = "Data")]

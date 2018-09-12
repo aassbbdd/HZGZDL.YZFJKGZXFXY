@@ -5,20 +5,24 @@ using System.Threading;
 using System.Windows.Forms;
 using Socket_Server;
 using Socket_Server.Udp_Event;
+using Udp_Agreement;
 
 namespace WindowsFormsApp4
 {
     public partial class Form1 : Form
     {
-
-        IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("192.168.0.143"), 8001);
+        /// <summary>
+        /// 协议对应参数
+        /// </summary>
+        Tester_Agreement agreement = new Tester_Agreement();
+        IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("192.168.1.5"), 4000);
         public Form1()
         {
             InitializeComponent();
 
 
             string ip = GetLocalIP();
-            ipep = new IPEndPoint(IPAddress.Parse(ip), 4001);
+            ipep = new IPEndPoint(IPAddress.Parse(ip), 4000);
             //ipep = new IPEndPoint(IPAddress.Any, 0);
 
 
@@ -32,7 +36,9 @@ namespace WindowsFormsApp4
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            ReceiveMessage.ReceiveStart("S",ipep);
+            ReceiveMessage.SendMsgStart(agreement._2_CMD_STARTTESTER, ipep);
+
+            //ReceiveMessage.ReceiveStart("S",ipep);
         }
 
         /// <summary>
