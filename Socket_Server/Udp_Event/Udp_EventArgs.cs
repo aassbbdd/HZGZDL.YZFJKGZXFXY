@@ -15,6 +15,16 @@ namespace Socket_Server.Udp_Event
             set;
         }
 
+        /// <summary>
+        ///数据数组形
+        /// </summary>
+        public byte[] DataBaty
+        {
+            get;
+            set;
+        }
+
+
         ////头部  
         public string Hearder
         {

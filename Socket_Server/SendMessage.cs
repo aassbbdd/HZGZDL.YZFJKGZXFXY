@@ -25,7 +25,11 @@ namespace Socket_Server
         /// <summary>
         /// 波形图数据
         /// </summary>
-        public static event EventHandler<Udp_EventArgs> udp_Event;
+        public static event EventHandler<byte[]> udp_Event;
+        /// <summary>
+        /// 波形图数据
+        /// </summary>
+        public static event EventHandler<Udp_EventArgs> udp_Event2;
         /// <summary>
         /// 一般协议发送回调
         /// </summary>
@@ -48,8 +52,8 @@ namespace Socket_Server
             //给参数赋值
             ipPoint = point;//选择发送模式
             //固定为匿名模式（套接字绑定的端口由系统自动分配）
-            sendUdpClient = new UdpClient(0);//0默认随机 
-
+            sendUdpClient = new UdpClient(0);//0默认随机  1024*1024; 665535 1048576
+            sendUdpClient.Client.ReceiveBufferSize = 1024 * 1024;
             if (sendMsg != "03550355")
             {
                 //启动发送线程
@@ -61,8 +65,6 @@ namespace Socket_Server
                     if (threadSendStert != null)
                     {
                         continueLoop = false;
-                        //Thread.Sleep(100);
-                        //threadSendStert.Abort();
                     }
                 }
             }
@@ -73,14 +75,18 @@ namespace Socket_Server
                     Thread.Sleep(100);
                     threadSendStert.Abort();
                 }
-                
-                
+
+
                 //启动发送线程  开始测试时一直保持运行
-                threadSendStert = new Thread(SendMessages1);
-               threadSendStert.Priority = ThreadPriority.Highest;
-                
+                //threadSendStert = new Thread(SendMessages1);
+                threadSendStert = new Thread(SendMessages2);
+
+                threadSendStert.Priority = ThreadPriority.Highest;
+
                 threadSendStert.IsBackground = true;
                 threadSendStert.Start(sendMsg);
+
+
 
             }
         }
@@ -134,6 +140,8 @@ namespace Socket_Server
 
         }
 
+
+
         /// <summary>
         /// 发送开始 测试协议（震动 电流数据 用）
         /// </summary>
@@ -162,20 +170,20 @@ namespace Socket_Server
 
                         if (receiveCmd.Substring(0, 4) == "0909")//判断是测试回复协议
                         {
-                            //sendmessage = "30FF" + receiveCmd.Substring(4, 4);
-                            //sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
-                            //sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                            sendmessage = "30FF" + receiveCmd.Substring(4, 4);
+                            sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+                            sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
 
                             eventArgs.Msg = receiveCmd;
                             startTime = DateTime.Now;
                             eventArgs.Hearder = "0909";
                             eventArgs.AddDate = startTime.ToString("yyyyMMdd HH:mm:ss.fff");
-                            udp_Event("", eventArgs);
+                            udp_Event2("", eventArgs);
 
                             i++;
                             //ListToText.Instance.WriteListToTextFile1(sendmessage);
                         }
-                        
+
                     }
                 }
                 if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
@@ -185,7 +193,64 @@ namespace Socket_Server
                     eventArgs.Hearder = "-1";
                     udp_Event_Kind("", eventArgs);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
+        }
+
+
+        /// <summary>
+        /// 发送开始 测试协议（震动 电流数据 用）
+        /// </summary>
+        /// <param name="sendMsg"></param>
+        private static void SendMessages2(object sendMsg)
+        {
+            try
+            {
+                string receiveCmd = string.Empty; //接收到信息
+
+                string sendmessage = (string)sendMsg;
+                byte[] sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+
+                sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                IPEndPoint receivePoint = new IPEndPoint(IPAddress.Any, 0);
+                DateTime startTime = DateTime.Now;
+                int i = 0;
+                Udp_EventArgs eventArgs = new Udp_EventArgs();
+                while (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= outTime * 1000)
+                {
+
+                    if (sendUdpClient.Client.Available > 0)
+                    {
+                        byte[] recData = sendUdpClient.Receive(ref receivePoint);
+                        udp_Event("", recData);
+
+
+
+                        i++;
+                    }
+
+                    if (i >= 480)
+                    {
+                        i = 0;
+                        startTime = DateTime.Now;
+                        sendmessage = "30FF";
+                        sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
+                        sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                    }
+                }
+                if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+                {
+                    // Udp_EventArgs eventArgs = new Udp_EventArgs();
+                    eventArgs.Msg = "连接超时";
+                    eventArgs.Hearder = "-1";
+                    udp_Event_Kind("", eventArgs);
+                }
+
+            }
+            catch (Exception ex)
             {
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }

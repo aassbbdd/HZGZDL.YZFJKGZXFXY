@@ -189,7 +189,7 @@ namespace WindowsFormsApp1
             try
             {
                 ReceiveMessage.udp_Event += new EventHandler<Udp_EventArgs>(Run);
-                SendMessage.udp_Event += new EventHandler<Udp_EventArgs>(Run);
+                SendMessage.udp_Event2 += new EventHandler<Udp_EventArgs>(Run);
             }
             catch (Exception e)
             {
