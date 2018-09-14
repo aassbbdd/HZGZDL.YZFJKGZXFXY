@@ -205,18 +205,6 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSaveData_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //SaveFileDialog pSaveFileDialog = new SaveFileDialog
-            //{
-            //    Title = "保存为:",
-            //    RestoreDirectory = true,
-            //    Filter = "所有文件(*.*)|*.*"
-            //};//同打开文件，也可指定任意类型的文件
-            //if (pSaveFileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    string path = pSaveFileDialog.FileName;
-            //}
-            //IsSaveData = true;
-
             try
             {
                 if (list.Count > 0)
@@ -345,33 +333,17 @@ namespace Basic_Controls
             try
             {
                 sendUdp(agreement._3_CMD_STOPTESTER);
-
                 End_Chart();
 
-
-
+                //结束采样 同时采样存储 图形处理异常慢 所以分开 存储数据
+                //考虑是否加个 转圈提示在存储数据不进行别的操作
+                Test_Xml_Insert();
                 if (isIN)
                 {
-                    Thread.Sleep(1000);
-                    if (Db_Save != null)
-                    {
-                        DateTime startTime = DateTime.Now;
-                        while (Save_Db_Source.Count > 0 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= 5 * 1000)
-                        {
-                            startTime = DateTime.Now;
-                        }
-
-                        Db_Save.Abort();
-                    }
                     if (thread_List != null)
                     {
                         thread_List.Abort();
                     }
-                    if (ReChart != null)
-                    {
-                        ReChart.Abort();
-                    }
-
                     if (IsOpensTest && topnum <= alltopnum)
                     {
                         // 通信超时后还原页面属性
@@ -385,10 +357,6 @@ namespace Basic_Controls
                         isIN = false;
                     }
                 }
-                //else
-                //{
-                //    End_Chart();
-                //}
             }
             catch (Exception ex)
             {
@@ -471,7 +439,6 @@ namespace Basic_Controls
                 string id = "";
                 if (SINGLE_DOUBLE == 1)
                 {
-
                     using (FmTestConfig form = new FmTestConfig(model))
                     {
                         form.ShowDialog();
@@ -510,9 +477,6 @@ namespace Basic_Controls
                 #endregion
                 XmlHelper.DeleteXmlDocument(pub_Test_Plan.DVNAME);
                 XmlHelper.Init(pub_Test_Plan.DVNAME, pub_Test_Plan);
-                //   xmlpath = XmlHelper.xmlpath;
-                //Thread.Sleep(10);
-
                 sendUdp(agreement._2_CMD_STARTTESTER);
                 Start_Chart();
             }
@@ -688,18 +652,11 @@ namespace Basic_Controls
         /// </summary>
         private void Event_Bind()
         {
-            try
-            {
-                //波形数据
-                SendMessage.udp_Event += new EventHandler<byte[]>(Run);
-                //一般协议数据
-                SendMessage.udp_Event_Kind += new EventHandler<Udp_EventArgs>(Run_Kind);
-                Event_Chart_Bind();
-            }
-            catch (Exception ex)
-            {
-                ListToText.Instance.WriteListToTextFile1(ex.ToString());
-            }
+            //波形数据
+            SendMessage.udp_Event += new EventHandler<byte[]>(Run);
+            //一般协议数据
+            SendMessage.udp_Event_Kind += new EventHandler<Udp_EventArgs>(Run_Kind);
+            Event_Chart_Bind();
         }
 
         /// <summary>
@@ -755,21 +712,13 @@ namespace Basic_Controls
 
         int runNum = 0;
         /// <summary>
-        /// 事件回调执行方法
+        /// 事件回调执行方法 存储接收到的 udp数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Run(object sender, byte[] e)
         {
-            try
-            {
-                //绘图
-                Porint_List.Enqueue(e);
-            }
-            catch (Exception ex)
-            {
-                ListToText.Instance.WriteListToTextFile1(ex.ToString());
-            }
+            Porint_List.Enqueue(e);
         }
 
         #endregion
@@ -1310,7 +1259,7 @@ namespace Basic_Controls
                     tChart.Series.Add(vline1);
 
                     vline1.Title = string.Format("震动曲线{0}", 1);
-                    vline1.Add(vx1, vy1);
+                    //vline1.Add(vx1, vy1);
                 }
                 //震动2路 vline2
                 if (v2)
@@ -1318,7 +1267,7 @@ namespace Basic_Controls
                     vline2 = new Line();
                     tChart.Series.Add(vline2);
                     vline2.Title = string.Format("震动曲线{0}", 2);
-                    vline2.Add(vx2, vy2);
+                    // vline2.Add(vx2, vy2);
                 }
                 //震动3路 vline3
                 if (v3)
@@ -1326,7 +1275,7 @@ namespace Basic_Controls
                     vline3 = new Line();
                     tChart.Series.Add(vline3);
                     vline3.Title = string.Format("震动曲线{0}", 3);
-                    vline3.Add(vx3, vy3);
+                    //vline3.Add(vx3, vy3);
                 }
                 //电流1路 cline1
                 if (c1)
@@ -1335,7 +1284,7 @@ namespace Basic_Controls
                     cline1 = new Line();
                     tChart.Series.Add(cline1);
                     cline1.Title = string.Format("电流曲线{0}", 1);
-                    cline1.Add(cx1, cy1);
+                    //cline1.Add(cx1, cy1);
                 }
                 //电流2路 cline2
                 if (c2)
@@ -1347,7 +1296,7 @@ namespace Basic_Controls
                     //cline2.XValues.DataMember = "Xwitdh";
                     //cline2.DataSource = dt;
 
-                    cline2.Add(cx2, cy2);
+                    // cline2.Add(cx2, cy2);
                 }
                 //电流3路 cline3
                 if (c3)
@@ -1358,7 +1307,7 @@ namespace Basic_Controls
                     //cline3.YValues.DataMember = "C3";
                     //cline3.XValues.DataMember = "Xwitdh";
                     //cline3.DataSource = dt;
-                    cline3.Add(cx3, cy3);
+                    //cline3.Add(cx3, cy3);
                 }
 
                 //绘制画布
@@ -1433,10 +1382,10 @@ namespace Basic_Controls
         /// </summary>
         private void Start_Chart()
         {
-            //清空Y轴
-            tChart.Series.RemoveAllSeries();
-            //清空Y轴
-            tChart.Axes.Custom.Clear();
+            ////清空Y轴
+            //tChart.Series.RemoveAllSeries();
+            ////清空Y轴
+            //tChart.Axes.Custom.Clear();
             panelControl1.Enabled = false;
             pc2.Enabled = false;
             isAbort = true;
@@ -1447,12 +1396,16 @@ namespace Basic_Controls
 
             Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
 
+
+
+
             #region 处理队列数据
 
             //thread_List = new Thread(Job_Queue);
             if (pub_Test_Plan.GETINFO == "2")
             {
                 thread_List = new Thread(Job_Queue_01);
+                // Xml_Save_ON_OFF();
             }
             else
             {
@@ -1475,20 +1428,19 @@ namespace Basic_Controls
             //}
 
             #endregion
-
             #region 存储数据
 
 
-            //if (IsSaveData)
-            //{
-            Db_Save = new Thread(Test_Xml_Insert);
-            Db_Save.IsBackground = true;
-            Db_Save.Start();//启动线程
-            //                //}
             #endregion
-
             Chart_Init();
         }
+
+        //private void Xml_Save_ON_OFF()
+        //{
+        //    Db_Save = new Thread(Test_Xml_Insert);
+        //    Db_Save.IsBackground = true;
+        //    Db_Save.Start();//启动线程
+        //}
 
         /// <summary>
         /// 停止处理图表
@@ -1514,7 +1466,8 @@ namespace Basic_Controls
         #region 队列数据处理
 
         /// <summary>
-        /// 判断是否刚开始 走图形 是为false 否为true 
+        /// 判断是否刚开始 走图形 是为false 否为true  
+        /// 电流触发 启动时使用
         /// </summary>
         bool istrue = false;
 
@@ -1693,7 +1646,6 @@ namespace Basic_Controls
                                     c3x = new double[alladdnum];
                                     c3y = new double[alladdnum];
                                 }
-
                             }
                             #endregion
 
@@ -1705,12 +1657,12 @@ namespace Basic_Controls
                             {
                                 addNum++;
                             }
-
                             #region 存储数据
 
                             //判断数据是否超标了
                             if (porintadd >= linlength)
-                            {//是停止
+                            {
+                                //是停止
                                 this.BeginInvoke(new MethodInvoker(() =>
                                 {
                                     Stop_Test(false);
@@ -1730,12 +1682,7 @@ namespace Basic_Controls
                         }
                     }
                 }
-                else
-                {
-
-                }
             }
-
             Print_End_Bind(addNum);
         }
         /// <summary>
@@ -1837,31 +1784,31 @@ namespace Basic_Controls
         string COUNT_BASE_C = "1";
 
         /// <summary>
+        /// 窗口刷新次数
+        /// </summary>
+        int WinRefreshNum = 0;
+
+
+        /// <summary>
         /// 前往后走图形电流触发波形
         /// </summary>
         private void Job_Queue_03()
         {
-            Db_Save.Suspend();
             addNum = 0;
             c1x = new double[alladdnum];
             c1y = new double[alladdnum];
 
-
             c2x = new double[alladdnum];
             c2y = new double[alladdnum];
-
 
             c3x = new double[alladdnum];
             c3y = new double[alladdnum];
 
-
             v1x = new double[alladdnum];
             v1y = new double[alladdnum];
 
-
             v2x = new double[alladdnum];
             v2y = new double[alladdnum];
-
 
             v3x = new double[alladdnum];
             v3y = new double[alladdnum];
@@ -1960,7 +1907,7 @@ namespace Basic_Controls
                             if (c1)
                             {
                                 string C = data.Substring(12 + length, 4);
-                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C,I);
+                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
 
                                 if (isFist)
                                 {
@@ -1983,7 +1930,7 @@ namespace Basic_Controls
                             if (c2)
                             {
                                 string C = data.Substring(16 + length, 4);
-                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C,I);
+                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
                                 if (isFist)
                                 {
                                     cline2.YValues[porintadd] = Cd;
@@ -2032,19 +1979,27 @@ namespace Basic_Controls
                             }
                             porintadd++;
                         }
-
-
                         // 处理数据线程结束后 触发
-                        //if (!isAbort && Porint_List.Count == 0)
-                        //{
-                        //    Print_End_Bind(addNum);
-                        //}
+                        if (!isAbort && Porint_List.Count == 0)
+                        {
+                            Print_End_Bind(addNum);
+                        }
                         #region 数据大于10秒时执行 横条删除效果
                         if (porintadd > linlength - 1 && addNum == 0)
                         {
-                            Db_Save.Resume();
+                            if(WinRefreshNum>10)
+                            {
+                                this.BeginInvoke(new MethodInvoker(() =>
+                                {
+                                    Stop_Test(false);
+                                }));
+                                break;
+                            }
+
                             isFist = true;
                             porintadd = 0;//归零
+
+                            WinRefreshNum++;
                             istrue = true;//开启进入标识
                             double swidth = 0;//初始位置
                             double width = swidth;//结束时位置
@@ -2057,8 +2012,9 @@ namespace Basic_Controls
                             colorFrom = swidth;
                             colorTo = width;
                             Print_Color_Bind();
+                            
                         }
-                        if (istrue && addNum == 0)
+                        else if (istrue && addNum == 0)
                         {
                             double swidth = porintadd * newXvalue;//初始位置
                             double width = swidth;//结束时位置
@@ -2074,9 +2030,22 @@ namespace Basic_Controls
                                     break;
                                 }
                             }
-                            colorFrom = swidth;
+                            colorFrom = Math.Round(swidth, 2, MidpointRounding.AwayFromZero);
                             colorTo = width;
                             Print_Color_Bind();
+
+                            //Invoke(new ThreadStart(delegate ()
+                            //{
+                            //    try
+                            //    {
+                            //        tChart.Refresh();
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
+                            //    }
+                            //}));
+
                         }
                         #endregion
                         //运算 电流是否达到开启值
@@ -2084,20 +2053,21 @@ namespace Basic_Controls
 
                         if (SCURRENT)//true 电流到达开启值  
                         {
+
                             //储存数量 10秒  
                             Save_Db_Source.Enqueue(e);
-                            //到达10秒后 SCURRENT=false isaround=true
-                            Invoke(new ThreadStart(delegate ()
-                            {
-                                try
-                                {
-                                    blSavePorint.Text = CurrentNum.ToString();
-                                }
-                                catch (Exception ex)
-                                {
-                                    ListToText.Instance.WriteListToTextFile1(ex.ToString());
-                                }
-                            }));
+                            ////到达10秒后 SCURRENT=false isaround=true
+                            //Invoke(new ThreadStart(delegate ()
+                            //{
+                            //    try
+                            //    {
+                            //        blSavePorint.Text = CurrentNum.ToString();
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
+                            //    }
+                            //}));
                             CurrentNum++;
                             if (CurrentNum > 12500) //存储达到 12500条 10秒的数据时
                             {
@@ -2206,11 +2176,16 @@ namespace Basic_Controls
                     if (Current1 >= setSCURRENT && !SCURRENT)
                     {
                         SCURRENT = true;
+                        //OpenSaveNum++;
+                        //if (OpenSaveNum == 1)
+                        //{
+                        //    Xml_Save_ON_OFF();
+                        //}
                     }
                     //结束存数据   条件1： 判断是否达到电流关闭 ，条件2：判断是电流关闭
                     if (Current1 <= setECURRENT && SCURRENT || CurrentNum == 12500)
                     {
-
+                        //OpenSaveNum = 0;
                         SCURRENT = false;
                         isaround = true;
                         AroundSecond = 2;//第二次开始存2秒电流数据
@@ -2229,34 +2204,40 @@ namespace Basic_Controls
         /// <param name="width"></param>
         private void Print_Bind(int index)
         {
-            if (v1)
+            try
             {
-                vline1.YValues[index] = 0;
+                if (v1)
+                {
+                    vline1.YValues[index] = 0;
+                }
+                if (v2)
+                {
+                    vline2.YValues[index] = 0;
+                }
+                if (v3)
+                {
+                    vline3.YValues[index] = 0;
+                }
+                if (c1)
+                {
+                    cline1.YValues[index] = 0;
+
+                }
+                if (c2)
+                {
+                    cline3.YValues[index] = 0;
+                }
+                if (c3)
+                {
+                    cline3.YValues[index] = 0;
+                }
             }
-            if (v2)
+            catch (Exception ex)
             {
-                vline2.YValues[index] = 0;
-            }
-            if (v3)
-            {
-                vline3.YValues[index] = 0;
-            }
-            if (c1)
-            {
-                cline1.YValues[index] = 0;
 
             }
-            if (c2)
-            {
-                cline3.YValues[index] = 0;
-            }
-            if (c3)
-            {
-                cline3.YValues[index] = 0;
-            }
-
         }
-
+        int a = 0;
         /// <summary>
         /// 绑定数数据
         /// </summary>
@@ -2269,40 +2250,135 @@ namespace Basic_Controls
                 if (v1)
                 {
                     ValueList vlist = vline1.ValuesLists[0];
-                    vline1.Colors.Clear();
+                    //  vline1.Colors.Clear();
+
+                    if (vline1.Colors.Count <= 500)
+                    {
+
+                        //Clear 程序会崩溃
+                        vline1.Colors.RemoveRange(0, vline1.Colors.Count);
+                    }
+
+                    else
+                    {
+                        //for (int i = vline1.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (vline1.Colors[i].Name == "Red")
+                        //    {
+                        //        vline1.Colors.Remove(vline1.Colors[i]);
+                        //    }
+                        //}
+
+                        vline1.Colors.RemoveRange(100, vline2.Colors.Count - 100);
+                    }
                     vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (v2)
                 {
                     ValueList vlist = vline2.ValuesLists[0];
-                    vline2.Colors.Clear();
+                    // vline2.Colors.Clear();
+                    if (vline2.Colors.Count <= 500)
+                    {
+
+                        vline2.Colors.RemoveRange(0, vline2.Colors.Count);
+                    }
+                    else
+                    {
+                        //for (int i = vline2.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (vline2.Colors[i].Name == "Red")
+                        //    {
+                        //        vline2.Colors.Remove(vline2.Colors[i]);
+                        //    }
+                        //}
+                        vline2.Colors.RemoveRange(100, vline2.Colors.Count - 100);
+                    }
                     vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (v3)
                 {
                     ValueList vlist = vline3.ValuesLists[0];
-                    vline3.Colors.Clear();
+                    if (vline3.Colors.Count <= 500)
+                    {
+                        vline3.Colors.RemoveRange(0, vline3.Colors.Count);
+                    }
+                    else
+                    {
+                        //for (int i = vline3.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (vline3.Colors[i].Name == "Red")
+                        //    {
+                        //        vline3.Colors.Remove(vline3.Colors[i]);
+                        //    }
+                        //}
+                        vline3.Colors.RemoveRange(100, vline3.Colors.Count - 100);
+                    }
                     vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c1)
                 {
                     ValueList vlist = cline1.ValuesLists[0];
-                    cline1.Colors.Clear();
+
+                    if (cline1.Colors.Count <= 500)
+                    {
+                        cline1.Colors.RemoveRange(0, cline1.Colors.Count);
+                    }
+                    else
+                    {
+                        //for (int i = cline1.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (cline1.Colors[i].Name == "Red")
+                        //    {
+                        //        cline1.Colors.Remove(cline1.Colors[i]);
+                        //    }
+                        //}
+                        cline1.Colors.RemoveRange(100, cline1.Colors.Count - 100);
+                    }
                     cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c2)
                 {
                     ValueList vlist = cline2.ValuesLists[0];
-                    cline2.Colors.Clear();
+                    // cline2.Colors.Clear();
+                    if (cline2.Colors.Count <= 500)
+                    {
+                        cline2.Colors.RemoveRange(0, cline2.Colors.Count);
+                    }
+                    else
+                    {
+                        //for (int i = cline2.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (cline2.Colors[i].Name == "Red")
+                        //    {
+                        //        cline2.Colors.Remove(cline2.Colors[i]);
+                        //    }
+                        //}
+                        cline2.Colors.RemoveRange(100, cline2.Colors.Count - 100);
+                    }
                     cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c3)
                 {
                     ValueList vlist = cline3.ValuesLists[0];
-                    cline3.Colors.Clear();
+                    if (cline3.Colors.Count <= 500)
+                    {
+                        cline3.Colors.RemoveRange(0, cline3.Colors.Count);
+                    }
+                    else
+                    {
+                        //for (int i = cline3.Colors.Count; i > 0; i--)
+                        //{
+                        //    if (cline3.Colors[i].Name == "Red")
+                        //    {
+                        //        cline3.Colors.Remove(cline3.Colors[i]);
+                        //    }
+                        //}
+                        cline3.Colors.RemoveRange(100, cline3.Colors.Count - 100);
+                    }
                     cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
             }
+
         }
 
         #endregion
@@ -2348,7 +2424,6 @@ namespace Basic_Controls
             {
                 MessageBox.Show(ex.ToString());
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
-
             }
         }
 
@@ -2365,43 +2440,38 @@ namespace Basic_Controls
                 int i = 0;
                 Xml_Node_Model model = new Xml_Node_Model();
                 #region 开始插入分割线
-                //if (pub_Test_Plan.GETINFO == "1")
-                //{
+                if (pub_Test_Plan.GETINFO == "1")
+                {
+                    while (Top_End_Data.Count < 1250)// 有进入死循环的 概率秒开秒关
+                    {
+                        if (!isAbort)//如果线程都关闭 了，还在循环则 结束循环
+                        {
+                            break;
+                        }
+                    }
+                    model.DataSource = "分割线开始";
+                    model.Id = "1";
+                    XmlHelper.Insert(model);
+                    for (int j = 0; j < AroundSecond; j++)
+                    {
+                        foreach (Udp_EventArgs e in Top_End_Data)
+                        {
+                            model = new Xml_Node_Model();
+                            //  model.AddDate = e.AddDate;
+                            model.Id = e.Msg.Substring(4, 4);
+                            model.DataSource = e.Msg;
+                            model.Data = new List<Xml_Element_Model>();
+                            XmlHelper.Insert(model);
+                        }
+                    }
+                    model = new Xml_Node_Model();
+                    model.Id = "1";
+                    model.DataSource = "分割线结束";
+                    XmlHelper.Insert(model);
 
-                //    //if (isaround)//插入分割线
-                //    //{
-                //    while (Top_End_Data.Count < 1250)// 有进入死循环的 概率秒开秒关
-                //    {
-                //        if (!isAbort)//如果线程都关闭 了，还在循环则 结束循环
-                //        {
-                //            break;
-                //        }
-                //    }
-
-                //    model.DataSource = "分割线开始";
-                //    model.Id = "1";
-                //    XmlHelper.Insert(model);
-                //    for (int j = 0; j < AroundSecond; j++)
-                //    {
-                //        foreach (Udp_EventArgs e in Top_End_Data)
-                //        {
-                //            model = new Xml_Node_Model();
-                //            //  model.AddDate = e.AddDate;
-                //            model.Id = e.Msg.Substring(4, 4);
-                //            model.DataSource = e.Msg;
-                //            model.Data = new List<Xml_Element_Model>();
-                //            XmlHelper.Insert(model);
-                //        }
-                //    }
-                //    model = new Xml_Node_Model();
-                //    model.Id = "1";
-                //    model.DataSource = "分割线结束";
-                //    XmlHelper.Insert(model);
-
-                //    XmlHelper.Save();
-                //    isaround = false;
-                //    //}
-                //}
+                    XmlHelper.Save();
+                    isaround = false;
+                }
                 #endregion
                 //插入波形数据 条件一  一直插入 或 条件二 只要还有数据一直插入
                 while (isAbort || Save_Db_Source.Count > 0)
@@ -2416,57 +2486,43 @@ namespace Basic_Controls
                         model.AddDate = e.AddDate;
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
-
                         XmlHelper.Insert(model);
-
                         if (i == 2000)
                         {
                             XmlHelper.Save();
                             i = 0;
                         };
-                        Invoke(new ThreadStart(delegate ()
-                        {
-                            try
-                            {
-                                LBxmlCount.Text = Save_Db_Source.Count.ToString();
-                            }
-                            catch (Exception ex)
-                            {
-                                ListToText.Instance.WriteListToTextFile1(ex.ToString());
-                            }
-                        }));
-
                         i++;
                     }
 
                 }
-                //if (pub_Test_Plan.GETINFO == "1")
-                //{
-                //    #region 结束后插入分割线
-                //    //if (!isAbort && Save_Db_Source.Count <= 0)
-                //    //{
-                //    model = new Xml_Node_Model();
-                //    model.DataSource = "分割线开始";
-                //    model.Id = "1";
-                //    XmlHelper.Insert(model);
-                //    for (int j = 0; j < AroundSecond; j++)
-                //    {
-                //        foreach (Udp_EventArgs e in Top_End_Data)
-                //        {
-                //            model = new Xml_Node_Model();
-                //            model.Id = e.Msg.Substring(4, 4);
-                //            model.DataSource = e.Msg;
-                //            model.Data = new List<Xml_Element_Model>();
-                //            XmlHelper.Insert(model);
-                //        }
-                //    }
-                //    model = new Xml_Node_Model();
-                //    model.Id = "1";
-                //    model.DataSource = "分割线结束";
-                //    XmlHelper.Insert(model);
-                //    //}
-                //    #endregion
-                //}
+                if (pub_Test_Plan.GETINFO == "1")
+                {
+                    #region 结束后插入分割线
+
+                    model = new Xml_Node_Model();
+                    model.DataSource = "分割线开始";
+                    model.Id = "1";
+                    XmlHelper.Insert(model);
+                    for (int j = 0; j < AroundSecond; j++)
+                    {
+                        foreach (Udp_EventArgs e in Top_End_Data)
+                        {
+                            model = new Xml_Node_Model();
+                            model.Id = e.Msg.Substring(4, 4);
+                            model.DataSource = e.Msg;
+                            model.Data = new List<Xml_Element_Model>();
+                            XmlHelper.Insert(model);
+                        }
+                    }
+                    Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
+                    model = new Xml_Node_Model();
+                    model.Id = "1";
+                    model.DataSource = "分割线结束";
+                    XmlHelper.Insert(model);
+                    //}
+                    #endregion
+                }
                 //结束后保存下防止 漏数据
                 XmlHelper.Save();
             }

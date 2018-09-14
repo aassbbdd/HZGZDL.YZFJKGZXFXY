@@ -107,6 +107,8 @@
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.blSavePorint = new DevExpress.XtraEditors.LabelControl();
             this.lbOpen = new DevExpress.XtraEditors.LabelControl();
             this.pcOpen = new System.Windows.Forms.PictureBox();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
@@ -132,8 +134,6 @@
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
-            this.blSavePorint = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
@@ -884,6 +884,22 @@
             this.panelControl1.Size = new System.Drawing.Size(187, 837);
             this.panelControl1.TabIndex = 52;
             // 
+            // labelControl5
+            // 
+            this.labelControl5.Location = new System.Drawing.Point(12, 364);
+            this.labelControl5.Name = "labelControl5";
+            this.labelControl5.Size = new System.Drawing.Size(75, 18);
+            this.labelControl5.TabIndex = 53;
+            this.labelControl5.Text = "已存点数：";
+            // 
+            // blSavePorint
+            // 
+            this.blSavePorint.Location = new System.Drawing.Point(85, 364);
+            this.blSavePorint.Name = "blSavePorint";
+            this.blSavePorint.Size = new System.Drawing.Size(78, 18);
+            this.blSavePorint.TabIndex = 52;
+            this.blSavePorint.Text = "blSavePorint";
+            // 
             // lbOpen
             // 
             this.lbOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -926,17 +942,17 @@
             // 
             this.LBPrintCount.Location = new System.Drawing.Point(83, 329);
             this.LBPrintCount.Name = "LBPrintCount";
-            this.LBPrintCount.Size = new System.Drawing.Size(81, 18);
+            this.LBPrintCount.Size = new System.Drawing.Size(82, 18);
             this.LBPrintCount.TabIndex = 47;
-            this.LBPrintCount.Text = "labelControl1";
+            this.LBPrintCount.Text = "LBPrintCount";
             // 
             // LBxmlCount
             // 
             this.LBxmlCount.Location = new System.Drawing.Point(83, 290);
             this.LBxmlCount.Name = "LBxmlCount";
-            this.LBxmlCount.Size = new System.Drawing.Size(81, 18);
+            this.LBxmlCount.Size = new System.Drawing.Size(77, 18);
             this.LBxmlCount.TabIndex = 46;
-            this.LBxmlCount.Text = "labelControl1";
+            this.LBxmlCount.Text = "LBxmlCount";
             // 
             // btnClear
             // 
@@ -1130,22 +1146,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.popupMenu.Manager = this.barManager1;
             this.popupMenu.Name = "popupMenu";
-            // 
-            // labelControl5
-            // 
-            this.labelControl5.Location = new System.Drawing.Point(12, 364);
-            this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(75, 18);
-            this.labelControl5.TabIndex = 53;
-            this.labelControl5.Text = "已存点数：";
-            // 
-            // blSavePorint
-            // 
-            this.blSavePorint.Location = new System.Drawing.Point(85, 364);
-            this.blSavePorint.Name = "blSavePorint";
-            this.blSavePorint.Size = new System.Drawing.Size(81, 18);
-            this.blSavePorint.TabIndex = 52;
-            this.blSavePorint.Text = "labelControl1";
             // 
             // FmMain
             // 
