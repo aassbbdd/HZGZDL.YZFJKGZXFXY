@@ -121,7 +121,7 @@ namespace Basic_Controls
         /// <summary>
         /// 接收数据开关
         /// </summary>
-        bool IsSaveData = false;
+       // bool IsSaveData = false;
 
         /// <summary>
         /// 协议对应参数
@@ -233,26 +233,8 @@ namespace Basic_Controls
             try
             {
                 string filepath = FileHelper.GetOpenFilePath();
-                Test_Plan model = XmlHelper.Xml_To_Model(filepath);
-                if (!string.IsNullOrEmpty(filepath))
-                {
-                    //  DataTable dt = XmlHelper.Xml_To_DataTable(filepath, cks);
-                    XmlHelper.Xml_To_Array(filepath, cks,
-                       out vx1, out vy1,
-                       out vx2, out vy2,
-                       out vx3, out vy3,
-                       out cx1, out cy1,
-                       out cx2, out cy2,
-                       out cx3, out cy3
-                        );
+                Lond_Chart(filepath);
 
-                    Chart_DataTable_Init();
-                    Chart_Data_Lond_Bind();
-
-                    tChart.Refresh();
-                    min = tChart.Axes.Bottom.Minimum;
-                    max = tChart.Axes.Bottom.MaxXValue;
-                }
             }
             catch (Exception ex)
             {
@@ -263,11 +245,45 @@ namespace Basic_Controls
         }
 
         /// <summary>
+        /// 加载图标
+        /// </summary>
+        /// <param name="filepath"></param>
+        private void Lond_Chart(string filepath)
+        {
+            if (!string.IsNullOrEmpty(filepath))
+            {
+                splashScreenManager.ShowWaitForm();
+                splashScreenManager.SetWaitFormCaption("请稍后");
+                splashScreenManager.SetWaitFormDescription("正在加载图形...");
+
+                XmlHelper.Xml_To_Array(filepath, cks,
+                   out vx1, out vy1,
+                   out vx2, out vy2,
+                   out vx3, out vy3,
+                   out cx1, out cy1,
+                   out cx2, out cy2,
+                   out cx3, out cy3
+                    );
+                //取 参数有问题
+                Test_Plan model = XmlHelper.Xml_To_Model(filepath);
+                Chart_DataTable_Init();
+                Chart_Data_Lond_Bind("1");
+
+                //tChart.Refresh();
+                min = tChart.Axes.Bottom.Minimum;
+                max = tChart.Axes.Bottom.MaxXValue;
+
+                splashScreenManager.SetWaitFormDescription("加载完成。");
+                //Thread.Sleep(1000);
+                splashScreenManager.CloseWaitForm();
+            }
+        }
+
+        /// <summary>
         /// 保存图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void btnSaveImg_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             string path = FileHelper.Local_Path_Get() + "TestLineImage";
@@ -304,6 +320,7 @@ namespace Basic_Controls
 
             #endregion
         }
+
         /// <summary>
         /// 心跳测试
         /// </summary>
@@ -313,7 +330,6 @@ namespace Basic_Controls
         {
             sendUdp(agreement._1_CMD_HEARTBEAT);
         }
-
 
         /// <summary>
         /// 停止测试
@@ -327,17 +343,25 @@ namespace Basic_Controls
         /// <summary>
         /// 停止测试功能
         /// </summary>
-        /// <param name="isIN"></param>
-        private void Stop_Test(bool isIN)
+        /// <param name="isIN">是否 跳转档位</param>
+        /// <param name="ShowType">显示状态 0，不操作 1,跳转到下一个档位 2，结束提醒</param>
+        private void Stop_Test(bool isIN, int ShowType = 0)
         {
             try
             {
                 sendUdp(agreement._3_CMD_STOPTESTER);
                 End_Chart();
 
-                //结束采样 同时采样存储 图形处理异常慢 所以分开 存储数据
-                //考虑是否加个 转圈提示在存储数据不进行别的操作
-                Test_Xml_Insert();
+                Invoke(new ThreadStart(delegate ()
+                {
+                    splashScreenManager.ShowWaitForm();
+                    splashScreenManager.SetWaitFormDescription("采集数据保存中...");
+                    //结束采样 同时采样存储 图形处理异常慢 所以分开 存储数据
+                    //考虑是否加个 转圈提示在存储数据不进行别的操作
+                    Test_Xml_Insert();
+                    splashScreenManager.CloseWaitForm();
+
+                }));
                 if (isIN)
                 {
                     if (thread_List != null)
@@ -346,6 +370,16 @@ namespace Basic_Controls
                     }
                     if (IsOpensTest && topnum <= alltopnum)
                     {
+                        if (ShowType == 1)
+                        {
+                            int time = 5;
+                            splashScreenManager.ShowWaitForm();
+                            splashScreenManager.SetWaitFormCaption("请切换档位");
+                            splashScreenManager.SetWaitFormDescription(time + " 秒后 开始采集数据...");
+
+                            Thread.Sleep(time * 1000);
+                            splashScreenManager.CloseWaitForm();
+                        }
                         // 通信超时后还原页面属性
                         Invoke(new ThreadStart(delegate ()
                         {
@@ -1248,7 +1282,7 @@ namespace Basic_Controls
         /// <summary>
         /// 重新加载图表
         /// </summary>
-        private void Chart_Data_Lond_Bind()
+        private void Chart_Data_Lond_Bind(string type = "0")
         {
             try
             {
@@ -1259,7 +1293,10 @@ namespace Basic_Controls
                     tChart.Series.Add(vline1);
 
                     vline1.Title = string.Format("震动曲线{0}", 1);
-                    //vline1.Add(vx1, vy1);
+                    if (type == "1")
+                    {
+                        vline1.Add(vx1, vy1);
+                    }
                 }
                 //震动2路 vline2
                 if (v2)
@@ -1267,7 +1304,10 @@ namespace Basic_Controls
                     vline2 = new Line();
                     tChart.Series.Add(vline2);
                     vline2.Title = string.Format("震动曲线{0}", 2);
-                    // vline2.Add(vx2, vy2);
+                    if (type == "1")
+                    {
+                        vline2.Add(vx2, vy2);
+                    }
                 }
                 //震动3路 vline3
                 if (v3)
@@ -1275,7 +1315,10 @@ namespace Basic_Controls
                     vline3 = new Line();
                     tChart.Series.Add(vline3);
                     vline3.Title = string.Format("震动曲线{0}", 3);
-                    //vline3.Add(vx3, vy3);
+                    if (type == "1")
+                    {
+                        vline3.Add(vx3, vy3);
+                    }
                 }
                 //电流1路 cline1
                 if (c1)
@@ -1284,7 +1327,10 @@ namespace Basic_Controls
                     cline1 = new Line();
                     tChart.Series.Add(cline1);
                     cline1.Title = string.Format("电流曲线{0}", 1);
-                    //cline1.Add(cx1, cy1);
+                    if (type == "1")
+                    {
+                        cline1.Add(cx1, cy1);
+                    }
                 }
                 //电流2路 cline2
                 if (c2)
@@ -1295,8 +1341,10 @@ namespace Basic_Controls
                     //cline2.YValues.DataMember = "C2";
                     //cline2.XValues.DataMember = "Xwitdh";
                     //cline2.DataSource = dt;
-
-                    // cline2.Add(cx2, cy2);
+                    if (type == "1")
+                    {
+                        cline2.Add(cx2, cy2);
+                    }
                 }
                 //电流3路 cline3
                 if (c3)
@@ -1307,7 +1355,10 @@ namespace Basic_Controls
                     //cline3.YValues.DataMember = "C3";
                     //cline3.XValues.DataMember = "Xwitdh";
                     //cline3.DataSource = dt;
-                    //cline3.Add(cx3, cy3);
+                    if (type == "1")
+                    {
+                        cline3.Add(cx3, cy3);
+                    }
                 }
 
                 //绘制画布
@@ -1321,6 +1372,7 @@ namespace Basic_Controls
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }
         }
+
 
         #region 队列刷新动态图表
 
@@ -1457,7 +1509,7 @@ namespace Basic_Controls
             {
                 panelControl1.Enabled = true;
                 pc2.Enabled = true;
-                IsSaveData = false;
+                //IsSaveData = false;
             }));
             //Tester_List_Bind();
             isBtnTest = true;
@@ -1987,14 +2039,19 @@ namespace Basic_Controls
                         #region 数据大于10秒时执行 横条删除效果
                         if (porintadd > linlength - 1 && addNum == 0)
                         {
-                            if(WinRefreshNum>10)
+                            if (WinRefreshNum > 9)
                             {
-                                this.BeginInvoke(new MethodInvoker(() =>
+                                BeginInvoke(new MethodInvoker(() =>
                                 {
                                     Stop_Test(false);
                                 }));
                                 break;
                             }
+
+                            Invoke(new ThreadStart(delegate ()
+                            {
+                                LBxmlCount.Text = WinRefreshNum.ToString();
+                            }));
 
                             isFist = true;
                             porintadd = 0;//归零
@@ -2012,7 +2069,7 @@ namespace Basic_Controls
                             colorFrom = swidth;
                             colorTo = width;
                             Print_Color_Bind();
-                            
+
                         }
                         else if (istrue && addNum == 0)
                         {
@@ -2075,7 +2132,7 @@ namespace Basic_Controls
                                 topnum++;
                                 this.BeginInvoke(new MethodInvoker(() =>
                                 {
-                                    Stop_Test(true);
+                                    Stop_Test(true, 1);
                                 }));
 
                                 break;
@@ -2090,7 +2147,7 @@ namespace Basic_Controls
                                 this.BeginInvoke(new MethodInvoker(() =>
                                 {
                                     topnum++;
-                                    Stop_Test(true);
+                                    Stop_Test(true, 1);
                                 }));
                                 break;
                             }
@@ -2669,12 +2726,25 @@ namespace Basic_Controls
                     }
                 }
 
-                Chart_Init();
 
-                //获取存储数据路径
+
+                //获取存储数据路径 加载图形
                 if (pub_Test_Plan.PARENTID != "0")
                 {
-                    string path = "";
+                    string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\"+ pub_Test_Plan.DVNAME+".xml";
+                    bool isdd = FileHelper.IsFileExist(filepath);
+                    if (FileHelper.IsFileExist(filepath))
+                    {
+                        Lond_Chart(filepath);
+                    }
+                    else
+                    {
+                        //MessageBox.Show("");
+                    }
+                }
+                else
+                {
+                    Chart_Init();
                 }
             }
         }

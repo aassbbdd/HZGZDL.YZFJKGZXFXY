@@ -341,7 +341,55 @@ namespace DbHelper
                 XElement root = document.Root;
                 XElement ele = root.Element("Test_Plan");
                 Test_Plan model = new Test_Plan();
-                model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
+
+
+                model.ID = ele.Element("ID").Value;
+                model.PARENTID = ele.Element("PARENTID").Value;
+                model.DVNAME = ele.Element("DVNAME").Value;
+                model.DVPOSITION = ele.Element("DVPOSITION").Value;
+                model.DVID = ele.Element("DVID").Value;
+                model.TESTER = ele.Element("TESTER").Value;
+                model.OLTC_TS = ele.Element("OLTC_TS").Value;
+                model.CONTACT_NUM = ele.Element("CONTACT_NUM").Value;
+                model.TEST_NUM = ele.Element("TEST_NUM").Value;
+                model.SPLACE = ele.Element("SPLACE").Value;
+                model.OILTEMP = ele.Element("OILTEMP").Value;
+                model.TEST_TIME = ele.Element("TEST_TIME").Value;
+                model.TEST_TYPE = ele.Element("TEST_TYPE").Value;
+                model.GETINFO = ele.Element("GETINFO").Value;
+                model.TESTSTAGE = ele.Element("TESTSTAGE").Value;
+                model.DJUST = ele.Element("DJUST").Value;
+                model.DESCRIBE = ele.Element("DESCRIBE").Value;
+                model.SCURRENT = ele.Element("SCURRENT").Value;
+                model.ECURRENT = ele.Element("ECURRENT").Value;
+                model.TIME_UNIT = ele.Element("TIME_UNIT").Value;
+                model.V1 = ele.Element("V1").Value;
+                model.V2 = ele.Element("V2").Value;
+                model.V3 = ele.Element("V3").Value;
+                model.C1 = ele.Element("C1").Value;
+                model.C2 = ele.Element("C2").Value;
+                model.C3 = ele.Element("C3").Value;
+                model.TEST_BASE_C = ele.Element("TEST_BASE_C").Value;
+                model.TEST_SINGLE_DOUBLE = ele.Element("TEST_SINGLE_DOUBLE").Value;
+                model.DOUBLE_SP = ele.Element("DOUBLE_SP").Value;
+                model.DOUBLE_EP = ele.Element("DOUBLE_EP").Value;
+                model.SINGLE_P = ele.Element("SINGLE_P").Value;
+                model.TEST_ORDER = ele.Element("TEST_ORDER").Value;
+                model.COUNT_BASE_C = ele.Element("COUNT_BASE_C").Value;
+
+
+
+                //foreach (var item in ele.)
+
+                //{
+                //}
+
+                // model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
+                //if(model.ID==null)
+                //{
+                //    model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
+                //}
+
                 return model;
             }
             catch (Exception ex)
@@ -609,9 +657,9 @@ namespace DbHelper
                 int id = (jinex * count) + i;
 
                 //计算
-                newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1,I);
-                newcy2[id] = Algorithm.Instance.Current_Algorithm_Double(Current2,I);
-                newcy3[id] = Algorithm.Instance.Current_Algorithm_Double(Current3,I);
+                newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                newcy2[id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                newcy3[id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
 
                 newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
                 newvy2[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);

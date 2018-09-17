@@ -54,8 +54,6 @@ namespace DocDecrypt.Common
             return path;
         }
 
-
-
         public static string GetTempFileName(string fileName)
         {
             return Path.Combine(Path.GetTempPath(), string.IsNullOrEmpty(fileName) ? "~temp.tmp" : fileName);
@@ -171,6 +169,11 @@ namespace DocDecrypt.Common
             }
         }
 
+        /// <summary>
+        /// //验证文件是否存在
+        /// </summary>
+        /// <param name="file">文件路径</param>
+        /// <returns></returns>
         public static bool IsFileExist(string file)
         {
             return !string.IsNullOrEmpty(file) && File.Exists(file);

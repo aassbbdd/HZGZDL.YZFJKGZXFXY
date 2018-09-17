@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseFrom));
+            DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager2 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, null, true, true);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
@@ -471,6 +471,10 @@
             // 
             this.fastLine1.YValues.DataMember = "Y";
             // 
+            // splashScreenManager2
+            // 
+            splashScreenManager2.ClosingDelay = 500;
+            // 
             // BaseFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
@@ -504,6 +508,7 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
         private Steema.TeeChart.TChart tChart1;
         private Steema.TeeChart.Styles.FastLine fastLine1;
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
     }
 }
 

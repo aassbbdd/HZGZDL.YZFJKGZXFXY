@@ -226,13 +226,10 @@ namespace Socket_Server
                     {
                         byte[] recData = sendUdpClient.Receive(ref receivePoint);
                         udp_Event("", recData);
-
-
-
                         i++;
                     }
 
-                    if (i >= 480)
+                    if (i == 300)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
                     {
                         i = 0;
                         startTime = DateTime.Now;
@@ -241,7 +238,7 @@ namespace Socket_Server
                         sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
                     }
                 }
-                if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
+                 if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
                 {
                     // Udp_EventArgs eventArgs = new Udp_EventArgs();
                     eventArgs.Msg = "连接超时";
