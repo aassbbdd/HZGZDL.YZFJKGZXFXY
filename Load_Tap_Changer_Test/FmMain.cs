@@ -269,12 +269,10 @@ namespace Basic_Controls
                 Chart_DataTable_Init();
                 Chart_Data_Lond_Bind("1");
 
-                //tChart.Refresh();
                 min = tChart.Axes.Bottom.Minimum;
                 max = tChart.Axes.Bottom.MaxXValue;
 
                 splashScreenManager.SetWaitFormDescription("加载完成。");
-                //Thread.Sleep(1000);
                 splashScreenManager.CloseWaitForm();
             }
         }
@@ -416,7 +414,6 @@ namespace Basic_Controls
         {
             try
             {
-                //IsOpensTest = false;
                 Send_Config();
             }
             catch (Exception ex)
@@ -1373,7 +1370,6 @@ namespace Basic_Controls
             }
         }
 
-
         #region 队列刷新动态图表
 
         /// <summary>
@@ -1427,6 +1423,7 @@ namespace Basic_Controls
 
         double[] cx3;
         double[] cy3;
+
         #endregion
 
         /// <summary>
@@ -1503,7 +1500,7 @@ namespace Basic_Controls
             porintadd = 0;
             isAbort = false;
             Current_Config();
-
+            WinRefreshNum = 0;
             // 通信超时后还原页面属性
             Invoke(new ThreadStart(delegate ()
             {
@@ -1810,7 +1807,7 @@ namespace Basic_Controls
         /// <summary>
         /// 开始前后是否存数据开关 true 开 false 关
         /// </summary>
-        bool isaround = true;
+        //bool isaround = true;
         /// <summary>
         /// 到达2000是 进行一次运算
         /// </summary>
@@ -2039,8 +2036,9 @@ namespace Basic_Controls
                         #region 数据大于10秒时执行 横条删除效果
                         if (porintadd > linlength - 1 && addNum == 0)
                         {
-                            if (WinRefreshNum > 9)
+                            if (WinRefreshNum > 4)
                             {
+                                WinRefreshNum = 0;
                                 BeginInvoke(new MethodInvoker(() =>
                                 {
                                     Stop_Test(false);
@@ -2073,14 +2071,17 @@ namespace Basic_Controls
                         }
                         else if (istrue && addNum == 0)
                         {
-                            double swidth = porintadd * newXvalue;//初始位置
+                            double swidth = Math.Round((porintadd + 1) * newXvalue, 2, MidpointRounding.AwayFromZero);//初始位置
                             double width = swidth;//结束时位置
                             for (int i = 0; i < 500; i++)
                             {
-                                if (porintadd + i <= linlength - 1)
+                                if (porintadd + 1 + i <= linlength - 1)
                                 {
-                                    width = (porintadd + i) * newXvalue;
-                                    Print_Bind((porintadd + i));
+                                    width = (porintadd + 1 + i) * newXvalue;
+
+
+
+                                    Print_Bind((porintadd + 1 + i));
                                 }
                                 else
                                 {
@@ -2170,14 +2171,6 @@ namespace Basic_Controls
             // around = 1;
             CurrentNum = 1;
             AroundSecond = 1;
-            if (pub_Test_Plan.GETINFO == "2")
-            {
-                isaround = false;
-            }
-            else
-            {
-                isaround = true;
-            }
         }
 
         /// <summary>
@@ -2233,18 +2226,11 @@ namespace Basic_Controls
                     if (Current1 >= setSCURRENT && !SCURRENT)
                     {
                         SCURRENT = true;
-                        //OpenSaveNum++;
-                        //if (OpenSaveNum == 1)
-                        //{
-                        //    Xml_Save_ON_OFF();
-                        //}
                     }
                     //结束存数据   条件1： 判断是否达到电流关闭 ，条件2：判断是电流关闭
                     if (Current1 <= setECURRENT && SCURRENT || CurrentNum == 12500)
                     {
-                        //OpenSaveNum = 0;
                         SCURRENT = false;
-                        isaround = true;
                         AroundSecond = 2;//第二次开始存2秒电流数据
                     }
                     //运算完成后恢复初始值
@@ -2282,7 +2268,7 @@ namespace Basic_Controls
                 }
                 if (c2)
                 {
-                    cline3.YValues[index] = 0;
+                    cline2.YValues[index] = 0;
                 }
                 if (c3)
                 {
@@ -2294,7 +2280,6 @@ namespace Basic_Controls
 
             }
         }
-        int a = 0;
         /// <summary>
         /// 绑定数数据
         /// </summary>
@@ -2309,133 +2294,158 @@ namespace Basic_Controls
                     ValueList vlist = vline1.ValuesLists[0];
                     //  vline1.Colors.Clear();
 
-                    if (vline1.Colors.Count <= 500)
-                    {
+                    //if (vline1.Colors.Count <= 500)
+                    //{
 
-                        //Clear 程序会崩溃
-                        vline1.Colors.RemoveRange(0, vline1.Colors.Count);
-                    }
+                    //    //Clear 程序会崩溃
+                    //    vline1.Colors.RemoveRange(0, vline1.Colors.Count);
+                    //}
+                    //else if (vline1.Colors.Count > 2000)
+                    //{
+                    //    vline1.Colors.RemoveRange(0, 2000);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = vline1.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (vline1.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        vline1.Colors.Remove(vline1.Colors[i]);
+                    //    //    }
+                    //    //}
 
-                    else
-                    {
-                        //for (int i = vline1.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (vline1.Colors[i].Name == "Red")
-                        //    {
-                        //        vline1.Colors.Remove(vline1.Colors[i]);
-                        //    }
-                        //}
+                    //    // vline1.Colors.RemoveRange(100, vline2.Colors.Count - 100);
+                    //    vline1.Colors.RemoveRange(vline2.Colors.Count - 500, 500);
 
-                        vline1.Colors.RemoveRange(100, vline2.Colors.Count - 100);
-                    }
+                    //}
+
+                    vline1.Colors.RemoveRange(0, vline1.Colors.Count);
                     vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (v2)
                 {
                     ValueList vlist = vline2.ValuesLists[0];
                     // vline2.Colors.Clear();
-                    if (vline2.Colors.Count <= 500)
-                    {
+                    //if (vline2.Colors.Count <= 500)
+                    //{
 
-                        vline2.Colors.RemoveRange(0, vline2.Colors.Count);
-                    }
-                    else
-                    {
-                        //for (int i = vline2.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (vline2.Colors[i].Name == "Red")
-                        //    {
-                        //        vline2.Colors.Remove(vline2.Colors[i]);
-                        //    }
-                        //}
-                        vline2.Colors.RemoveRange(100, vline2.Colors.Count - 100);
-                    }
+                    //    vline2.Colors.RemoveRange(0, vline2.Colors.Count);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = vline2.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (vline2.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        vline2.Colors.Remove(vline2.Colors[i]);
+                    //    //    }
+                    //    //}
+                    //    // vline2.Colors.RemoveRange(100, vline2.Colors.Count - 100);
+                    //    vline2.Colors.RemoveRange(vline2.Colors.Count - 500, 500);
+
+                    //}
+                    vline2.Colors.RemoveRange(0, vline2.Colors.Count);
+
                     vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (v3)
                 {
                     ValueList vlist = vline3.ValuesLists[0];
-                    if (vline3.Colors.Count <= 500)
-                    {
-                        vline3.Colors.RemoveRange(0, vline3.Colors.Count);
-                    }
-                    else
-                    {
-                        //for (int i = vline3.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (vline3.Colors[i].Name == "Red")
-                        //    {
-                        //        vline3.Colors.Remove(vline3.Colors[i]);
-                        //    }
-                        //}
-                        vline3.Colors.RemoveRange(100, vline3.Colors.Count - 100);
-                    }
+                    //if (vline3.Colors.Count <= 500)
+                    //{
+                    //    vline3.Colors.RemoveRange(0, vline3.Colors.Count);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = vline3.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (vline3.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        vline3.Colors.Remove(vline3.Colors[i]);
+                    //    //    }
+                    //    //}
+                    //    // vline3.Colors.RemoveRange(100, vline3.Colors.Count - 100);
+                    //    vline3.Colors.RemoveRange(vline3.Colors.Count - 500, 500);
+
+                    //}
+                    vline3.Colors.RemoveRange(0, vline3.Colors.Count);
+
                     vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c1)
                 {
                     ValueList vlist = cline1.ValuesLists[0];
 
-                    if (cline1.Colors.Count <= 500)
-                    {
-                        cline1.Colors.RemoveRange(0, cline1.Colors.Count);
-                    }
-                    else
-                    {
-                        //for (int i = cline1.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (cline1.Colors[i].Name == "Red")
-                        //    {
-                        //        cline1.Colors.Remove(cline1.Colors[i]);
-                        //    }
-                        //}
-                        cline1.Colors.RemoveRange(100, cline1.Colors.Count - 100);
-                    }
+                    //if (cline1.Colors.Count <= 500)
+                    //{
+                    //    cline1.Colors.RemoveRange(0, cline1.Colors.Count);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = cline1.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (cline1.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        cline1.Colors.Remove(cline1.Colors[i]);
+                    //    //    }
+                    //    //}
+                    //    //cline1.Colors.RemoveRange(100, cline1.Colors.Count - 100);
+                    //    cline1.Colors.RemoveRange(cline1.Colors.Count - 500, 500);
+                    //}
+                    cline1.Colors.RemoveRange(0, cline1.Colors.Count);
+
                     cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c2)
                 {
                     ValueList vlist = cline2.ValuesLists[0];
                     // cline2.Colors.Clear();
-                    if (cline2.Colors.Count <= 500)
-                    {
-                        cline2.Colors.RemoveRange(0, cline2.Colors.Count);
-                    }
-                    else
-                    {
-                        //for (int i = cline2.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (cline2.Colors[i].Name == "Red")
-                        //    {
-                        //        cline2.Colors.Remove(cline2.Colors[i]);
-                        //    }
-                        //}
-                        cline2.Colors.RemoveRange(100, cline2.Colors.Count - 100);
-                    }
+                    //if (cline2.Colors.Count <= 500)
+                    //{
+                    //    cline2.Colors.RemoveRange(0, cline2.Colors.Count);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = cline2.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (cline2.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        cline2.Colors.Remove(cline2.Colors[i]);
+                    //    //    }
+                    //    //}
+                    //    //cline2.Colors.RemoveRange(100, cline2.Colors.Count - 100);
+                    //    cline2.Colors.RemoveRange(cline2.Colors.Count - 500, 500);
+
+                    //}
+                    cline2.Colors.RemoveRange(0, cline2.Colors.Count);
+
                     cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
                 if (c3)
                 {
                     ValueList vlist = cline3.ValuesLists[0];
-                    if (cline3.Colors.Count <= 500)
-                    {
-                        cline3.Colors.RemoveRange(0, cline3.Colors.Count);
-                    }
-                    else
-                    {
-                        //for (int i = cline3.Colors.Count; i > 0; i--)
-                        //{
-                        //    if (cline3.Colors[i].Name == "Red")
-                        //    {
-                        //        cline3.Colors.Remove(cline3.Colors[i]);
-                        //    }
-                        //}
-                        cline3.Colors.RemoveRange(100, cline3.Colors.Count - 100);
-                    }
+                    //if (cline3.Colors.Count <= 500)
+                    //{
+                    //    cline3.Colors.RemoveRange(0, cline3.Colors.Count);
+                    //}
+                    //else
+                    //{
+                    //    //for (int i = cline3.Colors.Count; i > 0; i--)
+                    //    //{
+                    //    //    if (cline3.Colors[i].Name == "Red")
+                    //    //    {
+                    //    //        cline3.Colors.Remove(cline3.Colors[i]);
+                    //    //    }
+                    //    //}
+                    //    //cline3.Colors.RemoveRange(100, cline3.Colors.Count - 100);
+                    //    cline3.Colors.RemoveRange(cline3.Colors.Count - 500, 500);
+
+                    //}
+                    cline3.Colors.RemoveRange(0, cline3.Colors.Count);
+
                     cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
                 }
             }
-
         }
 
         #endregion
@@ -2527,7 +2537,7 @@ namespace Basic_Controls
                     XmlHelper.Insert(model);
 
                     XmlHelper.Save();
-                    isaround = false;
+                    // isaround = false;
                 }
                 #endregion
                 //插入波形数据 条件一  一直插入 或 条件二 只要还有数据一直插入
@@ -2551,7 +2561,6 @@ namespace Basic_Controls
                         };
                         i++;
                     }
-
                 }
                 if (pub_Test_Plan.GETINFO == "1")
                 {
@@ -2726,26 +2735,8 @@ namespace Basic_Controls
                     }
                 }
 
+                Chart_Init();
 
-
-                //获取存储数据路径 加载图形
-                if (pub_Test_Plan.PARENTID != "0")
-                {
-                    string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\"+ pub_Test_Plan.DVNAME+".xml";
-                    bool isdd = FileHelper.IsFileExist(filepath);
-                    if (FileHelper.IsFileExist(filepath))
-                    {
-                        Lond_Chart(filepath);
-                    }
-                    else
-                    {
-                        //MessageBox.Show("");
-                    }
-                }
-                else
-                {
-                    Chart_Init();
-                }
             }
         }
 
@@ -2770,15 +2761,23 @@ namespace Basic_Controls
                     model.ISEDIT = "2";
                     if (model.PARENTID != "0")
                     {
-                        return;
+                        string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
+                        bool isdd = FileHelper.IsFileExist(filepath);
+                        if (FileHelper.IsFileExist(filepath))
+                        {
+                            Lond_Chart(filepath);
+                        }
                     }
-                    using (FmAddTest form = new FmAddTest(model))
+                    else
                     {
-                        form.ShowDialog();
-                    }
-                    Tester_List_Bind();
+                        using (FmAddTest form = new FmAddTest(model))
+                        {
+                            form.ShowDialog();
+                        }
+                        Tester_List_Bind();
 
-                    Set_Foucs(model.ID);
+                        Set_Foucs(model.ID);
+                    }
                 }
             }
 

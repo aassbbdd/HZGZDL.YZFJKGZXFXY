@@ -317,7 +317,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(101, 32);
             this.btnSave.TabIndex = 23;
-            this.btnSave.Text = "保存";
+            this.btnSave.Text = "测试";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
