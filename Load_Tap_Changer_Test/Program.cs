@@ -15,9 +15,15 @@ namespace Load_Tap_Changer_Test
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FmMain());
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new FmMain());
+            }catch(Exception  ex)
+            {
+
+            }
         }
     }
 }

@@ -1542,7 +1542,7 @@ namespace Basic_Controls
         /// <summary>
         /// 存储数量的最大值刷新图形用
         /// </summary>
-        int alladdnum = 100;
+        int alladdnum = 150;
         double[] c1x;
         double[] c1y;
 
@@ -2036,7 +2036,7 @@ namespace Basic_Controls
                         #region 数据大于10秒时执行 横条删除效果
                         if (porintadd > linlength - 1 && addNum == 0)
                         {
-                            if (WinRefreshNum > 4)
+                            if (WinRefreshNum > 9)
                             {
                                 WinRefreshNum = 0;
                                 BeginInvoke(new MethodInvoker(() =>
@@ -2078,9 +2078,6 @@ namespace Basic_Controls
                                 if (porintadd + 1 + i <= linlength - 1)
                                 {
                                     width = (porintadd + 1 + i) * newXvalue;
-
-
-
                                     Print_Bind((porintadd + 1 + i));
                                 }
                                 else
@@ -2247,37 +2244,29 @@ namespace Basic_Controls
         /// <param name="width"></param>
         private void Print_Bind(int index)
         {
-            try
+            if (v1)
             {
-                if (v1)
-                {
-                    vline1.YValues[index] = 0;
-                }
-                if (v2)
-                {
-                    vline2.YValues[index] = 0;
-                }
-                if (v3)
-                {
-                    vline3.YValues[index] = 0;
-                }
-                if (c1)
-                {
-                    cline1.YValues[index] = 0;
-
-                }
-                if (c2)
-                {
-                    cline2.YValues[index] = 0;
-                }
-                if (c3)
-                {
-                    cline3.YValues[index] = 0;
-                }
+                vline1.YValues[index] = -10;
             }
-            catch (Exception ex)
+            if (v2)
             {
-
+                vline2.YValues[index] = -10;
+            }
+            if (v3)
+            {
+                vline3.YValues[index] = -10;
+            }
+            if (c1)
+            {
+                cline1.YValues[index] = -5;
+            }
+            if (c2)
+            {
+                cline2.YValues[index] = -5;
+            }
+            if (c3)
+            {
+                cline3.YValues[index] = -5;
             }
         }
         /// <summary>
@@ -2289,6 +2278,10 @@ namespace Basic_Controls
         {
             if (colorTo > 0 || colorFrom > 0)
             {
+                colorTo = 0;
+                colorFrom = 0;
+
+                Color c = new Color();
                 if (v1)
                 {
                     ValueList vlist = vline1.ValuesLists[0];
@@ -2319,131 +2312,54 @@ namespace Basic_Controls
 
                     //}
 
-                    vline1.Colors.RemoveRange(0, vline1.Colors.Count);
-                    vline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+
+                    //if (vline1.Colors.Count == 0)
+                    //{
+                    //vline1.Colors.RemoveRange(0, vline1.Colors.Count);
+                    //vline1.ColorRange(vlist, 0, 0, c);
+
+                    vline1.Colors.Remove(c);
+
+                    //vline1.Colors.RemoveRange(1,100);
+                    // vline1.Colors.Add(c);
+                    vline1.ColorRange(vlist, colorFrom, colorTo, c);
+
+                    //}
+                    //else
+                    //{
+                    //    vline1.Colors.RemoveAt(0);
+                    //    vline1.Colors.Add(vline1.ValueColor(0));
+                    //}
                 }
                 if (v2)
                 {
                     ValueList vlist = vline2.ValuesLists[0];
-                    // vline2.Colors.Clear();
-                    //if (vline2.Colors.Count <= 500)
-                    //{
-
-                    //    vline2.Colors.RemoveRange(0, vline2.Colors.Count);
-                    //}
-                    //else
-                    //{
-                    //    //for (int i = vline2.Colors.Count; i > 0; i--)
-                    //    //{
-                    //    //    if (vline2.Colors[i].Name == "Red")
-                    //    //    {
-                    //    //        vline2.Colors.Remove(vline2.Colors[i]);
-                    //    //    }
-                    //    //}
-                    //    // vline2.Colors.RemoveRange(100, vline2.Colors.Count - 100);
-                    //    vline2.Colors.RemoveRange(vline2.Colors.Count - 500, 500);
-
-                    //}
-                    vline2.Colors.RemoveRange(0, vline2.Colors.Count);
-
-                    vline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                    vline2.Colors.Remove(c);
+                    vline2.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (v3)
                 {
                     ValueList vlist = vline3.ValuesLists[0];
-                    //if (vline3.Colors.Count <= 500)
-                    //{
-                    //    vline3.Colors.RemoveRange(0, vline3.Colors.Count);
-                    //}
-                    //else
-                    //{
-                    //    //for (int i = vline3.Colors.Count; i > 0; i--)
-                    //    //{
-                    //    //    if (vline3.Colors[i].Name == "Red")
-                    //    //    {
-                    //    //        vline3.Colors.Remove(vline3.Colors[i]);
-                    //    //    }
-                    //    //}
-                    //    // vline3.Colors.RemoveRange(100, vline3.Colors.Count - 100);
-                    //    vline3.Colors.RemoveRange(vline3.Colors.Count - 500, 500);
-
-                    //}
-                    vline3.Colors.RemoveRange(0, vline3.Colors.Count);
-
-                    vline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                    vline3.Colors.Remove(c);
+                    vline3.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c1)
                 {
                     ValueList vlist = cline1.ValuesLists[0];
-
-                    //if (cline1.Colors.Count <= 500)
-                    //{
-                    //    cline1.Colors.RemoveRange(0, cline1.Colors.Count);
-                    //}
-                    //else
-                    //{
-                    //    //for (int i = cline1.Colors.Count; i > 0; i--)
-                    //    //{
-                    //    //    if (cline1.Colors[i].Name == "Red")
-                    //    //    {
-                    //    //        cline1.Colors.Remove(cline1.Colors[i]);
-                    //    //    }
-                    //    //}
-                    //    //cline1.Colors.RemoveRange(100, cline1.Colors.Count - 100);
-                    //    cline1.Colors.RemoveRange(cline1.Colors.Count - 500, 500);
-                    //}
-                    cline1.Colors.RemoveRange(0, cline1.Colors.Count);
-
-                    cline1.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                    cline1.Colors.Remove(c);
+                    cline1.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c2)
                 {
                     ValueList vlist = cline2.ValuesLists[0];
-                    // cline2.Colors.Clear();
-                    //if (cline2.Colors.Count <= 500)
-                    //{
-                    //    cline2.Colors.RemoveRange(0, cline2.Colors.Count);
-                    //}
-                    //else
-                    //{
-                    //    //for (int i = cline2.Colors.Count; i > 0; i--)
-                    //    //{
-                    //    //    if (cline2.Colors[i].Name == "Red")
-                    //    //    {
-                    //    //        cline2.Colors.Remove(cline2.Colors[i]);
-                    //    //    }
-                    //    //}
-                    //    //cline2.Colors.RemoveRange(100, cline2.Colors.Count - 100);
-                    //    cline2.Colors.RemoveRange(cline2.Colors.Count - 500, 500);
-
-                    //}
-                    cline2.Colors.RemoveRange(0, cline2.Colors.Count);
-
-                    cline2.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                    cline2.Colors.Remove(c);
+                    cline2.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c3)
                 {
                     ValueList vlist = cline3.ValuesLists[0];
-                    //if (cline3.Colors.Count <= 500)
-                    //{
-                    //    cline3.Colors.RemoveRange(0, cline3.Colors.Count);
-                    //}
-                    //else
-                    //{
-                    //    //for (int i = cline3.Colors.Count; i > 0; i--)
-                    //    //{
-                    //    //    if (cline3.Colors[i].Name == "Red")
-                    //    //    {
-                    //    //        cline3.Colors.Remove(cline3.Colors[i]);
-                    //    //    }
-                    //    //}
-                    //    //cline3.Colors.RemoveRange(100, cline3.Colors.Count - 100);
-                    //    cline3.Colors.RemoveRange(cline3.Colors.Count - 500, 500);
-
-                    //}
-                    cline3.Colors.RemoveRange(0, cline3.Colors.Count);
-
-                    cline3.ColorRange(vlist, colorFrom, colorTo, Color.Red);
+                    cline3.Colors.Remove(c);
+                    cline3.ColorRange(vlist, colorFrom, colorTo, c);
                 }
             }
         }
