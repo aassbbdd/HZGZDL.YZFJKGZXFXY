@@ -22,6 +22,7 @@ namespace Basic_Controls
         {
 
             InitializeComponent();
+            Init();
         }
         public FmAddTest(Test_Plan model)
         {
@@ -40,6 +41,27 @@ namespace Basic_Controls
         }
 
         #region 执行方法
+
+        private void Init()
+        {
+            oldmodel = new Test_Plan();
+            oldmodel.ISEDIT = "1";
+            txtCONTACT_NUM.Text = "5";
+            this.txtTEST_TIME.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            rdoTEST_TYPE.SelectedIndex = 1;
+
+            rdoGETINFO.SelectedIndex = 0;
+            this.txtSA.Text = "0.8";
+            this.txtEA.Text = "0.2";
+
+            this.txtGetUnit.Text = "10";
+            //判断采样信息是那种状态
+            Get_Info_Type();
+
+
+            this.ckV1.Checked = true;
+            this.ckC1.Checked = true;
+        }
 
         /// <summary>
         /// 判断采样信息
@@ -177,25 +199,6 @@ namespace Basic_Controls
             }
         }
 
-        /// <summary>
-        /// 生成数据库
-        /// </summary>
-        //private void CreateDb()
-        //{
-        //    try
-        //    {
-        //        SQLiteHelper.NewDbFile();//生成SQL文件
-        //        string DbStr = Create_Table.Instance.Create_TEST_COFIGE();
-        //        SQLiteHelper.NewTable(DbStr);
-        //        DbStr = Create_Table.Instance.Create_TEST_DATA();
-        //        SQLiteHelper.NewTable(DbStr);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-
         #region  保存数据库
 
         /// <summary>
@@ -259,12 +262,10 @@ namespace Basic_Controls
                 model.DESCRIBE = this.txtDescribe.Text;
 
                 model.GETINFO = this.rdoGETINFO.Text;
-                model.SCURRENT = model.GETINFO == "1" ? this.txtSA.Text : "" ;
+                model.SCURRENT = model.GETINFO == "1" ? this.txtSA.Text : "";
                 model.ECURRENT = model.GETINFO == "1" ? this.txtEA.Text : "";
                 model.TIME_UNIT = model.GETINFO == "2" ? this.txtGetUnit.Text : "";
-                model.PARENTID = string.IsNullOrEmpty(oldmodel.PARENTID)?"0": oldmodel.PARENTID;
-
-
+                model.PARENTID = string.IsNullOrEmpty(oldmodel.PARENTID) ? "0" : oldmodel.PARENTID;
 
                 model.V1 = ckV1.Checked ? "1" : "0";
                 model.V2 = ckV2.Checked ? "1" : "0";
@@ -299,7 +300,6 @@ namespace Basic_Controls
 
         #endregion
 
-
         #endregion
 
         #region 按键事件
@@ -312,7 +312,6 @@ namespace Basic_Controls
         {
             Save();
             this.DialogResult = DialogResult.OK;
-            // CreateDb();
         }
         /// <summary>
         /// 取消
@@ -340,18 +339,6 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void txtCONTACT_NUM_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    string CONTACT_NUM = this.txtCONTACT_NUM.Text;
-
-        //    // if()
-        //}
-
-        /// <summary>
-        /// 输入文字自动循环
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void txtCONTACT_NUM_EditValueChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.txtCONTACT_NUM.Text))
@@ -364,13 +351,11 @@ namespace Basic_Controls
                     cmbSPLACE.Properties.Items.Add(i);
                 }
                 this.lbHearder.Text = heardnum;
-
             }
             else
             {
                 this.lbHearder.Text = "";
             }
-
         }
         #endregion
 

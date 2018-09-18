@@ -1074,7 +1074,7 @@
             // 
             // ID
             // 
-            this.ID.Caption = "设备名字";
+            this.ID.Caption = "设备名字(双击加载图形)";
             this.ID.FieldName = "DVNAME";
             this.ID.MinWidth = 34;
             this.ID.Name = "ID";
