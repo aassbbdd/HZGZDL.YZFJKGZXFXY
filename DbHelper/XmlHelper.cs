@@ -340,8 +340,12 @@ namespace DbHelper
                 }
                 XElement root = document.Root;
                 XElement ele = root.Element("Test_Plan");
-                Test_Plan model = new Test_Plan();
 
+                Test_Plan model = new Test_Plan();
+                if(ele==null)
+                {
+                    return model;
+                }
 
                 model.ID = ele.Element("ID").Value;
                 model.PARENTID = ele.Element("PARENTID").Value;
@@ -696,11 +700,13 @@ namespace DbHelper
             out double[] vx3, out double[] vy3,
             out double[] cx1, out double[] cy1,
             out double[] cx2, out double[] cy2,
-            out double[] cx3, out double[] cy3
+            out double[] cx3, out double[] cy3,
+            out bool IsNotNull
             )
         {
             try
             {
+                IsNotNull = true ;
                 XDocument document;
                 try
                 {
@@ -717,8 +723,14 @@ namespace DbHelper
 
                 XElement ele = root.Element("Test_Plan");
 
-                I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
-
+                if (ele == null)
+                {
+                    I = 10;
+                }
+                else
+                {
+                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                }
                 int count = eles.Count() * 80;
                 newvx1 = new double[count]; newvy1 = new double[count];
                 newvx2 = new double[count]; newvy2 = new double[count];
@@ -738,6 +750,10 @@ namespace DbHelper
                 cx3 = new double[count]; cy3 = new double[count];
 
 
+                if(count==0)
+                {
+                    IsNotNull = false;
+                }
                 int index = 0; //index 为索引值
                 foreach (XElement item in eles)
                 {

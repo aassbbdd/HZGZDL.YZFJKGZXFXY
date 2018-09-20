@@ -62,6 +62,8 @@ namespace Basic_Controls
             sendUdp(agreement._1_CMD_HEARTBEAT);
         }
 
+
+
         #region 页面初始化参数
 
         //protected override void WndProc(ref Message m)
@@ -335,15 +337,13 @@ namespace Basic_Controls
                     FileHelper.DeleteFile(filepath);
 
                     #endregion
-                    Invoke(new ThreadStart(delegate ()
-                    {
-                        Tester_List_Bind();
-                        MessageBox.Show("电流未触发数据采集，请检查电流！");
-                    }));
 
+                    Tester_List_Bind();
+                    XtraMessageBox.Show("电流未触发数据采集，请检查电流！");
                 }
                 else
                 {
+
 
                     Invoke(new ThreadStart(delegate ()
                         {
@@ -492,6 +492,7 @@ namespace Basic_Controls
                 }
                 else
                 {
+                    //model.TIME_UNIT
                     pub_Test_Plan.PARENTID = model.ID;
                     pub_Test_Plan.DVNAME = model.DVNAME + "_" + topnum.ToString() + "--" + (topnum + 1).ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     pub_Test_Plan.ID = Db_Action.Instance.Test_Confige_Insert(pub_Test_Plan).ToString();
@@ -659,15 +660,37 @@ namespace Basic_Controls
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(DvIp), 4000);
             string ip = GetIpAddress();
 
-            if (ip == DvIp)
+            if (PingIP(DvIp))
             {
-                MessageBox.Show("本机IP和设备IP相同，请修改本机IP。");
-                return;
+                if (ip == DvIp)
+                {
+                    MessageBox.Show("本机IP和设备IP相同，请修改本机IP。");
+                }
+                else
+                {
+                    SendMessage.SendMsgStart(msg, ipep);
+                }
             }
             else
             {
-                SendMessage.SendMsgStart(msg, ipep);
+                MessageBox.Show("设备IP: 【" + DvIp + "】 未连接");
             }
+        }
+        /// <summary>
+        /// 检测IP
+        /// </summary>
+        /// <param name="strIP"></param>
+        /// <returns></returns>
+        public static bool PingIP(string strIP)
+        {
+
+            System.Net.NetworkInformation.Ping psender = new System.Net.NetworkInformation.Ping();
+            System.Net.NetworkInformation.PingReply prep = psender.Send(strIP, 500, Encoding.Default.GetBytes("afdafdadfsdacareqretrqtqeqrq8899tu"));
+            if (prep.Status == System.Net.NetworkInformation.IPStatus.Success)
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -853,14 +876,14 @@ namespace Basic_Controls
                 tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
                 if (e.Delta > 0)
                 {
-                    if (aotuzoom < 3)
+                    if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
                     {
                         double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
                         double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
 
                         double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
                         double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
-
+                        startTime = DateTime.Now;
                         tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
                         aotuzoom++;
                     }
@@ -1031,12 +1054,14 @@ namespace Basic_Controls
         /// <summary>
         ///  //计算1秒 点位数量
         /// </summary>
-        int pnum = 0;
+        //int pnum = 0;
         /// <summary>
         /// 单个点位的长度
         /// </summary>
         double newXvalue = 0;
         Line vline1;//震动1
+        Line vline1_1;//震动1
+
         Line vline2;//震动2
         Line vline3;//震动3
         Line cline1;//电流1
@@ -1086,12 +1111,12 @@ namespace Basic_Controls
             //总点数=alltime执行秒数  （默认10秒）/（单点长度*偷点数）
             linlength = (alltime * allnum) / num / LessPoint;
             //计算1秒 点位数量
-            pnum = (int)(0.1 * allnum) / num / LessPoint;
+            // pnum = (int)(0.1 * allnum) / num / LessPoint;
             //计算单点的距离
             newXvalue = (double)(1 * num * LessPoint) / allnum;
 
             vline1 = new Line();//震动1
-
+            vline1_1 = new Line();//震动1
             vline2 = new Line();//震动2
 
             vline3 = new Line();//震动3
@@ -1214,6 +1239,56 @@ namespace Basic_Controls
             }
         }
 
+
+        /// <summary>
+        /// 添加若干个自定义坐标轴 绘制 图表画布
+        /// </summary>
+        /// <param name="count"></param>
+        private void AddCustomAxis1(int count)
+        {
+
+            double single = (100 - space * ((count / 2) + 2)) / ((count / 2) + 1);//单个坐标轴的百分比
+
+            tChart.Axes.Left.StartPosition = space;
+            tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
+            tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
+
+            double startPosition = tChart.Axes.Left.StartPosition;
+            double endPosition = tChart.Axes.Left.EndPosition;
+            // tChart.Axes.Custom.Clear();//清除原先画布
+            Axis axis;
+
+            for (int i = 0; i < count / 2; i++)
+            {
+                axis = new Axis();
+                startPosition = endPosition + space;
+                endPosition = startPosition + single;
+                axis.StartPosition = startPosition;
+                axis.EndPosition = endPosition;
+                axis.AutomaticMaximum = false;//最大刻度禁用
+                axis.AutomaticMinimum = false;//最小刻度禁用
+                axis.Title.Angle = 90;//'标题摆放角度
+                                      //axis.Maximum = 10;//最大值
+                                      //axis.Minimum = -10;//最小值
+
+                string title = tChart.Series[0].Title;
+
+                axis.Title.Text = title;
+                if (title.Substring(0, 2) == "电流")
+                {
+                    axis.Maximum = 5;//最大值
+                    axis.Minimum = -5;//最小值
+                }
+                else
+                {
+                    axis.Maximum = 10;//最大值
+                    axis.Minimum = -10;//最小值
+                }
+                tChart.Axes.Custom.Add(axis);
+                //tChart.Axes.Custom.Add(axis);
+            }
+        }
+
         /// <summary>
         /// 绑定图表 line 线
         /// </summary>
@@ -1221,12 +1296,17 @@ namespace Basic_Controls
         {
             try
             {
+                tChart.Axes.Custom.Clear();
                 if (v1)
                 {
                     //震动1路 vline1
                     vline1.Title = string.Format("震动曲线{0}", 1);
-
+                    //    vline1.Color = Color.Green;
                     tChart.Series.Add(vline1);
+
+                    //vline1_1 = new Line();
+                    //vline1_1.Color = Color.Red;
+                    // tChart.Series.Add(vline1_1);
                 }
                 if (v2)
                 {
@@ -1265,7 +1345,9 @@ namespace Basic_Controls
                     //Line cline3 = new Line();
                     tChart.Series.Add(cline3);
                 }
+                //AddCustomAxis1(tChart.Series.Count);//绘制画布
                 AddCustomAxis(tChart.Series.Count);//绘制画布
+
             }
             catch (Exception ex)
             {
@@ -1301,17 +1383,25 @@ namespace Basic_Controls
                 splashScreenManager.ShowWaitForm();
                 splashScreenManager.SetWaitFormCaption("请稍后");
                 splashScreenManager.SetWaitFormDescription("正在加载图形...");
-
+                bool IsNotNull;
                 XmlHelper.Xml_To_Array(filepath, cks,
                    out vx1, out vy1,
                    out vx2, out vy2,
                    out vx3, out vy3,
                    out cx1, out cy1,
                    out cx2, out cy2,
-                   out cx3, out cy3
+                   out cx3, out cy3,
+                   out IsNotNull
                     );
+
                 //取 参数有问题
-                Test_Plan model = XmlHelper.Xml_To_Model(filepath);
+                Test_Plan modelNew = XmlHelper.Xml_To_Model(filepath);
+
+                if (modelNew != null)
+                {
+                    //mode
+                }
+                alltime = 20;
                 Chart_DataTable_Init();
                 Chart_Data_Lond_Bind();
 
@@ -1320,6 +1410,11 @@ namespace Basic_Controls
 
                 splashScreenManager.SetWaitFormDescription("加载完成。");
                 splashScreenManager.CloseWaitForm();
+
+                if (!IsNotNull)
+                {
+                    MessageBox.Show("未找到该图形数据！");
+                }
             }
         }
 
@@ -1384,6 +1479,7 @@ namespace Basic_Controls
 
                 //绘制画布
                 AddCustomAxis(tChart.Series.Count);
+
                 tChart.Refresh();
             }
             catch (Exception ex)
@@ -1469,9 +1565,6 @@ namespace Basic_Controls
 
             Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
 
-
-
-
             #region 处理队列数据
 
             //thread_List = new Thread(Job_Queue);
@@ -1482,9 +1575,10 @@ namespace Basic_Controls
             }
             else
             {
-
-                //thread_List = new Thread(Job_Queue_02);
                 thread_List = new Thread(Job_Queue_03);
+                //thread_List = new Thread(Job_Queue_04);
+
+
             }
             thread_List.IsBackground = true;
             thread_List.Start();//启动线程
@@ -1522,6 +1616,7 @@ namespace Basic_Controls
         {
             istrue = false;
             porintadd = 0;
+            endprint = 0;
             isAbort = false;
             Current_Config();
             WinRefreshNum = 0;
@@ -1861,6 +1956,10 @@ namespace Basic_Controls
         /// </summary>
         int WinRefreshNum = 0;
 
+        /// <summary>
+        /// 结束后再保存2秒
+        /// </summary>
+        int endprint =0;
 
         /// <summary>
         /// 前往后走图形电流触发波形
@@ -2067,13 +2166,8 @@ namespace Basic_Controls
                                 {
                                     Stop_Test(false, 2);
                                 }));
-                                break;
+                                return;
                             }
-
-                            Invoke(new ThreadStart(delegate ()
-                            {
-                                LBxmlCount.Text = WinRefreshNum.ToString();
-                            }));
 
                             isFist = true;
                             porintadd = 0;//归零
@@ -2086,7 +2180,7 @@ namespace Basic_Controls
                             for (int i = 0; i < 500; i++)
                             {
                                 width = (porintadd + i) * newXvalue;
-                                Print_Bind((porintadd + i));
+                                //Print_Bind((porintadd + i));
                             }
                             colorFrom = swidth;
                             colorTo = width;
@@ -2102,7 +2196,7 @@ namespace Basic_Controls
                                 if (porintadd + 1 + i <= linlength - 1)
                                 {
                                     width = (porintadd + 1 + i) * newXvalue;
-                                    Print_Bind((porintadd + 1 + i));
+                                    //Print_Bind((porintadd + 1 + i));
                                 }
                                 else
                                 {
@@ -2148,6 +2242,333 @@ namespace Basic_Controls
                             //    }
                             //}));
                             CurrentNum++;
+                            if (CurrentNum > 23750) //存储达到 12500条 10秒的数据时 17500
+                            {
+                                SCURRENT = false;//关闭有效波段存储
+                                topnum++;
+                                this.BeginInvoke(new MethodInvoker(() =>
+                                {
+                                    Stop_Test(true, 1);
+                                }));
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (AroundSecond == 2)//电流到达关闭值
+                            {
+                                SCURRENT = false;//关闭有效波段存储
+                                                 // 异步方法
+                                if (endprint < 2500)
+                                {
+                                    Save_Db_Source.Enqueue(e);
+                                    endprint++;
+                                }
+                                else
+                                {
+                                    this.BeginInvoke(new MethodInvoker(() =>
+                                    {
+                                        topnum++;
+                                        Stop_Test(true, 1);
+                                    }));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// 前往后走图形电流触发波形
+        /// </summary>
+        private void Job_Queue_04()
+        {
+            addNum = 0;
+            c1x = new double[alladdnum];
+            c1y = new double[alladdnum];
+
+            c2x = new double[alladdnum];
+            c2y = new double[alladdnum];
+
+            c3x = new double[alladdnum];
+            c3y = new double[alladdnum];
+
+            v1x = new double[alladdnum];
+            v1y = new double[alladdnum];
+
+            v2x = new double[alladdnum];
+            v2y = new double[alladdnum];
+
+            v3x = new double[alladdnum];
+            v3y = new double[alladdnum];
+            bool isFist = false;
+
+            while (isAbort)
+            {
+                if (Porint_List.Count > 0)
+                {
+                    byte[] bytes;
+                    Porint_List.TryDequeue(out bytes);//取出队里数据并删除
+                                                      //截取返回数据
+                    if (bytes.Length > 300)
+                    {
+                        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                        e.DataBaty = bytes;
+                        e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
+
+                        if (Top_End_Data.Count < 1250)
+                        {
+                            Top_End_Data.Enqueue(e);
+                        }
+
+                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                        int Porints = 80 / LessPoint;
+                        double x = new double();
+                        double y = new double();
+                        for (int i = 0; i < Porints; i++)
+                        {
+                            int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
+                            #region 计算保存新点位数据
+
+                            x = porintadd * newXvalue;
+                            if (v1)
+                            {
+                                string V = data.Substring(0 + length, 4);
+                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+                                if (isFist)
+                                {
+                                    vline1.YValues[porintadd] = Vd;
+
+                                    vline1.YValues[porintadd] = Vd + 3;
+                                }
+                                else
+                                {
+                                    v1x[addNum] = x;
+                                    v1y[addNum] = Vd;
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        vline1.Add(v1x, v1y, true);
+                                        vline1_1.Add(v1x, v1y, true);
+                                        v1x = new double[alladdnum];
+                                        v1y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            if (v2)
+                            {
+                                string V = data.Substring(4 + length, 4);
+                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                if (isFist)
+                                {
+                                    vline2.YValues[porintadd] = Vd;
+                                }
+                                else
+                                {
+                                    v2x[addNum] = x;
+                                    v2y[addNum] = Vd;
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        vline2.Add(v2x, v2y, true);
+                                        v2x = new double[alladdnum];
+                                        v2y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            if (v3)
+                            {
+                                string V = data.Substring(8 + length, 4);
+                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+                                if (isFist)
+                                {
+                                    vline3.YValues[porintadd] = Vd;
+                                }
+                                else
+                                {
+                                    v3x[addNum] = x;
+                                    v3y[addNum] = Vd;
+
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        vline3.Add(v3x, v3y, true);
+                                        v3x = new double[alladdnum];
+                                        v3y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            if (c1)
+                            {
+                                string C = data.Substring(12 + length, 4);
+                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                if (isFist)
+                                {
+                                    cline1.YValues[porintadd] = Cd;
+                                }
+                                else
+                                {
+                                    c1x[addNum] = x;
+                                    c1y[addNum] = Cd;
+
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        cline1.Add(c1x, c1y, true);
+
+                                        c1x = new double[alladdnum];
+                                        c1y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            if (c2)
+                            {
+                                string C = data.Substring(16 + length, 4);
+                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                if (isFist)
+                                {
+                                    cline2.YValues[porintadd] = Cd;
+                                }
+                                else
+                                {
+                                    c2x[addNum] = x;
+                                    c2y[addNum] = Cd;
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        cline2.Add(c2x, c2y, true);
+                                        c2x = new double[alladdnum];
+                                        c2y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            if (c3)
+                            {
+                                string C = data.Substring(20 + length, 4);
+                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                if (isFist)
+                                {
+                                    cline3.YValues[porintadd] = Cd;
+                                }
+                                else
+                                {
+                                    c3x[addNum] = x;
+                                    c3y[addNum] = Cd;
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        cline3.Add(c3x, c3y, true);
+                                        c3x = new double[alladdnum];
+                                        c3y = new double[alladdnum];
+                                    }
+                                }
+                            }
+                            #endregion
+
+                            if (addNum == alladdnum - 1)
+                            {
+                                addNum = 0;
+                            }
+                            else
+                            {
+                                addNum++;
+                            }
+                            porintadd++;
+                        }
+                        // 处理数据线程结束后 触发
+                        if (!isAbort && Porint_List.Count == 0)
+                        {
+                            Print_End_Bind(addNum);
+                        }
+                        #region 数据大于10秒时执行 横条删除效果
+                        if (porintadd > linlength - 1 && addNum == 0)
+                        {
+                            if (WinRefreshNum > 2)
+                            {
+                                WinRefreshNum = 0;
+                                BeginInvoke(new MethodInvoker(() =>
+                                {
+                                    Stop_Test(false, 2);
+                                }));
+                                return;
+                            }
+
+                            Invoke(new ThreadStart(delegate ()
+                            {
+                                LBxmlCount.Text = WinRefreshNum.ToString();
+                            }));
+
+                            isFist = true;
+                            porintadd = 0;//归零
+
+                            WinRefreshNum++;
+                            istrue = true;//开启进入标识
+                            double swidth = 0;//初始位置
+                            double width = swidth;//结束时位置
+
+                            for (int i = 0; i < 500; i++)
+                            {
+                                width = (porintadd + i) * newXvalue;
+                                Print_Bind((porintadd + i));
+                            }
+                            colorFrom = swidth;
+                            colorTo = width;
+                            Print_Color_Bind();
+
+                        }
+                        else if (istrue && addNum == 0)
+                        {
+                            double swidth = Math.Round((porintadd + 1) * newXvalue, 2, MidpointRounding.AwayFromZero);//初始位置
+                            double width = swidth;//结束时位置
+                            for (int i = 0; i < 500; i++)
+                            {
+                                if (porintadd + 1 + i <= linlength - 1)
+                                {
+                                    width = (porintadd + 1 + i) * newXvalue;
+                                    Print_Bind((porintadd + 1 + i));
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            colorFrom = Math.Round(swidth, 2, MidpointRounding.AwayFromZero);
+                            colorTo = width;
+                            Print_Color_Bind();
+                            //Invoke(new ThreadStart(delegate ()
+                            //{
+                            //    try
+                            //    {
+                            //        tChart.Refresh();
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
+                            //    }
+                            //}));
+
+                        }
+                        #endregion
+                        //运算 电流是否达到开启值
+                        Current_Open(data);
+
+                        if (SCURRENT)//true 电流到达开启值  
+                        {
+
+                            //储存数量 10秒  
+                            Save_Db_Source.Enqueue(e);
+                            ////到达10秒后 SCURRENT=false isaround=true
+                            //Invoke(new ThreadStart(delegate ()
+                            //{
+                            //    try
+                            //    {
+                            //        blSavePorint.Text = CurrentNum.ToString();
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
+                            //    }
+                            //}));
+                            CurrentNum++;
                             if (CurrentNum > 12500) //存储达到 12500条 10秒的数据时
                             {
                                 SCURRENT = false;//关闭有效波段存储
@@ -2156,7 +2577,6 @@ namespace Basic_Controls
                                 {
                                     Stop_Test(true, 1);
                                 }));
-
                                 break;
                             }
                         }
@@ -2270,27 +2690,27 @@ namespace Basic_Controls
         {
             if (v1)
             {
-                vline1.YValues[index] = -10;
+                vline1.YValues[index] = 0;
             }
             if (v2)
             {
-                vline2.YValues[index] = -10;
+                vline2.YValues[index] = 0;
             }
             if (v3)
             {
-                vline3.YValues[index] = -10;
+                vline3.YValues[index] = 0;
             }
             if (c1)
             {
-                cline1.YValues[index] = -5;
+                cline1.YValues[index] = 0;
             }
             if (c2)
             {
-                cline2.YValues[index] = -5;
+                cline2.YValues[index] = 0;
             }
             if (c3)
             {
-                cline3.YValues[index] = -5;
+                cline3.YValues[index] = 0;
             }
         }
         /// <summary>
@@ -2308,7 +2728,7 @@ namespace Basic_Controls
                 Color c = new Color();
                 if (v1)
                 {
-                    ValueList vlist = vline1.ValuesLists[0];
+
                     //  vline1.Colors.Clear();
 
                     //if (vline1.Colors.Count <= 500)
@@ -2342,10 +2762,19 @@ namespace Basic_Controls
                     //vline1.Colors.RemoveRange(0, vline1.Colors.Count);
                     //vline1.ColorRange(vlist, 0, 0, c);
 
-                    vline1.Colors.Remove(c);
+                    //if (vline1.Colors.Count == 500)
+                    //{
+                    //    vline1.Colors.RemoveRange(0, vline1.Colors.Count);
+                    //}
+                    //else if (vline1.Colors.Count > 600)
+                    //{
+                    //    vline1.Colors.RemoveRange(100, vline1.Colors.Count - 100);
+                    //}
 
-                    //vline1.Colors.RemoveRange(1,100);
-                    // vline1.Colors.Add(c);
+                    vline1.Colors.Remove(c);
+                   // vline1.Colors.Add(c);
+                    ValueList vlist = vline1.ValuesLists[0];
+
                     vline1.ColorRange(vlist, colorFrom, colorTo, c);
 
                     //}
@@ -2357,33 +2786,41 @@ namespace Basic_Controls
                 }
                 if (v2)
                 {
-                    ValueList vlist = vline2.ValuesLists[0];
                     vline2.Colors.Remove(c);
-                    vline2.ColorRange(vlist, colorFrom, colorTo, c);
+                    vline2.Colors.Add(c);
+                    //ValueList vlist = vline2.ValuesLists[0];
+
+                    //vline2.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (v3)
                 {
-                    ValueList vlist = vline3.ValuesLists[0];
                     vline3.Colors.Remove(c);
-                    vline3.ColorRange(vlist, colorFrom, colorTo, c);
+                    vline3.Colors.Add(c);
+                    //ValueList vlist = vline3.ValuesLists[0];
+
+                    //vline3.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c1)
                 {
-                    ValueList vlist = cline1.ValuesLists[0];
                     cline1.Colors.Remove(c);
-                    cline1.ColorRange(vlist, colorFrom, colorTo, c);
+                    cline1.Colors.Add(c);
+
+                    //ValueList vlist = cline1.ValuesLists[0];
+                    //cline1.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c2)
                 {
-                    ValueList vlist = cline2.ValuesLists[0];
                     cline2.Colors.Remove(c);
-                    cline2.ColorRange(vlist, colorFrom, colorTo, c);
+                    cline2.Colors.Add(c);
+                    //ValueList vlist = cline2.ValuesLists[0];
+                    //cline2.ColorRange(vlist, colorFrom, colorTo, c);
                 }
                 if (c3)
                 {
-                    ValueList vlist = cline3.ValuesLists[0];
                     cline3.Colors.Remove(c);
-                    cline3.ColorRange(vlist, colorFrom, colorTo, c);
+                    cline3.Colors.Add(c);
+                    //ValueList vlist = cline3.ValuesLists[0];
+                    //cline3.ColorRange(vlist, colorFrom, colorTo, c);
                 }
             }
         }
@@ -2502,33 +2939,33 @@ namespace Basic_Controls
                         i++;
                     }
                 }
-                if (pub_Test_Plan.GETINFO == "1")
-                {
-                    #region 结束后插入分割线
+                //if (pub_Test_Plan.GETINFO == "1")
+                //{
+                //    #region 结束后插入分割线
 
-                    model = new Xml_Node_Model();
-                    model.DataSource = "分割线开始";
-                    model.Id = "1";
-                    XmlHelper.Insert(model);
-                    for (int j = 0; j < AroundSecond; j++)
-                    {
-                        foreach (Udp_EventArgs e in Top_End_Data)
-                        {
-                            model = new Xml_Node_Model();
-                            model.Id = e.Msg.Substring(4, 4);
-                            model.DataSource = e.Msg;
-                            model.Data = new List<Xml_Element_Model>();
-                            XmlHelper.Insert(model);
-                        }
-                    }
-                    Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
-                    model = new Xml_Node_Model();
-                    model.Id = "1";
-                    model.DataSource = "分割线结束";
-                    XmlHelper.Insert(model);
-                    //}
-                    #endregion
-                }
+                //    model = new Xml_Node_Model();
+                //    model.DataSource = "分割线开始";
+                //    model.Id = "1";
+                //    XmlHelper.Insert(model);
+                //    for (int j = 0; j < AroundSecond; j++)
+                //    {
+                //        foreach (Udp_EventArgs e in Top_End_Data)
+                //        {
+                //            model = new Xml_Node_Model();
+                //            model.Id = e.Msg.Substring(4, 4);
+                //            model.DataSource = e.Msg;
+                //            model.Data = new List<Xml_Element_Model>();
+                //            XmlHelper.Insert(model);
+                //        }
+                //    }
+                //    Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
+                //    model = new Xml_Node_Model();
+                //    model.Id = "1";
+                //    model.DataSource = "分割线结束";
+                //    XmlHelper.Insert(model);
+                //    //}
+                //    #endregion
+                //}
                 //结束后保存下防止 漏数据
                 XmlHelper.Save();
             }
@@ -2594,7 +3031,6 @@ namespace Basic_Controls
                     init_Chart_Config(alltime);
                     btnCTest.Enabled = true;
                     if (isBtnTest)//只有不执行的时候才能进去
-
                     {
                         if (pub_Test_Plan.PARENTID != "0")
                         {
@@ -2705,6 +3141,8 @@ namespace Basic_Controls
                         bool isdd = FileHelper.IsFileExist(filepath);
                         if (FileHelper.IsFileExist(filepath))
                         {
+                            alltime = 20;
+                            Chart_Init();
                             Lond_Chart(filepath);
                         }
                         else

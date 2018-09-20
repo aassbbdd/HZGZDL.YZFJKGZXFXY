@@ -229,7 +229,7 @@ namespace Socket_Server
                         i++;
                     }
 
-                    if (i == 300)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
+                    if (i == 400)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
                     {
                         i = 0;
                         startTime = DateTime.Now;
@@ -240,6 +240,7 @@ namespace Socket_Server
                 }
                  if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)
                 {
+                    i = 0;
                     // Udp_EventArgs eventArgs = new Udp_EventArgs();
                     eventArgs.Msg = "连接超时";
                     eventArgs.Hearder = "-1";
