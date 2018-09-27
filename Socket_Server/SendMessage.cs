@@ -229,13 +229,13 @@ namespace Socket_Server
                         i++;
                     }
 
-                    if (i == 400)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
+                    if (i == 200)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
                     {
-                        i = 0;
-                        startTime = DateTime.Now;
                         sendmessage = "30FF";
                         sendbytes = ProtocolUtil.strToToHexByte(sendmessage);
                         sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                        i = 0;
+                        startTime = DateTime.Now;
                     }
                 }
                  if (continueLoop && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > outTime * 1000)

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager2 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, null, true, true);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseFrom));
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
@@ -38,11 +39,17 @@
             this.repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.tChart1 = new Steema.TeeChart.TChart();
+            this.axis1 = new Steema.TeeChart.Axis();
             this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
+            this.fastLine2 = new Steema.TeeChart.Styles.FastLine();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // splashScreenManager2
+            // 
+            splashScreenManager2.ClosingDelay = 500;
             // 
             // simpleButton1
             // 
@@ -131,13 +138,15 @@
             // 
             // 
             // 
+            this.tChart1.Aspect.ClipPoints = false;
+            this.tChart1.Aspect.View3D = false;
+            this.tChart1.Aspect.ZoomText = false;
             // 
             // 
             // 
-            this.tChart1.Axes.Bottom.Automatic = false;
-            this.tChart1.Axes.Bottom.AutomaticMaximum = false;
-            this.tChart1.Axes.Bottom.AutomaticMinimum = false;
-            this.tChart1.Axes.Bottom.Inverted = true;
+            // 
+            // 
+            // 
             // 
             // 
             // 
@@ -154,42 +163,11 @@
             // 
             // 
             // 
-            // 
-            // 
-            // 
-            this.tChart1.Axes.Bottom.Labels.Font.Shadow.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(160)))), ((int)(((byte)(160)))));
-            this.tChart1.Axes.Bottom.Maximum = 24D;
-            this.tChart1.Axes.Bottom.Minimum = 0D;
-            this.tChart1.Axes.Bottom.PositionUnits = Steema.TeeChart.PositionUnits.Pixels;
-            // 
-            // 
-            // 
-            this.tChart1.Axes.Bottom.Title.Angle = 100;
-            // 
-            // 
-            // 
             this.tChart1.Axes.Bottom.Title.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.tChart1.Axes.Bottom.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Bottom.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Bottom.Title.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Axes.Bottom.Title.Caption = "DDD";
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tChart1.Axes.Bottom.Title.Font.Shadow.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            // 
-            // 
-            // 
-            this.tChart1.Axes.Bottom.Title.Font.Shadow.Brush.Gradient.Transparency = 100;
-            this.tChart1.Axes.Bottom.Title.Lines = new string[] {
-        "DDD"};
-            this.tChart1.Axes.Bottom.ZPosition = 10D;
+            this.tChart1.Axes.Custom.Add(this.axis1);
             // 
             // 
             // 
@@ -217,6 +195,9 @@
             // 
             // 
             // 
+            this.tChart1.Axes.DepthTop.Automatic = false;
+            this.tChart1.Axes.DepthTop.AutomaticMaximum = false;
+            this.tChart1.Axes.DepthTop.AutomaticMinimum = false;
             // 
             // 
             // 
@@ -228,6 +209,8 @@
             this.tChart1.Axes.DepthTop.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.DepthTop.Labels.Bevel.StringColorTwo = "FF808080";
             this.tChart1.Axes.DepthTop.LabelsAsSeriesTitles = true;
+            this.tChart1.Axes.DepthTop.Maximum = 0.5D;
+            this.tChart1.Axes.DepthTop.Minimum = -0.5D;
             // 
             // 
             // 
@@ -238,9 +221,14 @@
             this.tChart1.Axes.DepthTop.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.DepthTop.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.DepthTop.Title.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.DrawBehind = false;
             // 
             // 
             // 
+            this.tChart1.Axes.Left.Automatic = false;
+            this.tChart1.Axes.Left.AutomaticMaximum = false;
+            this.tChart1.Axes.Left.AutomaticMinimum = false;
+            this.tChart1.Axes.Left.EndPosition = 20D;
             // 
             // 
             // 
@@ -251,7 +239,9 @@
             this.tChart1.Axes.Left.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Left.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Left.Labels.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Axes.Left.Labels.MultiLine = true;
+            this.tChart1.Axes.Left.Maximum = 1140D;
+            this.tChart1.Axes.Left.Minimum = 808D;
+            this.tChart1.Axes.Left.PositionUnits = Steema.TeeChart.PositionUnits.Pixels;
             // 
             // 
             // 
@@ -262,13 +252,18 @@
             this.tChart1.Axes.Left.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Left.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Left.Title.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Left.Title.Caption = "ffff";
+            this.tChart1.Axes.Left.Title.Lines = new string[] {
+        "ffff"};
             // 
             // 
             // 
+            this.tChart1.Axes.Right.Automatic = false;
+            this.tChart1.Axes.Right.AutomaticMaximum = false;
+            this.tChart1.Axes.Right.AutomaticMinimum = false;
             // 
             // 
             // 
-            this.tChart1.Axes.Right.Labels.Alternate = true;
             // 
             // 
             // 
@@ -276,8 +271,9 @@
             this.tChart1.Axes.Right.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Right.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Right.Labels.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Right.Maximum = 0D;
             this.tChart1.Axes.Right.MaximumOffset = 10;
-            this.tChart1.Axes.Right.MinimumOffset = 1;
+            this.tChart1.Axes.Right.Minimum = 0D;
             // 
             // 
             // 
@@ -291,9 +287,14 @@
             // 
             // 
             // 
+            this.tChart1.Axes.Top.Automatic = false;
+            this.tChart1.Axes.Top.AutomaticMaximum = false;
+            this.tChart1.Axes.Top.AutomaticMinimum = false;
+            this.tChart1.Axes.Top.Inverted = true;
             // 
             // 
             // 
+            this.tChart1.Axes.Top.Labels.Alternate = true;
             // 
             // 
             // 
@@ -301,9 +302,14 @@
             this.tChart1.Axes.Top.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Top.Labels.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Top.Labels.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Top.Maximum = 0D;
+            this.tChart1.Axes.Top.MaximumOffset = 10;
+            this.tChart1.Axes.Top.Minimum = 0D;
+            this.tChart1.Axes.Top.PositionUnits = Steema.TeeChart.PositionUnits.Pixels;
             // 
             // 
             // 
+            this.tChart1.Axes.Top.Title.Angle = 90;
             // 
             // 
             // 
@@ -311,6 +317,17 @@
             this.tChart1.Axes.Top.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Axes.Top.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Axes.Top.Title.Bevel.StringColorTwo = "FF808080";
+            this.tChart1.Axes.Top.Title.Caption = "fdfasdf";
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart1.Axes.Top.Title.Font.Shadow.Visible = true;
+            this.tChart1.Axes.Top.Title.Lines = new string[] {
+        "fdfasdf"};
+            this.tChart1.Axes.Top.ZPosition = 0D;
             // 
             // 
             // 
@@ -351,7 +368,7 @@
             this.tChart1.Legend.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Legend.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Legend.Title.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Location = new System.Drawing.Point(313, 206);
+            this.tChart1.Location = new System.Drawing.Point(289, 123);
             this.tChart1.Name = "tChart1";
             // 
             // 
@@ -364,7 +381,8 @@
             this.tChart1.Panel.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Panel.Bevel.StringColorTwo = "FF808080";
             this.tChart1.Series.Add(this.fastLine1);
-            this.tChart1.Size = new System.Drawing.Size(487, 341);
+            this.tChart1.Series.Add(this.fastLine2);
+            this.tChart1.Size = new System.Drawing.Size(1033, 567);
             // 
             // 
             // 
@@ -430,10 +448,47 @@
             this.tChart1.Walls.Right.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Walls.Right.Bevel.StringColorTwo = "FF808080";
             // 
+            // axis1
+            // 
+            this.axis1.Automatic = false;
+            this.axis1.AutomaticMaximum = false;
+            this.axis1.AutomaticMinimum = false;
+            this.axis1.Horizontal = false;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.axis1.Labels.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.axis1.Labels.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.axis1.Labels.Bevel.StringColorOne = "FFFFFFFF";
+            this.axis1.Labels.Bevel.StringColorTwo = "FF808080";
+            this.axis1.Maximum = 0D;
+            this.axis1.Minimum = 0D;
+            this.axis1.OtherSide = false;
+            this.axis1.PositionUnits = Steema.TeeChart.PositionUnits.Pixels;
+            this.axis1.StartPosition = 20D;
+            // 
+            // 
+            // 
+            this.axis1.Title.Angle = 90;
+            // 
+            // 
+            // 
+            this.axis1.Title.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.axis1.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.axis1.Title.Bevel.StringColorOne = "FFFFFFFF";
+            this.axis1.Title.Bevel.StringColorTwo = "FF808080";
+            this.axis1.Title.Caption = "fff";
+            this.axis1.Title.Lines = new string[] {
+        "fff"};
+            // 
             // fastLine1
             // 
             this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
             this.fastLine1.ColorEach = false;
+            this.fastLine1.HorizAxis = Steema.TeeChart.Styles.HorizontalAxis.Both;
             // 
             // 
             // 
@@ -458,9 +513,8 @@
             this.fastLine1.Marks.Symbol.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.fastLine1.Marks.Symbol.Bevel.StringColorOne = "FFFFFFFF";
             this.fastLine1.Marks.Symbol.Bevel.StringColorTwo = "FF808080";
+            this.fastLine1.ShowInLegend = false;
             this.fastLine1.Title = "fastLine1";
-            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
-            this.fastLine1.VertAxis = Steema.TeeChart.Styles.VerticalAxis.Both;
             // 
             // 
             // 
@@ -471,15 +525,61 @@
             // 
             this.fastLine1.YValues.DataMember = "Y";
             // 
-            // splashScreenManager2
+            // fastLine2
             // 
-            splashScreenManager2.ClosingDelay = 500;
+            this.fastLine2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(53)))));
+            this.fastLine2.ColorEach = false;
+            // 
+            // 
+            // 
+            this.fastLine2.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(53)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.fastLine2.Marks.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.fastLine2.Marks.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.fastLine2.Marks.Bevel.StringColorOne = "FFFFFFFF";
+            this.fastLine2.Marks.Bevel.StringColorTwo = "FF808080";
+            this.fastLine2.Marks.Clip = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.fastLine2.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(53)))));
+            this.fastLine2.Marks.FontSeriesColor = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.fastLine2.Marks.Symbol.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.fastLine2.Marks.Symbol.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.fastLine2.Marks.Symbol.Bevel.StringColorOne = "FFFFFFFF";
+            this.fastLine2.Marks.Symbol.Bevel.StringColorTwo = "FF808080";
+            this.fastLine2.ShowInLegend = false;
+            this.fastLine2.Title = "fastLine2";
+            this.fastLine2.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            // 
+            // 
+            this.fastLine2.XValues.DataMember = "X";
+            this.fastLine2.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // 
+            // 
+            this.fastLine2.YValues.DataMember = "Y";
             // 
             // BaseFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 863);
+            this.ClientSize = new System.Drawing.Size(1356, 863);
             this.Controls.Add(this.tChart1);
             this.Controls.Add(this.simpleButton4);
             this.Controls.Add(this.gridControl1);
@@ -506,9 +606,11 @@
         private DevExpress.XtraGrid.Columns.GridColumn NAME;
         private DevExpress.XtraEditors.SimpleButton simpleButton4;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
-        private Steema.TeeChart.TChart tChart1;
-        private Steema.TeeChart.Styles.FastLine fastLine1;
         private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1;
+        private Steema.TeeChart.TChart tChart1;
+        private Steema.TeeChart.Axis axis1;
+        private Steema.TeeChart.Styles.FastLine fastLine1;
+        private Steema.TeeChart.Styles.FastLine fastLine2;
     }
 }
 

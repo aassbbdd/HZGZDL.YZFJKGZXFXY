@@ -52,7 +52,7 @@ namespace Udp_Agreement
         {
             get
             {
-                return stoptester;
+                return receiveend;
             }
         }
     }

@@ -211,6 +211,12 @@
     <Compile Include="FmAddTest.Designer.cs">
       <DependentUpon>FmAddTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="FmContrast.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FmContrast.Designer.cs">
+      <DependentUpon>FmContrast.cs</DependentUpon>
+    </Compile>
     <Compile Include="FmTestConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +245,9 @@
     </Compile>
     <EmbeddedResource Include="FmAddTest.resx">
       <DependentUpon>FmAddTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FmContrast.resx">
+      <DependentUpon>FmContrast.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FmTestConfig.resx">
       <DependentUpon>FmTestConfig.cs</DependentUpon>

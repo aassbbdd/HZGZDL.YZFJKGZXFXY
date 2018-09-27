@@ -218,5 +218,11 @@ namespace DbHelper.Db_Model
         /// 
         [XmlAttribute(AttributeName = "COUNT_BASE_C")]
         public string COUNT_BASE_C { get; set; }
+
+        /// <summary>
+        /// 电压
+        /// </summary>
+        [XmlAttribute(AttributeName = "VOLTAGE")]
+        public string VOLTAGE { get; set; }
     }
 }

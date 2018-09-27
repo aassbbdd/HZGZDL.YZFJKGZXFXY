@@ -127,6 +127,7 @@ namespace DbHelper.Sqlite_Db
 
                                                     ,TEST_ORDER         
                                                     ,COUNT_BASE_C       
+                                                    ,VOLTAGE
                                 )values(
                                                      @DVNAME    
                                                     ,@DVPOSITION
@@ -166,6 +167,7 @@ namespace DbHelper.Sqlite_Db
 
                                                     ,@TEST_ORDER         
                                                     ,@COUNT_BASE_C 
+                                                    ,@VOLTAGE
                                 )
                                 ";
 
@@ -207,6 +209,7 @@ namespace DbHelper.Sqlite_Db
                      ,new SQLiteParameter("SINGLE_P",DbType.String)
                      ,new SQLiteParameter("TEST_ORDER",DbType.String)
                      ,new SQLiteParameter("COUNT_BASE_C",DbType.String)
+                     ,new SQLiteParameter("VOLTAGE",DbType.String)
 
                 };
 
@@ -249,6 +252,7 @@ namespace DbHelper.Sqlite_Db
 
                 parameters[30].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "" : model.TEST_ORDER;
                 parameters[31].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
+                parameters[32].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
 
                 int id = 0;
                 SQLiteHelper.ExecuteScalar(strsql, CommandType.Text, parameters);
@@ -313,6 +317,7 @@ namespace DbHelper.Sqlite_Db
                                                     ,COUNT_BASE_C=@COUNT_BASE_C
                                                     ,TEST_BASE_C=@TEST_BASE_C
                                                     ,TEST_SINGLE_DOUBLE=@TEST_SINGLE_DOUBLE 
+                                                    ,VOLTAGE=@VOLTAGE 
 
                               where ID=@ID
                                 ";
@@ -357,6 +362,9 @@ namespace DbHelper.Sqlite_Db
                      ,new SQLiteParameter("COUNT_BASE_C",DbType.String)
                      ,new SQLiteParameter("TEST_BASE_C",DbType.String)
                      ,new SQLiteParameter("TEST_SINGLE_DOUBLE",DbType.String)
+
+                     ,new SQLiteParameter("VOLTAGE",DbType.String)
+
                 };
 
                 parameters[0].Value = model.DVNAME;
@@ -390,7 +398,6 @@ namespace DbHelper.Sqlite_Db
                 parameters[24].Value = model.PARENTID;
 
                 parameters[25].Value = model.ID;
-
                 parameters[26].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "" : model.DOUBLE_SP;
                 parameters[27].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
                 parameters[28].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "" : model.SINGLE_P;
@@ -399,7 +406,35 @@ namespace DbHelper.Sqlite_Db
                 parameters[30].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
                 parameters[31].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "" : model.TEST_BASE_C;
                 parameters[32].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "" : model.TEST_SINGLE_DOUBLE;
+                parameters[33].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
 
+                int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
+                return Convert.ToInt32(model.ID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 修改 测试计划 
+        /// </summary>
+        public int Test_Confige_VOLTAGE_Edit(Test_Plan model)
+        {
+            try
+            {
+                string strsql = @"
+                                update TEST_CONFIGE set  VOLTAGE=@VOLTAGE 
+                                 where ID=@ID  ";
+
+                SQLiteParameter[] parameters = {
+                    new SQLiteParameter("ID",DbType.Int32)
+                    ,new SQLiteParameter("VOLTAGE",DbType.String)
+                     
+                };
+                parameters[0].Value = model.ID;
+                parameters[1].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
                 int count = SQLiteHelper.ExecuteNonQuery(strsql, CommandType.Text, parameters);
                 return Convert.ToInt32(model.ID);
             }

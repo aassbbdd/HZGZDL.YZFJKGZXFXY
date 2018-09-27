@@ -133,6 +133,44 @@ namespace DbHelper
             }
         }
 
+
+        /// <summary>
+        /// 1. 功能：新增节点。
+        /// 2. 使用条件：将任意节点插入到当前Xml文件中。
+        /// </summary>        
+        /// <param name="xmlNode">要插入的Xml节点</param>
+        public static void Edit_Voltage(Test_Plan model)
+        {
+            try
+            {
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(xmlpath);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                XElement ele = root.Element("Test_Plan");
+
+                if (ele == null)
+                {
+                    return;
+                }
+
+                ele.Element("VOLTAGE").SetValue(model.VOLTAGE);
+
+                document.Save(xmlpath);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         /// <summary>
         /// 1. 功能：新增节点。
         /// 2. 使用条件：将任意节点插入到当前Xml文件中。
@@ -342,7 +380,7 @@ namespace DbHelper
                 XElement ele = root.Element("Test_Plan");
 
                 Test_Plan model = new Test_Plan();
-                if(ele==null)
+                if (ele == null)
                 {
                     return model;
                 }
@@ -380,19 +418,7 @@ namespace DbHelper
                 model.SINGLE_P = ele.Element("SINGLE_P").Value;
                 model.TEST_ORDER = ele.Element("TEST_ORDER").Value;
                 model.COUNT_BASE_C = ele.Element("COUNT_BASE_C").Value;
-
-
-
-                //foreach (var item in ele.)
-
-                //{
-                //}
-
-                // model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
-                //if(model.ID==null)
-                //{
-                //    model = (Test_Plan)Deserialize(typeof(Test_Plan), ele.ToString());
-                //}
+                model.VOLTAGE = ele.Element("VOLTAGE").Value;
 
                 return model;
             }
@@ -648,7 +674,6 @@ namespace DbHelper
 
             for (int i = 0; i < count; i++)
             {
-
                 int length = 24 * i;//截取位置
 
                 string Current1 = data.Substring(12 + length, 4);
@@ -669,10 +694,8 @@ namespace DbHelper
                 newvy2[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
                 newvy3[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
 
-
                 //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
                 double newXvalue = (double)((jinex * count) + num + i) / allnum;
-
 
                 newvx1[id] = newvx2[id] = newvx3[id]
               = newcx1[id] = newcx2[id] = newcx3[id]
@@ -706,7 +729,7 @@ namespace DbHelper
         {
             try
             {
-                IsNotNull = true ;
+                IsNotNull = true;
                 XDocument document;
                 try
                 {
@@ -750,7 +773,7 @@ namespace DbHelper
                 cx3 = new double[count]; cy3 = new double[count];
 
 
-                if(count==0)
+                if (count == 0)
                 {
                     IsNotNull = false;
                 }
@@ -798,6 +821,123 @@ namespace DbHelper
             }
         }
 
+        /// <summary>
+        /// xml转DataTable  对比方法
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="path">xml路径</param>
+        /// <returns></returns>
+        public static void Xml_To_Array_Contrast(string path, bool[] cks,
+            out double[] vx1, out double[] vy1,
+             out double[] cx1, out double[] cy1
+            )
+        {
+            try
+            {
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                XElement ele = root.Element("Test_Plan");
+
+                if (ele == null)
+                {
+                    I = 10;
+                }
+                else
+                {
+                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value)
+                        ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                }
+                int count = eles.Count() * 80;
+                newvx1 = new double[count]; newvy1 = new double[count];
+                newcx1 = new double[count]; newcy1 = new double[count];
+                vx1 = new double[count]; vy1 = new double[count];
+                cx1 = new double[count]; cy1 = new double[count];
+
+                int index = 0; //index 为索引值
+                foreach (XElement item in eles)
+                {
+                    Algorithm_To_Arrey_Contrast(item, cks, index);
+                    index++;
+                }
+                vx1 = newvx1; vy1 = newvy1;
+                cx1 = newcx1; cy1 = newcy1;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>        
+        /// 存储为数组 arrey
+        /// </summary>
+        private static void Algorithm_To_Arrey_Contrast(XElement model, bool[] cks, int jinex
+            )
+        {
+            //转成毫秒除数
+            int allnum = 100000;
+            //基本宽度
+            int num = 1;
+            //一组数据总计算次数
+            int count = 80;
+
+            string DataSource = model.Element("DataSource").Value;
+            string data = DataSource.Substring(8, DataSource.Length - 8);
+
+            for (int i = 0; i < count; i++)
+            {
+                int length = 24 * i;//截取位置
+
+                int id = (jinex * count) + i;
+                if (cks[0])
+                {
+                    //计算
+                    string Current1 = data.Substring(12 + length, 4);
+                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                }
+                else if (cks[1])
+                {
+                    string Current2 = data.Substring(16 + length, 4);
+                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                }
+                else if (cks[2])
+                {
+                    string Current3 = data.Substring(20 + length, 4);
+                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+                }
+
+                if (cks[3])
+                {
+                    string Vibration1 = data.Substring(0 + length, 4);
+                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                }
+                else if (cks[4])
+                {
+                    string Vibration2 = data.Substring(4 + length, 4);
+                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                }
+                else if (cks[5])
+                {
+                    string Vibration3 = data.Substring(8 + length, 4);
+                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+                }
+                //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                double newXvalue = (double)((jinex * count) + num + i) / allnum;
+                newvx1[id]
+              = newcx1[id]
+              = newXvalue;
+            }
+        }
 
         #region 反序列化
         /// <summary>

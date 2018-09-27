@@ -151,8 +151,9 @@ namespace DbHelper.Sqlite_Db
                     item.SINGLE_P = dr["SINGLE_P"].ToString();
                     item.TEST_ORDER = dr["TEST_ORDER"].ToString();
                     item.COUNT_BASE_C = dr["COUNT_BASE_C"].ToString();
+                    item.VOLTAGE = dr["VOLTAGE"].ToString();
 
-
+                    
                     list.Add(item);
                 }
 

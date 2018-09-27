@@ -90,7 +90,8 @@ namespace DbHelper.Sqlite_Db
                                    DOUBLE_EP           varchar(20)                    null,
                                    SINGLE_P             varchar(20)                    null,
                                    TEST_ORDER           varchar(20)                    null,
-                                   COUNT_BASE_C         varchar(20)                    null
+                                   COUNT_BASE_C         varchar(20)                    null,
+                                   VOLTAGE         varchar(20)                    null
 
                                 )");
 
