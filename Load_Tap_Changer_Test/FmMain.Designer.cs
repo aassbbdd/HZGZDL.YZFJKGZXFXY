@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
-            DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
+            DevExpress.Utils.Animation.PushTransition pushTransition2 = new DevExpress.Utils.Animation.PushTransition();
             this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
@@ -47,13 +47,16 @@
             this.barLargeButtonItem8 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem10 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem14 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnStopTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnEnvelope = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnContrast = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLeftShift = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.btnRightShift = new DevExpress.XtraBars.BarHeaderItem();
+            this.btnRightShift1 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnEnlarge = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnNarrow = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnClear = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnReNew = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem17 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem18 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem20 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -95,6 +98,7 @@
             this.barLargeButtonItem11 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem12 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem13 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem14 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem15 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barListItem1 = new DevExpress.XtraBars.BarListItem();
             this.barLargeButtonItem16 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -110,16 +114,35 @@
             this.barEditItem3 = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemFontEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemFontEdit();
             this.barLinkContainerItem2 = new DevExpress.XtraBars.BarLinkContainerItem();
+            this.btnRightShift = new DevExpress.XtraBars.BarHeaderItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnEnlarge = new DevExpress.XtraEditors.SimpleButton();
-            this.btnNarrow = new DevExpress.XtraEditors.SimpleButton();
+            this.btnEnlarge11 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnNarrow1 = new DevExpress.XtraEditors.SimpleButton();
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.plLinePath = new DevExpress.XtraEditors.PanelControl();
+            this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
+            this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
+            this.label5 = new System.Windows.Forms.Label();
+            this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ckC1 = new DevExpress.XtraEditors.CheckEdit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ckC2 = new DevExpress.XtraEditors.CheckEdit();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
+            this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
+            this.lbdbtime = new DevExpress.XtraEditors.LabelControl();
+            this.lbybtime = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbdata = new DevExpress.XtraEditors.LabelControl();
+            this.lbybname = new DevExpress.XtraEditors.LabelControl();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
@@ -130,15 +153,8 @@
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
             this.LBxmlCount = new DevExpress.XtraEditors.LabelControl();
-            this.btnClear = new DevExpress.XtraEditors.SimpleButton();
-            this.btnReNew = new DevExpress.XtraEditors.SimpleButton();
-            this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
-            this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckC2 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckC1 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckV3 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
-            this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
+            this.btnClear1 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReNew1 = new DevExpress.XtraEditors.SimpleButton();
             this.treeList = new DevExpress.XtraTreeList.TreeList();
             this.ID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.删除 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
@@ -151,12 +167,6 @@
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::Load_Tap_Changer_Test.WaitForm), true, true);
             this.barLargeButtonItem24 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            this.lbdbdata = new DevExpress.XtraEditors.LabelControl();
-            this.lbybname = new DevExpress.XtraEditors.LabelControl();
-            this.lbybtime = new DevExpress.XtraEditors.LabelControl();
-            this.lbdbtime = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
@@ -165,13 +175,15 @@
             this.pclChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).BeginInit();
+            this.plLinePath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.删除)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
@@ -292,9 +304,14 @@
             this.barLinkContainerItem2,
             this.btnContrast,
             this.btnLeftShift,
-            this.btnRightShift});
+            this.btnRightShift,
+            this.btnRightShift1,
+            this.btnEnlarge,
+            this.btnNarrow,
+            this.btnClear,
+            this.btnReNew});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 117;
+            this.barManager1.MaxItemId = 122;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemTextEdit1,
             this.repositoryItemTextEdit2,
@@ -322,13 +339,16 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem8, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem10, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem14),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest, true),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnContrast, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnLeftShift),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnRightShift),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnRightShift1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnEnlarge),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnNarrow),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnClear),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnReNew),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem17, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem18, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem20, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -412,13 +432,6 @@
             this.btnPant.Name = "btnPant";
             this.btnPant.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPant_ItemClick);
             // 
-            // barLargeButtonItem14
-            // 
-            this.barLargeButtonItem14.Caption = "图标";
-            this.barLargeButtonItem14.Id = 94;
-            this.barLargeButtonItem14.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目4;
-            this.barLargeButtonItem14.Name = "barLargeButtonItem14";
-            // 
             // btnSTest
             // 
             this.btnSTest.Caption = "测试";
@@ -458,12 +471,40 @@
             this.btnLeftShift.Name = "btnLeftShift";
             this.btnLeftShift.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLeftShift_ItemClick);
             // 
-            // btnRightShift
+            // btnRightShift1
             // 
-            this.btnRightShift.Caption = "右移";
-            this.btnRightShift.Id = 116;
-            this.btnRightShift.Name = "btnRightShift";
-            this.btnRightShift.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRightShift_ItemClick);
+            this.btnRightShift1.Caption = "右移";
+            this.btnRightShift1.Id = 117;
+            this.btnRightShift1.Name = "btnRightShift1";
+            this.btnRightShift1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRightShift_ItemClick);
+            // 
+            // btnEnlarge
+            // 
+            this.btnEnlarge.Caption = "放大";
+            this.btnEnlarge.Id = 118;
+            this.btnEnlarge.Name = "btnEnlarge";
+            this.btnEnlarge.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEnlarge_ItemClick);
+            // 
+            // btnNarrow
+            // 
+            this.btnNarrow.Caption = "缩小";
+            this.btnNarrow.Id = 119;
+            this.btnNarrow.Name = "btnNarrow";
+            this.btnNarrow.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNarrow_ItemClick);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Caption = "清空";
+            this.btnClear.Id = 120;
+            this.btnClear.Name = "btnClear";
+            this.btnClear.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnClear_ItemClick);
+            // 
+            // btnReNew
+            // 
+            this.btnReNew.Caption = "还原";
+            this.btnReNew.Id = 121;
+            this.btnReNew.Name = "btnReNew";
+            this.btnReNew.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReNew_ItemClick);
             // 
             // barLargeButtonItem17
             // 
@@ -736,7 +777,6 @@
             this.btnCTest.Id = 36;
             this.btnCTest.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnCTest.ImageOptions.Image")));
             this.btnCTest.Name = "btnCTest";
-            this.btnCTest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnCTest_ItemClick);
             // 
             // barLargeButtonItem3
             // 
@@ -769,6 +809,13 @@
             this.barLargeButtonItem13.Caption = "图标";
             this.barLargeButtonItem13.Id = 93;
             this.barLargeButtonItem13.Name = "barLargeButtonItem13";
+            // 
+            // barLargeButtonItem14
+            // 
+            this.barLargeButtonItem14.Caption = "图标";
+            this.barLargeButtonItem14.Id = 94;
+            this.barLargeButtonItem14.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目4;
+            this.barLargeButtonItem14.Name = "barLargeButtonItem14";
             // 
             // barLargeButtonItem15
             // 
@@ -829,7 +876,7 @@
             // workspaceManager1
             // 
             this.workspaceManager1.TargetControl = this;
-            this.workspaceManager1.TransitionType = pushTransition1;
+            this.workspaceManager1.TransitionType = pushTransition2;
             // 
             // barEditItem2
             // 
@@ -862,6 +909,13 @@
             this.barLinkContainerItem2.Caption = "barLinkContainerItem2";
             this.barLinkContainerItem2.Id = 113;
             this.barLinkContainerItem2.Name = "barLinkContainerItem2";
+            // 
+            // btnRightShift
+            // 
+            this.btnRightShift.Caption = "右移";
+            this.btnRightShift.Id = 116;
+            this.btnRightShift.Name = "btnRightShift";
+            this.btnRightShift.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRightShift_ItemClick);
             // 
             // pclChart
             // 
@@ -926,23 +980,23 @@
             this.label1.Text = "浮标";
             this.label1.Visible = false;
             // 
-            // btnEnlarge
+            // btnEnlarge11
             // 
-            this.btnEnlarge.Location = new System.Drawing.Point(25, 162);
-            this.btnEnlarge.Name = "btnEnlarge";
-            this.btnEnlarge.Size = new System.Drawing.Size(54, 28);
-            this.btnEnlarge.TabIndex = 35;
-            this.btnEnlarge.Text = "放大";
-            this.btnEnlarge.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.btnEnlarge11.Location = new System.Drawing.Point(25, 162);
+            this.btnEnlarge11.Name = "btnEnlarge11";
+            this.btnEnlarge11.Size = new System.Drawing.Size(54, 28);
+            this.btnEnlarge11.TabIndex = 35;
+            this.btnEnlarge11.Text = "放大";
+            this.btnEnlarge11.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
-            // btnNarrow
+            // btnNarrow1
             // 
-            this.btnNarrow.Location = new System.Drawing.Point(85, 162);
-            this.btnNarrow.Name = "btnNarrow";
-            this.btnNarrow.Size = new System.Drawing.Size(54, 28);
-            this.btnNarrow.TabIndex = 36;
-            this.btnNarrow.Text = "缩小";
-            this.btnNarrow.Click += new System.EventHandler(this.simpleButton2_Click);
+            this.btnNarrow1.Location = new System.Drawing.Point(85, 162);
+            this.btnNarrow1.Name = "btnNarrow1";
+            this.btnNarrow1.Size = new System.Drawing.Size(54, 28);
+            this.btnNarrow1.TabIndex = 36;
+            this.btnNarrow1.Text = "缩小";
+            this.btnNarrow1.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // lbX
             // 
@@ -967,6 +1021,7 @@
             this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
             this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.plLinePath);
             this.panelControl1.Controls.Add(this.lbdbtime);
             this.panelControl1.Controls.Add(this.lbybtime);
             this.panelControl1.Controls.Add(this.labelControl7);
@@ -983,23 +1038,197 @@
             this.panelControl1.Controls.Add(this.labelControl3);
             this.panelControl1.Controls.Add(this.LBPrintCount);
             this.panelControl1.Controls.Add(this.LBxmlCount);
-            this.panelControl1.Controls.Add(this.btnClear);
-            this.panelControl1.Controls.Add(this.btnReNew);
-            this.panelControl1.Controls.Add(this.btnReLond);
-            this.panelControl1.Controls.Add(this.ckC3);
-            this.panelControl1.Controls.Add(this.ckC2);
+            this.panelControl1.Controls.Add(this.btnClear1);
+            this.panelControl1.Controls.Add(this.btnReNew1);
             this.panelControl1.Controls.Add(this.lbY);
-            this.panelControl1.Controls.Add(this.ckC1);
             this.panelControl1.Controls.Add(this.lbX);
-            this.panelControl1.Controls.Add(this.ckV3);
-            this.panelControl1.Controls.Add(this.btnNarrow);
-            this.panelControl1.Controls.Add(this.ckV2);
-            this.panelControl1.Controls.Add(this.btnEnlarge);
-            this.panelControl1.Controls.Add(this.ckV1);
+            this.panelControl1.Controls.Add(this.btnNarrow1);
+            this.panelControl1.Controls.Add(this.btnEnlarge11);
             this.panelControl1.Location = new System.Drawing.Point(1282, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 837);
             this.panelControl1.TabIndex = 52;
+            // 
+            // plLinePath
+            // 
+            this.plLinePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.plLinePath.Appearance.BackColor = System.Drawing.Color.White;
+            this.plLinePath.Appearance.Options.UseBackColor = true;
+            this.plLinePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.plLinePath.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.plLinePath.Controls.Add(this.ckV2);
+            this.plLinePath.Controls.Add(this.ckV1);
+            this.plLinePath.Controls.Add(this.label5);
+            this.plLinePath.Controls.Add(this.ckV3);
+            this.plLinePath.Controls.Add(this.label6);
+            this.plLinePath.Controls.Add(this.ckC1);
+            this.plLinePath.Controls.Add(this.label7);
+            this.plLinePath.Controls.Add(this.ckC2);
+            this.plLinePath.Controls.Add(this.label8);
+            this.plLinePath.Controls.Add(this.ckC3);
+            this.plLinePath.Controls.Add(this.btnReLond);
+            this.plLinePath.Location = new System.Drawing.Point(2, 2);
+            this.plLinePath.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.plLinePath.Name = "plLinePath";
+            this.plLinePath.Size = new System.Drawing.Size(185, 152);
+            this.plLinePath.TabIndex = 31;
+            // 
+            // ckV2
+            // 
+            this.ckV2.Location = new System.Drawing.Point(15, 40);
+            this.ckV2.MenuManager = this.barManager1;
+            this.ckV2.Name = "ckV2";
+            this.ckV2.Properties.Caption = "震动2";
+            this.ckV2.Size = new System.Drawing.Size(64, 22);
+            this.ckV2.TabIndex = 1;
+            // 
+            // ckV1
+            // 
+            this.ckV1.EditValue = true;
+            this.ckV1.Location = new System.Drawing.Point(15, 12);
+            this.ckV1.MenuManager = this.barManager1;
+            this.ckV1.Name = "ckV1";
+            this.ckV1.Properties.Caption = "震动1";
+            this.ckV1.Size = new System.Drawing.Size(64, 22);
+            this.ckV1.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(-293, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 18);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "浮标";
+            this.label5.Visible = false;
+            // 
+            // ckV3
+            // 
+            this.ckV3.Location = new System.Drawing.Point(15, 68);
+            this.ckV3.MenuManager = this.barManager1;
+            this.ckV3.Name = "ckV3";
+            this.ckV3.Properties.Caption = "震动3";
+            this.ckV3.Size = new System.Drawing.Size(64, 22);
+            this.ckV3.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(-337, 25);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(38, 18);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "浮标";
+            this.label6.Visible = false;
+            // 
+            // ckC1
+            // 
+            this.ckC1.Location = new System.Drawing.Point(83, 12);
+            this.ckC1.MenuManager = this.barManager1;
+            this.ckC1.Name = "ckC1";
+            this.ckC1.Properties.Caption = "电流1";
+            this.ckC1.Size = new System.Drawing.Size(62, 22);
+            this.ckC1.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(-293, 43);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 18);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "浮标";
+            this.label7.Visible = false;
+            // 
+            // ckC2
+            // 
+            this.ckC2.Location = new System.Drawing.Point(83, 40);
+            this.ckC2.MenuManager = this.barManager1;
+            this.ckC2.Name = "ckC2";
+            this.ckC2.Properties.Caption = "电流2";
+            this.ckC2.Size = new System.Drawing.Size(62, 22);
+            this.ckC2.TabIndex = 4;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(-337, 43);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 18);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "浮标";
+            this.label8.Visible = false;
+            // 
+            // ckC3
+            // 
+            this.ckC3.Location = new System.Drawing.Point(83, 68);
+            this.ckC3.MenuManager = this.barManager1;
+            this.ckC3.Name = "ckC3";
+            this.ckC3.Properties.Caption = "电流3";
+            this.ckC3.Size = new System.Drawing.Size(62, 22);
+            this.ckC3.TabIndex = 5;
+            // 
+            // btnReLond
+            // 
+            this.btnReLond.Location = new System.Drawing.Point(21, 96);
+            this.btnReLond.Name = "btnReLond";
+            this.btnReLond.Size = new System.Drawing.Size(119, 42);
+            this.btnReLond.TabIndex = 43;
+            this.btnReLond.Text = "重新加载波形图";
+            this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
+            // 
+            // lbdbtime
+            // 
+            this.lbdbtime.Location = new System.Drawing.Point(16, 388);
+            this.lbdbtime.Name = "lbdbtime";
+            this.lbdbtime.Size = new System.Drawing.Size(89, 18);
+            this.lbdbtime.TabIndex = 61;
+            this.lbdbtime.Text = "labelControl12";
+            // 
+            // lbybtime
+            // 
+            this.lbybtime.Location = new System.Drawing.Point(16, 316);
+            this.lbybtime.Name = "lbybtime";
+            this.lbybtime.Size = new System.Drawing.Size(89, 18);
+            this.lbybtime.TabIndex = 60;
+            this.lbybtime.Text = "labelControl11";
+            // 
+            // labelControl7
+            // 
+            this.labelControl7.Location = new System.Drawing.Point(6, 454);
+            this.labelControl7.Name = "labelControl7";
+            this.labelControl7.Size = new System.Drawing.Size(75, 18);
+            this.labelControl7.TabIndex = 59;
+            this.labelControl7.Text = "绘图点数：";
+            // 
+            // labelControl8
+            // 
+            this.labelControl8.Location = new System.Drawing.Point(10, 430);
+            this.labelControl8.Name = "labelControl8";
+            this.labelControl8.Size = new System.Drawing.Size(75, 18);
+            this.labelControl8.TabIndex = 58;
+            this.labelControl8.Text = "存储数量：";
+            // 
+            // lbdbdata
+            // 
+            this.lbdbdata.Location = new System.Drawing.Point(16, 364);
+            this.lbdbdata.Name = "lbdbdata";
+            this.lbdbdata.Size = new System.Drawing.Size(81, 18);
+            this.lbdbdata.TabIndex = 57;
+            this.lbdbdata.Text = "labelControl9";
+            // 
+            // lbybname
+            // 
+            this.lbybname.Location = new System.Drawing.Point(16, 296);
+            this.lbybname.Name = "lbybname";
+            this.lbybname.Size = new System.Drawing.Size(89, 18);
+            this.lbybname.TabIndex = 56;
+            this.lbybname.Text = "labelControl10";
             // 
             // labelControl6
             // 
@@ -1087,87 +1316,23 @@
             this.LBxmlCount.TabIndex = 46;
             this.LBxmlCount.Text = "LBxmlCount";
             // 
-            // btnClear
+            // btnClear1
             // 
-            this.btnClear.Location = new System.Drawing.Point(85, 196);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(54, 28);
-            this.btnClear.TabIndex = 45;
-            this.btnClear.Text = "清空";
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear1.Location = new System.Drawing.Point(85, 196);
+            this.btnClear1.Name = "btnClear1";
+            this.btnClear1.Size = new System.Drawing.Size(54, 28);
+            this.btnClear1.TabIndex = 45;
+            this.btnClear1.Text = "清空";
+            this.btnClear1.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // btnReNew
+            // btnReNew1
             // 
-            this.btnReNew.Location = new System.Drawing.Point(25, 196);
-            this.btnReNew.Name = "btnReNew";
-            this.btnReNew.Size = new System.Drawing.Size(54, 28);
-            this.btnReNew.TabIndex = 44;
-            this.btnReNew.Text = "还原";
-            this.btnReNew.Click += new System.EventHandler(this.btnReNew_Click);
-            // 
-            // btnReLond
-            // 
-            this.btnReLond.Location = new System.Drawing.Point(25, 101);
-            this.btnReLond.Name = "btnReLond";
-            this.btnReLond.Size = new System.Drawing.Size(119, 42);
-            this.btnReLond.TabIndex = 43;
-            this.btnReLond.Text = "重新加载波形图";
-            this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
-            // 
-            // ckC3
-            // 
-            this.ckC3.Location = new System.Drawing.Point(90, 73);
-            this.ckC3.MenuManager = this.barManager1;
-            this.ckC3.Name = "ckC3";
-            this.ckC3.Properties.Caption = "电流3";
-            this.ckC3.Size = new System.Drawing.Size(75, 22);
-            this.ckC3.TabIndex = 5;
-            // 
-            // ckC2
-            // 
-            this.ckC2.Location = new System.Drawing.Point(90, 45);
-            this.ckC2.MenuManager = this.barManager1;
-            this.ckC2.Name = "ckC2";
-            this.ckC2.Properties.Caption = "电流2";
-            this.ckC2.Size = new System.Drawing.Size(75, 22);
-            this.ckC2.TabIndex = 4;
-            // 
-            // ckC1
-            // 
-            this.ckC1.Location = new System.Drawing.Point(90, 17);
-            this.ckC1.MenuManager = this.barManager1;
-            this.ckC1.Name = "ckC1";
-            this.ckC1.Properties.Caption = "电流1";
-            this.ckC1.Size = new System.Drawing.Size(75, 22);
-            this.ckC1.TabIndex = 3;
-            // 
-            // ckV3
-            // 
-            this.ckV3.Location = new System.Drawing.Point(25, 73);
-            this.ckV3.MenuManager = this.barManager1;
-            this.ckV3.Name = "ckV3";
-            this.ckV3.Properties.Caption = "震动3";
-            this.ckV3.Size = new System.Drawing.Size(75, 22);
-            this.ckV3.TabIndex = 2;
-            // 
-            // ckV2
-            // 
-            this.ckV2.Location = new System.Drawing.Point(25, 45);
-            this.ckV2.MenuManager = this.barManager1;
-            this.ckV2.Name = "ckV2";
-            this.ckV2.Properties.Caption = "震动2";
-            this.ckV2.Size = new System.Drawing.Size(75, 22);
-            this.ckV2.TabIndex = 1;
-            // 
-            // ckV1
-            // 
-            this.ckV1.EditValue = true;
-            this.ckV1.Location = new System.Drawing.Point(25, 17);
-            this.ckV1.MenuManager = this.barManager1;
-            this.ckV1.Name = "ckV1";
-            this.ckV1.Properties.Caption = "震动1";
-            this.ckV1.Size = new System.Drawing.Size(75, 22);
-            this.ckV1.TabIndex = 0;
+            this.btnReNew1.Location = new System.Drawing.Point(25, 196);
+            this.btnReNew1.Name = "btnReNew1";
+            this.btnReNew1.Size = new System.Drawing.Size(54, 28);
+            this.btnReNew1.TabIndex = 44;
+            this.btnReNew1.Text = "还原";
+            this.btnReNew1.Click += new System.EventHandler(this.btnReNew_Click);
             // 
             // treeList
             // 
@@ -1290,54 +1455,6 @@
             this.barLargeButtonItem24.Id = 115;
             this.barLargeButtonItem24.Name = "barLargeButtonItem24";
             // 
-            // labelControl7
-            // 
-            this.labelControl7.Location = new System.Drawing.Point(6, 454);
-            this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(75, 18);
-            this.labelControl7.TabIndex = 59;
-            this.labelControl7.Text = "绘图点数：";
-            // 
-            // labelControl8
-            // 
-            this.labelControl8.Location = new System.Drawing.Point(10, 430);
-            this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(75, 18);
-            this.labelControl8.TabIndex = 58;
-            this.labelControl8.Text = "存储数量：";
-            // 
-            // lbdbdata
-            // 
-            this.lbdbdata.Location = new System.Drawing.Point(16, 364);
-            this.lbdbdata.Name = "lbdbdata";
-            this.lbdbdata.Size = new System.Drawing.Size(81, 18);
-            this.lbdbdata.TabIndex = 57;
-            this.lbdbdata.Text = "labelControl9";
-            // 
-            // lbybname
-            // 
-            this.lbybname.Location = new System.Drawing.Point(16, 296);
-            this.lbybname.Name = "lbybname";
-            this.lbybname.Size = new System.Drawing.Size(89, 18);
-            this.lbybname.TabIndex = 56;
-            this.lbybname.Text = "labelControl10";
-            // 
-            // lbybtime
-            // 
-            this.lbybtime.Location = new System.Drawing.Point(16, 316);
-            this.lbybtime.Name = "lbybtime";
-            this.lbybtime.Size = new System.Drawing.Size(89, 18);
-            this.lbybtime.TabIndex = 60;
-            this.lbybtime.Text = "labelControl11";
-            // 
-            // lbdbtime
-            // 
-            this.lbdbtime.Location = new System.Drawing.Point(16, 388);
-            this.lbdbtime.Name = "lbdbtime";
-            this.lbdbtime.Size = new System.Drawing.Size(89, 18);
-            this.lbdbtime.TabIndex = 61;
-            this.lbdbtime.Text = "labelControl12";
-            // 
             // FmMain
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1369,13 +1486,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).EndInit();
+            this.plLinePath.ResumeLayout(false);
+            this.plLinePath.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckV1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckV3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckC3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcOpen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.删除)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
@@ -1429,8 +1549,8 @@
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem1;
         private DevExpress.XtraEditors.PanelControl pclChart;
 
-        private DevExpress.XtraEditors.SimpleButton btnNarrow;
-        private DevExpress.XtraEditors.SimpleButton btnEnlarge;
+        private DevExpress.XtraEditors.SimpleButton btnNarrow1;
+        private DevExpress.XtraEditors.SimpleButton btnEnlarge11;
         private DevExpress.XtraEditors.LabelControl lbY;
         private DevExpress.XtraEditors.LabelControl lbX;
         private DevExpress.XtraEditors.PanelControl panelControl1;
@@ -1441,8 +1561,8 @@
         private DevExpress.XtraEditors.CheckEdit ckV2;
         private DevExpress.XtraEditors.CheckEdit ckV1;
         private DevExpress.XtraEditors.SimpleButton btnReLond;
-        private DevExpress.XtraEditors.SimpleButton btnReNew;
-        private DevExpress.XtraEditors.SimpleButton btnClear;
+        private DevExpress.XtraEditors.SimpleButton btnReNew1;
+        private DevExpress.XtraEditors.SimpleButton btnClear1;
         private DevExpress.XtraTreeList.TreeList treeList;
         private DevExpress.XtraTreeList.Columns.TreeListColumn ID;
         private DevExpress.XtraBars.BarButtonItem barButtonItem22;
@@ -1516,5 +1636,15 @@
         private DevExpress.XtraEditors.LabelControl lbybname;
         private DevExpress.XtraEditors.LabelControl lbdbtime;
         private DevExpress.XtraEditors.LabelControl lbybtime;
+        private DevExpress.XtraEditors.PanelControl plLinePath;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private DevExpress.XtraBars.BarLargeButtonItem btnRightShift1;
+        private DevExpress.XtraBars.BarLargeButtonItem btnEnlarge;
+        private DevExpress.XtraBars.BarLargeButtonItem btnNarrow;
+        private DevExpress.XtraBars.BarLargeButtonItem btnClear;
+        private DevExpress.XtraBars.BarLargeButtonItem btnReNew;
     }
 }

@@ -328,7 +328,6 @@ namespace Basic_Controls
             {
                 if (sendUdp(agreement._3_CMD_STOPTESTER))// 返回成功才执行
                 {
-
                     End_Chart();
                     if (ShowType == 2)
                     {
@@ -353,8 +352,14 @@ namespace Basic_Controls
                         //考虑是否加个 转圈提示在存储数据不进行别的操作
                         Test_Xml_Insert();
 
-                        pub_Test_Plan.VOLTAGE = (allv / vcount).ToString();
-
+                        if (allv > 0 && vcount > 0)
+                        {
+                            pub_Test_Plan.VOLTAGE = (allv / vcount).ToString();
+                        }
+                        else
+                        {
+                            pub_Test_Plan.VOLTAGE = "0";
+                        }
                         Db_Action.Instance.Test_Confige_VOLTAGE_Edit(pub_Test_Plan);
 
                         XmlHelper.Edit_Voltage(pub_Test_Plan);
@@ -390,8 +395,14 @@ namespace Basic_Controls
                                 {
                                     Tester_List_Bind();
                                     MessageBox.Show("数据采集完毕！");
+                                    btnSTest.Enabled = true;
+
                                 }));
                             }
+                        }
+                        else
+                        {
+                            btnSTest.Enabled = true;
                         }
                     }
                 }
@@ -429,24 +440,6 @@ namespace Basic_Controls
             }
         }
         /// <summary>
-        /// 连续测试
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnCTest_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            try
-            {
-                //连续测试加个循环
-                // IsOpensTest = true;
-                Send_Config();
-            }
-            catch (Exception ex)
-            {
-                ListToText.Instance.WriteListToTextFile1(ex.ToString());
-            }
-        }
-        /// <summary>
         /// 开始测试基本配置
         /// </summary>
         private void Send_Config(int SINGLE_DOUBLE = 1)
@@ -462,8 +455,6 @@ namespace Basic_Controls
                 #region 生成测试配置信息
 
                 Test_Plan model = new Test_Plan();
-
-
 
                 if (pub_Test_Plan.PARENTID == "0")
                 {
@@ -521,9 +512,12 @@ namespace Basic_Controls
 
                 XmlHelper.DeleteXmlDocument(pub_Test_Plan.DVNAME);
                 XmlHelper.Init(pub_Test_Plan.DVNAME, pub_Test_Plan);
+                btnSTest.Enabled = false;
+
                 if (sendUdp(agreement._2_CMD_STARTTESTER))
                 {
                     Start_Chart();
+
                 };
             }
         }
@@ -541,7 +535,7 @@ namespace Basic_Controls
             //更新波形通道
             if (Bind_IsDC())
             {
-                if (pub_Test_Plan != null)
+                if (pub_Test_Plan != null && pub_Test_Plan.PARENTID != "0")
                 {
                     string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
                     bool isdd = FileHelper.IsFileExist(filepath);
@@ -553,6 +547,10 @@ namespace Basic_Controls
                     {
                         MessageBox.Show("未找到该图形数据！");
                     }
+                }
+                else
+                {
+                    Chart_Init();
                 }
             }
         }
@@ -684,6 +682,8 @@ namespace Basic_Controls
                 if (ip == DvIp)
                 {
                     MessageBox.Show("本机IP和设备IP相同，请修改本机IP。");
+                    btnSTest.Enabled = true;
+
                     return false;
                 }
                 else
@@ -694,6 +694,13 @@ namespace Basic_Controls
             }
             else
             {
+                if (msg == agreement._2_CMD_STARTTESTER)//发送 采集数据是 检查设备未连接 删除该条数据 和xml文件
+                {
+                    Db_Action.Instance.Test_Confige_Del(pub_Test_Plan);
+                    string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
+                    FileHelper.DeleteFile(filepath);
+                }
+                btnSTest.Enabled = true;
                 MessageBox.Show("设备IP: 【" + DvIp + "】 未连接");
                 return false;
             }
@@ -896,6 +903,122 @@ namespace Basic_Controls
                 aotuzoom = 0;
             }
         }
+
+        /// <summary>
+        /// 放大
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEnlarge_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (aotuzoom < 3)
+            {
+                double OldXMin = tChart.Axes.Bottom.Minimum;
+                double OldXMax = tChart.Axes.Bottom.Maximum;
+                double XMid = (OldXMin + OldXMax) / 2;
+                double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+                double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+
+                tChart.Axes.Top.Labels.ValueFormat = "0.000000";
+                tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+                tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+                aotuzoom++;
+            }
+        }
+        /// <summary>
+        /// 缩小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNarrow_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (aotuzoom > 1)
+            {
+                double OldXMin = tChart.Axes.Bottom.Minimum;
+                double OldXMax = tChart.Axes.Bottom.Maximum;
+                double XMid = (OldXMin + OldXMax) / 2;
+                double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
+                double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
+                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+
+
+                tChart.Axes.Top.Labels.ValueFormat = "0.000000";
+                tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+                tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+                aotuzoom--;
+            }
+            else if (aotuzoom == 1)
+            {
+                tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+                tChart.Axes.Bottom.SetMinMax(min, max);
+
+                tChart.Axes.Top.Labels.ValueFormat = "0.00";
+                tChart.Axes.Top.SetMinMax(min, max);
+                aotuzoom = 0;
+            }
+        }
+        /// <summary>
+        /// 清空
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClear_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (tChart != null && linlength > 0)
+            {
+                Porint_List = new ConcurrentQueue<byte[]>();
+                Save_Db_Source = new ConcurrentQueue<Udp_EventArgs>();
+                vx1 = new double[linlength];
+                vy1 = new double[linlength];
+
+                vx2 = new double[linlength];
+                vy2 = new double[linlength];
+
+                vx3 = new double[linlength];
+                vy3 = new double[linlength];
+
+                cx1 = new double[linlength];
+                cy1 = new double[linlength];
+
+                cx2 = new double[linlength];
+                cy2 = new double[linlength];
+
+                cx3 = new double[linlength];
+                cy3 = new double[linlength];
+
+                vline1.Clear();
+                vline2.Clear();
+                vline3.Clear();
+                cline1.Clear();
+                cline2.Clear();
+                cline3.Clear();
+
+                tChart.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("无数据清理！");
+            }
+
+        }
+        /// <summary>
+        /// 还原
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReNew_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            //tChart.Zoom.Undo();
+            tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+            tChart.Axes.Bottom.SetMinMax(min, max);
+            aotuzoom = 0;
+        }
+
         /// <summary>
         /// 中键放大缩小
         /// </summary>
@@ -1148,6 +1271,8 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_Init()
         {
+            plLinePath.Enabled = true;
+
             tChart.Series.Clear();
             tChart.Axes.Custom.Clear();
 
@@ -1354,9 +1479,6 @@ namespace Basic_Controls
             {
                 listBaseLine.Add((BaseLine)tChart.Series[i]);
             }
-            //tChart.Axes.Left.StartPosition = space;
-            //tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
-            //tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
             double startPosition = tChart.Axes.Left.StartPosition;
             double endPosition = tChart.Axes.Left.EndPosition;
             startPosition = 0;
@@ -1381,7 +1503,6 @@ namespace Basic_Controls
                 axis.Minimum = -5;//最小值
 
                 tChart.Axes.Custom.Add(axis);
-                //listBaseLine[i].CustomVertAxis = axis;
                 listBaseLine[i * 2].CustomVertAxis = axis;
                 listBaseLine[(i * 2) + 1].CustomVertAxis = axis;
             }
@@ -1552,8 +1673,8 @@ namespace Basic_Controls
                 Chart_DataTable_Init();
                 Chart_Data_Lond();
 
-                min = tChart.Axes.Bottom.Minimum;
-                max = tChart.Axes.Bottom.MaxXValue;
+                //min = tChart.Axes.Bottom.Minimum;
+                //max = tChart.Axes.Bottom.MaxXValue;
 
                 splashScreenManager.SetWaitFormDescription("加载完成。");
                 splashScreenManager.CloseWaitForm();
@@ -1646,6 +1767,7 @@ namespace Basic_Controls
                 vline1 = new Line();
                 vline1.HorizAxis = HorizontalAxis.Top;
                 vline1.Title = string.Format("【震动】");
+
                 vline1.Add(vx1, vy1);
                 vline1.Color = Color.Yellow;
 
@@ -1677,6 +1799,41 @@ namespace Basic_Controls
                 //绘制画布
                 AddCustomAxis_Contrast(2);
                 //AddCustomAxis_Contrast(tChart.Series.Count);
+
+                tChart.Refresh();
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 对比数据加载加载图表
+        /// </summary>
+        private void Chart_Data_Envelope_Lond(double[] Out_x, double[] Out_y)
+        {
+            try
+            {
+                vline1 = new Line();
+                // vline1.HorizAxis = HorizontalAxis.Top;
+                vline1.Title = string.Format("【震动1】包络线");
+
+                vline1.Add(Out_x, Out_y);
+                vline1.Color = Color.Green;
+
+                tChart.Series.Add(vline1);
+
+
+
+                vline2 = new Line();
+                //vline2.Add(vx1, vy1);
+                //vline2.Color = Color.Red;
+
+                tChart.Series.Add(vline2);
+
+                //绘制画布
+                AddCustomAxis_Contrast(1);
 
                 tChart.Refresh();
             }
@@ -1754,6 +1911,7 @@ namespace Basic_Controls
             lbVoltage.Text = "0";
             panelControl1.Enabled = false;
             pc2.Enabled = false;
+
             isAbort = true;
 
             Porint_List = new ConcurrentQueue<byte[]>();
@@ -1799,12 +1957,12 @@ namespace Basic_Controls
             Chart_Init();
         }
 
-
         /// <summary>
         /// 停止处理图表
         /// </summary>
         private void End_Chart()
         {
+            btnSTest.Enabled = true;//通信未超时是回复
             istrue = false;
             porintadd = 0;
             endprint = 0;
@@ -2533,7 +2691,6 @@ namespace Basic_Controls
             }
 
         }
-
 
         /// <summary>
         /// 初始化电流配置
@@ -3285,6 +3442,23 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnEnvelope_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            try
+            {
+                double[] Out_x;
+                double[] Out_y;
+
+                double spacing = (double)(1 * num) / allnum; ;
+
+                Envelope_Algorithm.Instance.Envelope(spacing, vx1, vy1, out Out_x, out Out_y);
+                Chart_DataTable_Init();
+
+                Chart_Config();
+                Chart_Data_Envelope_Lond(Out_x, Out_y);
+            }
+            catch (Exception ex)
+            {
+                string ex1 = ex.ToString();
+            }
 
         }
         /// <summary>
@@ -3374,6 +3548,8 @@ namespace Basic_Controls
                     alltime = 20;
                     min = 0;
                     max = 20;
+                    plLinePath.Enabled = false;
+
                     Chart_DataTable_Init();
                     Chart_Config_Contrast();
                     Chart_Data_Contrast_Lond();
@@ -3499,5 +3675,6 @@ namespace Basic_Controls
 
             }
         }
+
     }
 }

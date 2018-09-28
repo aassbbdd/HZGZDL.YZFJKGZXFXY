@@ -121,6 +121,7 @@ namespace Udp_Agreement
             return x;
         }
         #endregion
+
         #region Current 电流
         /// <summary>
         /// 电流计算公式 算法
@@ -266,5 +267,6 @@ namespace Udp_Agreement
             return l;
         }
         #endregion
+
     }
 }
