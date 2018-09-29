@@ -852,22 +852,22 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            if (aotuzoom < 3)
-            {
-                double OldXMin = tChart.Axes.Bottom.Minimum;
-                double OldXMax = tChart.Axes.Bottom.Maximum;
-                double XMid = (OldXMin + OldXMax) / 2;
-                double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
-                double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
-                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
-                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
-                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+            //if (aotuzoom < 3)
+            //{
+            double OldXMin = tChart.Axes.Bottom.Minimum;
+            double OldXMax = tChart.Axes.Bottom.Maximum;
+            double XMid = (OldXMin + OldXMax) / 2;
+            double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+            double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+            tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+            tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+            tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
 
-                tChart.Axes.Top.Labels.ValueFormat = "0.000000";
-                tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
-                tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
-                aotuzoom++;
-            }
+            tChart.Axes.Top.Labels.ValueFormat = "0.000000";
+            tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+            tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+            aotuzoom++;
+            //}
         }
         /// <summary>
         /// 缩小
@@ -1037,7 +1037,8 @@ namespace Basic_Controls
 
                 if (e.Delta > 0)
                 {
-                    if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                    //  if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                    if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
                     {
                         double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
                         double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
@@ -1108,7 +1109,8 @@ namespace Basic_Controls
                     // 开始位置大于结束位置    开始位置大于0  是鼠标左键
                     if ((sx < e.X || sy < e.Y) && sx > 0 && sy > 0)
                     {
-                        if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                        //if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                        if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
                         {
                             double min = tChart.Axes.Bottom.CalcPosPoint(sx);
                             double max = tChart.Axes.Bottom.CalcPosPoint(e.X);
@@ -1827,8 +1829,8 @@ namespace Basic_Controls
 
 
                 vline2 = new Line();
-                //vline2.Add(vx1, vy1);
-                //vline2.Color = Color.Red;
+                vline2.Add(vx1, vy1);
+                vline2.Color = Color.Red;
 
                 tChart.Series.Add(vline2);
 

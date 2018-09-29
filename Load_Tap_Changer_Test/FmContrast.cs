@@ -44,6 +44,18 @@ namespace Load_Tap_Changer_Test
             treeList1.Refresh();
 
             treeList2.DataSource = list1;
+            List<TreeListNode> listNode = treeList2.GetNodeList();
+            TreeListNode node = treeList1.FocusedNode;
+            for (int i = 0; i <= listNode.Count; i++)
+            {
+                if (listNode.Count > 2
+                && node.GetValue("ID").ToString() != listNode[i].GetValue("ID").ToString()
+                && listNode[i].GetValue("PARENTID").ToString() != "0")
+                {
+                    treeList2.SetFocusedNode(listNode[i]);
+                    break;
+                }
+            }
             treeList2.Refresh();
         }
         /// <summary>
@@ -69,87 +81,122 @@ namespace Load_Tap_Changer_Test
             Tester_List_Bind();
             Bind_V();
             Bind_C();
+            isfirst = true;
         }
-
-
+        bool isfirst = false;
         private void treeList1_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
             if (e.Node.Selected)
             {
-                bool v = e.Node["PARENTID"].ToString() != "0";
-                if (v)
+                //bool v = e.Node["PARENTID"].ToString() != "0";
+                //if (v)
+                //{
+                node1 = e.Node;
+
+                if (node2 != null
+                    && e.Node["ID"].ToString() == node2["ID"].ToString()
+                    && isfirst)
                 {
-                    if (node2 != null && e.Node["ID"].ToString() == node2["ID"].ToString())
+                    treeList1.SetFocusedNode(e.OldNode);
+                    if (treeList1.Appearance.FocusedCell.BackColor != Color.Red)
                     {
-                        MessageBox.Show("样本数据不能和对比数据一样!");
-                        return;
+                        treeList1.Appearance.FocusedCell.BackColor = Color.Red;
+                    };
+
+                    MessageBox.Show("样本数据不能和对比数据一样!");
+                    return;
+                }
+                else if (e.Node.GetValue("PARENTID").ToString() == "0")
+                {
+                    treeList1.SetFocusedNode(e.OldNode);
+                    if (treeList1.Appearance.FocusedCell.BackColor != Color.Red)
+                    {
+                        treeList1.Appearance.FocusedCell.BackColor = Color.Red;
+                    };
+                }
+                else
+                {
+                    if (treeList1.Appearance.FocusedCell.BackColor != Color.Red)
+                    {
+                        treeList1.Appearance.FocusedCell.BackColor = Color.Red;
+                    };
+
+                    lbContrast.Text = node1["DVNAME"].ToString();
+
+                    rdoC.Properties.Items.Clear();
+                    rdoV.Properties.Items.Clear();
+
+                    if (node1["C1"].ToString() == "1")
+                    {
+                        rdoC.Properties.Items.Add(new RadioGroupItem("1", "电流1"));
                     }
-                    else
+                    if (node1["C2"].ToString() == "1")
                     {
-                        if (treeList1.Appearance.FocusedCell.BackColor != Color.Red)
-                        {
-                            treeList1.Appearance.FocusedCell.BackColor = Color.Red;
-                        };
-                        node1 = e.Node;
-                        lbContrast.Text = node1["DVNAME"].ToString();
+                        rdoC.Properties.Items.Add(new RadioGroupItem("2", "电流2"));
+                    }
 
-                        rdoC.Properties.Items.Clear();
-                        rdoV.Properties.Items.Clear();
+                    if (node1["C3"].ToString() == "1")
+                    {
+                        rdoC.Properties.Items.Add(new RadioGroupItem("3", "电流3"));
+                    }
 
-                        if (node1["C1"].ToString() == "1")
-                        {
-                            rdoC.Properties.Items.Add(new RadioGroupItem ("1", "电流1"));
-                        }
-                        if (node1["C2"].ToString() == "1")
-                        {
-                            rdoC.Properties.Items.Add(new RadioGroupItem("2", "电流2"));
-                        }
+                    if (node1["V1"].ToString() == "1")
+                    {
+                        rdoV.Properties.Items.Add(new RadioGroupItem("1", "震动1"));
+                    }
+                    if (node1["V2"].ToString() == "1")
+                    {
+                        rdoV.Properties.Items.Add(new RadioGroupItem("2", "震动2"));
+                    }
 
-                        if (node1["C3"].ToString() == "1")
-                        {
-                            rdoC.Properties.Items.Add(new RadioGroupItem("3", "电流3"));
-                        }
-
-                        if (node1["V1"].ToString() == "1")
-                        {
-                            rdoV.Properties.Items.Add(new RadioGroupItem("1", "震动1"));
-                        }
-                        if (node1["V2"].ToString() == "1")
-                        {
-                            rdoV.Properties.Items.Add(new RadioGroupItem("2", "震动2"));
-                        }
-
-                        if (node1["V3"].ToString() == "1")
-                        {
-                            rdoV.Properties.Items.Add(new RadioGroupItem("3", "震动3"));
-                        }
+                    if (node1["V3"].ToString() == "1")
+                    {
+                        rdoV.Properties.Items.Add(new RadioGroupItem("3", "震动3"));
                     }
                 }
             }
+            //}
         }
         private void treeList2_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
             if (e.Node.Selected)
             {
-                bool v = e.Node["PARENTID"].ToString() != "0";
-                if (v)
+                //bool v = e.Node["PARENTID"].ToString() != "0";
+                //if (v)
+                //{
+                node2 = e.Node;
+                if (node1 != null
+                    && e.Node["ID"].ToString() == node1["ID"].ToString()
+                    && isfirst)
                 {
-                    if (node1 != null && e.Node["ID"].ToString() == node1["ID"].ToString())
+                    treeList2.SetFocusedNode(e.OldNode);
+                    if (treeList2.Appearance.FocusedCell.BackColor != Color.SteelBlue)
                     {
-                        MessageBox.Show("对比数据不能和样本数据一样!");
-                        return;
-                    }
-                    else
-                    {
-
-                        if (treeList2.Appearance.FocusedCell.BackColor != Color.SteelBlue)
-                        {
-                            treeList2.Appearance.FocusedCell.BackColor = Color.SteelBlue;
-                        };
-                        node2 = e.Node;
-                        lbSample.Text = node2["DVNAME"].ToString();
-                    }
+                        treeList2.Appearance.FocusedCell.BackColor = Color.SteelBlue;
+                    };
+                    MessageBox.Show("对比数据不能和样本数据一样!");
+                    return;
                 }
+                else if (e.Node.GetValue("PARENTID").ToString() == "0")
+                {
+                    treeList2.SetFocusedNode(e.OldNode);
+                    if (treeList2.Appearance.FocusedCell.BackColor != Color.SteelBlue)
+                    {
+                        treeList2.Appearance.FocusedCell.BackColor = Color.SteelBlue;
+                    };
+                }
+                else
+                {
+                    if (treeList2.Appearance.FocusedCell.BackColor != Color.SteelBlue)
+                    {
+                        treeList2.Appearance.FocusedCell.BackColor = Color.SteelBlue;
+                    };
+
+                    lbSample.Text = node2["DVNAME"].ToString();
+                }
+
+                //}
+
             }
         }
         /// <summary>

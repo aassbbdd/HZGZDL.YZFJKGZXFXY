@@ -38,39 +38,67 @@ namespace Udp_Agreement
 
         public void Envelope(double spacing, double[] x, double[] y, out double[] Out_x, out double[] Out_y)
         {
-            double[] xNew = new double[y.Length - 2];
-            double[] yNew = new double[y.Length - 2];
-            int fcount = 0;
+            double[] xNew = (double[])x.Clone();
+            double[] yNew = (double[])y.Clone();
 
-            xNew = Diff(y, x, out fcount);
-            xNew = Sign(y, out fcount);
-            xNew = Diff(y, x, out fcount);
+            env_3(yNew, xNew, yNew.Length, 0);
 
-            Out_x = new double[fcount];
-            Out_y = new double[fcount];
-            int j = 1;//计算峰值个数
+            Out_x = x;
+            Out_y = xNew;
 
-            Out_x[0] = 0;
-            Out_y[0] = 0;
 
-            for (int i = 0; i < xNew.Length; i++)
-            {
-                if (xNew[i] < 0)//峰值
-                {
-                    Out_x[j] = (i + 1) * spacing;
-                    Out_y[j] = y[i + 1];
-                    j++;
-                }
-                else//谷值
-                {
+            //double[] bfy = bf(y);
 
-                }
-            }
+            //double[] xNew = new double[bfy.Length];
+            //double[] yNew = new double[bfy.Length];
+            //int fcount = 0;
 
-            Out_x[Out_x.Length - 1] = x.Length * spacing;
-            Out_y[Out_x.Length - 1] = 0;
+            //xNew = Diff(bfy, x, out fcount);
+            //xNew = Sign(bfy, out fcount);
+            //xNew = Diff(bfy, x, out fcount);
+
+            //Out_x = new double[fcount];
+            //Out_y = new double[fcount];
+            //int j = 1;//计算峰值个数
+
+            //Out_x[0] = 0;
+            //Out_y[0] = 0;
+
+            //for (int i = 0; i < xNew.Length; i++)
+            //{
+            //    if (xNew[i] < 0)//峰值
+            //    {
+            //        Out_x[j] = (i + 1) * spacing;
+            //        Out_y[j] = bfy[i + 1];
+            //        j++;
+            //    }
+            //    else//谷值
+            //    {
+
+            //    }
+            //}
+
+            //Out_x[Out_x.Length - 1] = x.Length * spacing;
+            //Out_y[Out_x.Length - 1] = 0;
         }
         #endregion
+
+        private double[] bf(double[] f)
+        {
+            double[] fNew = new double[f.Length];
+            for (int i = 0; i < f.Length - 1; i++)
+            {
+                if (f[i] > 0)
+                {
+                    fNew[i] = f[i];
+                }
+                else
+                {
+                    fNew[i] = -1;
+                }
+            }
+            return fNew;
+        }
 
         /// <summary>
         /// （求斜率函数）：对数组y0相邻元素求斜率，比原始信号少一位数据。结果是个数组。
@@ -82,12 +110,12 @@ namespace Udp_Agreement
         {
             fcount = 2;
             double[] newY = new double[yArray.Length - 2];
-            for (int i = 0; i < newY.Length; i++)
+            for (int i = 0; i < newY.Length - 10; i++)
             {
-                var n1 = yArray[i + 1];
+                var n1 = yArray[i + 10];
                 var n2 = yArray[i];
-                var num = (yArray[i + 1] - yArray[i]);
-                newY[i] = (yArray[i + 1] - yArray[i]);
+                var num = (yArray[i + 10] - yArray[i]);
+                newY[i] = (yArray[i + 10] - yArray[i]);
                 if (newY[i] < 0)
                 {
                     fcount++;
@@ -126,5 +154,86 @@ namespace Udp_Agreement
             }
             return newX;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="rct"></param>
+        /// <returns></returns>
+        public double env_1(double x, double rct)
+        {
+            double old_y = 0.0;
+            if (rct == 0.0)
+            {
+                old_y = 0.0;
+            }
+            else
+            {
+                if (x > old_y)
+                {
+                    old_y = x;
+                }
+                else
+                {
+                    old_y *= rct / (rct + 1);
+                }
+            }
+            return old_y;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="N"></param>
+        /// <param name="rct"></param>
+        public void env_2(double[] x, double[] y, int N, double rct = 2)
+        {
+            double xx = 0.0;
+            int i;
+            y[0] = Math.Abs(x[0]);
+            for (i = 1; i < N; i++)
+            {
+                xx = x[i];
+
+                if (xx > 0)
+                {
+                    if ((xx + 20.00) > y[i - 1])
+                    {
+                        y[i] = xx;
+                    }
+                    else
+                    {
+                        y[i] = y[i - 1] * rct / (rct + 1);
+                    }
+                }
+                else
+                {
+                    y[i] = 0;
+                }
+
+            }
+        }
+
+        public void env_3(double[] iny, double[] outy, int N, double rct = 0.01)
+        {
+            double m_old = 0;
+            for (int i = 0; i < N; i++)
+            {
+                if ((iny[i]) > m_old)
+                {
+                    m_old = iny[i];
+                    outy[i] = m_old;
+                }
+                else
+                {
+                    m_old *= rct / (rct + 1);
+                    outy[i] = m_old;
+                }
+            }
+
+        }
+
     }
 }
