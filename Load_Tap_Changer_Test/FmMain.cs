@@ -341,6 +341,7 @@ namespace Basic_Controls
 
                         Tester_List_Bind();
                         XtraMessageBox.Show("电流未触发数据采集，请检查电流！");
+                        return;
                     }
                     else if (ShowType == 0)
                     {
@@ -1818,7 +1819,7 @@ namespace Basic_Controls
             try
             {
                 vline1 = new Line();
-                // vline1.HorizAxis = HorizontalAxis.Top;
+      //          vline1.HorizAxis = HorizontalAxis.Both;
                 vline1.Title = string.Format("【震动1】包络线");
 
                 vline1.Add(Out_x, Out_y);
@@ -1829,7 +1830,7 @@ namespace Basic_Controls
 
 
                 vline2 = new Line();
-                vline2.Add(vx1, vy1);
+                //  vline2.Add(vx1, vy1);
                 vline2.Color = Color.Red;
 
                 tChart.Series.Add(vline2);
@@ -3098,6 +3099,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
+            btnEnvelope.Enabled = false;
 
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
@@ -3239,6 +3241,8 @@ namespace Basic_Controls
                             alltime = 20;
                             Chart_Init();
                             Chart_Lond(filepath);
+
+                            btnEnvelope.Enabled = true;
                         }
                         else
                         {
@@ -3448,14 +3452,19 @@ namespace Basic_Controls
             {
                 double[] Out_x;
                 double[] Out_y;
-
                 double spacing = (double)(1 * num) / allnum; ;
+                double rc_up = txtRcUp.Text != "0" ? Convert.ToDouble(txtRcUp.Text) : 0.0001;
+                double rc_dn = txtRcDn.Text != "0" ? Convert.ToDouble(txtRcDn.Text) : 0.01;
+                Envelope_Algorithm.Instance.Envelope(spacing, vx1, vy1
+                    , out Out_x, out Out_y
+                    , rc_dn, rc_up);
 
-                Envelope_Algorithm.Instance.Envelope(spacing, vx1, vy1, out Out_x, out Out_y);
                 Chart_DataTable_Init();
 
                 Chart_Config();
                 Chart_Data_Envelope_Lond(Out_x, Out_y);
+                plLinePath.Enabled = false;
+
             }
             catch (Exception ex)
             {
@@ -3632,50 +3641,53 @@ namespace Basic_Controls
         private void btnRightShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             LeftOrRightNum--;
-            int num = MoveNum * LeftOrRightNum;
-            int allnum = cx2.Length - num;
 
-            if (cx2.Length > vline2.Count)
-            {
-                //double[] newvx = new double[allnum];
-                //double[] newvy = new double[allnum];
+            tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
 
-                //double[] newcx = new double[allnum];
-                //double[] newcy = new double[allnum];
+            //int num = MoveNum * LeftOrRightNum;
+            //int allnum = cx2.Length - num;
 
-                //for (int i = 0; i <= allnum - 1; i++)
-                //{
-                //    double x = i * 0.00001;
-                //    newvx[i] = x;
-                //    newvy[i] = vy2[num + i];
+            //if (cx2.Length > vline2.Count)
+            //{
+            //    //double[] newvx = new double[allnum];
+            //    //double[] newvy = new double[allnum];
 
-                //    newcx[i] = x;
-                //    newcy[i] = cy2[num + i];
-                //}
+            //    //double[] newcx = new double[allnum];
+            //    //double[] newcy = new double[allnum];
 
-                //vline2.Add(newvx, newvy);
-                //cline2.Add(newcx, newcy);
-                tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
+            //    //for (int i = 0; i <= allnum - 1; i++)
+            //    //{
+            //    //    double x = i * 0.00001;
+            //    //    newvx[i] = x;
+            //    //    newvy[i] = vy2[num + i];
 
-            }
-            else if (cx2.Length == vline2.Count)
-            {
-                //allnum = cx2.Length;
-                //double[] newx = new double[allnum];
-                //for (int i = 0; i <= allnum - 1; i++)
-                //{
-                //    double x = (Math.Abs(LeftOrRightNum) * MoveNum * 0.00001) + (i * 0.00001);
-                //    newx[i] = x;
-                //}
-                //vline2.Add(newx, vy2);
-                //cline2.Add(newx, cy2);
-                tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
+            //    //    newcx[i] = x;
+            //    //    newcy[i] = cy2[num + i];
+            //    //}
 
-            }
-            else
-            {
+            //    //vline2.Add(newvx, newvy);
+            //    //cline2.Add(newcx, newcy);
+            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
 
-            }
+            //}
+            //else if (cx2.Length == vline2.Count)
+            //{
+            //    //allnum = cx2.Length;
+            //    //double[] newx = new double[allnum];
+            //    //for (int i = 0; i <= allnum - 1; i++)
+            //    //{
+            //    //    double x = (Math.Abs(LeftOrRightNum) * MoveNum * 0.00001) + (i * 0.00001);
+            //    //    newx[i] = x;
+            //    //}
+            //    //vline2.Add(newx, vy2);
+            //    //cline2.Add(newx, cy2);
+            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
+
+            //}
+            //else
+            //{
+
+            //}
         }
 
     }

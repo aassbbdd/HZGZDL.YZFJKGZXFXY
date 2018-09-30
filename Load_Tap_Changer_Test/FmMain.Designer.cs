@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
-            DevExpress.Utils.Animation.PushTransition pushTransition2 = new DevExpress.Utils.Animation.PushTransition();
+            DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
             this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem8 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
@@ -125,6 +125,10 @@
             this.lbX = new DevExpress.XtraEditors.LabelControl();
             this.lbY = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
+            this.txtRcDn = new DevExpress.XtraEditors.TextEdit();
+            this.txtRcUp = new DevExpress.XtraEditors.TextEdit();
             this.plLinePath = new DevExpress.XtraEditors.PanelControl();
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
@@ -175,6 +179,8 @@
             this.pclChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).BeginInit();
             this.plLinePath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
@@ -876,7 +882,7 @@
             // workspaceManager1
             // 
             this.workspaceManager1.TargetControl = this;
-            this.workspaceManager1.TransitionType = pushTransition2;
+            this.workspaceManager1.TransitionType = pushTransition1;
             // 
             // barEditItem2
             // 
@@ -1000,7 +1006,7 @@
             // 
             // lbX
             // 
-            this.lbX.Location = new System.Drawing.Point(8, 498);
+            this.lbX.Location = new System.Drawing.Point(8, 545);
             this.lbX.Name = "lbX";
             this.lbX.Size = new System.Drawing.Size(81, 18);
             this.lbX.TabIndex = 41;
@@ -1008,7 +1014,7 @@
             // 
             // lbY
             // 
-            this.lbY.Location = new System.Drawing.Point(90, 498);
+            this.lbY.Location = new System.Drawing.Point(90, 545);
             this.lbY.Name = "lbY";
             this.lbY.Size = new System.Drawing.Size(81, 18);
             this.lbY.TabIndex = 42;
@@ -1021,6 +1027,10 @@
             this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
             this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.labelControl9);
+            this.panelControl1.Controls.Add(this.labelControl10);
+            this.panelControl1.Controls.Add(this.txtRcDn);
+            this.panelControl1.Controls.Add(this.txtRcUp);
             this.panelControl1.Controls.Add(this.plLinePath);
             this.panelControl1.Controls.Add(this.lbdbtime);
             this.panelControl1.Controls.Add(this.lbybtime);
@@ -1044,10 +1054,48 @@
             this.panelControl1.Controls.Add(this.lbX);
             this.panelControl1.Controls.Add(this.btnNarrow1);
             this.panelControl1.Controls.Add(this.btnEnlarge11);
-            this.panelControl1.Location = new System.Drawing.Point(1282, 112);
+            this.panelControl1.Location = new System.Drawing.Point(1286, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 837);
             this.panelControl1.TabIndex = 52;
+            // 
+            // labelControl9
+            // 
+            this.labelControl9.Location = new System.Drawing.Point(16, 442);
+            this.labelControl9.Name = "labelControl9";
+            this.labelControl9.Size = new System.Drawing.Size(51, 18);
+            this.labelControl9.TabIndex = 65;
+            this.labelControl9.Text = "下降Rc:";
+            // 
+            // labelControl10
+            // 
+            this.labelControl10.Location = new System.Drawing.Point(16, 418);
+            this.labelControl10.Name = "labelControl10";
+            this.labelControl10.Size = new System.Drawing.Size(51, 18);
+            this.labelControl10.TabIndex = 64;
+            this.labelControl10.Text = "上升Rc:";
+            // 
+            // txtRcDn
+            // 
+            this.txtRcDn.EditValue = "0.01";
+            this.txtRcDn.Location = new System.Drawing.Point(71, 439);
+            this.txtRcDn.MenuManager = this.barManager1;
+            this.txtRcDn.Name = "txtRcDn";
+            this.txtRcDn.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,12})?";
+            this.txtRcDn.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.txtRcDn.Size = new System.Drawing.Size(76, 24);
+            this.txtRcDn.TabIndex = 63;
+            // 
+            // txtRcUp
+            // 
+            this.txtRcUp.EditValue = "0.0001";
+            this.txtRcUp.Location = new System.Drawing.Point(71, 415);
+            this.txtRcUp.MenuManager = this.barManager1;
+            this.txtRcUp.Name = "txtRcUp";
+            this.txtRcUp.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,10})?";
+            this.txtRcUp.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.txtRcUp.Size = new System.Drawing.Size(76, 24);
+            this.txtRcUp.TabIndex = 62;
             // 
             // plLinePath
             // 
@@ -1200,7 +1248,7 @@
             // 
             // labelControl7
             // 
-            this.labelControl7.Location = new System.Drawing.Point(6, 454);
+            this.labelControl7.Location = new System.Drawing.Point(6, 501);
             this.labelControl7.Name = "labelControl7";
             this.labelControl7.Size = new System.Drawing.Size(75, 18);
             this.labelControl7.TabIndex = 59;
@@ -1208,7 +1256,7 @@
             // 
             // labelControl8
             // 
-            this.labelControl8.Location = new System.Drawing.Point(10, 430);
+            this.labelControl8.Location = new System.Drawing.Point(10, 477);
             this.labelControl8.Name = "labelControl8";
             this.labelControl8.Size = new System.Drawing.Size(75, 18);
             this.labelControl8.TabIndex = 58;
@@ -1248,7 +1296,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(16, 474);
+            this.labelControl5.Location = new System.Drawing.Point(16, 521);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(75, 18);
             this.labelControl5.TabIndex = 53;
@@ -1256,7 +1304,7 @@
             // 
             // blSavePorint
             // 
-            this.blSavePorint.Location = new System.Drawing.Point(89, 474);
+            this.blSavePorint.Location = new System.Drawing.Point(89, 521);
             this.blSavePorint.Name = "blSavePorint";
             this.blSavePorint.Size = new System.Drawing.Size(78, 18);
             this.blSavePorint.TabIndex = 52;
@@ -1302,7 +1350,7 @@
             // 
             // LBPrintCount
             // 
-            this.LBPrintCount.Location = new System.Drawing.Point(85, 454);
+            this.LBPrintCount.Location = new System.Drawing.Point(85, 501);
             this.LBPrintCount.Name = "LBPrintCount";
             this.LBPrintCount.Size = new System.Drawing.Size(82, 18);
             this.LBPrintCount.TabIndex = 47;
@@ -1310,7 +1358,7 @@
             // 
             // LBxmlCount
             // 
-            this.LBxmlCount.Location = new System.Drawing.Point(85, 430);
+            this.LBxmlCount.Location = new System.Drawing.Point(85, 477);
             this.LBxmlCount.Name = "LBxmlCount";
             this.LBxmlCount.Size = new System.Drawing.Size(77, 18);
             this.LBxmlCount.TabIndex = 46;
@@ -1486,6 +1534,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).EndInit();
             this.plLinePath.ResumeLayout(false);
             this.plLinePath.PerformLayout();
@@ -1646,5 +1696,9 @@
         private DevExpress.XtraBars.BarLargeButtonItem btnNarrow;
         private DevExpress.XtraBars.BarLargeButtonItem btnClear;
         private DevExpress.XtraBars.BarLargeButtonItem btnReNew;
+        private DevExpress.XtraEditors.LabelControl labelControl9;
+        private DevExpress.XtraEditors.LabelControl labelControl10;
+        private DevExpress.XtraEditors.TextEdit txtRcDn;
+        private DevExpress.XtraEditors.TextEdit txtRcUp;
     }
 }
