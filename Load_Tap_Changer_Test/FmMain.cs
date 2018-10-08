@@ -59,10 +59,8 @@ namespace Basic_Controls
                 Tester_List_Bind();//获取测试计划绑定到页面树
             }
             //测试连接通信
-            sendUdp(agreement._1_CMD_HEARTBEAT);
+            // sendUdp(agreement._1_CMD_HEARTBEAT);
         }
-
-
 
         #region 页面初始化参数
 
@@ -322,7 +320,7 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="isIN">是否 跳转档位</param>
         /// <param name="ShowType">显示状态 0，不操作 1,跳转到下一个档位 2，结束提醒</param>
-        private void Stop_Test(bool isIN, int ShowType = 0)
+        private void Stop_Test(bool isIN, int ShowType = 1)
         {
             try
             {
@@ -343,12 +341,12 @@ namespace Basic_Controls
                         XtraMessageBox.Show("电流未触发数据采集，请检查电流！");
                         return;
                     }
-                    else if (ShowType == 0)
+                    else if (ShowType == 1)
                     {
                         //Invoke(new ThreadStart(delegate ()
                         //                          {
-                        splashScreenManager.ShowWaitForm();
-                        splashScreenManager.SetWaitFormDescription("采集数据保存中...");
+                        Show_Open("数据保存中");
+
                         //结束采样 同时采样存储 图形处理异常慢 所以分开 存储数据
                         //考虑是否加个 转圈提示在存储数据不进行别的操作
                         Test_Xml_Insert();
@@ -366,6 +364,7 @@ namespace Basic_Controls
                         XmlHelper.Edit_Voltage(pub_Test_Plan);
 
                         splashScreenManager.CloseWaitForm();
+                        // Show_End();
 
                         //}));
                         if (isIN)
@@ -407,7 +406,6 @@ namespace Basic_Controls
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -912,16 +910,23 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnEnlarge_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (aotuzoom < 3)
+            if (aotuzoom < 5)
             {
                 double OldXMin = tChart.Axes.Bottom.Minimum;
                 double OldXMax = tChart.Axes.Bottom.Maximum;
                 double XMid = (OldXMin + OldXMax) / 2;
                 double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
                 double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+
                 tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
                 tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
                 tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+
+                OldXMin = tChart.Axes.Top.Minimum;
+                OldXMax = tChart.Axes.Top.Maximum;
+                XMid = (OldXMin + OldXMax) / 2;
+                NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+                NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
 
                 tChart.Axes.Top.Labels.ValueFormat = "0.000000";
                 tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
@@ -929,6 +934,7 @@ namespace Basic_Controls
                 aotuzoom++;
             }
         }
+
         /// <summary>
         /// 缩小
         /// </summary>
@@ -936,32 +942,49 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnNarrow_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (aotuzoom > 1)
+            if (aotuzoom > 0)
             {
-                double OldXMin = tChart.Axes.Bottom.Minimum;
-                double OldXMax = tChart.Axes.Bottom.Maximum;
+                double OldXMin = tChart.Axes.Top.Minimum;
+                double OldXMax = tChart.Axes.Top.Maximum;
                 double XMid = (OldXMin + OldXMax) / 2;
                 double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
                 double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
-                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
-                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
-                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
-
-
                 tChart.Axes.Top.Labels.ValueFormat = "0.000000";
                 tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+                double min = 0;
+                if (NewXMin < 0)
+                {
+                    min = Math.Abs(NewXMin);
+                    NewXMin = 0;
+                }
+
                 tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+
+
+                OldXMin = tChart.Axes.Bottom.Minimum;
+                OldXMax = tChart.Axes.Bottom.Maximum;
+                XMid = (OldXMin + OldXMax) / 2;
+                NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
+                NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
+                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                NewXMin = NewXMin + min;
+                if (NewXMin < Offset)
+                {
+                    NewXMin = Offset;
+                }
+                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
                 aotuzoom--;
             }
-            else if (aotuzoom == 1)
-            {
-                tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
-                tChart.Axes.Bottom.SetMinMax(min, max);
+            //else if (aotuzoom == 1)
+            //{
+            //    tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
+            //    tChart.Axes.Bottom.SetMinMax(min, max);
 
-                tChart.Axes.Top.Labels.ValueFormat = "0.00";
-                tChart.Axes.Top.SetMinMax(min, max);
-                aotuzoom = 0;
-            }
+            //    tChart.Axes.Top.Labels.ValueFormat = "0.00";
+            //    tChart.Axes.Top.SetMinMax(min, max);
+            //    aotuzoom = 0;
+            //}
         }
         /// <summary>
         /// 清空
@@ -1017,6 +1040,8 @@ namespace Basic_Controls
             //tChart.Zoom.Undo();
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
             tChart.Axes.Bottom.SetMinMax(min, max);
+            tChart.Axes.Top.Labels.ValueFormat = "0.00";
+            tChart.Axes.Top.SetMinMax(min, max);
             aotuzoom = 0;
         }
 
@@ -1041,16 +1066,26 @@ namespace Basic_Controls
                     //  if (aotuzoom < 3 && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
                     if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
                     {
-                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
-                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+
+
+                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - 0.5;//(aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + 0.5;//(aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
 
                         double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
                         double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
                         startTime = DateTime.Now;
+                        //if (NewXMax - NewXMin < 0.25)
+                        //{
+                        //    NewXMin = NewXMin + 0.1;
+                        //    NewXMax = NewXMax - 0.1;
+                        //}
+                        //else if (NewXMax - NewXMin < 0.5)
+                        //{
+                        //    NewXMin = NewXMin + 0.25;
+                        //    NewXMax = NewXMax - 0.25;
+                        //}
                         tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
-
                         tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
-
                         aotuzoom++;
                     }
                 }
@@ -1058,18 +1093,22 @@ namespace Basic_Controls
                 {
                     if (aotuzoom > 1)
                     {
-                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) + (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
-                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) - (aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double OldXMin = tChart.Axes.Bottom.CalcPosPoint(e.X) - 0.5;//(aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
+                        double OldXMax = tChart.Axes.Bottom.CalcPosPoint(e.X) + 0.5;//(aotuzoom == 0 ? 0.5 : (0.5 / aotuzoom));
                         double NewXMin = (-XMid * 0.5 + OldXMin) / (0.5);
                         double NewXMax = (-XMid * 0.5 + OldXMax) / (0.5);
 
                         tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+                        tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+
                         aotuzoom--;
                     }
                     else if (aotuzoom == 1)
                     {
                         tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
                         tChart.Axes.Bottom.SetMinMax(min, max);
+                        tChart.Axes.Top.SetMinMax(min, max);
+
                         aotuzoom = 0;
                     }
                 }
@@ -1119,15 +1158,13 @@ namespace Basic_Controls
                             tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
                             tChart.Axes.Bottom.SetMinMax(min, max);
 
-
-
                             double mint = tChart.Axes.Top.CalcPosPoint(sx);
                             double maxt = tChart.Axes.Top.CalcPosPoint(e.X);
                             tChart.Axes.Top.Labels.ValueFormat = "0.000000";
                             tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
                             tChart.Axes.Top.SetMinMax(mint, maxt);
 
-                            aotuzoom++;
+                            aotuzoom = 7;
                             startTime = DateTime.Now;
                         }
                     }
@@ -1155,6 +1192,141 @@ namespace Basic_Controls
         private void chart_Zoomed(object sender, EventArgs e)
         {
 
+        }
+
+
+        /// <summary>
+        /// 左移右移标尺
+        /// </summary>
+        int LeftOrRightNum = 0;
+        /// <summary>
+        /// 移动标尺
+        /// </summary>
+        int MoveNum = 10000;
+        /// <summary>
+        /// 偏移量 用来计算缩小是 样本数据的 开始位置
+        /// </summary>
+        double Offset = 0;
+        /// <summary>
+        /// 左移
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLeftShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            LeftOrRightNum++;
+            Offset = tChart.Axes.Bottom.Minimum + (0.01 * Math.Abs(LeftOrRightNum));
+            //if(Offset>0)
+            //{
+            //    tChart.Axes.Bottom.SetMinMax(Offset, tChart.Axes.Top.Maximum - Offset);
+            //}
+            //else
+            //{
+            tChart.Axes.Bottom.SetMinMax(Offset, tChart.Axes.Top.Maximum + Offset);
+            //}
+
+            //int num = MoveNum * LeftOrRightNum;
+            //int allnum = cx2.Length - num;
+
+            //if (allnum > 0)
+            //{
+            //    //double[] newvx = new double[allnum];
+            //    //double[] newvy = new double[allnum];
+
+            //    //double[] newcx = new double[allnum];
+            //    //double[] newcy = new double[allnum];
+
+            //    //for (int i = 0; i <= allnum - 1; i++)
+            //    //{
+            //    //    double x = i * 0.00001;
+            //    //    newvx[i] = x;
+            //    //    newvy[i] = vy2[num + i];
+
+            //    //    newcx[i] = x;
+            //    //    newcy[i] = cy2[num + i];
+            //    //}
+
+            //    //vline2.Add(newvx, newvy);
+            //    //cline2.Add(newcx, newcy);
+
+            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum + (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
+            //}
+            //else
+            //{
+            //    LeftOrRightNum--;
+            //    double[] xy = new double[1] { 0 };
+            //    vline2.Add(xy, xy);
+            //    cline2.Add(xy, xy);
+            //}
+        }
+
+        /// <summary>
+        /// 右移
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void btnRightShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            LeftOrRightNum--;
+
+            //tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
+
+            Offset = tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum));
+
+            //if (Offset > 0)
+            //{
+            //    tChart.Axes.Bottom.SetMinMax(Offset, tChart.Axes.Top.Maximum + Offset);
+            //}
+            //else
+            //{
+            tChart.Axes.Bottom.SetMinMax(Offset, tChart.Axes.Top.Maximum + Offset);
+            //  }
+
+            //int num = MoveNum * LeftOrRightNum;
+            //int allnum = cx2.Length - num;
+
+            //if (cx2.Length > vline2.Count)
+            //{
+            //    //double[] newvx = new double[allnum];
+            //    //double[] newvy = new double[allnum];
+
+            //    //double[] newcx = new double[allnum];
+            //    //double[] newcy = new double[allnum];
+
+            //    //for (int i = 0; i <= allnum - 1; i++)
+            //    //{
+            //    //    double x = i * 0.00001;
+            //    //    newvx[i] = x;
+            //    //    newvy[i] = vy2[num + i];
+
+            //    //    newcx[i] = x;
+            //    //    newcy[i] = cy2[num + i];
+            //    //}
+
+            //    //vline2.Add(newvx, newvy);
+            //    //cline2.Add(newcx, newcy);
+            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
+
+            //}
+            //else if (cx2.Length == vline2.Count)
+            //{
+            //    //allnum = cx2.Length;
+            //    //double[] newx = new double[allnum];
+            //    //for (int i = 0; i <= allnum - 1; i++)
+            //    //{
+            //    //    double x = (Math.Abs(LeftOrRightNum) * MoveNum * 0.00001) + (i * 0.00001);
+            //    //    newx[i] = x;
+            //    //}
+            //    //vline2.Add(newx, vy2);
+            //    //cline2.Add(newx, cy2);
+            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
+
+            //}
+            //else
+            //{
+
+            //}
         }
 
         #endregion
@@ -1286,7 +1458,7 @@ namespace Basic_Controls
         /// <summary>
         /// 图片配置初始化
         /// </summary>
-        private void Chart_Config()
+        private void Chart_Config(string time = "10")
         {
             //总点数=alltime执行秒数  （默认10秒）/（单点长度*偷点数）
             linlength = (alltime * allnum) / num / LessPoint;
@@ -1325,7 +1497,7 @@ namespace Basic_Controls
 
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
-            tChart.Axes.Bottom.Title.Text = "时间单位:秒(sec)";
+            tChart.Axes.Bottom.Title.Text = "时间单位:" + time + "秒(sec)";
 
 
             //tChart.Axes.Bottom.Labels.Tag = "sec";
@@ -1362,7 +1534,7 @@ namespace Basic_Controls
         /// <summary>
         /// 初始化对比页面
         /// </summary>
-        private void Chart_Config_Contrast()
+        private void Chart_Config_Contrast(string time1, string time2)
         {
             vline1 = new Line();//震动1
             vline2 = new Line();//震动2
@@ -1376,21 +1548,22 @@ namespace Basic_Controls
 
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
-            tChart.Axes.Bottom.Title.Text = "对比数据时间单位:秒(sec)";
+            tChart.Axes.Bottom.Title.Text = "对比数据时间单位:" + time2 + "秒(sec)";
 
             //默认10秒
             tChart.Axes.Bottom.SetMinMax(0, alltime);
             tChart.Axes.Bottom.Increment = 1;//控制X轴 刻度的增量
+            tChart.Axes.Bottom.Grid.Visible = false;//网格 显示 true  不显示 false
 
 
             tChart.Axes.Top.Visible = true;
 
             tChart.Axes.Top.Labels.ValueFormat = "0.00";
-            tChart.Axes.Top.Title.Text = "样本数据时间单位:秒(sec)";
+            tChart.Axes.Top.Title.Text = "样本数据时间单位:" + time1 + "秒(sec)";
             tChart.Axes.Top.SetMinMax(0, alltime);
             tChart.Axes.Top.Increment = 1;//控制X轴 刻度的增量
                                           // tChart.Axes.Top.Automatic = false;
-            tChart.Axes.Top.Grid.Visible = false;
+                                          //  tChart.Axes.Top.Grid.Visible = false;
 
             tChart.Panel.MarginLeft = 10;
             tChart.Panel.MarginRight = 10;
@@ -1501,7 +1674,7 @@ namespace Basic_Controls
                 string title = tChart.Series[i * 2].Title;
 
                 axis.Title.Text = title;
-
+                axis.Title.Color = Color.Red;
                 axis.Maximum = 5;//最大值
                 axis.Minimum = -5;//最小值
 
@@ -1651,9 +1824,7 @@ namespace Basic_Controls
         {
             if (!string.IsNullOrEmpty(filepath))
             {
-                splashScreenManager.ShowWaitForm();
-                splashScreenManager.SetWaitFormCaption("请稍后");
-                splashScreenManager.SetWaitFormDescription("正在加载图形...");
+                Show_Open();
                 bool IsNotNull;
                 XmlHelper.Xml_To_Array(filepath, cks,
                    out vx1, out vy1,
@@ -1670,8 +1841,13 @@ namespace Basic_Controls
 
                 if (modelNew != null)
                 {
+                    //tChart.Axes.Bottom.Title.Text = "时间单位:" + modelNew.TEST_TIME + "秒(sec)";
                     //mode
                 }
+                string time = vx1[vx1.Length - 1].ToString();
+
+
+                tChart.Axes.Bottom.Title.Text = "时间单位:" + time + "秒(sec)";
                 alltime = 20;
                 Chart_DataTable_Init();
                 Chart_Data_Lond();
@@ -1679,9 +1855,7 @@ namespace Basic_Controls
                 //min = tChart.Axes.Bottom.Minimum;
                 //max = tChart.Axes.Bottom.MaxXValue;
 
-                splashScreenManager.SetWaitFormDescription("加载完成。");
-                splashScreenManager.CloseWaitForm();
-
+                Show_End();
                 if (!IsNotNull)
                 {
                     MessageBox.Show("未找到该图形数据！");
@@ -1772,7 +1946,7 @@ namespace Basic_Controls
                 vline1.Title = string.Format("【震动】");
 
                 vline1.Add(vx1, vy1);
-                vline1.Color = Color.Yellow;
+                vline1.Color = Color.Green;
 
                 tChart.Series.Add(vline1);
 
@@ -1787,7 +1961,7 @@ namespace Basic_Controls
                 cline1.HorizAxis = HorizontalAxis.Top;
                 cline1.Title = string.Format("【电流】");
                 cline1.Add(cx1, cy1);
-                cline1.Color = Color.Pink;
+                cline1.Color = Color.Orange;
 
                 tChart.Series.Add(cline1);
 
@@ -1796,7 +1970,7 @@ namespace Basic_Controls
                 cline2.HorizAxis = HorizontalAxis.Bottom;
                 //cline2.Title = string.Format("【电流】对比数据");
                 cline2.Add(cx2, cy2);
-                cline2.Color = Color.White;
+                cline2.Color = Color.Blue;
                 tChart.Series.Add(cline2);
 
                 //绘制画布
@@ -1814,27 +1988,32 @@ namespace Basic_Controls
         /// <summary>
         /// 对比数据加载加载图表
         /// </summary>
-        private void Chart_Data_Envelope_Lond(double[] Out_x, double[] Out_y)
+        private void Chart_Data_Envelope_Lond(double[] Out_x, double[] Out_y, double[] Out_x1 = null
+            , double[] Out_y1 = null, bool Single = false)
         {
             try
             {
                 vline1 = new Line();
-      //          vline1.HorizAxis = HorizontalAxis.Both;
-                vline1.Title = string.Format("【震动1】包络线");
+
+                vline1.Title = string.Format("包络线");
 
                 vline1.Add(Out_x, Out_y);
                 vline1.Color = Color.Green;
 
                 tChart.Series.Add(vline1);
 
-
-
                 vline2 = new Line();
-                //  vline2.Add(vx1, vy1);
-                vline2.Color = Color.Red;
-
                 tChart.Series.Add(vline2);
+                if (Single)
+                {
+                    vline1.Title = string.Format("包络线 (绿色【样本数据】   红色【对比数据】)");
 
+                    vline1.HorizAxis = HorizontalAxis.Top;
+                    vline2.HorizAxis = HorizontalAxis.Bottom;
+
+                    vline2.Add(Out_x1, Out_y1);
+                    vline2.Color = Color.Red;
+                }
                 //绘制画布
                 AddCustomAxis_Contrast(1);
 
@@ -3450,20 +3629,18 @@ namespace Basic_Controls
         {
             try
             {
+                Show_Open();
+
                 double[] Out_x;
                 double[] Out_y;
-                double spacing = (double)(1 * num) / allnum; ;
-                double rc_up = txtRcUp.Text != "0" ? Convert.ToDouble(txtRcUp.Text) : 0.0001;
-                double rc_dn = txtRcDn.Text != "0" ? Convert.ToDouble(txtRcDn.Text) : 0.01;
-                Envelope_Algorithm.Instance.Envelope(spacing, vx1, vy1
-                    , out Out_x, out Out_y
-                    , rc_dn, rc_up);
-
+                Re_Envelope_Data(vx1, vy1, out Out_x, out Out_y);
                 Chart_DataTable_Init();
-
-                Chart_Config();
+                string time = Out_x[Out_x.Length - 1].ToString();
+                Chart_Config(time);
                 Chart_Data_Envelope_Lond(Out_x, Out_y);
                 plLinePath.Enabled = false;
+
+                Show_End();
 
             }
             catch (Exception ex)
@@ -3472,6 +3649,21 @@ namespace Basic_Controls
             }
 
         }
+        /// <summary>
+        /// 转换包络线数据
+        /// </summary>
+        /// <param name="Out_x">返回X轴数据</param>
+        /// <param name="Out_y">返回Y轴数据</param>
+        private void Re_Envelope_Data(double[] In_x, double[] In_y, out double[] Out_x, out double[] Out_y)
+        {
+            double spacing = (double)(1 * num) / allnum; ;
+            double rc_up = txtRcUp.Text != "0" ? Convert.ToDouble(txtRcUp.Text) : 0.0001;
+            double rc_dn = txtRcDn.Text != "0" ? Convert.ToDouble(txtRcDn.Text) : 0.01;
+            Envelope_Algorithm.Instance.Envelope(spacing, In_x, In_y
+                , out Out_x, out Out_y
+                , rc_dn, rc_up);
+        }
+
         /// <summary>
         /// 对比
         /// </summary>
@@ -3484,6 +3676,7 @@ namespace Basic_Controls
                 form.ShowDialog();
                 if (form.DialogResult == DialogResult.OK)
                 {
+                    Show_Open();
                     int c = Convert.ToInt32(form.C);
                     int v = Convert.ToInt32(form.V);
                     var Node1 = Test_Plan_Bind(form.node1);
@@ -3529,7 +3722,7 @@ namespace Basic_Controls
                     }
                     else
                     {
-                        MessageBox.Show(Node1.DVNAME + "  未找到该图形数据！");
+                        MessageBox.Show("样本数据 " + Node1.DVNAME + "  未找到该图形数据！");
                     }
                     filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + Node2.DVNAME + ".xml";
                     if (FileHelper.IsFileExist(filepath))
@@ -3544,7 +3737,7 @@ namespace Basic_Controls
                     }
                     else
                     {
-                        MessageBox.Show(Node1.DVNAME + "  未找到该图形数据！");
+                        MessageBox.Show("对比数据 " + Node2.DVNAME + "  未找到该图形数据！");
                     }
 
                     double time1 = vx1[vx1.Length - 1];
@@ -3562,8 +3755,24 @@ namespace Basic_Controls
                     plLinePath.Enabled = false;
 
                     Chart_DataTable_Init();
-                    Chart_Config_Contrast();
-                    Chart_Data_Contrast_Lond();
+                    Chart_Config_Contrast(time1.ToString(), time2.ToString());
+
+                    if (form.IsBlx)
+                    {
+                        double[] Out_x;
+                        double[] Out_y;
+                        double[] Out_x1;
+                        double[] Out_y1;
+
+                        Re_Envelope_Data(vx1, vy1, out Out_x, out Out_y);
+                        Re_Envelope_Data(vx2, vy2, out Out_x1, out Out_y1);
+                        Chart_Data_Envelope_Lond(Out_x, Out_y, Out_x1, Out_y1, true);
+                    }
+                    else
+                    {
+                        Chart_Data_Contrast_Lond();
+                    }
+                    Show_End();
                 }
             }
         }
@@ -3578,117 +3787,22 @@ namespace Basic_Controls
             ckV3.Checked = false;
         }
 
-        /// <summary>
-        /// 左移右移标尺
-        /// </summary>
-        int LeftOrRightNum = 0;
-        /// <summary>
-        /// 移动标尺
-        /// </summary>
-        int MoveNum = 10000;
-
-        /// <summary>
-        /// 左移
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnLeftShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        #region 显示动画加载
+        private void Show_Open(string Msg = "正在加载图形...")
         {
-            LeftOrRightNum++;
+            splashScreenManager.ShowWaitForm();
+            splashScreenManager.SetWaitFormCaption("请稍后");
+            splashScreenManager.SetWaitFormDescription(Msg);
 
-            tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum + (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
-            //int num = MoveNum * LeftOrRightNum;
-            //int allnum = cx2.Length - num;
+        }
+        private void Show_End()
+        {
+            splashScreenManager.SetWaitFormDescription("加载完成。");
+            splashScreenManager.CloseWaitForm();
 
-            //if (allnum > 0)
-            //{
-            //    //double[] newvx = new double[allnum];
-            //    //double[] newvy = new double[allnum];
-
-            //    //double[] newcx = new double[allnum];
-            //    //double[] newcy = new double[allnum];
-
-            //    //for (int i = 0; i <= allnum - 1; i++)
-            //    //{
-            //    //    double x = i * 0.00001;
-            //    //    newvx[i] = x;
-            //    //    newvy[i] = vy2[num + i];
-
-            //    //    newcx[i] = x;
-            //    //    newcy[i] = cy2[num + i];
-            //    //}
-
-            //    //vline2.Add(newvx, newvy);
-            //    //cline2.Add(newcx, newcy);
-
-            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum + (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
-            //}
-            //else
-            //{
-            //    LeftOrRightNum--;
-            //    double[] xy = new double[1] { 0 };
-            //    vline2.Add(xy, xy);
-            //    cline2.Add(xy, xy);
-            //}
         }
 
-        /// <summary>
-        /// 右移
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void btnRightShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            LeftOrRightNum--;
-
-            tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
-
-            //int num = MoveNum * LeftOrRightNum;
-            //int allnum = cx2.Length - num;
-
-            //if (cx2.Length > vline2.Count)
-            //{
-            //    //double[] newvx = new double[allnum];
-            //    //double[] newvy = new double[allnum];
-
-            //    //double[] newcx = new double[allnum];
-            //    //double[] newcy = new double[allnum];
-
-            //    //for (int i = 0; i <= allnum - 1; i++)
-            //    //{
-            //    //    double x = i * 0.00001;
-            //    //    newvx[i] = x;
-            //    //    newvy[i] = vy2[num + i];
-
-            //    //    newcx[i] = x;
-            //    //    newcy[i] = cy2[num + i];
-            //    //}
-
-            //    //vline2.Add(newvx, newvy);
-            //    //cline2.Add(newcx, newcy);
-            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * LeftOrRightNum), tChart.Axes.Bottom.Maximum);
-
-            //}
-            //else if (cx2.Length == vline2.Count)
-            //{
-            //    //allnum = cx2.Length;
-            //    //double[] newx = new double[allnum];
-            //    //for (int i = 0; i <= allnum - 1; i++)
-            //    //{
-            //    //    double x = (Math.Abs(LeftOrRightNum) * MoveNum * 0.00001) + (i * 0.00001);
-            //    //    newx[i] = x;
-            //    //}
-            //    //vline2.Add(newx, vy2);
-            //    //cline2.Add(newx, cy2);
-            //    tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
-
-            //}
-            //else
-            //{
-
-            //}
-        }
+        #endregion
 
     }
 }

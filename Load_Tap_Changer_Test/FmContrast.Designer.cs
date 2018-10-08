@@ -54,6 +54,7 @@
             this.lbCurrent = new System.Windows.Forms.Label();
             this.lbContrast = new System.Windows.Forms.Label();
             this.lbSample = new System.Windows.Forms.Label();
+            this.ckblx = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.rdoV.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdoC.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.删除)).BeginInit();
@@ -66,6 +67,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.treeList2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckblx.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // rdoV
@@ -368,11 +370,20 @@
             this.lbSample.TabIndex = 66;
             this.lbSample.Text = "样本数据:";
             // 
+            // ckblx
+            // 
+            this.ckblx.Location = new System.Drawing.Point(507, 3);
+            this.ckblx.Name = "ckblx";
+            this.ckblx.Properties.Caption = "包络线";
+            this.ckblx.Size = new System.Drawing.Size(98, 22);
+            this.ckblx.TabIndex = 70;
+            // 
             // FmContrast
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 493);
+            this.Controls.Add(this.ckblx);
             this.Controls.Add(this.lbVibrate);
             this.Controls.Add(this.lbCurrent);
             this.Controls.Add(this.lbContrast);
@@ -407,6 +418,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.treeList2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ckblx.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -441,5 +453,6 @@
         private System.Windows.Forms.Label lbCurrent;
         private System.Windows.Forms.Label lbContrast;
         private System.Windows.Forms.Label lbSample;
+        private DevExpress.XtraEditors.CheckEdit ckblx;
     }
 }

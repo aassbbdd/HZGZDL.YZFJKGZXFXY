@@ -993,6 +993,7 @@
             this.btnEnlarge11.Size = new System.Drawing.Size(54, 28);
             this.btnEnlarge11.TabIndex = 35;
             this.btnEnlarge11.Text = "放大";
+            this.btnEnlarge11.Visible = false;
             this.btnEnlarge11.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // btnNarrow1
@@ -1002,6 +1003,7 @@
             this.btnNarrow1.Size = new System.Drawing.Size(54, 28);
             this.btnNarrow1.TabIndex = 36;
             this.btnNarrow1.Text = "缩小";
+            this.btnNarrow1.Visible = false;
             this.btnNarrow1.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // lbX
@@ -1371,6 +1373,7 @@
             this.btnClear1.Size = new System.Drawing.Size(54, 28);
             this.btnClear1.TabIndex = 45;
             this.btnClear1.Text = "清空";
+            this.btnClear1.Visible = false;
             this.btnClear1.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnReNew1
@@ -1380,6 +1383,7 @@
             this.btnReNew1.Size = new System.Drawing.Size(54, 28);
             this.btnReNew1.TabIndex = 44;
             this.btnReNew1.Text = "还原";
+            this.btnReNew1.Visible = false;
             this.btnReNew1.Click += new System.EventHandler(this.btnReNew_Click);
             // 
             // treeList

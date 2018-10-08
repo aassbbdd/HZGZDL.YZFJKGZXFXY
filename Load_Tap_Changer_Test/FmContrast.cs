@@ -30,6 +30,10 @@ namespace Load_Tap_Changer_Test
         public TreeListNode node2;
         public string C;
         public string V;
+        /// <summary>
+        /// 是否显示包络线
+        /// </summary>
+        public bool IsBlx;
         #endregion
         #region 绑定测试计划
         /// <summary>
@@ -206,6 +210,7 @@ namespace Load_Tap_Changer_Test
         /// <param name="e"></param>
         private void btnOk_Click(object sender, EventArgs e)
         {
+            IsBlx = this.ckblx.Checked;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
