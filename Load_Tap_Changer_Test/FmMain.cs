@@ -758,6 +758,7 @@ namespace Basic_Controls
             {
                 Invoke(new ThreadStart(delegate ()
                 {
+                    ListToText.Instance.WriteListToTextFile1(e.Hearder);
                     if (e.Hearder == "00FF00FF")
                     {
                         Open_Type("1");
@@ -1194,7 +1195,6 @@ namespace Basic_Controls
 
         }
 
-
         /// <summary>
         /// 左移右移标尺
         /// </summary>
@@ -1269,11 +1269,8 @@ namespace Basic_Controls
         private void btnRightShift_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             LeftOrRightNum--;
-
             //tChart.Axes.Bottom.SetMinMax(tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum)), tChart.Axes.Bottom.Maximum);
-
             Offset = tChart.Axes.Bottom.Minimum - (0.01 * Math.Abs(LeftOrRightNum));
-
             //if (Offset > 0)
             //{
             //    tChart.Axes.Bottom.SetMinMax(Offset, tChart.Axes.Top.Maximum + Offset);
@@ -1844,6 +1841,12 @@ namespace Basic_Controls
                     //tChart.Axes.Bottom.Title.Text = "时间单位:" + modelNew.TEST_TIME + "秒(sec)";
                     //mode
                 }
+                if (!IsNotNull)
+                {
+                    MessageBox.Show("未找到该图形数据！");
+                    Show_End();
+                    return;
+                }
                 string time = vx1[vx1.Length - 1].ToString();
 
 
@@ -1856,10 +1859,7 @@ namespace Basic_Controls
                 //max = tChart.Axes.Bottom.MaxXValue;
 
                 Show_End();
-                if (!IsNotNull)
-                {
-                    MessageBox.Show("未找到该图形数据！");
-                }
+
             }
         }
 
@@ -1932,7 +1932,6 @@ namespace Basic_Controls
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }
         }
-
 
         /// <summary>
         /// 对比数据加载加载图表
@@ -2278,7 +2277,7 @@ namespace Basic_Controls
 
                                 v1x[addNum] = x;
                                 v1y[addNum] = Vd;
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     vline1.Add(v1x, v1y, true);
                                     v1x = new double[alladdnum];
@@ -2292,7 +2291,7 @@ namespace Basic_Controls
 
                                 v2x[addNum] = x;
                                 v2y[addNum] = Vd;
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     vline2.Add(v2x, v2y, true);
                                     v2x = new double[alladdnum];
@@ -2307,7 +2306,7 @@ namespace Basic_Controls
                                 v3x[addNum] = x;
                                 v3y[addNum] = Vd;
 
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     vline3.Add(v3x, v3y, true);
                                     v3x = new double[alladdnum];
@@ -2322,10 +2321,9 @@ namespace Basic_Controls
                                 c1x[addNum] = x;
                                 c1y[addNum] = Cd;
 
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     cline1.Add(c1x, c1y, true);
-
                                     c1x = new double[alladdnum];
                                     c1y = new double[alladdnum];
                                 }
@@ -2337,7 +2335,7 @@ namespace Basic_Controls
 
                                 c2x[addNum] = x;
                                 c2y[addNum] = Cd;
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     cline2.Add(c2x, c2y, true);
                                     c2x = new double[alladdnum];
@@ -2352,7 +2350,7 @@ namespace Basic_Controls
 
                                 c3x[addNum] = x;
                                 c3y[addNum] = Cd;
-                                if (addNum == alladdnum - 1)
+                                if (addNum == alladdnum - 1 || porintadd >= linlength)
                                 {
                                     cline3.Add(c3x, c3y, true);
                                     c3x = new double[alladdnum];
@@ -2377,6 +2375,7 @@ namespace Basic_Controls
                                 //是停止
                                 this.BeginInvoke(new MethodInvoker(() =>
                                 {
+                                    tChart.Refresh();
                                     Stop_Test(false);
 
                                 }));
@@ -3385,9 +3384,7 @@ namespace Basic_Controls
                         c3 = false;
                     }
                 }
-
                 Chart_Init();
-
             }
         }
 
@@ -3620,6 +3617,8 @@ namespace Basic_Controls
 
         #endregion
 
+        #region 包络线相关转换
+
         /// <summary>
         /// 包络线
         /// </summary>
@@ -3739,7 +3738,20 @@ namespace Basic_Controls
                     {
                         MessageBox.Show("对比数据 " + Node2.DVNAME + "  未找到该图形数据！");
                     }
+                    if (vx1.Length == 0)
+                    {
 
+                        Show_End();
+                        MessageBox.Show("样本数据 " + Node1.DVNAME + "  未找到该图形数据！");
+                        return;
+                    }
+                    if (vx2.Length == 0)
+                    {
+                        Show_End();
+                        MessageBox.Show("对比数据 " + Node2.DVNAME + "  未找到该图形数据！");
+
+                        return;
+                    }
                     double time1 = vx1[vx1.Length - 1];
                     double time2 = vx2[vx2.Length - 1];
 
@@ -3787,6 +3799,8 @@ namespace Basic_Controls
             ckV3.Checked = false;
         }
 
+        #endregion
+
         #region 显示动画加载
         private void Show_Open(string Msg = "正在加载图形...")
         {
@@ -3799,7 +3813,6 @@ namespace Basic_Controls
         {
             splashScreenManager.SetWaitFormDescription("加载完成。");
             splashScreenManager.CloseWaitForm();
-
         }
 
         #endregion
