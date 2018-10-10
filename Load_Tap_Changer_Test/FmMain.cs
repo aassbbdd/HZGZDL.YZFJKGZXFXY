@@ -3282,7 +3282,8 @@ namespace Basic_Controls
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
-                if (treeList.Appearance.FocusedCell.BackColor != Color.SteelBlue)
+                lbVoltage.Text = "0";//单击时电压清空
+                if (treeList.Appearance.FocusedCell.BackColor != Color.SteelBlue)//选中测试计划 改变颜色
                 {
                     treeList.Appearance.FocusedCell.BackColor = Color.SteelBlue;
                 };
@@ -3290,7 +3291,7 @@ namespace Basic_Controls
                 pub_Test_Plan = Test_Plan_Bind(publicnode);
                 tChart.Header.Text = pub_Test_Plan.DVNAME;
 
-                if (pub_Test_Plan.GETINFO == "2")
+                if (pub_Test_Plan.GETINFO == "2")//判断是 按时长采集数据
                 {
                     if (!string.IsNullOrEmpty(pub_Test_Plan.TIME_UNIT))
                     {
@@ -3299,7 +3300,7 @@ namespace Basic_Controls
                     init_Chart_Config(alltime);
                     btnCTest.Enabled = false;
                 }
-                else
+                else//按电流触发采集数据
                 {
                     alltime = 10;
                     init_Chart_Config(alltime);
