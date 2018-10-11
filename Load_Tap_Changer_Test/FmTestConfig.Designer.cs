@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmTestConfig));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rdoTestType = new DevExpress.XtraEditors.RadioGroup();
             this.gbSINGLE = new System.Windows.Forms.GroupBox();
@@ -476,6 +477,7 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FmTestConfig";

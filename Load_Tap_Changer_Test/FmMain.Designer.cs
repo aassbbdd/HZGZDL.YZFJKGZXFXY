@@ -122,9 +122,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnEnlarge11 = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow1 = new DevExpress.XtraEditors.SimpleButton();
-            this.lbX = new DevExpress.XtraEditors.LabelControl();
-            this.lbY = new DevExpress.XtraEditors.LabelControl();
+            this.lbTopTime = new DevExpress.XtraEditors.LabelControl();
+            this.lbBottomTime = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl21 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc1 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.txtRcDn = new DevExpress.XtraEditors.TextEdit();
@@ -1006,21 +1020,21 @@
             this.btnNarrow1.Visible = false;
             this.btnNarrow1.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
-            // lbX
+            // lbTopTime
             // 
-            this.lbX.Location = new System.Drawing.Point(8, 545);
-            this.lbX.Name = "lbX";
-            this.lbX.Size = new System.Drawing.Size(81, 18);
-            this.lbX.TabIndex = 41;
-            this.lbX.Text = "labelControl1";
+            this.lbTopTime.Location = new System.Drawing.Point(85, 557);
+            this.lbTopTime.Name = "lbTopTime";
+            this.lbTopTime.Size = new System.Drawing.Size(8, 18);
+            this.lbTopTime.TabIndex = 41;
+            this.lbTopTime.Text = "0";
             // 
-            // lbY
+            // lbBottomTime
             // 
-            this.lbY.Location = new System.Drawing.Point(90, 545);
-            this.lbY.Name = "lbY";
-            this.lbY.Size = new System.Drawing.Size(81, 18);
-            this.lbY.TabIndex = 42;
-            this.lbY.Text = "labelControl2";
+            this.lbBottomTime.Location = new System.Drawing.Point(85, 581);
+            this.lbBottomTime.Name = "lbBottomTime";
+            this.lbBottomTime.Size = new System.Drawing.Size(8, 18);
+            this.lbBottomTime.TabIndex = 42;
+            this.lbBottomTime.Text = "0";
             // 
             // panelControl1
             // 
@@ -1029,6 +1043,20 @@
             this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
             this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panelControl1.Controls.Add(this.labelControl12);
+            this.panelControl1.Controls.Add(this.labelControl14);
+            this.panelControl1.Controls.Add(this.labelControl17);
+            this.panelControl1.Controls.Add(this.lbc3);
+            this.panelControl1.Controls.Add(this.labelControl19);
+            this.panelControl1.Controls.Add(this.lbc2);
+            this.panelControl1.Controls.Add(this.labelControl21);
+            this.panelControl1.Controls.Add(this.lbc1);
+            this.panelControl1.Controls.Add(this.labelControl15);
+            this.panelControl1.Controls.Add(this.lbv3);
+            this.panelControl1.Controls.Add(this.labelControl13);
+            this.panelControl1.Controls.Add(this.lbv2);
+            this.panelControl1.Controls.Add(this.labelControl11);
+            this.panelControl1.Controls.Add(this.lbv1);
             this.panelControl1.Controls.Add(this.labelControl9);
             this.panelControl1.Controls.Add(this.labelControl10);
             this.panelControl1.Controls.Add(this.txtRcDn);
@@ -1052,14 +1080,126 @@
             this.panelControl1.Controls.Add(this.LBxmlCount);
             this.panelControl1.Controls.Add(this.btnClear1);
             this.panelControl1.Controls.Add(this.btnReNew1);
-            this.panelControl1.Controls.Add(this.lbY);
-            this.panelControl1.Controls.Add(this.lbX);
+            this.panelControl1.Controls.Add(this.lbBottomTime);
+            this.panelControl1.Controls.Add(this.lbTopTime);
             this.panelControl1.Controls.Add(this.btnNarrow1);
             this.panelControl1.Controls.Add(this.btnEnlarge11);
             this.panelControl1.Location = new System.Drawing.Point(1286, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(187, 837);
             this.panelControl1.TabIndex = 52;
+            // 
+            // labelControl12
+            // 
+            this.labelControl12.Location = new System.Drawing.Point(9, 581);
+            this.labelControl12.Name = "labelControl12";
+            this.labelControl12.Size = new System.Drawing.Size(65, 18);
+            this.labelControl12.TabIndex = 79;
+            this.labelControl12.Text = "底部时间:";
+            // 
+            // labelControl14
+            // 
+            this.labelControl14.Location = new System.Drawing.Point(9, 557);
+            this.labelControl14.Name = "labelControl14";
+            this.labelControl14.Size = new System.Drawing.Size(65, 18);
+            this.labelControl14.TabIndex = 78;
+            this.labelControl14.Text = "顶部时间:";
+            // 
+            // labelControl17
+            // 
+            this.labelControl17.Location = new System.Drawing.Point(10, 740);
+            this.labelControl17.Name = "labelControl17";
+            this.labelControl17.Size = new System.Drawing.Size(53, 18);
+            this.labelControl17.TabIndex = 77;
+            this.labelControl17.Text = "电流3：";
+            // 
+            // lbc3
+            // 
+            this.lbc3.Location = new System.Drawing.Point(85, 740);
+            this.lbc3.Name = "lbc3";
+            this.lbc3.Size = new System.Drawing.Size(8, 18);
+            this.lbc3.TabIndex = 76;
+            this.lbc3.Text = "0";
+            // 
+            // labelControl19
+            // 
+            this.labelControl19.Location = new System.Drawing.Point(10, 716);
+            this.labelControl19.Name = "labelControl19";
+            this.labelControl19.Size = new System.Drawing.Size(53, 18);
+            this.labelControl19.TabIndex = 75;
+            this.labelControl19.Text = "电流2：";
+            // 
+            // lbc2
+            // 
+            this.lbc2.Location = new System.Drawing.Point(85, 716);
+            this.lbc2.Name = "lbc2";
+            this.lbc2.Size = new System.Drawing.Size(8, 18);
+            this.lbc2.TabIndex = 74;
+            this.lbc2.Text = "0";
+            // 
+            // labelControl21
+            // 
+            this.labelControl21.Location = new System.Drawing.Point(10, 692);
+            this.labelControl21.Name = "labelControl21";
+            this.labelControl21.Size = new System.Drawing.Size(53, 18);
+            this.labelControl21.TabIndex = 73;
+            this.labelControl21.Text = "电流1：";
+            // 
+            // lbc1
+            // 
+            this.lbc1.Location = new System.Drawing.Point(85, 692);
+            this.lbc1.Name = "lbc1";
+            this.lbc1.Size = new System.Drawing.Size(8, 18);
+            this.lbc1.TabIndex = 72;
+            this.lbc1.Text = "0";
+            // 
+            // labelControl15
+            // 
+            this.labelControl15.Location = new System.Drawing.Point(10, 667);
+            this.labelControl15.Name = "labelControl15";
+            this.labelControl15.Size = new System.Drawing.Size(53, 18);
+            this.labelControl15.TabIndex = 71;
+            this.labelControl15.Text = "震动3：";
+            // 
+            // lbv3
+            // 
+            this.lbv3.Location = new System.Drawing.Point(85, 667);
+            this.lbv3.Name = "lbv3";
+            this.lbv3.Size = new System.Drawing.Size(8, 18);
+            this.lbv3.TabIndex = 70;
+            this.lbv3.Text = "0";
+            // 
+            // labelControl13
+            // 
+            this.labelControl13.Location = new System.Drawing.Point(10, 643);
+            this.labelControl13.Name = "labelControl13";
+            this.labelControl13.Size = new System.Drawing.Size(53, 18);
+            this.labelControl13.TabIndex = 69;
+            this.labelControl13.Text = "震动2：";
+            // 
+            // lbv2
+            // 
+            this.lbv2.Location = new System.Drawing.Point(85, 643);
+            this.lbv2.Name = "lbv2";
+            this.lbv2.Size = new System.Drawing.Size(8, 18);
+            this.lbv2.TabIndex = 68;
+            this.lbv2.Text = "0";
+            // 
+            // labelControl11
+            // 
+            this.labelControl11.Location = new System.Drawing.Point(10, 619);
+            this.labelControl11.Name = "labelControl11";
+            this.labelControl11.Size = new System.Drawing.Size(53, 18);
+            this.labelControl11.TabIndex = 67;
+            this.labelControl11.Text = "震动1：";
+            // 
+            // lbv1
+            // 
+            this.lbv1.Location = new System.Drawing.Point(85, 619);
+            this.lbv1.Name = "lbv1";
+            this.lbv1.Size = new System.Drawing.Size(8, 18);
+            this.lbv1.TabIndex = 66;
+            this.lbv1.Text = "0";
             // 
             // labelControl9
             // 
@@ -1522,6 +1662,7 @@
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1024, 800);
             this.Name = "FmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1605,8 +1746,8 @@
 
         private DevExpress.XtraEditors.SimpleButton btnNarrow1;
         private DevExpress.XtraEditors.SimpleButton btnEnlarge11;
-        private DevExpress.XtraEditors.LabelControl lbY;
-        private DevExpress.XtraEditors.LabelControl lbX;
+        private DevExpress.XtraEditors.LabelControl lbBottomTime;
+        private DevExpress.XtraEditors.LabelControl lbTopTime;
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraEditors.CheckEdit ckC3;
         private DevExpress.XtraEditors.CheckEdit ckC2;
@@ -1704,5 +1845,19 @@
         private DevExpress.XtraEditors.LabelControl labelControl10;
         private DevExpress.XtraEditors.TextEdit txtRcDn;
         private DevExpress.XtraEditors.TextEdit txtRcUp;
+        private DevExpress.XtraEditors.LabelControl labelControl17;
+        private DevExpress.XtraEditors.LabelControl lbc3;
+        private DevExpress.XtraEditors.LabelControl labelControl19;
+        private DevExpress.XtraEditors.LabelControl lbc2;
+        private DevExpress.XtraEditors.LabelControl labelControl21;
+        private DevExpress.XtraEditors.LabelControl lbc1;
+        private DevExpress.XtraEditors.LabelControl labelControl15;
+        private DevExpress.XtraEditors.LabelControl lbv3;
+        private DevExpress.XtraEditors.LabelControl labelControl13;
+        private DevExpress.XtraEditors.LabelControl lbv2;
+        private DevExpress.XtraEditors.LabelControl labelControl11;
+        private DevExpress.XtraEditors.LabelControl lbv1;
+        private DevExpress.XtraEditors.LabelControl labelControl12;
+        private DevExpress.XtraEditors.LabelControl labelControl14;
     }
 }

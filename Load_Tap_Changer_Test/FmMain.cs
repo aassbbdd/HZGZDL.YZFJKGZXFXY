@@ -57,6 +57,7 @@ namespace Basic_Controls
                 Chart_Init();//初始化图表
                 CreateDb();//生成数据库
                 Tester_List_Bind();//获取测试计划绑定到页面树
+
             }
             //测试连接通信
             // sendUdp(agreement._1_CMD_HEARTBEAT);
@@ -244,7 +245,6 @@ namespace Basic_Controls
             {
                 string filepath = FileHelper.GetOpenFilePath();
                 Chart_Lond(filepath);
-
             }
             catch (Exception ex)
             {
@@ -911,29 +911,31 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnEnlarge_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (aotuzoom < 5)
-            {
-                double OldXMin = tChart.Axes.Bottom.Minimum;
-                double OldXMax = tChart.Axes.Bottom.Maximum;
-                double XMid = (OldXMin + OldXMax) / 2;
-                double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
-                double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
 
-                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
-                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
-                tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
+            double OldXMin = tChart.Axes.Bottom.Minimum;
+            double OldXMax = tChart.Axes.Bottom.Maximum;
+            double XMid = (OldXMin + OldXMax) / 2;
+            double NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+            double NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
 
-                OldXMin = tChart.Axes.Top.Minimum;
-                OldXMax = tChart.Axes.Top.Maximum;
-                XMid = (OldXMin + OldXMax) / 2;
-                NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
-                NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+            tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+            tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+            tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
 
-                tChart.Axes.Top.Labels.ValueFormat = "0.000000";
-                tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
-                tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
-                aotuzoom++;
-            }
+            OldXMin = tChart.Axes.Top.Minimum;
+            OldXMax = tChart.Axes.Top.Maximum;
+            XMid = (OldXMin + OldXMax) / 2;
+            NewXMin = (XMid * 0.5 + OldXMin) / (1.5);
+            NewXMax = (XMid * 0.5 + OldXMax) / (1.5);
+
+            tChart.Axes.Top.Labels.ValueFormat = "0.000000";
+            tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+            tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
+            Add_CursorTool();
+            //if (aotuzoom < 7)
+            //{
+            aotuzoom++;
+            //}
         }
 
         /// <summary>
@@ -943,6 +945,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnNarrow_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+
             if (aotuzoom > 0)
             {
                 double OldXMin = tChart.Axes.Top.Minimum;
@@ -976,16 +979,14 @@ namespace Basic_Controls
                 }
                 tChart.Axes.Bottom.SetMinMax(NewXMin, NewXMax);
                 aotuzoom--;
-            }
-            //else if (aotuzoom == 1)
-            //{
-            //    tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
-            //    tChart.Axes.Bottom.SetMinMax(min, max);
 
-            //    tChart.Axes.Top.Labels.ValueFormat = "0.00";
-            //    tChart.Axes.Top.SetMinMax(min, max);
-            //    aotuzoom = 0;
-            //}
+                if (tChart.Axes.Bottom.Maximum > max)
+                {
+                    tChart.Axes.Bottom.SetMinMax(min, max);
+                    aotuzoom = 0;
+                    return;
+                }
+            }
         }
         /// <summary>
         /// 清空
@@ -1115,6 +1116,8 @@ namespace Basic_Controls
                 }
             }
         }
+        int MouseX = 0;
+
         /// <summary>
         /// 鼠标移动点位
         /// </summary>
@@ -1122,8 +1125,24 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseMove(object sender, MouseEventArgs e)
         {
-            lbX.Text = e.X.ToString();
-            lbY.Text = e.Y.ToString();
+            //lbX.Text = e.X.ToString();
+            //lbY.Text = e.Y.ToString();
+            //if (vline1.Count > 0)
+            //{
+            //var dd = cursorTool1.XValue;
+            ////       var dd = vline1.XValues[10000];
+            //int num = vline1.XValues.Count;
+            //int num1 = vline2.XValues.Count;
+            //int num2 = cline1.XValues.Count;
+            //int num3 = cline2.XValues.Count;
+
+            MouseX = e.X;
+            double BottomNum = tChart.Axes.Bottom.CalcPosPoint(e.X);
+            double TopNum = tChart.Axes.Top.CalcPosPoint(e.X);
+
+            //lbX.Text = BottomNum.ToString();
+            //lbY.Text = TopNum.ToString();
+            //}
         }
 
         /// 点击鼠标事件
@@ -1134,6 +1153,7 @@ namespace Basic_Controls
         {
             sx = e.X;
             sy = e.Y;
+            startTime1 = DateTime.Now;
         }
 
         /// <summary>
@@ -1143,7 +1163,8 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseUp(object sender, MouseEventArgs e)
         {
-            if (tChart != null && tChart.Series.Count > 0)
+            // lbtest.Text = DateTimeUtil.DateTimeDiff(OpenCursortTime, startTime1) + " " + OpenCursortTime + "" + startTime1;
+            if (tChart != null && tChart.Series.Count > 0 && DateTimeUtil.DateTimeDiff(OpenCursortTime, startTime1) > 200)
             {
                 if (e.Button == MouseButtons.Left && e.Clicks == 1)
                 {
@@ -1167,6 +1188,7 @@ namespace Basic_Controls
 
                             aotuzoom = 7;
                             startTime = DateTime.Now;
+                            Add_CursorTool();
                         }
                     }
                     else
@@ -1407,8 +1429,6 @@ namespace Basic_Controls
         /// </summary>
         double newXvalue = 0;
         Line vline1;//震动1
-        Line vline1_1;//震动1
-
         Line vline2;//震动2
         Line vline3;//震动3
         Line cline1;//电流1
@@ -1444,7 +1464,8 @@ namespace Basic_Controls
         private void Chart_Init()
         {
             plLinePath.Enabled = true;
-
+            Offset = 0;
+            aotuzoom = 0;
             tChart.Series.Clear();
             tChart.Axes.Custom.Clear();
 
@@ -1453,7 +1474,7 @@ namespace Basic_Controls
             pclChart.Controls.Add(tChart);// 绑定图表位置 
         }
         /// <summary>
-        /// 图片配置初始化
+        /// 图表配置初始化
         /// </summary>
         private void Chart_Config(string time = "10")
         {
@@ -1465,7 +1486,7 @@ namespace Basic_Controls
             newXvalue = (double)(1 * num * LessPoint) / allnum;
 
             vline1 = new Line();//震动1
-            vline1_1 = new Line();//震动1
+
             vline2 = new Line();//震动2
 
             vline3 = new Line();//震动3
@@ -1514,18 +1535,115 @@ namespace Basic_Controls
             tChart.Panel.MarginTop = 10;
 
             tChart.Zoom.Allow = false;
-            ////轴标线
-            //Points pointSeries1 = new Points(tChart.Chart);
-            //CursorTool cursorTool1 = new CursorTool(tChart.Chart);
-            //pointSeries1.FillSampleValues(20);
-            //cursorTool1.Active = true;
-            //cursorTool1.FollowMouse = true;
-            //cursorTool1.Series = pointSeries1;
-            //cursorTool1.Style = CursorToolStyles.Both;
+
 
             min = tChart.Axes.Bottom.Minimum;
             max = tChart.Axes.Bottom.Maximum;
 
+        }
+        /// <summary>
+        /// 十字光标
+        /// </summary>
+        CursorTool cursorTool;
+        /// <summary>
+        /// 松开十字光标的时间
+        /// </summary>
+        DateTime OpenCursortTime;
+        /// <summary>
+        /// 鼠标左键松开的时间
+        /// </summary>
+        DateTime startTime1;
+
+        /// <summary>
+        /// 增加十字光标
+        /// </summary>
+        private void Add_CursorTool()
+        {
+            tChart.Tools.Clear();
+            cursorTool = new CursorTool();
+            cursorTool.Active = true;
+            cursorTool.FollowMouse = false;
+            cursorTool.Series = tChart.Series[0];
+            cursorTool.Style = CursorToolStyles.Both;
+
+            tChart.Tools.Add(cursorTool);
+            cursorTool.Change += (CursorChangeEventHandler)delegate
+            {
+                try
+                {
+                    int length = Convert.ToInt32(allnum * cursorTool.XValue);
+
+                    if (length < vline1.YValues.Count)// && ckV1.Checked
+                    {
+
+                        lbv1.Text = Rounding(vline1.YValues[length]);
+                    }
+                    if (Offset == 0)
+                    {
+                        if (length < vline2.YValues.Count)// && ckV1.Checked
+                        {
+                            lbv2.Text = Rounding(vline2.YValues[length]);
+                        }
+                    }
+                    else
+                    {
+                        int vl2Num = vline2.YValues.Count + (-(int)(allnum * Offset));
+                        if (length < vl2Num)//&& ckV2.Checked
+                        {
+                            if (length + (int)(allnum * Offset) > 0)
+                            {
+                                lbv2.Text = Rounding(vline2.YValues[length + (int)(allnum * Offset)]);
+                            }
+                        }
+                    }
+
+                    if (length < vline3.YValues.Count)//&& ckV3.Checked
+                    {
+                        lbv3.Text = vline3.YValues[length].ToString();
+                    }
+
+                    if (length < cline1.YValues.Count)//&& ckC1.Checked
+                    {
+                        lbc1.Text = Rounding(cline1.YValues[length]);
+                    }
+                    if (Offset == 0)
+                    {
+                        if (length < cline2.YValues.Count)// && ckV1.Checked
+                        {
+                            lbc2.Text = Rounding(cline2.YValues[length]);
+                        }
+                    }
+                    else
+                    {
+                        int cl2Num = cline2.YValues.Count + (-(int)(allnum * Offset));
+                        if (length < cl2Num)//&& ckV2.Checked
+                        {
+                            if (length + (int)(allnum * Offset) > 0)
+                            {
+                                lbc2.Text = Rounding(cline2.YValues[length + (int)(allnum * Offset)]);
+                            }
+                        }
+                    }
+                    if (length < cline3.YValues.Count)//&& ckC3.Checked
+                    {
+                        lbc3.Text = Rounding(cline3.YValues[length]);
+                    }
+                    tChart.Axes.Bottom.CalcPosPoint(MouseX);
+                    lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX));
+                    lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX));
+
+                    OpenCursortTime = DateTime.Now;
+                }
+                catch
+                {
+                }
+            };
+        }
+
+        private string Rounding(double num)
+        {
+            string remsg = Math.Round(num, 3, MidpointRounding.AwayFromZero).ToString();
+            return remsg;
         }
 
         /// <summary>
@@ -1682,55 +1800,6 @@ namespace Basic_Controls
         }
 
         /// <summary>
-        /// 添加若干个自定义坐标轴 绘制 图表画布
-        /// </summary>
-        /// <param name="count"></param>
-        private void AddCustomAxis1(int count)
-        {
-
-            double single = (100 - space * ((count / 2) + 2)) / ((count / 2) + 1);//单个坐标轴的百分比
-
-            tChart.Axes.Left.StartPosition = space;
-            tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
-            tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
-
-            double startPosition = tChart.Axes.Left.StartPosition;
-            double endPosition = tChart.Axes.Left.EndPosition;
-            // tChart.Axes.Custom.Clear();//清除原先画布
-            Axis axis;
-
-            for (int i = 0; i < count / 2; i++)
-            {
-                axis = new Axis();
-                startPosition = endPosition + space;
-                endPosition = startPosition + single;
-                axis.StartPosition = startPosition;
-                axis.EndPosition = endPosition;
-                axis.AutomaticMaximum = false;//最大刻度禁用
-                axis.AutomaticMinimum = false;//最小刻度禁用
-                axis.Title.Angle = 90;//'标题摆放角度
-                                      //axis.Maximum = 10;//最大值
-                                      //axis.Minimum = -10;//最小值
-
-                string title = tChart.Series[0].Title;
-
-                axis.Title.Text = title;
-                if (title.Substring(0, 2) == "电流")
-                {
-                    axis.Maximum = 5;//最大值
-                    axis.Minimum = -5;//最小值
-                }
-                else
-                {
-                    axis.Maximum = 10;//最大值
-                    axis.Minimum = -10;//最小值
-                }
-                tChart.Axes.Custom.Add(axis);
-                //tChart.Axes.Custom.Add(axis);
-            }
-        }
-
-        /// <summary>
         /// 绑定图表 line 线
         /// </summary>
         private void Chart_Data_Bind()
@@ -1857,7 +1926,7 @@ namespace Basic_Controls
 
                 //min = tChart.Axes.Bottom.Minimum;
                 //max = tChart.Axes.Bottom.MaxXValue;
-
+                ///Add_CursorTool();
                 Show_End();
 
             }
@@ -1975,7 +2044,6 @@ namespace Basic_Controls
                 //绘制画布
                 AddCustomAxis_Contrast(2);
                 //AddCustomAxis_Contrast(tChart.Series.Count);
-
                 tChart.Refresh();
             }
             catch (Exception ex)
@@ -3411,6 +3479,7 @@ namespace Basic_Controls
                     model.ISEDIT = "2";
                     if (model.PARENTID != "0")
                     {
+                        Add_CursorTool();
                         string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
                         bool isdd = FileHelper.IsFileExist(filepath);
                         if (FileHelper.IsFileExist(filepath))
@@ -3639,6 +3708,7 @@ namespace Basic_Controls
                 Chart_Config(time);
                 Chart_Data_Envelope_Lond(Out_x, Out_y);
                 plLinePath.Enabled = false;
+                Add_CursorTool();
 
                 Show_End();
 
@@ -3785,6 +3855,10 @@ namespace Basic_Controls
                     {
                         Chart_Data_Contrast_Lond();
                     }
+                    Add_CursorTool();
+                    //cursorTool.Active = true;
+
+
                     Show_End();
                 }
             }

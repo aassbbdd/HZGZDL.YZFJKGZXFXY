@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmAddTest));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtDVNAME = new DevExpress.XtraEditors.TextEdit();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -742,6 +743,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(640, 666);
             this.Name = "FmAddTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

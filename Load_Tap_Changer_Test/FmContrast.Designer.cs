@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmContrast));
             this.rdoV = new DevExpress.XtraEditors.RadioGroup();
             this.rdoC = new DevExpress.XtraEditors.RadioGroup();
             this.ID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
@@ -398,13 +399,14 @@
             this.Controls.Add(this.treeList1);
             this.Controls.Add(this.rdoC);
             this.Controls.Add(this.rdoV);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(683, 540);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(683, 540);
             this.Name = "FmContrast";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FmContrast";
+            this.Text = "数据对比";
             this.Load += new System.EventHandler(this.FmContrast_Load);
             ((System.ComponentModel.ISupportInitialize)(this.rdoV.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdoC.Properties)).EndInit();

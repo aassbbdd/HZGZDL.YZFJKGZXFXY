@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager2 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, null, true, true);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseFrom));
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
@@ -41,9 +40,7 @@
             this.tChart1 = new Steema.TeeChart.TChart();
             this.axis1 = new Steema.TeeChart.Axis();
             this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
-            this.fastLine2 = new Steema.TeeChart.Styles.FastLine();
-            this.candle1 = new Steema.TeeChart.Styles.Candle();
-            this.compressOHLC1 = new Steema.TeeChart.Functions.CompressOHLC();
+            this.cursorTool1 = new Steema.TeeChart.Tools.CursorTool();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).BeginInit();
@@ -384,8 +381,6 @@
             this.tChart1.Panel.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Panel.Bevel.StringColorTwo = "FF808080";
             this.tChart1.Series.Add(this.fastLine1);
-            this.tChart1.Series.Add(this.fastLine2);
-            this.tChart1.Series.Add(this.candle1);
             this.tChart1.Size = new System.Drawing.Size(1033, 567);
             // 
             // 
@@ -408,6 +403,7 @@
             this.tChart1.SubHeader.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.SubHeader.Bevel.StringColorTwo = "FF808080";
             this.tChart1.TabIndex = 5;
+            this.tChart1.Tools.Add(this.cursorTool1);
             // 
             // 
             // 
@@ -530,97 +526,15 @@
             // 
             this.fastLine1.YValues.DataMember = "Y";
             // 
-            // fastLine2
+            // cursorTool1
             // 
-            this.fastLine2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(83)))), ((int)(((byte)(49)))));
-            this.fastLine2.ColorEach = false;
-            // 
-            // 
-            // 
-            this.fastLine2.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(196)))), ((int)(((byte)(83)))), ((int)(((byte)(49)))));
+            this.cursorTool1.FollowMouse = true;
             // 
             // 
             // 
-            // 
-            // 
-            // 
-            this.fastLine2.Marks.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.fastLine2.Marks.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.fastLine2.Marks.Bevel.StringColorOne = "FFFFFFFF";
-            this.fastLine2.Marks.Bevel.StringColorTwo = "FF808080";
-            this.fastLine2.Marks.Clip = true;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.fastLine2.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(156)))), ((int)(((byte)(53)))));
-            this.fastLine2.Marks.FontSeriesColor = true;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.fastLine2.Marks.Symbol.Bevel.ColorOne = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.fastLine2.Marks.Symbol.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.fastLine2.Marks.Symbol.Bevel.StringColorOne = "FFFFFFFF";
-            this.fastLine2.Marks.Symbol.Bevel.StringColorTwo = "FF808080";
-            this.fastLine2.ShowInLegend = false;
-            this.fastLine2.Title = "fastLine2";
-            this.fastLine2.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
-            // 
-            // 
-            // 
-            this.fastLine2.XValues.DataMember = "X";
-            this.fastLine2.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
-            // 
-            // 
-            // 
-            this.fastLine2.YValues.DataMember = "Y";
-            // 
-            // candle1
-            // 
-            // 
-            // 
-            // 
-            this.candle1.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(150)))), ((int)(((byte)(9)))));
-            this.candle1.CloseValues = this.candle1.YValues;
-            this.candle1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(150)))), ((int)(((byte)(9)))));
-            this.candle1.ColorEach = false;
-            this.candle1.DateValues = this.candle1.XValues;
-            this.candle1.Function = this.compressOHLC1;
-            // 
-            // 
-            // 
-            this.candle1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(90)))), ((int)(((byte)(5)))));
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.candle1.Marks.Bevel.StringColorOne = "FFFFFFFF";
-            this.candle1.Marks.Bevel.StringColorTwo = "FF808080";
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.candle1.Marks.Symbol.Bevel.StringColorOne = "FFFFFFFF";
-            this.candle1.Marks.Symbol.Bevel.StringColorTwo = "FF808080";
-            // 
-            // 
-            // 
-            this.candle1.Pointer.Draw3D = false;
-            this.candle1.Style = Steema.TeeChart.Styles.CandleStyles.CandleBar;
-            this.candle1.Title = "candle1";
-            // 
-            // compressOHLC1
-            // 
-            this.compressOHLC1.Compress = Steema.TeeChart.Functions.CompressionPeriod.ocWeek;
+            this.cursorTool1.Pen.Style = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.cursorTool1.ScopeSize = 2;
+            this.cursorTool1.Style = Steema.TeeChart.Tools.CursorToolStyles.Scope;
             // 
             // BaseFrom
             // 
@@ -657,9 +571,7 @@
         private Steema.TeeChart.TChart tChart1;
         private Steema.TeeChart.Axis axis1;
         private Steema.TeeChart.Styles.FastLine fastLine1;
-        private Steema.TeeChart.Styles.FastLine fastLine2;
-        private Steema.TeeChart.Styles.Candle candle1;
-        private Steema.TeeChart.Functions.CompressOHLC compressOHLC1;
+        private Steema.TeeChart.Tools.CursorTool cursorTool1;
     }
 }
 

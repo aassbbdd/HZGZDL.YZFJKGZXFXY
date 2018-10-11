@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmTestSelect));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioGroup = new DevExpress.XtraEditors.RadioGroup();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -96,6 +97,7 @@
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(340, 365);
             this.MinimizeBox = false;
