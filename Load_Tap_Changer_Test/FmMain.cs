@@ -1571,11 +1571,10 @@ namespace Basic_Controls
             {
                 try
                 {
-                    int length = Convert.ToInt32(allnum * cursorTool.XValue);
+                    int length = Convert.ToInt32(allnum * cursorTool.XValue) / firstAverageNum;
 
                     if (length < vline1.YValues.Count)// && ckV1.Checked
                     {
-
                         lbv1.Text = Rounding(vline1.YValues[length]);
                     }
                     if (Offset == 0)
@@ -1883,6 +1882,10 @@ namespace Basic_Controls
         }
 
         /// <summary>
+        /// 平均次数
+        /// </summary>
+        int firstAverageNum = 100;
+        /// <summary>
         /// 加载波形图配置
         /// </summary>
         /// <param name="filepath"></param>
@@ -1892,23 +1895,41 @@ namespace Basic_Controls
             {
                 Show_Open();
                 bool IsNotNull;
-                XmlHelper.Xml_To_Array(filepath, cks,
+
+
+
+                //XmlHelper.Xml_To_Array(filepath, cks,
+                //   out vx1, out vy1,
+                //   out vx2, out vy2,
+                //   out vx3, out vy3,
+                //   out cx1, out cy1,
+                //   out cx2, out cy2,
+                //   out cx3, out cy3,
+                //   out IsNotNull
+                //    );
+
+
+                //取平均数据组
+                XmlHelper.Xml_To_Average_Array(filepath, cks,
                    out vx1, out vy1,
                    out vx2, out vy2,
                    out vx3, out vy3,
                    out cx1, out cy1,
                    out cx2, out cy2,
                    out cx3, out cy3,
-                   out IsNotNull
+                   out IsNotNull, firstAverageNum
                     );
+                //XmlHelper.Xml_To_Average_Array(filepath, cks,
+                //   out linex, out liney,
+
+                //   out IsNotNull, firstAverageNum
+                //    );
 
                 //取 参数有问题
                 Test_Plan modelNew = XmlHelper.Xml_To_Model(filepath);
 
                 if (modelNew != null)
                 {
-                    //tChart.Axes.Bottom.Title.Text = "时间单位:" + modelNew.TEST_TIME + "秒(sec)";
-                    //mode
                 }
                 if (!IsNotNull)
                 {
@@ -1917,18 +1938,11 @@ namespace Basic_Controls
                     return;
                 }
                 string time = vx1[vx1.Length - 1].ToString();
-
-
                 tChart.Axes.Bottom.Title.Text = "时间单位:" + time + "秒(sec)";
                 alltime = 20;
                 Chart_DataTable_Init();
                 Chart_Data_Lond();
-
-                //min = tChart.Axes.Bottom.Minimum;
-                //max = tChart.Axes.Bottom.MaxXValue;
-                ///Add_CursorTool();
                 Show_End();
-
             }
         }
 
@@ -2147,6 +2161,9 @@ namespace Basic_Controls
 
         double[] cx3;
         double[] cy3;
+
+        double[][] linex;
+        double[][] liney;
 
         #endregion
 

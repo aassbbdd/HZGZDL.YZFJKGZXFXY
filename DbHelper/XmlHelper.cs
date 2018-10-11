@@ -39,6 +39,14 @@ namespace DbHelper
         /// 文件名字
         /// </summary>
         static string xmlname = "";
+
+        static double[] newvx1; static double[] newvy1;
+        static double[] newvx2; static double[] newvy2;
+        static double[] newvx3; static double[] newvy3;
+        static double[] newcx1; static double[] newcy1;
+        static double[] newcx2; static double[] newcy2;
+        static double[] newcx3; static double[] newcy3;
+        static int I;
         #endregion
 
         /// <summary>
@@ -703,16 +711,8 @@ namespace DbHelper
 
             }
         }
-        static double[] newvx1; static double[] newvy1;
-        static double[] newvx2; static double[] newvy2;
-        static double[] newvx3; static double[] newvy3;
-        static double[] newcx1; static double[] newcy1;
-        static double[] newcx2; static double[] newcy2;
-        static double[] newcx3; static double[] newcy3;
-        static int I;
-
         /// <summary>
-        /// xml转DataTable
+        /// xml转数组
         /// </summary>
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
@@ -763,7 +763,6 @@ namespace DbHelper
                 newcx2 = new double[count]; newcy2 = new double[count];
                 newcx3 = new double[count]; newcy3 = new double[count];
 
-
                 vx1 = new double[count]; vy1 = new double[count];
                 vx2 = new double[count]; vy2 = new double[count];
                 vx3 = new double[count]; vy3 = new double[count];
@@ -771,7 +770,6 @@ namespace DbHelper
                 cx1 = new double[count]; cy1 = new double[count];
                 cx2 = new double[count]; cy2 = new double[count];
                 cx3 = new double[count]; cy3 = new double[count];
-
 
                 if (count == 0)
                 {
@@ -822,7 +820,368 @@ namespace DbHelper
         }
 
         /// <summary>
-        /// xml转DataTable  对比方法
+        /// xml转平均数组
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="cks"></param>
+        /// <param name="AverageNum">平均次数</param>
+        /// <param name="vx1"></param>
+        /// <param name="vy1"></param>
+        /// <param name="vx2"></param>
+        /// <param name="vy2"></param>
+        /// <param name="vx3"></param>
+        /// <param name="vy3"></param>
+        /// <param name="cx1"></param>
+        /// <param name="cy1"></param>
+        /// <param name="cx2"></param>
+        /// <param name="cy2"></param>
+        /// <param name="cx3"></param>
+        /// <param name="cy3"></param>
+        /// <param name="IsNotNull"></param>
+        public static void Xml_To_Average_Array( string path, bool[] cks,
+            out double[][] linex, out double[][] liney,
+
+            out bool IsNotNull, int AverageNum = 100
+            )
+        {
+            try
+            {
+                IsNotNull = true;
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                XElement ele = root.Element("Test_Plan");
+
+                if (ele == null)
+                {
+                    I = 10;
+                }
+                else
+                {
+                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                }
+
+                //int AverageNum = 100;//多少次去平均
+                var dd = (eles.Count() * 80);
+                var dd11 = eles.Count() ;
+                int count = (eles.Count() * 80) / AverageNum;
+                newvx1 = new double[count]; newvy1 = new double[count];
+                newvx2 = new double[count]; newvy2 = new double[count];
+                newvx3 = new double[count]; newvy3 = new double[count];
+
+                newcx1 = new double[count]; newcy1 = new double[count];
+                newcx2 = new double[count]; newcy2 = new double[count];
+                newcx3 = new double[count]; newcy3 = new double[count];
+
+
+                linex = new double[6][];
+                liney = new double[6][];
+                if (count == 0)
+                {
+                    IsNotNull = false;
+                }
+                int index = 0; //index 为 震动电流 每个点的 索引位置值
+
+                //转成毫秒除数
+                int allnum = 100000;
+                //基本宽度
+                int num = 1;
+                //一组数据总计算次数
+                int dcount = 80;
+
+                double v1 = 0;
+                double v2 = 0;
+                double v3 = 0;
+
+                double c1 = 0;
+                double c2 = 0;
+                double c3 = 0;
+                int AverageCoun = 0;//累加次数
+                int j = 0;//数组所在位置
+
+                foreach (XElement item in eles)
+                {
+                    // Algorithm_To_Arrey(item, index);
+                    string DataSource = item.Element("DataSource").Value;
+                    string data = DataSource.Substring(8, DataSource.Length - 8);
+
+                    for (int i = 0; i < dcount; i++)
+                    {
+                        int length = 24 * i;//截取位置
+
+                        string Current1 = data.Substring(12 + length, 4);
+                        string Current2 = data.Substring(16 + length, 4);
+                        string Current3 = data.Substring(20 + length, 4);
+
+                        string Vibration1 = data.Substring(0 + length, 4);
+                        string Vibration2 = data.Substring(4 + length, 4);
+                        string Vibration3 = data.Substring(8 + length, 4);
+                        int id = (index * dcount) + i;
+
+                        //计算
+                        c1 += Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                        c2 += Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                        c3 += Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+
+                        v1 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                        v2 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                        v3 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+
+                        //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                        AverageCoun++;
+
+                        if (AverageCoun >= AverageNum)
+                        {
+                            newvy1[j] = v1 / AverageNum;
+                            newvy2[j] = v2 / AverageNum;
+                            newvy3[j] = v3 / AverageNum;
+                            newcy1[j] = c1 / AverageNum;
+                            newcy2[j] = c2 / AverageNum;
+                            newcy3[j] = c3 / AverageNum;
+
+                            double newXvalue = (double)(j * AverageCoun) / allnum;
+                            newvx1[j] = newvx2[j] = newvx3[j]
+                          = newcx1[j] = newcx2[j] = newcx3[j]
+                          = newXvalue;
+
+                            AverageCoun = 0;
+                            c1 = 0;
+                            c2 = 0;
+                            c3 = 0;
+                            v1 = 0;
+                            v2 = 0;
+                            v3 = 0;
+
+                            j++;
+                        }
+                        index++;
+                    }
+                }
+                if (AverageCoun > 0)
+                {
+                    newvy1[j + 1] = v1 / AverageCoun;
+                    newvy2[j + 1] = v2 / AverageCoun;
+                    newvy3[j + 1] = v3 / AverageCoun;
+                    newcy1[j + 1] = c1 / AverageCoun;
+                    newcy2[j + 1] = c2 / AverageCoun;
+                    newcy3[j + 1] = c3 / AverageCoun;
+
+                    newvx1[j + 1] = newvx2[j + 1] = newvx3[j + 1]
+                  = newcx1[j + 1] = newcx2[j + 1] = newcx3[j + 1]
+                  = (double)(index * AverageCoun) / allnum; 
+                }
+                linex[0]= newvx1; linex[0]= newvy1;
+                linex[1]= newvx2; linex[1]= newvy2;
+                linex[2]= newvx3; linex[2]= newvy3;
+     
+                linex[3] = newcx1;linex[3] = newcy1;
+                linex[4] = newcx2;linex[4] = newcy2;
+                linex[5] = newcx3; linex[5] = newcy3;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// xml转平均数组
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="cks"></param>
+        /// <param name="AverageNum">平均次数</param>
+        /// <param name="vx1"></param>
+        /// <param name="vy1"></param>
+        /// <param name="vx2"></param>
+        /// <param name="vy2"></param>
+        /// <param name="vx3"></param>
+        /// <param name="vy3"></param>
+        /// <param name="cx1"></param>
+        /// <param name="cy1"></param>
+        /// <param name="cx2"></param>
+        /// <param name="cy2"></param>
+        /// <param name="cx3"></param>
+        /// <param name="cy3"></param>
+        /// <param name="IsNotNull"></param>
+        public static void Xml_To_Average_Array(string path, bool[] cks,
+            out double[] vx1, out double[] vy1,
+            out double[] vx2, out double[] vy2,
+            out double[] vx3, out double[] vy3,
+            out double[] cx1, out double[] cy1,
+            out double[] cx2, out double[] cy2,
+            out double[] cx3, out double[] cy3,
+            out bool IsNotNull, int AverageNum = 100
+            )
+        {
+            try
+            {
+                IsNotNull = true;
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                XElement ele = root.Element("Test_Plan");
+
+                if (ele == null)
+                {
+                    I = 10;
+                }
+                else
+                {
+                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                }
+
+                //int AverageNum = 100;//多少次去平均
+                var dd = (eles.Count() * 80);
+                var dd11 = eles.Count();
+                int count = (eles.Count() * 80) / AverageNum;
+                newvx1 = new double[count]; newvy1 = new double[count];
+                newvx2 = new double[count]; newvy2 = new double[count];
+                newvx3 = new double[count]; newvy3 = new double[count];
+
+                newcx1 = new double[count]; newcy1 = new double[count];
+                newcx2 = new double[count]; newcy2 = new double[count];
+                newcx3 = new double[count]; newcy3 = new double[count];
+
+                vx1 = new double[count]; vy1 = new double[count];
+                vx2 = new double[count]; vy2 = new double[count];
+                vx3 = new double[count]; vy3 = new double[count];
+
+                cx1 = new double[count]; cy1 = new double[count];
+                cx2 = new double[count]; cy2 = new double[count];
+                cx3 = new double[count]; cy3 = new double[count];
+
+                if (count == 0)
+                {
+                    IsNotNull = false;
+                }
+                int index = 0; //index 为 震动电流 每个点的 索引位置值
+
+                //转成毫秒除数
+                int allnum = 100000;
+                //基本宽度
+                int num = 1;
+                //一组数据总计算次数
+                int dcount = 80;
+
+                double v1 = 0;
+                double v2 = 0;
+                double v3 = 0;
+
+                double c1 = 0;
+                double c2 = 0;
+                double c3 = 0;
+                int AverageCoun = 0;//累加次数
+                int j = 0;//数组所在位置
+
+                foreach (XElement item in eles)
+                {
+                    // Algorithm_To_Arrey(item, index);
+                    string DataSource = item.Element("DataSource").Value;
+                    string data = DataSource.Substring(8, DataSource.Length - 8);
+
+                    for (int i = 0; i < dcount; i++)
+                    {
+                        int length = 24 * i;//截取位置
+
+                        string Current1 = data.Substring(12 + length, 4);
+                        string Current2 = data.Substring(16 + length, 4);
+                        string Current3 = data.Substring(20 + length, 4);
+
+                        string Vibration1 = data.Substring(0 + length, 4);
+                        string Vibration2 = data.Substring(4 + length, 4);
+                        string Vibration3 = data.Substring(8 + length, 4);
+                        int id = (index * dcount) + i;
+
+                        //计算
+                        c1 += Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                        c2 += Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                        c3 += Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+
+                        v1 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                        v2 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                        v3 += Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+
+                        //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                        AverageCoun++;
+
+                        if (AverageCoun >= AverageNum)
+                        {
+                            newvy1[j] = v1 / AverageNum;
+                            newvy2[j] = v2 / AverageNum;
+                            newvy3[j] = v3 / AverageNum;
+                            newcy1[j] = c1 / AverageNum;
+                            newcy2[j] = c2 / AverageNum;
+                            newcy3[j] = c3 / AverageNum;
+
+                            double newXvalue = (double)(j * AverageCoun) / allnum;
+                            newvx1[j] = newvx2[j] = newvx3[j]
+                          = newcx1[j] = newcx2[j] = newcx3[j]
+                          = newXvalue;
+
+                            AverageCoun = 0;
+                            c1 = 0;
+                            c2 = 0;
+                            c3 = 0;
+                            v1 = 0;
+                            v2 = 0;
+                            v3 = 0;
+
+                            j++;
+                        }
+                        index++;
+                    }
+                }
+                if (AverageCoun > 0)
+                {
+                    newvy1[j + 1] = v1 / AverageCoun;
+                    newvy2[j + 1] = v2 / AverageCoun;
+                    newvy3[j + 1] = v3 / AverageCoun;
+                    newcy1[j + 1] = c1 / AverageCoun;
+                    newcy2[j + 1] = c2 / AverageCoun;
+                    newcy3[j + 1] = c3 / AverageCoun;
+
+                    newvx1[j + 1] = newvx2[j + 1] = newvx3[j + 1]
+                  = newcx1[j + 1] = newcx2[j + 1] = newcx3[j + 1]
+                  = (double)(index * AverageCoun) / allnum;
+                }
+                vx1 = newvx1; vy1 = newvy1;
+                vx2 = newvx2; vy2 = newvy2;
+                vx3 = newvx3; vy3 = newvy3;
+
+                cx1 = newcx1; cy1 = newcy1;
+                cx2 = newcx2; cy2 = newcy2;
+                cx3 = newcx3; cy3 = newcy3;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        /// <summary>
+        /// xml转数组  对比数据转换方法
         /// </summary>
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
@@ -879,7 +1238,7 @@ namespace DbHelper
         }
 
         /// <summary>        
-        /// 存储为数组 arrey
+        /// 对比度提取算法
         /// </summary>
         private static void Algorithm_To_Arrey_Contrast(XElement model, bool[] cks, int jinex
             )
