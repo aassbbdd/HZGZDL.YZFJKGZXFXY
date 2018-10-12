@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager2 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, null, true, true);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
@@ -38,7 +39,7 @@
             this.repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.tChart1 = new Steema.TeeChart.TChart();
-            this.axis1 = new Steema.TeeChart.Axis();
+            this.axis1 = new Steema.TeeChart.Axis(this.components);
             this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
             this.cursorTool1 = new Steema.TeeChart.Tools.CursorTool();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
@@ -368,7 +369,7 @@
             this.tChart1.Legend.Title.Bevel.ColorTwo = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.tChart1.Legend.Title.Bevel.StringColorOne = "FFFFFFFF";
             this.tChart1.Legend.Title.Bevel.StringColorTwo = "FF808080";
-            this.tChart1.Location = new System.Drawing.Point(289, 123);
+            this.tChart1.Location = new System.Drawing.Point(277, 135);
             this.tChart1.Name = "tChart1";
             // 
             // 
@@ -532,9 +533,9 @@
             // 
             // 
             // 
+            this.cursorTool1.Pen.EndCap = System.Drawing.Drawing2D.LineCap.Square;
             this.cursorTool1.Pen.Style = System.Drawing.Drawing2D.DashStyle.Dash;
             this.cursorTool1.ScopeSize = 2;
-            this.cursorTool1.Style = Steema.TeeChart.Tools.CursorToolStyles.Scope;
             // 
             // BaseFrom
             // 

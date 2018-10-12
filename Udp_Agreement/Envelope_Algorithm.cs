@@ -53,59 +53,6 @@ namespace Udp_Agreement
             Out_y = outY;
         }
 
-
-        //public void Envelope(double spacing, double[] x, double[] y
-        //    , out double[] Out_x, out double[] Out_y
-        //    , double rc_dn = 0.01, double rc_up = 0.0001)
-        //{
-        //    double[] yNew = (double[])y.Clone();
-        //    double[] xNew = (double[])x.Clone();
-
-        //    //Average_100(spacing, y, out yNew, out xNew);
-
-        //    double[] outY = new double[yNew.Length];
-        //    double[] outX = new double[xNew.Length];
-        //    // env_3(yNew, xNew, yNew.Length, 0);
-        //    env_3(yNew, outY, rc_dn, rc_up);
-
-        //    Out_x = x;
-        //    Out_y = outY;
-
-
-        //    //double[] bfy = bf(y);
-
-        //    //double[] xNew = new double[bfy.Length];
-        //    //double[] yNew = new double[bfy.Length];
-        //    //int fcount = 0;
-
-        //    //xNew = Diff(bfy, x, out fcount);
-        //    //xNew = Sign(bfy, out fcount);
-        //    //xNew = Diff(bfy, x, out fcount);
-
-        //    //Out_x = new double[fcount];
-        //    //Out_y = new double[fcount];
-        //    //int j = 1;//计算峰值个数
-
-        //    //Out_x[0] = 0;
-        //    //Out_y[0] = 0;
-
-        //    //for (int i = 0; i < xNew.Length; i++)
-        //    //{
-        //    //    if (xNew[i] < 0)//峰值
-        //    //    {
-        //    //        Out_x[j] = (i + 1) * spacing;
-        //    //        Out_y[j] = bfy[i + 1];
-        //    //        j++;
-        //    //    }
-        //    //    else//谷值
-        //    //    {
-
-        //    //    }
-        //    //}
-
-        //    //Out_x[Out_x.Length - 1] = x.Length * spacing;
-        //    //Out_y[Out_x.Length - 1] = 0;
-        //}
         #endregion
 
         //private double[] bf(double[] f)

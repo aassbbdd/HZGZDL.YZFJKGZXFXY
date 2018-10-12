@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Db_Enum\Lond_Enum.cs" />
     <Compile Include="Db_Enum\Db_Enum.cs" />
     <Compile Include="Db_Model\Test_Plan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
