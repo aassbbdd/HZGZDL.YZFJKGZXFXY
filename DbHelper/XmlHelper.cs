@@ -1294,6 +1294,7 @@ namespace DbHelper
         /// xml转 平均数组和完整数组
         /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
         /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
@@ -1330,8 +1331,8 @@ namespace DbHelper
                     I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
                 }
 
-                linex = new double[12][];
-                liney = new double[12][];
+                linex = new double[20][];
+                liney = new double[20][];
                 #region  完全数据组
                 int count = eles.Count() * 80;
 
@@ -1485,6 +1486,8 @@ namespace DbHelper
         /// <summary>
         /// xml转数组   平均数组和完整数组 对比数据转换方法 
         /// 0 电流 1震动 2平均电流 3 平均震动
+        /// 4 电流 5震动 6平均电流 7平均震动
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>                                      
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
@@ -1629,6 +1632,9 @@ namespace DbHelper
             }
         }
 
+        /// <summary>        
+        /// 对比度提取算法 平均和完整
+        /// </summary>
         private static void Algorithm_To_Arrey_AverageAndContrast(XElement model, bool[] cks, int jinex, int AverageNum)
         {
             //转成毫秒除数

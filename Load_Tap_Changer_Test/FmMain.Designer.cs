@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FmMain));
             DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
             this.barButtonItem7 = new DevExpress.XtraBars.BarButtonItem();
@@ -35,7 +36,7 @@
             this.barButtonItem9 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem10 = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -156,32 +157,26 @@
             this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
             this.lbdbtime = new DevExpress.XtraEditors.LabelControl();
             this.lbybtime = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
             this.lbdbdata = new DevExpress.XtraEditors.LabelControl();
             this.lbybname = new DevExpress.XtraEditors.LabelControl();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
-            this.blSavePorint = new DevExpress.XtraEditors.LabelControl();
             this.lbOpen = new DevExpress.XtraEditors.LabelControl();
             this.pcOpen = new System.Windows.Forms.PictureBox();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.LBPrintCount = new DevExpress.XtraEditors.LabelControl();
-            this.LBxmlCount = new DevExpress.XtraEditors.LabelControl();
             this.btnClear1 = new DevExpress.XtraEditors.SimpleButton();
             this.btnReNew1 = new DevExpress.XtraEditors.SimpleButton();
             this.treeList = new DevExpress.XtraTreeList.TreeList();
             this.ID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.删除 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            this.imageList = new System.Windows.Forms.ImageList();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.barLargeButtonItem9 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.pc2 = new DevExpress.XtraEditors.PanelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.popupMenu = new DevExpress.XtraBars.PopupMenu();
+            this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::Load_Tap_Changer_Test.WaitForm), true, true);
             this.barLargeButtonItem24 = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
@@ -953,14 +948,14 @@
             this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(1066, 837);
+            this.pclChart.Size = new System.Drawing.Size(1043, 837);
             this.pclChart.TabIndex = 30;
             // 
             // label4
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(148, 710);
+            this.label4.Location = new System.Drawing.Point(136, 710);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 18);
             this.label4.TabIndex = 3;
@@ -971,7 +966,7 @@
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(104, 710);
+            this.label3.Location = new System.Drawing.Point(92, 710);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(38, 18);
             this.label3.TabIndex = 2;
@@ -982,7 +977,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(148, 728);
+            this.label2.Location = new System.Drawing.Point(136, 728);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 18);
             this.label2.TabIndex = 1;
@@ -993,7 +988,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(104, 728);
+            this.label1.Location = new System.Drawing.Point(92, 728);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 18);
             this.label1.TabIndex = 0;
@@ -1022,7 +1017,7 @@
             // 
             // lbTopTime
             // 
-            this.lbTopTime.Location = new System.Drawing.Point(85, 557);
+            this.lbTopTime.Location = new System.Drawing.Point(94, 480);
             this.lbTopTime.Name = "lbTopTime";
             this.lbTopTime.Size = new System.Drawing.Size(8, 18);
             this.lbTopTime.TabIndex = 41;
@@ -1030,7 +1025,7 @@
             // 
             // lbBottomTime
             // 
-            this.lbBottomTime.Location = new System.Drawing.Point(85, 581);
+            this.lbBottomTime.Location = new System.Drawing.Point(94, 504);
             this.lbBottomTime.Name = "lbBottomTime";
             this.lbBottomTime.Size = new System.Drawing.Size(8, 18);
             this.lbBottomTime.TabIndex = 42;
@@ -1064,34 +1059,28 @@
             this.panelControl1.Controls.Add(this.plLinePath);
             this.panelControl1.Controls.Add(this.lbdbtime);
             this.panelControl1.Controls.Add(this.lbybtime);
-            this.panelControl1.Controls.Add(this.labelControl7);
-            this.panelControl1.Controls.Add(this.labelControl8);
             this.panelControl1.Controls.Add(this.lbdbdata);
             this.panelControl1.Controls.Add(this.lbybname);
             this.panelControl1.Controls.Add(this.labelControl6);
             this.panelControl1.Controls.Add(this.lbVoltage);
-            this.panelControl1.Controls.Add(this.labelControl5);
-            this.panelControl1.Controls.Add(this.blSavePorint);
             this.panelControl1.Controls.Add(this.lbOpen);
             this.panelControl1.Controls.Add(this.pcOpen);
             this.panelControl1.Controls.Add(this.labelControl4);
             this.panelControl1.Controls.Add(this.labelControl3);
-            this.panelControl1.Controls.Add(this.LBPrintCount);
-            this.panelControl1.Controls.Add(this.LBxmlCount);
             this.panelControl1.Controls.Add(this.btnClear1);
             this.panelControl1.Controls.Add(this.btnReNew1);
             this.panelControl1.Controls.Add(this.lbBottomTime);
             this.panelControl1.Controls.Add(this.lbTopTime);
             this.panelControl1.Controls.Add(this.btnNarrow1);
             this.panelControl1.Controls.Add(this.btnEnlarge11);
-            this.panelControl1.Location = new System.Drawing.Point(1286, 112);
+            this.panelControl1.Location = new System.Drawing.Point(1261, 112);
             this.panelControl1.Name = "panelControl1";
-            this.panelControl1.Size = new System.Drawing.Size(187, 837);
+            this.panelControl1.Size = new System.Drawing.Size(209, 837);
             this.panelControl1.TabIndex = 52;
             // 
             // labelControl12
             // 
-            this.labelControl12.Location = new System.Drawing.Point(9, 581);
+            this.labelControl12.Location = new System.Drawing.Point(18, 504);
             this.labelControl12.Name = "labelControl12";
             this.labelControl12.Size = new System.Drawing.Size(65, 18);
             this.labelControl12.TabIndex = 79;
@@ -1099,7 +1088,7 @@
             // 
             // labelControl14
             // 
-            this.labelControl14.Location = new System.Drawing.Point(9, 557);
+            this.labelControl14.Location = new System.Drawing.Point(18, 480);
             this.labelControl14.Name = "labelControl14";
             this.labelControl14.Size = new System.Drawing.Size(65, 18);
             this.labelControl14.TabIndex = 78;
@@ -1107,7 +1096,7 @@
             // 
             // labelControl17
             // 
-            this.labelControl17.Location = new System.Drawing.Point(10, 740);
+            this.labelControl17.Location = new System.Drawing.Point(19, 663);
             this.labelControl17.Name = "labelControl17";
             this.labelControl17.Size = new System.Drawing.Size(53, 18);
             this.labelControl17.TabIndex = 77;
@@ -1115,7 +1104,7 @@
             // 
             // lbc3
             // 
-            this.lbc3.Location = new System.Drawing.Point(85, 740);
+            this.lbc3.Location = new System.Drawing.Point(94, 663);
             this.lbc3.Name = "lbc3";
             this.lbc3.Size = new System.Drawing.Size(8, 18);
             this.lbc3.TabIndex = 76;
@@ -1123,7 +1112,7 @@
             // 
             // labelControl19
             // 
-            this.labelControl19.Location = new System.Drawing.Point(10, 716);
+            this.labelControl19.Location = new System.Drawing.Point(19, 639);
             this.labelControl19.Name = "labelControl19";
             this.labelControl19.Size = new System.Drawing.Size(53, 18);
             this.labelControl19.TabIndex = 75;
@@ -1131,7 +1120,7 @@
             // 
             // lbc2
             // 
-            this.lbc2.Location = new System.Drawing.Point(85, 716);
+            this.lbc2.Location = new System.Drawing.Point(94, 639);
             this.lbc2.Name = "lbc2";
             this.lbc2.Size = new System.Drawing.Size(8, 18);
             this.lbc2.TabIndex = 74;
@@ -1139,7 +1128,7 @@
             // 
             // labelControl21
             // 
-            this.labelControl21.Location = new System.Drawing.Point(10, 692);
+            this.labelControl21.Location = new System.Drawing.Point(19, 615);
             this.labelControl21.Name = "labelControl21";
             this.labelControl21.Size = new System.Drawing.Size(53, 18);
             this.labelControl21.TabIndex = 73;
@@ -1147,7 +1136,7 @@
             // 
             // lbc1
             // 
-            this.lbc1.Location = new System.Drawing.Point(85, 692);
+            this.lbc1.Location = new System.Drawing.Point(94, 615);
             this.lbc1.Name = "lbc1";
             this.lbc1.Size = new System.Drawing.Size(8, 18);
             this.lbc1.TabIndex = 72;
@@ -1155,7 +1144,7 @@
             // 
             // labelControl15
             // 
-            this.labelControl15.Location = new System.Drawing.Point(10, 667);
+            this.labelControl15.Location = new System.Drawing.Point(19, 590);
             this.labelControl15.Name = "labelControl15";
             this.labelControl15.Size = new System.Drawing.Size(53, 18);
             this.labelControl15.TabIndex = 71;
@@ -1163,7 +1152,7 @@
             // 
             // lbv3
             // 
-            this.lbv3.Location = new System.Drawing.Point(85, 667);
+            this.lbv3.Location = new System.Drawing.Point(94, 590);
             this.lbv3.Name = "lbv3";
             this.lbv3.Size = new System.Drawing.Size(8, 18);
             this.lbv3.TabIndex = 70;
@@ -1171,7 +1160,7 @@
             // 
             // labelControl13
             // 
-            this.labelControl13.Location = new System.Drawing.Point(10, 643);
+            this.labelControl13.Location = new System.Drawing.Point(19, 566);
             this.labelControl13.Name = "labelControl13";
             this.labelControl13.Size = new System.Drawing.Size(53, 18);
             this.labelControl13.TabIndex = 69;
@@ -1179,7 +1168,7 @@
             // 
             // lbv2
             // 
-            this.lbv2.Location = new System.Drawing.Point(85, 643);
+            this.lbv2.Location = new System.Drawing.Point(94, 566);
             this.lbv2.Name = "lbv2";
             this.lbv2.Size = new System.Drawing.Size(8, 18);
             this.lbv2.TabIndex = 68;
@@ -1187,7 +1176,7 @@
             // 
             // labelControl11
             // 
-            this.labelControl11.Location = new System.Drawing.Point(10, 619);
+            this.labelControl11.Location = new System.Drawing.Point(19, 542);
             this.labelControl11.Name = "labelControl11";
             this.labelControl11.Size = new System.Drawing.Size(53, 18);
             this.labelControl11.TabIndex = 67;
@@ -1195,7 +1184,7 @@
             // 
             // lbv1
             // 
-            this.lbv1.Location = new System.Drawing.Point(85, 619);
+            this.lbv1.Location = new System.Drawing.Point(94, 542);
             this.lbv1.Name = "lbv1";
             this.lbv1.Size = new System.Drawing.Size(8, 18);
             this.lbv1.TabIndex = 66;
@@ -1258,10 +1247,10 @@
             this.plLinePath.Controls.Add(this.label8);
             this.plLinePath.Controls.Add(this.ckC3);
             this.plLinePath.Controls.Add(this.btnReLond);
-            this.plLinePath.Location = new System.Drawing.Point(2, 2);
+            this.plLinePath.Location = new System.Drawing.Point(-1, 2);
             this.plLinePath.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.plLinePath.Name = "plLinePath";
-            this.plLinePath.Size = new System.Drawing.Size(185, 152);
+            this.plLinePath.Size = new System.Drawing.Size(207, 152);
             this.plLinePath.TabIndex = 31;
             // 
             // ckV2
@@ -1287,7 +1276,7 @@
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(-293, 25);
+            this.label5.Location = new System.Drawing.Point(-282, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 18);
             this.label5.TabIndex = 3;
@@ -1307,7 +1296,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(-337, 25);
+            this.label6.Location = new System.Drawing.Point(-326, 25);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(38, 18);
             this.label6.TabIndex = 2;
@@ -1327,7 +1316,7 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(-293, 43);
+            this.label7.Location = new System.Drawing.Point(-282, 43);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 18);
             this.label7.TabIndex = 1;
@@ -1347,7 +1336,7 @@
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-337, 43);
+            this.label8.Location = new System.Drawing.Point(-326, 43);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(38, 18);
             this.label8.TabIndex = 0;
@@ -1388,22 +1377,6 @@
             this.lbybtime.TabIndex = 60;
             this.lbybtime.Text = "labelControl11";
             // 
-            // labelControl7
-            // 
-            this.labelControl7.Location = new System.Drawing.Point(6, 501);
-            this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(75, 18);
-            this.labelControl7.TabIndex = 59;
-            this.labelControl7.Text = "绘图点数：";
-            // 
-            // labelControl8
-            // 
-            this.labelControl8.Location = new System.Drawing.Point(10, 477);
-            this.labelControl8.Name = "labelControl8";
-            this.labelControl8.Size = new System.Drawing.Size(75, 18);
-            this.labelControl8.TabIndex = 58;
-            this.labelControl8.Text = "存储数量：";
-            // 
             // lbdbdata
             // 
             this.lbdbdata.Location = new System.Drawing.Point(16, 364);
@@ -1436,26 +1409,10 @@
             this.lbVoltage.TabIndex = 54;
             this.lbVoltage.Text = "0";
             // 
-            // labelControl5
-            // 
-            this.labelControl5.Location = new System.Drawing.Point(16, 521);
-            this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(75, 18);
-            this.labelControl5.TabIndex = 53;
-            this.labelControl5.Text = "已存点数：";
-            // 
-            // blSavePorint
-            // 
-            this.blSavePorint.Location = new System.Drawing.Point(89, 521);
-            this.blSavePorint.Name = "blSavePorint";
-            this.blSavePorint.Size = new System.Drawing.Size(78, 18);
-            this.blSavePorint.TabIndex = 52;
-            this.blSavePorint.Text = "blSavePorint";
-            // 
             // lbOpen
             // 
             this.lbOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbOpen.Location = new System.Drawing.Point(103, 811);
+            this.lbOpen.Location = new System.Drawing.Point(47, 811);
             this.lbOpen.Name = "lbOpen";
             this.lbOpen.Size = new System.Drawing.Size(81, 18);
             this.lbOpen.TabIndex = 51;
@@ -1466,7 +1423,7 @@
             this.pcOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pcOpen.ErrorImage = null;
             this.pcOpen.Image = global::Load_Tap_Changer_Test.Properties.Resources._1537;
-            this.pcOpen.Location = new System.Drawing.Point(77, 809);
+            this.pcOpen.Location = new System.Drawing.Point(21, 809);
             this.pcOpen.MaximumSize = new System.Drawing.Size(20, 20);
             this.pcOpen.MinimumSize = new System.Drawing.Size(20, 20);
             this.pcOpen.Name = "pcOpen";
@@ -1489,22 +1446,6 @@
             this.labelControl3.Size = new System.Drawing.Size(75, 18);
             this.labelControl3.TabIndex = 48;
             this.labelControl3.Text = "样本数据：";
-            // 
-            // LBPrintCount
-            // 
-            this.LBPrintCount.Location = new System.Drawing.Point(85, 501);
-            this.LBPrintCount.Name = "LBPrintCount";
-            this.LBPrintCount.Size = new System.Drawing.Size(82, 18);
-            this.LBPrintCount.TabIndex = 47;
-            this.LBPrintCount.Text = "LBPrintCount";
-            // 
-            // LBxmlCount
-            // 
-            this.LBxmlCount.Location = new System.Drawing.Point(85, 477);
-            this.LBxmlCount.Name = "LBxmlCount";
-            this.LBxmlCount.Size = new System.Drawing.Size(77, 18);
-            this.LBxmlCount.TabIndex = 46;
-            this.LBxmlCount.Text = "LBxmlCount";
             // 
             // btnClear1
             // 
@@ -1795,10 +1736,8 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit 删除;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
-        private DevExpress.XtraEditors.LabelControl LBxmlCount;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private DevExpress.XtraEditors.LabelControl LBPrintCount;
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraBars.BarEditItem barEditItem1;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
@@ -1807,8 +1746,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private DevExpress.XtraEditors.LabelControl labelControl5;
-        private DevExpress.XtraEditors.LabelControl blSavePorint;
         private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager;
         private DevExpress.XtraBars.BarLinkContainerItem barLinkContainerItem1;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem19;
@@ -1825,8 +1762,6 @@
         private DevExpress.XtraBars.BarLargeButtonItem btnLeftShift;
         private DevExpress.XtraBars.BarHeaderItem btnRightShift;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem24;
-        private DevExpress.XtraEditors.LabelControl labelControl7;
-        private DevExpress.XtraEditors.LabelControl labelControl8;
         private DevExpress.XtraEditors.LabelControl lbdbdata;
         private DevExpress.XtraEditors.LabelControl lbybname;
         private DevExpress.XtraEditors.LabelControl lbdbtime;
