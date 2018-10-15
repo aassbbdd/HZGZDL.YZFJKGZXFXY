@@ -43,9 +43,6 @@
             this.btnSaveData = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSaveImg = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem7 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem8 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem10 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnStopTest = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -57,12 +54,6 @@
             this.btnNarrow = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnClear = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnReNew = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem17 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem18 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem20 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem21 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem22 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem23 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem11 = new DevExpress.XtraBars.BarButtonItem();
@@ -95,6 +86,9 @@
             this.btnCTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem3 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem4 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem7 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem8 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem10 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem11 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem12 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem13 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -102,6 +96,12 @@
             this.barLargeButtonItem15 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barListItem1 = new DevExpress.XtraBars.BarListItem();
             this.barLargeButtonItem16 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem17 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem18 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem20 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem21 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem22 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem23 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -120,29 +120,42 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.lbybname = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbdata = new DevExpress.XtraEditors.LabelControl();
+            this.lbybtime = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbtime = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
+            this.txtRcUp = new DevExpress.XtraEditors.TextEdit();
+            this.txtRcDn = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
             this.btnEnlarge11 = new DevExpress.XtraEditors.SimpleButton();
             this.btnNarrow1 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReNew1 = new DevExpress.XtraEditors.SimpleButton();
+            this.btnClear1 = new DevExpress.XtraEditors.SimpleButton();
             this.lbTopTime = new DevExpress.XtraEditors.LabelControl();
             this.lbBottomTime = new DevExpress.XtraEditors.LabelControl();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
+            this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
+            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.ckFollow = new DevExpress.XtraEditors.CheckEdit();
+            this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc3 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl21 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
             this.lbv3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc1 = new DevExpress.XtraEditors.LabelControl();
+            this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.lbv2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl21 = new DevExpress.XtraEditors.LabelControl();
             this.lbv1 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
-            this.txtRcDn = new DevExpress.XtraEditors.TextEdit();
-            this.txtRcUp = new DevExpress.XtraEditors.TextEdit();
+            this.lbc3 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
             this.plLinePath = new DevExpress.XtraEditors.PanelControl();
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
@@ -155,18 +168,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.ckC3 = new DevExpress.XtraEditors.CheckEdit();
             this.btnReLond = new DevExpress.XtraEditors.SimpleButton();
-            this.lbdbtime = new DevExpress.XtraEditors.LabelControl();
-            this.lbybtime = new DevExpress.XtraEditors.LabelControl();
-            this.lbdbdata = new DevExpress.XtraEditors.LabelControl();
-            this.lbybname = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.lbOpen = new DevExpress.XtraEditors.LabelControl();
             this.pcOpen = new System.Windows.Forms.PictureBox();
-            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.btnClear1 = new DevExpress.XtraEditors.SimpleButton();
-            this.btnReNew1 = new DevExpress.XtraEditors.SimpleButton();
             this.treeList = new DevExpress.XtraTreeList.TreeList();
             this.ID = new DevExpress.XtraTreeList.Columns.TreeListColumn();
             this.删除 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
@@ -179,16 +182,22 @@
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::Load_Tap_Changer_Test.WaitForm), true, true);
             this.barLargeButtonItem24 = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.lbtime = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             this.pclChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
+            this.xtraTabControl1.SuspendLayout();
+            this.xtraTabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckFollow.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).BeginInit();
             this.plLinePath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckV2.Properties)).BeginInit();
@@ -349,9 +358,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveData),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSaveImg, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem7, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem8, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem10, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest, true),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -362,13 +368,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnEnlarge),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnNarrow),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnClear),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnReNew),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem17, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem18, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem20, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem21, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem22, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barLargeButtonItem23, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnReNew)});
             this.bar1.OptionsBar.AllowQuickCustomization = false;
             this.bar1.OptionsBar.DrawDragBorder = false;
             this.bar1.OptionsBar.UseWholeRow = true;
@@ -416,28 +416,6 @@
             this.barLargeButtonItem6.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem6.ImageOptions.Image")));
             this.barLargeButtonItem6.Name = "barLargeButtonItem6";
             this.barLargeButtonItem6.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
-            // 
-            // barLargeButtonItem7
-            // 
-            this.barLargeButtonItem7.Caption = "图标";
-            this.barLargeButtonItem7.Id = 88;
-            this.barLargeButtonItem7.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.字母i2;
-            this.barLargeButtonItem7.Name = "barLargeButtonItem7";
-            this.barLargeButtonItem7.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem7_ItemClick);
-            // 
-            // barLargeButtonItem8
-            // 
-            this.barLargeButtonItem8.Caption = "图标";
-            this.barLargeButtonItem8.Id = 89;
-            this.barLargeButtonItem8.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目6;
-            this.barLargeButtonItem8.Name = "barLargeButtonItem8";
-            // 
-            // barLargeButtonItem10
-            // 
-            this.barLargeButtonItem10.Caption = "图标";
-            this.barLargeButtonItem10.Id = 90;
-            this.barLargeButtonItem10.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._3函数;
-            this.barLargeButtonItem10.Name = "barLargeButtonItem10";
             // 
             // btnPant
             // 
@@ -520,48 +498,6 @@
             this.btnReNew.Id = 121;
             this.btnReNew.Name = "btnReNew";
             this.btnReNew.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReNew_ItemClick);
-            // 
-            // barLargeButtonItem17
-            // 
-            this.barLargeButtonItem17.Caption = "图标";
-            this.barLargeButtonItem17.Id = 98;
-            this.barLargeButtonItem17.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标12;
-            this.barLargeButtonItem17.Name = "barLargeButtonItem17";
-            // 
-            // barLargeButtonItem18
-            // 
-            this.barLargeButtonItem18.Caption = "图标";
-            this.barLargeButtonItem18.Id = 99;
-            this.barLargeButtonItem18.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标17;
-            this.barLargeButtonItem18.Name = "barLargeButtonItem18";
-            // 
-            // barLargeButtonItem20
-            // 
-            this.barLargeButtonItem20.Caption = "图标";
-            this.barLargeButtonItem20.Id = 101;
-            this.barLargeButtonItem20.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1529;
-            this.barLargeButtonItem20.Name = "barLargeButtonItem20";
-            // 
-            // barLargeButtonItem21
-            // 
-            this.barLargeButtonItem21.Caption = "图标";
-            this.barLargeButtonItem21.Id = 102;
-            this.barLargeButtonItem21.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1537;
-            this.barLargeButtonItem21.Name = "barLargeButtonItem21";
-            // 
-            // barLargeButtonItem22
-            // 
-            this.barLargeButtonItem22.Caption = "图标";
-            this.barLargeButtonItem22.Id = 103;
-            this.barLargeButtonItem22.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目18;
-            this.barLargeButtonItem22.Name = "barLargeButtonItem22";
-            // 
-            // barLargeButtonItem23
-            // 
-            this.barLargeButtonItem23.Caption = "图标";
-            this.barLargeButtonItem23.Id = 104;
-            this.barLargeButtonItem23.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标T;
-            this.barLargeButtonItem23.Name = "barLargeButtonItem23";
             // 
             // bar2
             // 
@@ -805,6 +741,27 @@
             this.barLargeButtonItem4.Id = 87;
             this.barLargeButtonItem4.Name = "barLargeButtonItem4";
             // 
+            // barLargeButtonItem7
+            // 
+            this.barLargeButtonItem7.Caption = "图标";
+            this.barLargeButtonItem7.Id = 88;
+            this.barLargeButtonItem7.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.字母i2;
+            this.barLargeButtonItem7.Name = "barLargeButtonItem7";
+            // 
+            // barLargeButtonItem8
+            // 
+            this.barLargeButtonItem8.Caption = "图标";
+            this.barLargeButtonItem8.Id = 89;
+            this.barLargeButtonItem8.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目6;
+            this.barLargeButtonItem8.Name = "barLargeButtonItem8";
+            // 
+            // barLargeButtonItem10
+            // 
+            this.barLargeButtonItem10.Caption = "图标";
+            this.barLargeButtonItem10.Id = 90;
+            this.barLargeButtonItem10.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._3函数;
+            this.barLargeButtonItem10.Name = "barLargeButtonItem10";
+            // 
             // barLargeButtonItem11
             // 
             this.barLargeButtonItem11.Caption = "图标";
@@ -849,6 +806,48 @@
             this.barLargeButtonItem16.Caption = "图标";
             this.barLargeButtonItem16.Id = 97;
             this.barLargeButtonItem16.Name = "barLargeButtonItem16";
+            // 
+            // barLargeButtonItem17
+            // 
+            this.barLargeButtonItem17.Caption = "图标";
+            this.barLargeButtonItem17.Id = 98;
+            this.barLargeButtonItem17.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标12;
+            this.barLargeButtonItem17.Name = "barLargeButtonItem17";
+            // 
+            // barLargeButtonItem18
+            // 
+            this.barLargeButtonItem18.Caption = "图标";
+            this.barLargeButtonItem18.Id = 99;
+            this.barLargeButtonItem18.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标17;
+            this.barLargeButtonItem18.Name = "barLargeButtonItem18";
+            // 
+            // barLargeButtonItem20
+            // 
+            this.barLargeButtonItem20.Caption = "图标";
+            this.barLargeButtonItem20.Id = 101;
+            this.barLargeButtonItem20.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1529;
+            this.barLargeButtonItem20.Name = "barLargeButtonItem20";
+            // 
+            // barLargeButtonItem21
+            // 
+            this.barLargeButtonItem21.Caption = "图标";
+            this.barLargeButtonItem21.Id = 102;
+            this.barLargeButtonItem21.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._1537;
+            this.barLargeButtonItem21.Name = "barLargeButtonItem21";
+            // 
+            // barLargeButtonItem22
+            // 
+            this.barLargeButtonItem22.Caption = "图标";
+            this.barLargeButtonItem22.Id = 103;
+            this.barLargeButtonItem22.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.项目18;
+            this.barLargeButtonItem22.Name = "barLargeButtonItem22";
+            // 
+            // barLargeButtonItem23
+            // 
+            this.barLargeButtonItem23.Caption = "图标";
+            this.barLargeButtonItem23.Id = 104;
+            this.barLargeButtonItem23.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标T;
+            this.barLargeButtonItem23.Name = "barLargeButtonItem23";
             // 
             // barButtonItem2
             // 
@@ -945,6 +944,20 @@
             this.pclChart.Controls.Add(this.label3);
             this.pclChart.Controls.Add(this.label2);
             this.pclChart.Controls.Add(this.label1);
+            this.pclChart.Controls.Add(this.labelControl3);
+            this.pclChart.Controls.Add(this.labelControl4);
+            this.pclChart.Controls.Add(this.lbybname);
+            this.pclChart.Controls.Add(this.lbdbdata);
+            this.pclChart.Controls.Add(this.lbybtime);
+            this.pclChart.Controls.Add(this.lbdbtime);
+            this.pclChart.Controls.Add(this.labelControl10);
+            this.pclChart.Controls.Add(this.txtRcUp);
+            this.pclChart.Controls.Add(this.txtRcDn);
+            this.pclChart.Controls.Add(this.labelControl9);
+            this.pclChart.Controls.Add(this.btnEnlarge11);
+            this.pclChart.Controls.Add(this.btnNarrow1);
+            this.pclChart.Controls.Add(this.btnReNew1);
+            this.pclChart.Controls.Add(this.btnClear1);
             this.pclChart.Location = new System.Drawing.Point(218, 112);
             this.pclChart.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.pclChart.Name = "pclChart";
@@ -995,9 +1008,105 @@
             this.label1.Text = "浮标";
             this.label1.Visible = false;
             // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(846, 242);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(75, 18);
+            this.labelControl3.TabIndex = 48;
+            this.labelControl3.Text = "样本数据：";
+            this.labelControl3.Visible = false;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(844, 307);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(75, 18);
+            this.labelControl4.TabIndex = 49;
+            this.labelControl4.Text = "对比数据：";
+            this.labelControl4.Visible = false;
+            // 
+            // lbybname
+            // 
+            this.lbybname.Location = new System.Drawing.Point(854, 263);
+            this.lbybname.Name = "lbybname";
+            this.lbybname.Size = new System.Drawing.Size(89, 18);
+            this.lbybname.TabIndex = 56;
+            this.lbybname.Text = "labelControl10";
+            this.lbybname.Visible = false;
+            // 
+            // lbdbdata
+            // 
+            this.lbdbdata.Location = new System.Drawing.Point(854, 331);
+            this.lbdbdata.Name = "lbdbdata";
+            this.lbdbdata.Size = new System.Drawing.Size(81, 18);
+            this.lbdbdata.TabIndex = 57;
+            this.lbdbdata.Text = "labelControl9";
+            this.lbdbdata.Visible = false;
+            // 
+            // lbybtime
+            // 
+            this.lbybtime.Location = new System.Drawing.Point(854, 283);
+            this.lbybtime.Name = "lbybtime";
+            this.lbybtime.Size = new System.Drawing.Size(89, 18);
+            this.lbybtime.TabIndex = 60;
+            this.lbybtime.Text = "labelControl11";
+            this.lbybtime.Visible = false;
+            // 
+            // lbdbtime
+            // 
+            this.lbdbtime.Location = new System.Drawing.Point(854, 355);
+            this.lbdbtime.Name = "lbdbtime";
+            this.lbdbtime.Size = new System.Drawing.Size(89, 18);
+            this.lbdbtime.TabIndex = 61;
+            this.lbdbtime.Text = "labelControl12";
+            this.lbdbtime.Visible = false;
+            // 
+            // labelControl10
+            // 
+            this.labelControl10.Location = new System.Drawing.Point(846, 172);
+            this.labelControl10.Name = "labelControl10";
+            this.labelControl10.Size = new System.Drawing.Size(51, 18);
+            this.labelControl10.TabIndex = 64;
+            this.labelControl10.Text = "上升Rc:";
+            this.labelControl10.Visible = false;
+            // 
+            // txtRcUp
+            // 
+            this.txtRcUp.EditValue = "0.0001";
+            this.txtRcUp.Location = new System.Drawing.Point(901, 169);
+            this.txtRcUp.MenuManager = this.barManager1;
+            this.txtRcUp.Name = "txtRcUp";
+            this.txtRcUp.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,10})?";
+            this.txtRcUp.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.txtRcUp.Size = new System.Drawing.Size(76, 24);
+            this.txtRcUp.TabIndex = 62;
+            this.txtRcUp.Visible = false;
+            // 
+            // txtRcDn
+            // 
+            this.txtRcDn.EditValue = "0.01";
+            this.txtRcDn.Location = new System.Drawing.Point(901, 193);
+            this.txtRcDn.MenuManager = this.barManager1;
+            this.txtRcDn.Name = "txtRcDn";
+            this.txtRcDn.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,12})?";
+            this.txtRcDn.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.txtRcDn.Size = new System.Drawing.Size(76, 24);
+            this.txtRcDn.TabIndex = 63;
+            this.txtRcDn.Visible = false;
+            // 
+            // labelControl9
+            // 
+            this.labelControl9.Location = new System.Drawing.Point(846, 196);
+            this.labelControl9.Name = "labelControl9";
+            this.labelControl9.Size = new System.Drawing.Size(51, 18);
+            this.labelControl9.TabIndex = 65;
+            this.labelControl9.Text = "下降Rc:";
+            this.labelControl9.Visible = false;
+            // 
             // btnEnlarge11
             // 
-            this.btnEnlarge11.Location = new System.Drawing.Point(25, 162);
+            this.btnEnlarge11.Location = new System.Drawing.Point(854, 98);
             this.btnEnlarge11.Name = "btnEnlarge11";
             this.btnEnlarge11.Size = new System.Drawing.Size(54, 28);
             this.btnEnlarge11.TabIndex = 35;
@@ -1007,7 +1116,7 @@
             // 
             // btnNarrow1
             // 
-            this.btnNarrow1.Location = new System.Drawing.Point(85, 162);
+            this.btnNarrow1.Location = new System.Drawing.Point(914, 98);
             this.btnNarrow1.Name = "btnNarrow1";
             this.btnNarrow1.Size = new System.Drawing.Size(54, 28);
             this.btnNarrow1.TabIndex = 36;
@@ -1015,9 +1124,29 @@
             this.btnNarrow1.Visible = false;
             this.btnNarrow1.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
+            // btnReNew1
+            // 
+            this.btnReNew1.Location = new System.Drawing.Point(854, 132);
+            this.btnReNew1.Name = "btnReNew1";
+            this.btnReNew1.Size = new System.Drawing.Size(54, 28);
+            this.btnReNew1.TabIndex = 44;
+            this.btnReNew1.Text = "还原";
+            this.btnReNew1.Visible = false;
+            this.btnReNew1.Click += new System.EventHandler(this.btnReNew_Click);
+            // 
+            // btnClear1
+            // 
+            this.btnClear1.Location = new System.Drawing.Point(914, 132);
+            this.btnClear1.Name = "btnClear1";
+            this.btnClear1.Size = new System.Drawing.Size(54, 28);
+            this.btnClear1.TabIndex = 45;
+            this.btnClear1.Text = "清空";
+            this.btnClear1.Visible = false;
+            this.btnClear1.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // lbTopTime
             // 
-            this.lbTopTime.Location = new System.Drawing.Point(94, 480);
+            this.lbTopTime.Location = new System.Drawing.Point(96, 32);
             this.lbTopTime.Name = "lbTopTime";
             this.lbTopTime.Size = new System.Drawing.Size(8, 18);
             this.lbTopTime.TabIndex = 41;
@@ -1025,7 +1154,7 @@
             // 
             // lbBottomTime
             // 
-            this.lbBottomTime.Location = new System.Drawing.Point(94, 504);
+            this.lbBottomTime.Location = new System.Drawing.Point(96, 59);
             this.lbBottomTime.Name = "lbBottomTime";
             this.lbBottomTime.Size = new System.Drawing.Size(8, 18);
             this.lbBottomTime.TabIndex = 42;
@@ -1038,113 +1167,81 @@
             this.panelControl1.Appearance.BackColor = System.Drawing.Color.White;
             this.panelControl1.Appearance.Options.UseBackColor = true;
             this.panelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.panelControl1.Controls.Add(this.labelControl12);
-            this.panelControl1.Controls.Add(this.labelControl14);
-            this.panelControl1.Controls.Add(this.labelControl17);
-            this.panelControl1.Controls.Add(this.lbc3);
-            this.panelControl1.Controls.Add(this.labelControl19);
-            this.panelControl1.Controls.Add(this.lbc2);
-            this.panelControl1.Controls.Add(this.labelControl21);
-            this.panelControl1.Controls.Add(this.lbc1);
-            this.panelControl1.Controls.Add(this.labelControl15);
-            this.panelControl1.Controls.Add(this.lbv3);
-            this.panelControl1.Controls.Add(this.labelControl13);
-            this.panelControl1.Controls.Add(this.lbv2);
-            this.panelControl1.Controls.Add(this.labelControl11);
-            this.panelControl1.Controls.Add(this.lbv1);
-            this.panelControl1.Controls.Add(this.labelControl9);
-            this.panelControl1.Controls.Add(this.labelControl10);
-            this.panelControl1.Controls.Add(this.txtRcDn);
-            this.panelControl1.Controls.Add(this.txtRcUp);
+            this.panelControl1.Controls.Add(this.xtraTabControl1);
             this.panelControl1.Controls.Add(this.plLinePath);
-            this.panelControl1.Controls.Add(this.lbdbtime);
-            this.panelControl1.Controls.Add(this.lbybtime);
-            this.panelControl1.Controls.Add(this.lbdbdata);
-            this.panelControl1.Controls.Add(this.lbybname);
-            this.panelControl1.Controls.Add(this.labelControl6);
-            this.panelControl1.Controls.Add(this.lbVoltage);
             this.panelControl1.Controls.Add(this.lbOpen);
             this.panelControl1.Controls.Add(this.pcOpen);
-            this.panelControl1.Controls.Add(this.labelControl4);
-            this.panelControl1.Controls.Add(this.labelControl3);
-            this.panelControl1.Controls.Add(this.btnClear1);
-            this.panelControl1.Controls.Add(this.btnReNew1);
-            this.panelControl1.Controls.Add(this.lbBottomTime);
-            this.panelControl1.Controls.Add(this.lbTopTime);
-            this.panelControl1.Controls.Add(this.btnNarrow1);
-            this.panelControl1.Controls.Add(this.btnEnlarge11);
             this.panelControl1.Location = new System.Drawing.Point(1261, 112);
             this.panelControl1.Name = "panelControl1";
             this.panelControl1.Size = new System.Drawing.Size(209, 837);
             this.panelControl1.TabIndex = 52;
             // 
+            // xtraTabControl1
+            // 
+            this.xtraTabControl1.Location = new System.Drawing.Point(3, 158);
+            this.xtraTabControl1.Name = "xtraTabControl1";
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+            this.xtraTabControl1.Size = new System.Drawing.Size(206, 465);
+            this.xtraTabControl1.TabIndex = 81;
+            this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.xtraTabPage1});
+            // 
+            // xtraTabPage1
+            // 
+            this.xtraTabPage1.Controls.Add(this.labelControl5);
+            this.xtraTabPage1.Controls.Add(this.lbtime);
+            this.xtraTabPage1.Controls.Add(this.ckFollow);
+            this.xtraTabPage1.Controls.Add(this.labelControl6);
+            this.xtraTabPage1.Controls.Add(this.labelControl12);
+            this.xtraTabPage1.Controls.Add(this.labelControl15);
+            this.xtraTabPage1.Controls.Add(this.lbBottomTime);
+            this.xtraTabPage1.Controls.Add(this.lbv3);
+            this.xtraTabPage1.Controls.Add(this.labelControl14);
+            this.xtraTabPage1.Controls.Add(this.lbc1);
+            this.xtraTabPage1.Controls.Add(this.lbVoltage);
+            this.xtraTabPage1.Controls.Add(this.labelControl13);
+            this.xtraTabPage1.Controls.Add(this.labelControl17);
+            this.xtraTabPage1.Controls.Add(this.labelControl21);
+            this.xtraTabPage1.Controls.Add(this.lbv1);
+            this.xtraTabPage1.Controls.Add(this.lbTopTime);
+            this.xtraTabPage1.Controls.Add(this.lbc3);
+            this.xtraTabPage1.Controls.Add(this.lbc2);
+            this.xtraTabPage1.Controls.Add(this.labelControl11);
+            this.xtraTabPage1.Controls.Add(this.lbv2);
+            this.xtraTabPage1.Controls.Add(this.labelControl19);
+            this.xtraTabPage1.Name = "xtraTabPage1";
+            this.xtraTabPage1.Size = new System.Drawing.Size(199, 429);
+            this.xtraTabPage1.Text = "设备波形参数";
+            // 
+            // ckFollow
+            // 
+            this.ckFollow.Location = new System.Drawing.Point(17, 271);
+            this.ckFollow.MenuManager = this.barManager1;
+            this.ckFollow.Name = "ckFollow";
+            this.ckFollow.Properties.Caption = "光标跟随鼠标";
+            this.ckFollow.Size = new System.Drawing.Size(118, 22);
+            this.ckFollow.TabIndex = 80;
+            this.ckFollow.CheckedChanged += new System.EventHandler(this.ckFollow_CheckedChanged);
+            // 
+            // labelControl6
+            // 
+            this.labelControl6.Location = new System.Drawing.Point(16, 11);
+            this.labelControl6.Name = "labelControl6";
+            this.labelControl6.Size = new System.Drawing.Size(45, 18);
+            this.labelControl6.TabIndex = 55;
+            this.labelControl6.Text = "电压：";
+            // 
             // labelControl12
             // 
-            this.labelControl12.Location = new System.Drawing.Point(18, 504);
+            this.labelControl12.Location = new System.Drawing.Point(16, 59);
             this.labelControl12.Name = "labelControl12";
             this.labelControl12.Size = new System.Drawing.Size(65, 18);
             this.labelControl12.TabIndex = 79;
             this.labelControl12.Text = "底部时间:";
             // 
-            // labelControl14
-            // 
-            this.labelControl14.Location = new System.Drawing.Point(18, 480);
-            this.labelControl14.Name = "labelControl14";
-            this.labelControl14.Size = new System.Drawing.Size(65, 18);
-            this.labelControl14.TabIndex = 78;
-            this.labelControl14.Text = "顶部时间:";
-            // 
-            // labelControl17
-            // 
-            this.labelControl17.Location = new System.Drawing.Point(19, 663);
-            this.labelControl17.Name = "labelControl17";
-            this.labelControl17.Size = new System.Drawing.Size(53, 18);
-            this.labelControl17.TabIndex = 77;
-            this.labelControl17.Text = "电流3：";
-            // 
-            // lbc3
-            // 
-            this.lbc3.Location = new System.Drawing.Point(94, 663);
-            this.lbc3.Name = "lbc3";
-            this.lbc3.Size = new System.Drawing.Size(8, 18);
-            this.lbc3.TabIndex = 76;
-            this.lbc3.Text = "0";
-            // 
-            // labelControl19
-            // 
-            this.labelControl19.Location = new System.Drawing.Point(19, 639);
-            this.labelControl19.Name = "labelControl19";
-            this.labelControl19.Size = new System.Drawing.Size(53, 18);
-            this.labelControl19.TabIndex = 75;
-            this.labelControl19.Text = "电流2：";
-            // 
-            // lbc2
-            // 
-            this.lbc2.Location = new System.Drawing.Point(94, 639);
-            this.lbc2.Name = "lbc2";
-            this.lbc2.Size = new System.Drawing.Size(8, 18);
-            this.lbc2.TabIndex = 74;
-            this.lbc2.Text = "0";
-            // 
-            // labelControl21
-            // 
-            this.labelControl21.Location = new System.Drawing.Point(19, 615);
-            this.labelControl21.Name = "labelControl21";
-            this.labelControl21.Size = new System.Drawing.Size(53, 18);
-            this.labelControl21.TabIndex = 73;
-            this.labelControl21.Text = "电流1：";
-            // 
-            // lbc1
-            // 
-            this.lbc1.Location = new System.Drawing.Point(94, 615);
-            this.lbc1.Name = "lbc1";
-            this.lbc1.Size = new System.Drawing.Size(8, 18);
-            this.lbc1.TabIndex = 72;
-            this.lbc1.Text = "0";
-            // 
             // labelControl15
             // 
-            this.labelControl15.Location = new System.Drawing.Point(19, 590);
+            this.labelControl15.Location = new System.Drawing.Point(16, 145);
             this.labelControl15.Name = "labelControl15";
             this.labelControl15.Size = new System.Drawing.Size(53, 18);
             this.labelControl15.TabIndex = 71;
@@ -1152,81 +1249,107 @@
             // 
             // lbv3
             // 
-            this.lbv3.Location = new System.Drawing.Point(94, 590);
+            this.lbv3.Location = new System.Drawing.Point(96, 145);
             this.lbv3.Name = "lbv3";
             this.lbv3.Size = new System.Drawing.Size(8, 18);
             this.lbv3.TabIndex = 70;
             this.lbv3.Text = "0";
             // 
+            // labelControl14
+            // 
+            this.labelControl14.Location = new System.Drawing.Point(16, 35);
+            this.labelControl14.Name = "labelControl14";
+            this.labelControl14.Size = new System.Drawing.Size(65, 18);
+            this.labelControl14.TabIndex = 78;
+            this.labelControl14.Text = "顶部时间:";
+            // 
+            // lbc1
+            // 
+            this.lbc1.Location = new System.Drawing.Point(96, 170);
+            this.lbc1.Name = "lbc1";
+            this.lbc1.Size = new System.Drawing.Size(8, 18);
+            this.lbc1.TabIndex = 72;
+            this.lbc1.Text = "0";
+            // 
+            // lbVoltage
+            // 
+            this.lbVoltage.Location = new System.Drawing.Point(96, 8);
+            this.lbVoltage.Name = "lbVoltage";
+            this.lbVoltage.Size = new System.Drawing.Size(8, 18);
+            this.lbVoltage.TabIndex = 54;
+            this.lbVoltage.Text = "0";
+            // 
             // labelControl13
             // 
-            this.labelControl13.Location = new System.Drawing.Point(19, 566);
+            this.labelControl13.Location = new System.Drawing.Point(16, 121);
             this.labelControl13.Name = "labelControl13";
             this.labelControl13.Size = new System.Drawing.Size(53, 18);
             this.labelControl13.TabIndex = 69;
             this.labelControl13.Text = "震动2：";
             // 
-            // lbv2
+            // labelControl17
             // 
-            this.lbv2.Location = new System.Drawing.Point(94, 566);
-            this.lbv2.Name = "lbv2";
-            this.lbv2.Size = new System.Drawing.Size(8, 18);
-            this.lbv2.TabIndex = 68;
-            this.lbv2.Text = "0";
+            this.labelControl17.Location = new System.Drawing.Point(16, 218);
+            this.labelControl17.Name = "labelControl17";
+            this.labelControl17.Size = new System.Drawing.Size(53, 18);
+            this.labelControl17.TabIndex = 77;
+            this.labelControl17.Text = "电流3：";
             // 
-            // labelControl11
+            // labelControl21
             // 
-            this.labelControl11.Location = new System.Drawing.Point(19, 542);
-            this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(53, 18);
-            this.labelControl11.TabIndex = 67;
-            this.labelControl11.Text = "震动1：";
+            this.labelControl21.Location = new System.Drawing.Point(16, 170);
+            this.labelControl21.Name = "labelControl21";
+            this.labelControl21.Size = new System.Drawing.Size(53, 18);
+            this.labelControl21.TabIndex = 73;
+            this.labelControl21.Text = "电流1：";
             // 
             // lbv1
             // 
-            this.lbv1.Location = new System.Drawing.Point(94, 542);
+            this.lbv1.Location = new System.Drawing.Point(96, 97);
             this.lbv1.Name = "lbv1";
             this.lbv1.Size = new System.Drawing.Size(8, 18);
             this.lbv1.TabIndex = 66;
             this.lbv1.Text = "0";
             // 
-            // labelControl9
+            // lbc3
             // 
-            this.labelControl9.Location = new System.Drawing.Point(16, 442);
-            this.labelControl9.Name = "labelControl9";
-            this.labelControl9.Size = new System.Drawing.Size(51, 18);
-            this.labelControl9.TabIndex = 65;
-            this.labelControl9.Text = "下降Rc:";
+            this.lbc3.Location = new System.Drawing.Point(96, 218);
+            this.lbc3.Name = "lbc3";
+            this.lbc3.Size = new System.Drawing.Size(8, 18);
+            this.lbc3.TabIndex = 76;
+            this.lbc3.Text = "0";
             // 
-            // labelControl10
+            // lbc2
             // 
-            this.labelControl10.Location = new System.Drawing.Point(16, 418);
-            this.labelControl10.Name = "labelControl10";
-            this.labelControl10.Size = new System.Drawing.Size(51, 18);
-            this.labelControl10.TabIndex = 64;
-            this.labelControl10.Text = "上升Rc:";
+            this.lbc2.Location = new System.Drawing.Point(96, 194);
+            this.lbc2.Name = "lbc2";
+            this.lbc2.Size = new System.Drawing.Size(8, 18);
+            this.lbc2.TabIndex = 74;
+            this.lbc2.Text = "0";
             // 
-            // txtRcDn
+            // labelControl11
             // 
-            this.txtRcDn.EditValue = "0.01";
-            this.txtRcDn.Location = new System.Drawing.Point(71, 439);
-            this.txtRcDn.MenuManager = this.barManager1;
-            this.txtRcDn.Name = "txtRcDn";
-            this.txtRcDn.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,12})?";
-            this.txtRcDn.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
-            this.txtRcDn.Size = new System.Drawing.Size(76, 24);
-            this.txtRcDn.TabIndex = 63;
+            this.labelControl11.Location = new System.Drawing.Point(16, 97);
+            this.labelControl11.Name = "labelControl11";
+            this.labelControl11.Size = new System.Drawing.Size(53, 18);
+            this.labelControl11.TabIndex = 67;
+            this.labelControl11.Text = "震动1：";
             // 
-            // txtRcUp
+            // lbv2
             // 
-            this.txtRcUp.EditValue = "0.0001";
-            this.txtRcUp.Location = new System.Drawing.Point(71, 415);
-            this.txtRcUp.MenuManager = this.barManager1;
-            this.txtRcUp.Name = "txtRcUp";
-            this.txtRcUp.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,10})?";
-            this.txtRcUp.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
-            this.txtRcUp.Size = new System.Drawing.Size(76, 24);
-            this.txtRcUp.TabIndex = 62;
+            this.lbv2.Location = new System.Drawing.Point(96, 121);
+            this.lbv2.Name = "lbv2";
+            this.lbv2.Size = new System.Drawing.Size(8, 18);
+            this.lbv2.TabIndex = 68;
+            this.lbv2.Text = "0";
+            // 
+            // labelControl19
+            // 
+            this.labelControl19.Location = new System.Drawing.Point(16, 194);
+            this.labelControl19.Name = "labelControl19";
+            this.labelControl19.Size = new System.Drawing.Size(53, 18);
+            this.labelControl19.TabIndex = 75;
+            this.labelControl19.Text = "电流2：";
             // 
             // plLinePath
             // 
@@ -1361,54 +1484,6 @@
             this.btnReLond.Text = "重新加载波形图";
             this.btnReLond.Click += new System.EventHandler(this.btnReLond_Click);
             // 
-            // lbdbtime
-            // 
-            this.lbdbtime.Location = new System.Drawing.Point(16, 388);
-            this.lbdbtime.Name = "lbdbtime";
-            this.lbdbtime.Size = new System.Drawing.Size(89, 18);
-            this.lbdbtime.TabIndex = 61;
-            this.lbdbtime.Text = "labelControl12";
-            // 
-            // lbybtime
-            // 
-            this.lbybtime.Location = new System.Drawing.Point(16, 316);
-            this.lbybtime.Name = "lbybtime";
-            this.lbybtime.Size = new System.Drawing.Size(89, 18);
-            this.lbybtime.TabIndex = 60;
-            this.lbybtime.Text = "labelControl11";
-            // 
-            // lbdbdata
-            // 
-            this.lbdbdata.Location = new System.Drawing.Point(16, 364);
-            this.lbdbdata.Name = "lbdbdata";
-            this.lbdbdata.Size = new System.Drawing.Size(81, 18);
-            this.lbdbdata.TabIndex = 57;
-            this.lbdbdata.Text = "labelControl9";
-            // 
-            // lbybname
-            // 
-            this.lbybname.Location = new System.Drawing.Point(16, 296);
-            this.lbybname.Name = "lbybname";
-            this.lbybname.Size = new System.Drawing.Size(89, 18);
-            this.lbybname.TabIndex = 56;
-            this.lbybname.Text = "labelControl10";
-            // 
-            // labelControl6
-            // 
-            this.labelControl6.Location = new System.Drawing.Point(12, 242);
-            this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(45, 18);
-            this.labelControl6.TabIndex = 55;
-            this.labelControl6.Text = "电压：";
-            // 
-            // lbVoltage
-            // 
-            this.lbVoltage.Location = new System.Drawing.Point(63, 242);
-            this.lbVoltage.Name = "lbVoltage";
-            this.lbVoltage.Size = new System.Drawing.Size(8, 18);
-            this.lbVoltage.TabIndex = 54;
-            this.lbVoltage.Text = "0";
-            // 
             // lbOpen
             // 
             this.lbOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1430,42 +1505,6 @@
             this.pcOpen.Size = new System.Drawing.Size(20, 20);
             this.pcOpen.TabIndex = 50;
             this.pcOpen.TabStop = false;
-            // 
-            // labelControl4
-            // 
-            this.labelControl4.Location = new System.Drawing.Point(6, 340);
-            this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(75, 18);
-            this.labelControl4.TabIndex = 49;
-            this.labelControl4.Text = "对比数据：";
-            // 
-            // labelControl3
-            // 
-            this.labelControl3.Location = new System.Drawing.Point(8, 275);
-            this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Size = new System.Drawing.Size(75, 18);
-            this.labelControl3.TabIndex = 48;
-            this.labelControl3.Text = "样本数据：";
-            // 
-            // btnClear1
-            // 
-            this.btnClear1.Location = new System.Drawing.Point(85, 196);
-            this.btnClear1.Name = "btnClear1";
-            this.btnClear1.Size = new System.Drawing.Size(54, 28);
-            this.btnClear1.TabIndex = 45;
-            this.btnClear1.Text = "清空";
-            this.btnClear1.Visible = false;
-            this.btnClear1.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // btnReNew1
-            // 
-            this.btnReNew1.Location = new System.Drawing.Point(25, 196);
-            this.btnReNew1.Name = "btnReNew1";
-            this.btnReNew1.Size = new System.Drawing.Size(54, 28);
-            this.btnReNew1.TabIndex = 44;
-            this.btnReNew1.Text = "还原";
-            this.btnReNew1.Visible = false;
-            this.btnReNew1.Click += new System.EventHandler(this.btnReNew_Click);
             // 
             // treeList
             // 
@@ -1588,6 +1627,22 @@
             this.barLargeButtonItem24.Id = 115;
             this.barLargeButtonItem24.Name = "barLargeButtonItem24";
             // 
+            // labelControl5
+            // 
+            this.labelControl5.Location = new System.Drawing.Point(17, 247);
+            this.labelControl5.Name = "labelControl5";
+            this.labelControl5.Size = new System.Drawing.Size(45, 18);
+            this.labelControl5.TabIndex = 82;
+            this.labelControl5.Text = "时差：";
+            // 
+            // lbtime
+            // 
+            this.lbtime.Location = new System.Drawing.Point(97, 244);
+            this.lbtime.Name = "lbtime";
+            this.lbtime.Size = new System.Drawing.Size(8, 18);
+            this.lbtime.TabIndex = 81;
+            this.lbtime.Text = "0";
+            // 
             // FmMain
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1595,9 +1650,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1469, 953);
+            this.Controls.Add(this.pclChart);
             this.Controls.Add(this.pc2);
             this.Controls.Add(this.panelControl1);
-            this.Controls.Add(this.pclChart);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -1617,11 +1672,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).EndInit();
             this.pclChart.ResumeLayout(false);
             this.pclChart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
             this.panelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
+            this.xtraTabControl1.ResumeLayout(false);
+            this.xtraTabPage1.ResumeLayout(false);
+            this.xtraTabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckFollow.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).EndInit();
             this.plLinePath.ResumeLayout(false);
             this.plLinePath.PerformLayout();
@@ -1794,5 +1854,10 @@
         private DevExpress.XtraEditors.LabelControl lbv1;
         private DevExpress.XtraEditors.LabelControl labelControl12;
         private DevExpress.XtraEditors.LabelControl labelControl14;
+        private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
+        private DevExpress.XtraEditors.CheckEdit ckFollow;
+        private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.LabelControl lbtime;
     }
 }
