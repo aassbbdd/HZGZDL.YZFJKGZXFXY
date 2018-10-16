@@ -7,7 +7,7 @@
     <ProjectGuid>{F703D6E6-4927-4823-8011-9C080DEBBF51}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Load_Tap_Changer_Test</RootNamespace>
-    <AssemblyName>Load_Tap_Changer_Test</AssemblyName>
+    <AssemblyName>有载分接开关故障诊断系统</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -66,33 +66,9 @@
     <ApplicationIcon>GZDL.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.CodeParser.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.CodeParser.v16.2.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Data.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dev_Dll\DevExpress.Data.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Diagram.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.Diagram.v16.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.PivotGrid.v16.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.Printing.v16.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.RichEdit.v16.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.Sparkline.v16.2.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -106,65 +82,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dev_Dll\DevExpress.XtraBars.v16.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraDiagram.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraDiagram.v16.2.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dev_Dll\DevExpress.XtraEditors.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraGauges.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraGauges.v16.2.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraGrid.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraLayout.v16.2.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraNavBar.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dev_Dll\DevExpress.XtraNavBar.v16.2.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.XtraPivotGrid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraPivotGrid.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraPrinting.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraReports.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraReports.v16.2.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraRichEdit.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraRichEdit.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraScheduler.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraScheduler.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraScheduler.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraScheduler.v16.2.Core.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.XtraTreeList.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dev_Dll\DevExpress.XtraTreeList.v16.2.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraVerticalGrid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dev_Dll\DevExpress.XtraVerticalGrid.v16.2.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -337,6 +265,12 @@
     <Content Include="ImgIcon\图标T.bmp" />
     <Content Include="ImgIcon\字母I1.bmp" />
     <Content Include="ImgIcon\字母i2.bmp" />
+    <Content Include="ImgIcon\有载分接开关软件界面图标-11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\有载分接开关软件界面图标-12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\设置图标.bmp" />
     <Content Include="ImgIcon\项目1525.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -345,6 +279,17 @@
     <Content Include="ImgIcon\项目4.ico" />
     <Content Include="ImgIcon\项目6.bmp" />
     <Content Include="ImgIcon\项目7.bmp" />
+    <None Include="Resources\有载分接开关软件界面图标-12.png" />
+    <None Include="Resources\有载分接开关软件界面图标-11.png" />
+    <None Include="Resources\有载分接开关软件界面图标-10.png" />
+    <None Include="Resources\有载分接开关软件界面图标-09.png" />
+    <None Include="Resources\有载分接开关软件界面图标-08.png" />
+    <None Include="Resources\有载分接开关软件界面图标-06.png" />
+    <None Include="Resources\有载分接开关软件界面图标-05.png" />
+    <None Include="Resources\有载分接开关软件界面图标-04.png" />
+    <None Include="Resources\有载分接开关软件界面图标-03.png" />
+    <None Include="Resources\有载分接开关软件界面图标-02.png" />
+    <None Include="Resources\有载分接开关软件界面图标-01.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">

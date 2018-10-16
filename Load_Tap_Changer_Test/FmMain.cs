@@ -186,7 +186,6 @@ namespace Basic_Controls
             string id = "";
             if (model.PARENTID == "0" || this.treeList.DataSource == null)
             {
-
                 using (FmAddTest form = new FmAddTest(model))
                 {
                     form.ShowDialog();
@@ -499,7 +498,6 @@ namespace Basic_Controls
                 }
                 else
                 {
-                    //model.TIME_UNIT
                     pub_Test_Plan.PARENTID = model.ID;
                     pub_Test_Plan.DVNAME = model.DVNAME + "_" + topnum.ToString() + "--" + (topnum + 1).ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     pub_Test_Plan.ID = Db_Action.Instance.Test_Confige_Insert(pub_Test_Plan).ToString();
@@ -513,8 +511,6 @@ namespace Basic_Controls
 
                 #endregion
                 //保存电压值
-
-
                 XmlHelper.DeleteXmlDocument(pub_Test_Plan.DVNAME);
                 XmlHelper.Init(pub_Test_Plan.DVNAME, pub_Test_Plan);
                 btnSTest.Enabled = false;
@@ -522,7 +518,6 @@ namespace Basic_Controls
                 if (sendUdp(agreement._2_CMD_STARTTESTER))
                 {
                     Start_Chart();
-
                 };
                 Clear_CursorTool();
             }
@@ -633,7 +628,6 @@ namespace Basic_Controls
             c2 = ckC2.Checked;
             c3 = ckC3.Checked;
 
-
             cks[0] = c1;
             cks[1] = c2;
             cks[2] = c3;
@@ -707,6 +701,7 @@ namespace Basic_Controls
                     FileHelper.DeleteFile(filepath);
                 }
                 btnSTest.Enabled = true;
+                Open_Type("0");
                 MessageBox.Show("设备IP: 【" + DvIp + "】 未连接");
                 return false;
             }
@@ -718,7 +713,6 @@ namespace Basic_Controls
         /// <returns></returns>
         public static bool PingIP(string strIP)
         {
-
             System.Net.NetworkInformation.Ping psender = new System.Net.NetworkInformation.Ping();
             System.Net.NetworkInformation.PingReply prep = psender.Send(strIP, 500, Encoding.Default.GetBytes("afdafdadfsdacareqretrqtqeqrq8899tu"));
             if (prep.Status == System.Net.NetworkInformation.IPStatus.Success)
@@ -796,12 +790,13 @@ namespace Basic_Controls
             string str = FileHelper.Local_Path_Get();
             if (type == "0")
             {
-                this.pcOpen.Load(str + "ImgIcon\\Favorite.bmp");
+
+                this.pcOpen.Load(str + "ImgIcon\\有载分接开关软件界面图标-11.png");
                 this.lbOpen.Text = "设备未连接";
             }
             else
             {
-                this.pcOpen.Load(str + "ImgIcon\\项目1525.bmp");
+                this.pcOpen.Load(str + "ImgIcon\\有载分接开关软件界面图标-12.png");
                 this.lbOpen.Text = "设备已连接";
             }
         }
@@ -1174,7 +1169,6 @@ namespace Basic_Controls
                             {
                                 aotuzoom = 7;
                                 Select_Chart_Lond();
-
                             }
 
                             double min = tChart.Axes.Bottom.CalcPosPoint(sx) + Offset;
@@ -1207,6 +1201,7 @@ namespace Basic_Controls
                 }
             }
         }
+
 
         /// <summary>
         /// 自带放大缩小控件
@@ -1477,6 +1472,24 @@ namespace Basic_Controls
         DateTime startTime1;
 
         /// <summary>
+        /// 波形展示参数初始化
+        /// </summary>
+        private void Dv_Parameter_Init()
+        {
+            this.lbc1.Text = "0";
+            this.lbc2.Text = "0";
+            this.lbc3.Text = "0";
+
+            this.lbv1.Text = "0";
+            this.lbv2.Text = "0";
+            this.lbv3.Text = "0";
+
+            this.lbtime.Text = "0";
+            this.lbTopTime.Text = "0";
+            this.lbBottomTime.Text = "0";
+        }
+
+        /// <summary>
         /// 增加十字光标
         /// </summary>
         private void Add_CursorTool()
@@ -1490,19 +1503,22 @@ namespace Basic_Controls
             cursorTool_Front.Pen.Color = Color.Blue;
             cursorTool_Front.Pen.Style = DashStyle.Custom;
             tChart.Tools.Add(cursorTool_Front);
-            cursorTool_Front.XValue = 1.0;
-
+            cursorTool_Front.XValue = 1;
+            if (cursorTool_Front.XValue != 1)
+            {
+                cursorTool_Front.XValue = 1;
+            }
             cursorTool_Front.Change += (CursorChangeEventHandler)delegate
             {
                 try
                 {
                     if (cursorTool_Front.XValue > cursorTool_After.XValue)
                     {
-                        cursorTool_Front.XValue = tChart.Axes.Bottom.Minimum + 0.02; ;
+                        cursorTool_Front.XValue = tChart.Axes.Bottom.Minimum + 0.02;
                         return;
                     }
 
-                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString();
+                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString() + " s";
                     int length = Convert.ToInt32(allnum * cursorTool_Front.XValue) + (int)(allnum * Offset);
 
                     if (aotuzoom == 0)
@@ -1516,53 +1532,53 @@ namespace Basic_Controls
 
                     if (length < vline1.YValues.Count)// && ckV1.Checked
                     {
-                        lbv1.Text = Rounding(vline1.YValues[length]);
+                        lbv1.Text = Rounding(vline1.YValues[length]) + " g";
                     }
                     if (Offset == 0)
                     {
                         if (length < vline2.YValues.Count)// && ckV1.Checked
                         {
-                            lbv2.Text = Rounding(vline2.YValues[length]);
+                            lbv2.Text = Rounding(vline2.YValues[length]) + " g";
                         }
                     }
                     else
                     {
                         if (length <= vline2.YValues.Count)
                         {
-                            lbv2.Text = Rounding(vline2.YValues[length]);
+                            lbv2.Text = Rounding(vline2.YValues[length]) + " g";
                         }
                     }
 
                     if (length < vline3.YValues.Count)//&& ckV3.Checked
                     {
-                        lbv3.Text = vline3.YValues[length].ToString();
+                        lbv3.Text = Rounding(vline3.YValues[length]) + " g";
                     }
 
                     if (length < cline1.YValues.Count)//&& ckC1.Checked
                     {
-                        lbc1.Text = Rounding(cline1.YValues[length]);
+                        lbc1.Text = Rounding(cline1.YValues[length]) + " a";
                     }
                     if (Offset == 0)
                     {
                         if (length < cline2.YValues.Count)// && ckV1.Checked
                         {
-                            lbc2.Text = Rounding(cline2.YValues[length]);
+                            lbc2.Text = Rounding(cline2.YValues[length]) + " a";
                         }
                     }
                     else
                     {
                         if (length <= cline2.YValues.Count)
                         {
-                            lbc2.Text = Rounding(cline2.YValues[length]);
+                            lbc2.Text = Rounding(cline2.YValues[length]) + " a";
                         }
                     }
                     if (length < cline3.YValues.Count)//&& ckC3.Checked
                     {
-                        lbc3.Text = Rounding(cline3.YValues[length]);
+                        lbc3.Text = Rounding(cline3.YValues[length]) + " a";
                     }
                     tChart.Axes.Bottom.CalcPosPoint(MouseX);
-                    lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX));
-                    lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX));
+                    lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX)) + " s";
+                    lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + " s";
 
                     OpenCursortTime = DateTime.Now;
                 }
@@ -1576,23 +1592,27 @@ namespace Basic_Controls
             cursorTool_After.FollowMouse = false;
             cursorTool_After.Series = tChart.Series[0];
             cursorTool_After.Style = CursorToolStyles.Vertical;
-            cursorTool_After.Pen.Color = Color.Yellow;
+            cursorTool_After.Pen.Color = Color.Red;
             cursorTool_After.Pen.Style = DashStyle.Custom;
 
             tChart.Tools.Add(cursorTool_After);
+
+            cursorTool_After.XValue = 5;
+            if (cursorTool_After.XValue != 5)
+            {
+                cursorTool_After.XValue = 5;
+            }
 
             cursorTool_After.Change += (CursorChangeEventHandler)delegate
             {
                 try
                 {
-
-
                     if (cursorTool_After.XValue < cursorTool_Front.XValue)
                     {
                         cursorTool_After.XValue = tChart.Axes.Bottom.Minimum + 0.09;
                         return;
                     }
-                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString();
+                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString() + " s";
 
                     //int length = Convert.ToInt32(allnum * cursorTool_After.XValue) + (int)(allnum * Offset);
                     //if (aotuzoom == 0)
@@ -1668,6 +1688,7 @@ namespace Basic_Controls
         /// </summary>
         private void Clear_CursorTool()
         {
+            Dv_Parameter_Init();
             tChart.Tools.Clear();
         }
 
@@ -1794,7 +1815,6 @@ namespace Basic_Controls
         /// <param name="count"></param>
         private void AddCustomAxis_Contrast(int count)
         {
-
             double single = (100 / count) - space;
             List<BaseLine> listBaseLine = new List<BaseLine>();
             for (int i = 0; i < tChart.Series.Count; i++)
@@ -3549,7 +3569,6 @@ namespace Basic_Controls
         private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
             btnEnvelope.Enabled = false;
-
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
@@ -4027,7 +4046,6 @@ namespace Basic_Controls
                     {
                         Show_End();
                         MessageBox.Show("对比数据 " + Node2.DVNAME + "  未找到该图形数据！");
-
                         return;
                     }
                     double time1 = linex[0][linex[0].Length - 1];
@@ -4096,7 +4114,6 @@ namespace Basic_Controls
             splashScreenManager.ShowWaitForm();
             splashScreenManager.SetWaitFormCaption("请稍后");
             splashScreenManager.SetWaitFormDescription(Msg);
-
         }
         private void Show_End()
         {

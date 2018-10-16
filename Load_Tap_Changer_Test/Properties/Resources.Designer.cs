@@ -273,6 +273,116 @@ namespace Load_Tap_Changer_Test.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_01 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_02 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_03 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-03", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_04 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-04", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_05 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-05", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_06 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-06", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_08 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-08", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_09 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-09", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_10 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-10", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_11 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 有载分接开关软件界面图标_12 {
+            get {
+                object obj = ResourceManager.GetObject("有载分接开关软件界面图标-12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 设置图标 {
             get {
                 object obj = ResourceManager.GetObject("设置图标", resourceCulture);
