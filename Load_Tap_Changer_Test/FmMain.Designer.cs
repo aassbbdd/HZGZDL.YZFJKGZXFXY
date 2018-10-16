@@ -40,6 +40,7 @@
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnAddTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLond = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnContrast = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSaveData = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSaveImg = new DevExpress.XtraBars.BarLargeButtonItem();
             this.barLargeButtonItem6 = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -47,8 +48,9 @@
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnStopTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnEnvelope = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.btnContrast = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLeftShift = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.TxtOffset11 = new DevExpress.XtraBars.BarEditItem();
+            this.TxtOffset = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.btnRightShift1 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnEnlarge = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnNarrow = new DevExpress.XtraBars.BarLargeButtonItem();
@@ -185,6 +187,7 @@
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::Load_Tap_Changer_Test.WaitForm), true, true);
             this.barLargeButtonItem24 = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TxtOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).BeginInit();
@@ -332,13 +335,15 @@
             this.btnEnlarge,
             this.btnNarrow,
             this.btnClear,
-            this.btnReNew});
+            this.btnReNew,
+            this.TxtOffset11});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 122;
+            this.barManager1.MaxItemId = 126;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemTextEdit1,
             this.repositoryItemTextEdit2,
-            this.repositoryItemFontEdit1});
+            this.repositoryItemFontEdit1,
+            this.TxtOffset});
             // 
             // bar1
             // 
@@ -355,15 +360,16 @@
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.btnAddTest),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnLond),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnContrast, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSaveData),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSaveImg, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.barLargeButtonItem6),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest, true),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnContrast, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLeftShift, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.TxtOffset11),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRightShift1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnlarge, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNarrow, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -391,6 +397,14 @@
             this.btnLond.Name = "btnLond";
             this.btnLond.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
             this.btnLond.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLond_ItemClick);
+            // 
+            // btnContrast
+            // 
+            this.btnContrast.Caption = "对比";
+            this.btnContrast.Id = 114;
+            this.btnContrast.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnContrast.ImageOptions.Image")));
+            this.btnContrast.Name = "btnContrast";
+            this.btnContrast.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnContrast_ItemClick);
             // 
             // btnSaveData
             // 
@@ -446,17 +460,9 @@
             // 
             this.btnEnvelope.Caption = "包络线";
             this.btnEnvelope.Id = 85;
-            this.btnEnvelope.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEnvelope.ImageOptions.Image")));
+            this.btnEnvelope.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.有载分接开关软件界面图标_01;
             this.btnEnvelope.Name = "btnEnvelope";
             this.btnEnvelope.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEnvelope_ItemClick);
-            // 
-            // btnContrast
-            // 
-            this.btnContrast.Caption = "对比";
-            this.btnContrast.Id = 114;
-            this.btnContrast.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.有载分接开关软件界面图标_01;
-            this.btnContrast.Name = "btnContrast";
-            this.btnContrast.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnContrast_ItemClick);
             // 
             // btnLeftShift
             // 
@@ -465,6 +471,22 @@
             this.btnLeftShift.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.有载分接开关软件界面图标_09;
             this.btnLeftShift.Name = "btnLeftShift";
             this.btnLeftShift.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnLeftShift_ItemClick);
+            // 
+            // TxtOffset11
+            // 
+            this.TxtOffset11.Caption = "偏移时间";
+            this.TxtOffset11.Edit = this.TxtOffset;
+            this.TxtOffset11.EditValue = 0.01D;
+            this.TxtOffset11.Id = 125;
+            this.TxtOffset11.Name = "TxtOffset11";
+            this.TxtOffset11.EditValueChanged += new System.EventHandler(this.TxtOffset11_EditValueChanged);
+            // 
+            // TxtOffset
+            // 
+            this.TxtOffset.AutoHeight = false;
+            this.TxtOffset.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
+            this.TxtOffset.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            this.TxtOffset.Name = "TxtOffset";
             // 
             // btnRightShift1
             // 
@@ -1675,6 +1697,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TxtOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).EndInit();
@@ -1868,5 +1891,7 @@
         private DevExpress.XtraEditors.CheckEdit ckFollow;
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl lbtime;
+        private DevExpress.XtraBars.BarEditItem TxtOffset11;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit TxtOffset;
     }
 }

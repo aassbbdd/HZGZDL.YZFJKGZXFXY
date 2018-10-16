@@ -60,6 +60,7 @@ namespace Basic_Controls
                 Tester_List_Bind();//获取测试计划绑定到页面树
 
             }
+            MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
             this.Text = "有载调压开关故障诊断系统(v" + Version + ")";
             //测试连接通信
             // sendUdp(agreement._1_CMD_HEARTBEAT);
@@ -1203,6 +1204,7 @@ namespace Basic_Controls
         }
 
 
+
         /// <summary>
         /// 自带放大缩小控件
         /// </summary>
@@ -1258,6 +1260,33 @@ namespace Basic_Controls
             }
         }
 
+        /// <summary>
+        /// 光标 跟随 鼠标
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ckFollow_CheckedChanged(object sender, EventArgs e)
+        {
+            if (linex != null)
+            {
+                cursorTool_Front.FollowMouse = ckFollow.Checked;
+            }
+            else
+            {
+                ckFollow.Checked = false;
+            }
+        }
+
+
+        /// <summary>
+        /// 更新偏移时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtOffset11_EditValueChanged(object sender, EventArgs e)
+        {
+            MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
+        }
         #endregion
 
         #region 图表初始化参数配置
@@ -1455,12 +1484,12 @@ namespace Basic_Controls
         /// <summary>
         /// 十字光标
         /// </summary>
-        CursorTool cursorTool_Front;
+        CursorTool cursorTool_Front = new CursorTool();
 
         /// <summary>
         /// 十字光标
         /// </summary>
-        CursorTool cursorTool_After;
+        CursorTool cursorTool_After = new CursorTool();
 
         /// <summary>
         /// 松开十字光标的时间
@@ -4122,17 +4151,5 @@ namespace Basic_Controls
         }
 
         #endregion
-
-        private void ckFollow_CheckedChanged(object sender, EventArgs e)
-        {
-            if (linex != null)
-            {
-                cursorTool_Front.FollowMouse = ckFollow.Checked;
-            }
-            else
-            {
-                ckFollow.Checked = false;
-            }
-        }
     }
 }
