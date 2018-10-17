@@ -359,11 +359,11 @@ namespace Basic_Controls
 
                         if (allv > 0 && vcount > 0)
                         {
-                            pub_Test_Plan.VOLTAGE = (allv / vcount).ToString();
+                            pub_Test_Plan.VOLTAGE = ((double)allv / vcount).ToString("#0.0");
                         }
                         else
                         {
-                            pub_Test_Plan.VOLTAGE = "0";
+                            pub_Test_Plan.VOLTAGE = "0.0";
                         }
                         Db_Action.Instance.Test_Confige_VOLTAGE_Edit(pub_Test_Plan);
 
@@ -1178,9 +1178,6 @@ namespace Basic_Controls
                             tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
                             tChart.Axes.Bottom.SetMinMax(min, max);
 
-                            cursorTool_Front.XValue = tChart.Axes.Bottom.Minimum + 0.02;
-                            cursorTool_After.XValue = tChart.Axes.Bottom.Minimum + 0.09;
-
                             double mint = tChart.Axes.Top.CalcPosPoint(sx);
                             double maxt = tChart.Axes.Top.CalcPosPoint(e.X);
                             tChart.Axes.Top.Labels.ValueFormat = "0.000000";
@@ -1188,6 +1185,17 @@ namespace Basic_Controls
                             tChart.Axes.Top.SetMinMax(mint, maxt);
                             startTime = DateTime.Now;
                             //Add_CursorTool();
+                            if (LeftOrRightNum != 0)
+                            {
+                                cursorTool_Front.XValue = mint + ((maxt - mint) / 4);
+                                cursorTool_After.XValue = mint + ((maxt - mint) / 2);
+
+                            }
+                            else
+                            {
+                                cursorTool_Front.XValue = min + ((max - min) / 4);
+                                cursorTool_After.XValue = min + ((max - min) / 2);
+                            }
                         }
                     }
                     else if ((sx > e.X || sy > e.Y) && sx > 0 && sy > 0)
@@ -1202,8 +1210,6 @@ namespace Basic_Controls
                 }
             }
         }
-
-
 
         /// <summary>
         /// 自带放大缩小控件
@@ -1255,7 +1261,8 @@ namespace Basic_Controls
                 aotuzoom = 0;
                 LeftOrRightNum = 0;
                 Offset = 0;
-
+                cursorTool_Front.XValue = 1;
+                cursorTool_After.XValue = 4;
                 Select_Chart_Lond();
             }
         }
@@ -1642,67 +1649,6 @@ namespace Basic_Controls
                         return;
                     }
                     lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString() + " s";
-
-                    //int length = Convert.ToInt32(allnum * cursorTool_After.XValue) + (int)(allnum * Offset);
-                    //if (aotuzoom == 0)
-                    //{
-                    //    length = Convert.ToInt32((allnum / firstAverageNum) * cursorTool_After.XValue) + (int)((allnum / firstAverageNum) * Offset);
-                    //}
-                    //if (length < 0)
-                    //{
-                    //    return;
-                    //}
-
-                    //if (length < vline1.YValues.Count)// && ckV1.Checked
-                    //{
-                    //    lbv1.Text = Rounding(vline1.YValues[length]);
-                    //}
-                    //if (Offset == 0)
-                    //{
-                    //    if (length < vline2.YValues.Count)// && ckV1.Checked
-                    //    {
-                    //        lbv2.Text = Rounding(vline2.YValues[length]);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (length <= vline2.YValues.Count)
-                    //    {
-                    //        lbv2.Text = Rounding(vline2.YValues[length]);
-                    //    }
-                    //}
-
-                    //if (length < vline3.YValues.Count)//&& ckV3.Checked
-                    //{
-                    //    lbv3.Text = vline3.YValues[length].ToString();
-                    //}
-
-                    //if (length < cline1.YValues.Count)//&& ckC1.Checked
-                    //{
-                    //    lbc1.Text = Rounding(cline1.YValues[length]);
-                    //}
-                    //if (Offset == 0)
-                    //{
-                    //    if (length < cline2.YValues.Count)// && ckV1.Checked
-                    //    {
-                    //        lbc2.Text = Rounding(cline2.YValues[length]);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (length <= cline2.YValues.Count)
-                    //    {
-                    //        lbc2.Text = Rounding(cline2.YValues[length]);
-                    //    }
-                    //}
-                    //if (length < cline3.YValues.Count)//&& ckC3.Checked
-                    //{
-                    //    lbc3.Text = Rounding(cline3.YValues[length]);
-                    //}
-                    //tChart.Axes.Bottom.CalcPosPoint(MouseX);
-                    //lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX));
-                    //lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX));
-
                     OpenCursortTime = DateTime.Now;
                 }
                 catch
@@ -2409,7 +2355,7 @@ namespace Basic_Controls
         {
             allv = 0;
             vcount = 0;
-            lbVoltage.Text = "0";
+            lbVoltage.Text = "0 v";
             panelControl1.Enabled = false;
             pc2.Enabled = false;
 
@@ -2522,8 +2468,8 @@ namespace Basic_Controls
         /// </summary>
         int vcount = 0;
 
-        string[] addv = new string[1000];
-        int[] addvv = new int[1000];
+        //string[] addv = new string[1000];
+        //int[] addvv = new int[1000];
 
         double[] c1x;
         double[] c1y;
@@ -2716,15 +2662,14 @@ namespace Basic_Controls
                     else
                     {
                         //Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-
                         e.Hearder = e.Msg.Substring(0, 4);
                         if (e.Hearder == "5050")//返回电压只 要存储 
                         {
                             string vv = e.Msg.Substring(4, 4);
                             int v = Convert.ToInt16(vv, 16);
 
-                            addv[vcount] = vv;
-                            addvv[vcount] = v;
+                            //addv[vcount] = vv;
+                            //addvv[vcount] = v;
                             if (v > 0)
                             {
                                 allv = allv + v;
@@ -2732,7 +2677,7 @@ namespace Basic_Controls
                                 vcount++;
                                 Invoke(new ThreadStart(delegate ()
                                 {
-                                    lbVoltage.Text = (allv / vcount).ToString();
+                                    lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
                                 }));
                             }
                         }
@@ -3173,8 +3118,8 @@ namespace Basic_Controls
                             string vv = e.Msg.Substring(4, 4);
                             int v = Convert.ToInt16(vv, 16);
 
-                            addv[vcount] = vv;
-                            addvv[vcount] = v;
+                            //addv[vcount] = vv;
+                            //addvv[vcount] = v;
                             if (v > 0)
                             {
                                 allv = allv + v;
@@ -3182,7 +3127,7 @@ namespace Basic_Controls
                                 vcount++;
                                 Invoke(new ThreadStart(delegate ()
                                 {
-                                    lbVoltage.Text = (allv / vcount).ToString();
+                                    lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
                                 }));
                             }
                         }
@@ -3601,7 +3546,7 @@ namespace Basic_Controls
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
-                lbVoltage.Text = "0";//单击时电压清空
+                lbVoltage.Text = "0 v";//单击时电压清空
                 if (treeList.Appearance.FocusedCell.BackColor != Color.SteelBlue)//选中测试计划 改变颜色
                 {
                     treeList.Appearance.FocusedCell.BackColor = Color.SteelBlue;
@@ -3720,7 +3665,7 @@ namespace Basic_Controls
                 {
                     //取得选定行信息  
                     Test_Plan model = Test_Plan_Bind(node);
-                    lbVoltage.Text = model.VOLTAGE;
+                    lbVoltage.Text = model.VOLTAGE + " v";
                     model.ISEDIT = "2";
                     if (model.PARENTID != "0")
                     {

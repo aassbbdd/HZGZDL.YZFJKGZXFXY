@@ -118,10 +118,6 @@
             this.barLinkContainerItem2 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.btnRightShift = new DevExpress.XtraBars.BarHeaderItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.lbybname = new DevExpress.XtraEditors.LabelControl();
@@ -969,10 +965,6 @@
             this.pclChart.Appearance.Options.UseBackColor = true;
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.pclChart.Controls.Add(this.label4);
-            this.pclChart.Controls.Add(this.label3);
-            this.pclChart.Controls.Add(this.label2);
-            this.pclChart.Controls.Add(this.label1);
             this.pclChart.Controls.Add(this.labelControl3);
             this.pclChart.Controls.Add(this.labelControl4);
             this.pclChart.Controls.Add(this.lbybname);
@@ -993,53 +985,9 @@
             this.pclChart.Size = new System.Drawing.Size(1043, 837);
             this.pclChart.TabIndex = 30;
             // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(136, 710);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 18);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "浮标";
-            this.label4.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(92, 710);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 18);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "浮标";
-            this.label3.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(136, 728);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 18);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "浮标";
-            this.label2.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(92, 728);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "浮标";
-            this.label1.Visible = false;
-            // 
             // labelControl3
             // 
-            this.labelControl3.Location = new System.Drawing.Point(846, 242);
+            this.labelControl3.Location = new System.Drawing.Point(55, 373);
             this.labelControl3.Name = "labelControl3";
             this.labelControl3.Size = new System.Drawing.Size(75, 18);
             this.labelControl3.TabIndex = 48;
@@ -1048,7 +996,7 @@
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(844, 307);
+            this.labelControl4.Location = new System.Drawing.Point(53, 438);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Size = new System.Drawing.Size(75, 18);
             this.labelControl4.TabIndex = 49;
@@ -1057,7 +1005,7 @@
             // 
             // lbybname
             // 
-            this.lbybname.Location = new System.Drawing.Point(854, 263);
+            this.lbybname.Location = new System.Drawing.Point(63, 394);
             this.lbybname.Name = "lbybname";
             this.lbybname.Size = new System.Drawing.Size(89, 18);
             this.lbybname.TabIndex = 56;
@@ -1066,7 +1014,7 @@
             // 
             // lbdbdata
             // 
-            this.lbdbdata.Location = new System.Drawing.Point(854, 331);
+            this.lbdbdata.Location = new System.Drawing.Point(63, 462);
             this.lbdbdata.Name = "lbdbdata";
             this.lbdbdata.Size = new System.Drawing.Size(81, 18);
             this.lbdbdata.TabIndex = 57;
@@ -1075,7 +1023,7 @@
             // 
             // lbybtime
             // 
-            this.lbybtime.Location = new System.Drawing.Point(854, 283);
+            this.lbybtime.Location = new System.Drawing.Point(63, 414);
             this.lbybtime.Name = "lbybtime";
             this.lbybtime.Size = new System.Drawing.Size(89, 18);
             this.lbybtime.TabIndex = 60;
@@ -1084,7 +1032,7 @@
             // 
             // lbdbtime
             // 
-            this.lbdbtime.Location = new System.Drawing.Point(854, 355);
+            this.lbdbtime.Location = new System.Drawing.Point(63, 486);
             this.lbdbtime.Name = "lbdbtime";
             this.lbdbtime.Size = new System.Drawing.Size(89, 18);
             this.lbdbtime.TabIndex = 61;
@@ -1093,7 +1041,7 @@
             // 
             // labelControl10
             // 
-            this.labelControl10.Location = new System.Drawing.Point(846, 172);
+            this.labelControl10.Location = new System.Drawing.Point(55, 303);
             this.labelControl10.Name = "labelControl10";
             this.labelControl10.Size = new System.Drawing.Size(51, 18);
             this.labelControl10.TabIndex = 64;
@@ -1103,7 +1051,7 @@
             // txtRcUp
             // 
             this.txtRcUp.EditValue = "0.0001";
-            this.txtRcUp.Location = new System.Drawing.Point(901, 169);
+            this.txtRcUp.Location = new System.Drawing.Point(110, 300);
             this.txtRcUp.MenuManager = this.barManager1;
             this.txtRcUp.Name = "txtRcUp";
             this.txtRcUp.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,10})?";
@@ -1115,7 +1063,7 @@
             // txtRcDn
             // 
             this.txtRcDn.EditValue = "0.01";
-            this.txtRcDn.Location = new System.Drawing.Point(901, 193);
+            this.txtRcDn.Location = new System.Drawing.Point(110, 324);
             this.txtRcDn.MenuManager = this.barManager1;
             this.txtRcDn.Name = "txtRcDn";
             this.txtRcDn.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,12})?";
@@ -1126,7 +1074,7 @@
             // 
             // labelControl9
             // 
-            this.labelControl9.Location = new System.Drawing.Point(846, 196);
+            this.labelControl9.Location = new System.Drawing.Point(55, 327);
             this.labelControl9.Name = "labelControl9";
             this.labelControl9.Size = new System.Drawing.Size(51, 18);
             this.labelControl9.TabIndex = 65;
@@ -1135,7 +1083,7 @@
             // 
             // btnEnlarge11
             // 
-            this.btnEnlarge11.Location = new System.Drawing.Point(854, 98);
+            this.btnEnlarge11.Location = new System.Drawing.Point(63, 229);
             this.btnEnlarge11.Name = "btnEnlarge11";
             this.btnEnlarge11.Size = new System.Drawing.Size(54, 28);
             this.btnEnlarge11.TabIndex = 35;
@@ -1145,7 +1093,7 @@
             // 
             // btnNarrow1
             // 
-            this.btnNarrow1.Location = new System.Drawing.Point(914, 98);
+            this.btnNarrow1.Location = new System.Drawing.Point(123, 229);
             this.btnNarrow1.Name = "btnNarrow1";
             this.btnNarrow1.Size = new System.Drawing.Size(54, 28);
             this.btnNarrow1.TabIndex = 36;
@@ -1155,7 +1103,7 @@
             // 
             // btnReNew1
             // 
-            this.btnReNew1.Location = new System.Drawing.Point(854, 132);
+            this.btnReNew1.Location = new System.Drawing.Point(63, 263);
             this.btnReNew1.Name = "btnReNew1";
             this.btnReNew1.Size = new System.Drawing.Size(54, 28);
             this.btnReNew1.TabIndex = 44;
@@ -1165,7 +1113,7 @@
             // 
             // btnClear1
             // 
-            this.btnClear1.Location = new System.Drawing.Point(914, 132);
+            this.btnClear1.Location = new System.Drawing.Point(123, 263);
             this.btnClear1.Name = "btnClear1";
             this.btnClear1.Size = new System.Drawing.Size(54, 28);
             this.btnClear1.TabIndex = 45;
@@ -1318,7 +1266,7 @@
             // 
             // lbVoltage
             // 
-            this.lbVoltage.Location = new System.Drawing.Point(97, 8);
+            this.lbVoltage.Location = new System.Drawing.Point(97, 11);
             this.lbVoltage.Name = "lbVoltage";
             this.lbVoltage.Size = new System.Drawing.Size(8, 18);
             this.lbVoltage.TabIndex = 54;
@@ -1830,14 +1778,10 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private System.Windows.Forms.Label label1;
         private DevExpress.XtraBars.BarEditItem barEditItem1;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private System.Windows.Forms.PictureBox pcOpen;
         private DevExpress.XtraEditors.LabelControl lbOpen;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager;
         private DevExpress.XtraBars.BarLinkContainerItem barLinkContainerItem1;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem19;
