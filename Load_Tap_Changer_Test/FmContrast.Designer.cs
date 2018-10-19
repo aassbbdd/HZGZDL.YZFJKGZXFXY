@@ -373,7 +373,7 @@
             // 
             // ckblx
             // 
-            this.ckblx.Location = new System.Drawing.Point(507, 3);
+            this.ckblx.Location = new System.Drawing.Point(507, 10);
             this.ckblx.Name = "ckblx";
             this.ckblx.Properties.Caption = "包络线";
             this.ckblx.Size = new System.Drawing.Size(98, 22);

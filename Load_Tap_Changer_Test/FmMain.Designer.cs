@@ -117,6 +117,7 @@
             this.repositoryItemFontEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemFontEdit();
             this.barLinkContainerItem2 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.btnRightShift = new DevExpress.XtraBars.BarHeaderItem();
+            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
@@ -137,25 +138,44 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
-            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.lbtime = new DevExpress.XtraEditors.LabelControl();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbv2T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc2T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc3T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbTopTimeT2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv1T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc1T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv3T2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbBottomTimeT2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbcT2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbybvT2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbybcT2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbvT2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl28 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl31 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl32 = new DevExpress.XtraEditors.LabelControl();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbv2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc2 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc3 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv1 = new DevExpress.XtraEditors.LabelControl();
+            this.lbc1 = new DevExpress.XtraEditors.LabelControl();
+            this.lbv3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbc = new DevExpress.XtraEditors.LabelControl();
+            this.lbybv = new DevExpress.XtraEditors.LabelControl();
+            this.lbybc = new DevExpress.XtraEditors.LabelControl();
+            this.lbdbv = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
+            this.ckLineShow = new DevExpress.XtraEditors.CheckEdit();
+            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.ckFollow = new DevExpress.XtraEditors.CheckEdit();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl15 = new DevExpress.XtraEditors.LabelControl();
-            this.lbv3 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc1 = new DevExpress.XtraEditors.LabelControl();
             this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl17 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl21 = new DevExpress.XtraEditors.LabelControl();
-            this.lbv1 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc3 = new DevExpress.XtraEditors.LabelControl();
-            this.lbc2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
-            this.lbv2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
             this.plLinePath = new DevExpress.XtraEditors.PanelControl();
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
@@ -196,6 +216,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckLineShow.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckFollow.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).BeginInit();
             this.plLinePath.SuspendLayout();
@@ -332,9 +355,10 @@
             this.btnNarrow,
             this.btnClear,
             this.btnReNew,
-            this.TxtOffset11});
+            this.TxtOffset11,
+            this.barButtonItem3});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 126;
+            this.barManager1.MaxItemId = 127;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemTextEdit1,
             this.repositoryItemTextEdit2,
@@ -956,6 +980,13 @@
             this.btnRightShift.Name = "btnRightShift";
             this.btnRightShift.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRightShift_ItemClick);
             // 
+            // barButtonItem3
+            // 
+            this.barButtonItem3.Caption = "新增设备";
+            this.barButtonItem3.Id = 126;
+            this.barButtonItem3.Name = "barButtonItem3";
+            this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
+            // 
             // pclChart
             // 
             this.pclChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1123,7 +1154,7 @@
             // 
             // lbTopTime
             // 
-            this.lbTopTime.Location = new System.Drawing.Point(97, 32);
+            this.lbTopTime.Location = new System.Drawing.Point(47, 31);
             this.lbTopTime.Name = "lbTopTime";
             this.lbTopTime.Size = new System.Drawing.Size(8, 18);
             this.lbTopTime.TabIndex = 41;
@@ -1131,7 +1162,7 @@
             // 
             // lbBottomTime
             // 
-            this.lbBottomTime.Location = new System.Drawing.Point(97, 59);
+            this.lbBottomTime.Location = new System.Drawing.Point(47, 55);
             this.lbBottomTime.Name = "lbBottomTime";
             this.lbBottomTime.Size = new System.Drawing.Size(8, 18);
             this.lbBottomTime.TabIndex = 42;
@@ -1155,60 +1186,347 @@
             // 
             // xtraTabControl1
             // 
-            this.xtraTabControl1.Location = new System.Drawing.Point(3, 158);
+            this.xtraTabControl1.Location = new System.Drawing.Point(1, 158);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(206, 465);
+            this.xtraTabControl1.Size = new System.Drawing.Size(226, 465);
             this.xtraTabControl1.TabIndex = 81;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1});
             // 
             // xtraTabPage1
             // 
-            this.xtraTabPage1.Controls.Add(this.labelControl5);
             this.xtraTabPage1.Controls.Add(this.lbtime);
+            this.xtraTabPage1.Controls.Add(this.groupBox2);
+            this.xtraTabPage1.Controls.Add(this.groupBox1);
+            this.xtraTabPage1.Controls.Add(this.ckLineShow);
+            this.xtraTabPage1.Controls.Add(this.labelControl5);
             this.xtraTabPage1.Controls.Add(this.ckFollow);
             this.xtraTabPage1.Controls.Add(this.labelControl6);
-            this.xtraTabPage1.Controls.Add(this.labelControl12);
-            this.xtraTabPage1.Controls.Add(this.labelControl15);
-            this.xtraTabPage1.Controls.Add(this.lbBottomTime);
-            this.xtraTabPage1.Controls.Add(this.lbv3);
-            this.xtraTabPage1.Controls.Add(this.labelControl14);
-            this.xtraTabPage1.Controls.Add(this.lbc1);
             this.xtraTabPage1.Controls.Add(this.lbVoltage);
-            this.xtraTabPage1.Controls.Add(this.labelControl13);
-            this.xtraTabPage1.Controls.Add(this.labelControl17);
-            this.xtraTabPage1.Controls.Add(this.labelControl21);
-            this.xtraTabPage1.Controls.Add(this.lbv1);
-            this.xtraTabPage1.Controls.Add(this.lbTopTime);
-            this.xtraTabPage1.Controls.Add(this.lbc3);
-            this.xtraTabPage1.Controls.Add(this.lbc2);
-            this.xtraTabPage1.Controls.Add(this.labelControl11);
-            this.xtraTabPage1.Controls.Add(this.lbv2);
-            this.xtraTabPage1.Controls.Add(this.labelControl19);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(199, 429);
+            this.xtraTabPage1.Size = new System.Drawing.Size(219, 429);
             this.xtraTabPage1.Text = "设备波形参数";
-            // 
-            // labelControl5
-            // 
-            this.labelControl5.Location = new System.Drawing.Point(17, 242);
-            this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Size = new System.Drawing.Size(45, 18);
-            this.labelControl5.TabIndex = 82;
-            this.labelControl5.Text = "时差：";
             // 
             // lbtime
             // 
-            this.lbtime.Location = new System.Drawing.Point(97, 244);
+            this.lbtime.Location = new System.Drawing.Point(142, 8);
             this.lbtime.Name = "lbtime";
             this.lbtime.Size = new System.Drawing.Size(8, 18);
             this.lbtime.TabIndex = 81;
             this.lbtime.Text = "0";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lbv2T2);
+            this.groupBox2.Controls.Add(this.lbc2T2);
+            this.groupBox2.Controls.Add(this.lbc3T2);
+            this.groupBox2.Controls.Add(this.lbTopTimeT2);
+            this.groupBox2.Controls.Add(this.lbv1T2);
+            this.groupBox2.Controls.Add(this.lbc1T2);
+            this.groupBox2.Controls.Add(this.lbv3T2);
+            this.groupBox2.Controls.Add(this.lbBottomTimeT2);
+            this.groupBox2.Controls.Add(this.labelControl7);
+            this.groupBox2.Controls.Add(this.lbdbcT2);
+            this.groupBox2.Controls.Add(this.lbybvT2);
+            this.groupBox2.Controls.Add(this.lbybcT2);
+            this.groupBox2.Controls.Add(this.lbdbvT2);
+            this.groupBox2.Controls.Add(this.labelControl28);
+            this.groupBox2.Controls.Add(this.labelControl31);
+            this.groupBox2.Controls.Add(this.labelControl32);
+            this.groupBox2.Location = new System.Drawing.Point(99, 32);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(108, 256);
+            this.groupBox2.TabIndex = 101;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "T2";
+            // 
+            // lbv2T2
+            // 
+            this.lbv2T2.Location = new System.Drawing.Point(49, 103);
+            this.lbv2T2.Name = "lbv2T2";
+            this.lbv2T2.Size = new System.Drawing.Size(8, 18);
+            this.lbv2T2.TabIndex = 68;
+            this.lbv2T2.Text = "0";
+            // 
+            // lbc2T2
+            // 
+            this.lbc2T2.Location = new System.Drawing.Point(49, 176);
+            this.lbc2T2.Name = "lbc2T2";
+            this.lbc2T2.Size = new System.Drawing.Size(8, 18);
+            this.lbc2T2.TabIndex = 74;
+            this.lbc2T2.Text = "0";
+            // 
+            // lbc3T2
+            // 
+            this.lbc3T2.Location = new System.Drawing.Point(49, 200);
+            this.lbc3T2.Name = "lbc3T2";
+            this.lbc3T2.Size = new System.Drawing.Size(8, 18);
+            this.lbc3T2.TabIndex = 76;
+            this.lbc3T2.Text = "0";
+            // 
+            // lbTopTimeT2
+            // 
+            this.lbTopTimeT2.Location = new System.Drawing.Point(49, 32);
+            this.lbTopTimeT2.Name = "lbTopTimeT2";
+            this.lbTopTimeT2.Size = new System.Drawing.Size(8, 18);
+            this.lbTopTimeT2.TabIndex = 41;
+            this.lbTopTimeT2.Text = "0";
+            // 
+            // lbv1T2
+            // 
+            this.lbv1T2.Location = new System.Drawing.Point(49, 79);
+            this.lbv1T2.Name = "lbv1T2";
+            this.lbv1T2.Size = new System.Drawing.Size(8, 18);
+            this.lbv1T2.TabIndex = 66;
+            this.lbv1T2.Text = "0";
+            // 
+            // lbc1T2
+            // 
+            this.lbc1T2.Location = new System.Drawing.Point(49, 153);
+            this.lbc1T2.Name = "lbc1T2";
+            this.lbc1T2.Size = new System.Drawing.Size(8, 18);
+            this.lbc1T2.TabIndex = 72;
+            this.lbc1T2.Text = "0";
+            // 
+            // lbv3T2
+            // 
+            this.lbv3T2.Location = new System.Drawing.Point(49, 127);
+            this.lbv3T2.Name = "lbv3T2";
+            this.lbv3T2.Size = new System.Drawing.Size(8, 18);
+            this.lbv3T2.TabIndex = 70;
+            this.lbv3T2.Text = "0";
+            // 
+            // lbBottomTimeT2
+            // 
+            this.lbBottomTimeT2.Location = new System.Drawing.Point(49, 57);
+            this.lbBottomTimeT2.Name = "lbBottomTimeT2";
+            this.lbBottomTimeT2.Size = new System.Drawing.Size(8, 18);
+            this.lbBottomTimeT2.TabIndex = 42;
+            this.lbBottomTimeT2.Text = "0";
+            // 
+            // labelControl7
+            // 
+            this.labelControl7.Location = new System.Drawing.Point(3, 200);
+            this.labelControl7.Name = "labelControl7";
+            this.labelControl7.Size = new System.Drawing.Size(53, 18);
+            this.labelControl7.TabIndex = 77;
+            this.labelControl7.Text = "电流3：";
+            // 
+            // lbdbcT2
+            // 
+            this.lbdbcT2.Location = new System.Drawing.Point(3, 176);
+            this.lbdbcT2.Name = "lbdbcT2";
+            this.lbdbcT2.Size = new System.Drawing.Size(53, 18);
+            this.lbdbcT2.TabIndex = 75;
+            this.lbdbcT2.Text = "电流2：";
+            // 
+            // lbybvT2
+            // 
+            this.lbybvT2.Location = new System.Drawing.Point(3, 79);
+            this.lbybvT2.Name = "lbybvT2";
+            this.lbybvT2.Size = new System.Drawing.Size(53, 18);
+            this.lbybvT2.TabIndex = 67;
+            this.lbybvT2.Text = "震动1：";
+            // 
+            // lbybcT2
+            // 
+            this.lbybcT2.Location = new System.Drawing.Point(3, 152);
+            this.lbybcT2.Name = "lbybcT2";
+            this.lbybcT2.Size = new System.Drawing.Size(53, 18);
+            this.lbybcT2.TabIndex = 73;
+            this.lbybcT2.Text = "电流1：";
+            // 
+            // lbdbvT2
+            // 
+            this.lbdbvT2.Location = new System.Drawing.Point(3, 103);
+            this.lbdbvT2.Name = "lbdbvT2";
+            this.lbdbvT2.Size = new System.Drawing.Size(53, 18);
+            this.lbdbvT2.TabIndex = 69;
+            this.lbdbvT2.Text = "震动2：";
+            // 
+            // labelControl28
+            // 
+            this.labelControl28.Location = new System.Drawing.Point(12, 31);
+            this.labelControl28.Name = "labelControl28";
+            this.labelControl28.Size = new System.Drawing.Size(35, 18);
+            this.labelControl28.TabIndex = 78;
+            this.labelControl28.Text = "顶部:";
+            // 
+            // labelControl31
+            // 
+            this.labelControl31.Location = new System.Drawing.Point(3, 127);
+            this.labelControl31.Name = "labelControl31";
+            this.labelControl31.Size = new System.Drawing.Size(53, 18);
+            this.labelControl31.TabIndex = 71;
+            this.labelControl31.Text = "震动3：";
+            // 
+            // labelControl32
+            // 
+            this.labelControl32.Location = new System.Drawing.Point(12, 55);
+            this.labelControl32.Name = "labelControl32";
+            this.labelControl32.Size = new System.Drawing.Size(35, 18);
+            this.labelControl32.TabIndex = 79;
+            this.labelControl32.Text = "底部:";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lbv2);
+            this.groupBox1.Controls.Add(this.lbc2);
+            this.groupBox1.Controls.Add(this.lbc3);
+            this.groupBox1.Controls.Add(this.lbTopTime);
+            this.groupBox1.Controls.Add(this.lbv1);
+            this.groupBox1.Controls.Add(this.lbc1);
+            this.groupBox1.Controls.Add(this.lbv3);
+            this.groupBox1.Controls.Add(this.lbBottomTime);
+            this.groupBox1.Controls.Add(this.labelControl17);
+            this.groupBox1.Controls.Add(this.lbdbc);
+            this.groupBox1.Controls.Add(this.lbybv);
+            this.groupBox1.Controls.Add(this.lbybc);
+            this.groupBox1.Controls.Add(this.lbdbv);
+            this.groupBox1.Controls.Add(this.labelControl14);
+            this.groupBox1.Controls.Add(this.labelControl15);
+            this.groupBox1.Controls.Add(this.labelControl12);
+            this.groupBox1.Location = new System.Drawing.Point(-2, 32);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(102, 256);
+            this.groupBox1.TabIndex = 100;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "d";
+            // 
+            // lbv2
+            // 
+            this.lbv2.Location = new System.Drawing.Point(47, 105);
+            this.lbv2.Name = "lbv2";
+            this.lbv2.Size = new System.Drawing.Size(8, 18);
+            this.lbv2.TabIndex = 68;
+            this.lbv2.Text = "0";
+            // 
+            // lbc2
+            // 
+            this.lbc2.Location = new System.Drawing.Point(47, 176);
+            this.lbc2.Name = "lbc2";
+            this.lbc2.Size = new System.Drawing.Size(8, 18);
+            this.lbc2.TabIndex = 74;
+            this.lbc2.Text = "0";
+            // 
+            // lbc3
+            // 
+            this.lbc3.Location = new System.Drawing.Point(47, 200);
+            this.lbc3.Name = "lbc3";
+            this.lbc3.Size = new System.Drawing.Size(8, 18);
+            this.lbc3.TabIndex = 76;
+            this.lbc3.Text = "0";
+            // 
+            // lbv1
+            // 
+            this.lbv1.Location = new System.Drawing.Point(47, 81);
+            this.lbv1.Name = "lbv1";
+            this.lbv1.Size = new System.Drawing.Size(8, 18);
+            this.lbv1.TabIndex = 66;
+            this.lbv1.Text = "0";
+            // 
+            // lbc1
+            // 
+            this.lbc1.Location = new System.Drawing.Point(47, 153);
+            this.lbc1.Name = "lbc1";
+            this.lbc1.Size = new System.Drawing.Size(8, 18);
+            this.lbc1.TabIndex = 72;
+            this.lbc1.Text = "0";
+            // 
+            // lbv3
+            // 
+            this.lbv3.Location = new System.Drawing.Point(47, 129);
+            this.lbv3.Name = "lbv3";
+            this.lbv3.Size = new System.Drawing.Size(8, 18);
+            this.lbv3.TabIndex = 70;
+            this.lbv3.Text = "0";
+            // 
+            // labelControl17
+            // 
+            this.labelControl17.Location = new System.Drawing.Point(3, 200);
+            this.labelControl17.Name = "labelControl17";
+            this.labelControl17.Size = new System.Drawing.Size(53, 18);
+            this.labelControl17.TabIndex = 77;
+            this.labelControl17.Text = "电流3：";
+            // 
+            // lbdbc
+            // 
+            this.lbdbc.Location = new System.Drawing.Point(3, 176);
+            this.lbdbc.Name = "lbdbc";
+            this.lbdbc.Size = new System.Drawing.Size(53, 18);
+            this.lbdbc.TabIndex = 75;
+            this.lbdbc.Text = "电流2：";
+            // 
+            // lbybv
+            // 
+            this.lbybv.Location = new System.Drawing.Point(3, 79);
+            this.lbybv.Name = "lbybv";
+            this.lbybv.Size = new System.Drawing.Size(53, 18);
+            this.lbybv.TabIndex = 67;
+            this.lbybv.Text = "震动1：";
+            // 
+            // lbybc
+            // 
+            this.lbybc.Location = new System.Drawing.Point(3, 152);
+            this.lbybc.Name = "lbybc";
+            this.lbybc.Size = new System.Drawing.Size(53, 18);
+            this.lbybc.TabIndex = 73;
+            this.lbybc.Text = "电流1：";
+            // 
+            // lbdbv
+            // 
+            this.lbdbv.Location = new System.Drawing.Point(3, 103);
+            this.lbdbv.Name = "lbdbv";
+            this.lbdbv.Size = new System.Drawing.Size(53, 18);
+            this.lbdbv.TabIndex = 69;
+            this.lbdbv.Text = "震动2：";
+            // 
+            // labelControl14
+            // 
+            this.labelControl14.Location = new System.Drawing.Point(12, 31);
+            this.labelControl14.Name = "labelControl14";
+            this.labelControl14.Size = new System.Drawing.Size(35, 18);
+            this.labelControl14.TabIndex = 78;
+            this.labelControl14.Text = "顶部:";
+            // 
+            // labelControl15
+            // 
+            this.labelControl15.Location = new System.Drawing.Point(3, 127);
+            this.labelControl15.Name = "labelControl15";
+            this.labelControl15.Size = new System.Drawing.Size(53, 18);
+            this.labelControl15.TabIndex = 71;
+            this.labelControl15.Text = "震动3：";
+            // 
+            // labelControl12
+            // 
+            this.labelControl12.Location = new System.Drawing.Point(12, 55);
+            this.labelControl12.Name = "labelControl12";
+            this.labelControl12.Size = new System.Drawing.Size(35, 18);
+            this.labelControl12.TabIndex = 79;
+            this.labelControl12.Text = "底部:";
+            // 
+            // ckLineShow
+            // 
+            this.ckLineShow.Location = new System.Drawing.Point(8, 322);
+            this.ckLineShow.MenuManager = this.barManager1;
+            this.ckLineShow.Name = "ckLineShow";
+            this.ckLineShow.Properties.Caption = "显示坐标线";
+            this.ckLineShow.Size = new System.Drawing.Size(118, 22);
+            this.ckLineShow.TabIndex = 83;
+            this.ckLineShow.CheckedChanged += new System.EventHandler(this.ckLineShow_CheckedChanged);
+            // 
+            // labelControl5
+            // 
+            this.labelControl5.Location = new System.Drawing.Point(110, 8);
+            this.labelControl5.Name = "labelControl5";
+            this.labelControl5.Size = new System.Drawing.Size(36, 18);
+            this.labelControl5.TabIndex = 82;
+            this.labelControl5.Text = "△T：";
+            // 
             // ckFollow
             // 
-            this.ckFollow.Location = new System.Drawing.Point(17, 271);
+            this.ckFollow.Location = new System.Drawing.Point(7, 294);
             this.ckFollow.MenuManager = this.barManager1;
             this.ckFollow.Name = "ckFollow";
             this.ckFollow.Properties.Caption = "光标跟随鼠标";
@@ -1218,131 +1536,19 @@
             // 
             // labelControl6
             // 
-            this.labelControl6.Location = new System.Drawing.Point(17, 11);
+            this.labelControl6.Location = new System.Drawing.Point(10, 8);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(45, 18);
             this.labelControl6.TabIndex = 55;
             this.labelControl6.Text = "电压：";
             // 
-            // labelControl12
-            // 
-            this.labelControl12.Location = new System.Drawing.Point(17, 59);
-            this.labelControl12.Name = "labelControl12";
-            this.labelControl12.Size = new System.Drawing.Size(65, 18);
-            this.labelControl12.TabIndex = 79;
-            this.labelControl12.Text = "底部时间:";
-            // 
-            // labelControl15
-            // 
-            this.labelControl15.Location = new System.Drawing.Point(17, 145);
-            this.labelControl15.Name = "labelControl15";
-            this.labelControl15.Size = new System.Drawing.Size(53, 18);
-            this.labelControl15.TabIndex = 71;
-            this.labelControl15.Text = "震动3：";
-            // 
-            // lbv3
-            // 
-            this.lbv3.Location = new System.Drawing.Point(97, 145);
-            this.lbv3.Name = "lbv3";
-            this.lbv3.Size = new System.Drawing.Size(8, 18);
-            this.lbv3.TabIndex = 70;
-            this.lbv3.Text = "0";
-            // 
-            // labelControl14
-            // 
-            this.labelControl14.Location = new System.Drawing.Point(17, 35);
-            this.labelControl14.Name = "labelControl14";
-            this.labelControl14.Size = new System.Drawing.Size(65, 18);
-            this.labelControl14.TabIndex = 78;
-            this.labelControl14.Text = "顶部时间:";
-            // 
-            // lbc1
-            // 
-            this.lbc1.Location = new System.Drawing.Point(97, 170);
-            this.lbc1.Name = "lbc1";
-            this.lbc1.Size = new System.Drawing.Size(8, 18);
-            this.lbc1.TabIndex = 72;
-            this.lbc1.Text = "0";
-            // 
             // lbVoltage
             // 
-            this.lbVoltage.Location = new System.Drawing.Point(97, 11);
+            this.lbVoltage.Location = new System.Drawing.Point(57, 8);
             this.lbVoltage.Name = "lbVoltage";
             this.lbVoltage.Size = new System.Drawing.Size(8, 18);
             this.lbVoltage.TabIndex = 54;
             this.lbVoltage.Text = "0";
-            // 
-            // labelControl13
-            // 
-            this.labelControl13.Location = new System.Drawing.Point(17, 121);
-            this.labelControl13.Name = "labelControl13";
-            this.labelControl13.Size = new System.Drawing.Size(53, 18);
-            this.labelControl13.TabIndex = 69;
-            this.labelControl13.Text = "震动2：";
-            // 
-            // labelControl17
-            // 
-            this.labelControl17.Location = new System.Drawing.Point(17, 218);
-            this.labelControl17.Name = "labelControl17";
-            this.labelControl17.Size = new System.Drawing.Size(53, 18);
-            this.labelControl17.TabIndex = 77;
-            this.labelControl17.Text = "电流3：";
-            // 
-            // labelControl21
-            // 
-            this.labelControl21.Location = new System.Drawing.Point(17, 170);
-            this.labelControl21.Name = "labelControl21";
-            this.labelControl21.Size = new System.Drawing.Size(53, 18);
-            this.labelControl21.TabIndex = 73;
-            this.labelControl21.Text = "电流1：";
-            // 
-            // lbv1
-            // 
-            this.lbv1.Location = new System.Drawing.Point(97, 97);
-            this.lbv1.Name = "lbv1";
-            this.lbv1.Size = new System.Drawing.Size(8, 18);
-            this.lbv1.TabIndex = 66;
-            this.lbv1.Text = "0";
-            // 
-            // lbc3
-            // 
-            this.lbc3.Location = new System.Drawing.Point(97, 218);
-            this.lbc3.Name = "lbc3";
-            this.lbc3.Size = new System.Drawing.Size(8, 18);
-            this.lbc3.TabIndex = 76;
-            this.lbc3.Text = "0";
-            // 
-            // lbc2
-            // 
-            this.lbc2.Location = new System.Drawing.Point(97, 194);
-            this.lbc2.Name = "lbc2";
-            this.lbc2.Size = new System.Drawing.Size(8, 18);
-            this.lbc2.TabIndex = 74;
-            this.lbc2.Text = "0";
-            // 
-            // labelControl11
-            // 
-            this.labelControl11.Location = new System.Drawing.Point(17, 97);
-            this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(53, 18);
-            this.labelControl11.TabIndex = 67;
-            this.labelControl11.Text = "震动1：";
-            // 
-            // lbv2
-            // 
-            this.lbv2.Location = new System.Drawing.Point(97, 121);
-            this.lbv2.Name = "lbv2";
-            this.lbv2.Size = new System.Drawing.Size(8, 18);
-            this.lbv2.TabIndex = 68;
-            this.lbv2.Text = "0";
-            // 
-            // labelControl19
-            // 
-            this.labelControl19.Location = new System.Drawing.Point(17, 194);
-            this.labelControl19.Name = "labelControl19";
-            this.labelControl19.Size = new System.Drawing.Size(53, 18);
-            this.labelControl19.TabIndex = 75;
-            this.labelControl19.Text = "电流2：";
             // 
             // plLinePath
             // 
@@ -1351,7 +1557,6 @@
             this.plLinePath.Appearance.BackColor = System.Drawing.Color.White;
             this.plLinePath.Appearance.Options.UseBackColor = true;
             this.plLinePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.plLinePath.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
             this.plLinePath.Controls.Add(this.ckV2);
             this.plLinePath.Controls.Add(this.ckV1);
             this.plLinePath.Controls.Add(this.label5);
@@ -1608,7 +1813,8 @@
             // popupMenu
             // 
             this.popupMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem3)});
             this.popupMenu.Manager = this.barManager1;
             this.popupMenu.Name = "popupMenu";
             // 
@@ -1661,6 +1867,11 @@
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             this.xtraTabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ckLineShow.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ckFollow.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.plLinePath)).EndInit();
             this.plLinePath.ResumeLayout(false);
@@ -1818,15 +2029,15 @@
         private DevExpress.XtraEditors.TextEdit txtRcUp;
         private DevExpress.XtraEditors.LabelControl labelControl17;
         private DevExpress.XtraEditors.LabelControl lbc3;
-        private DevExpress.XtraEditors.LabelControl labelControl19;
+        private DevExpress.XtraEditors.LabelControl lbdbc;
         private DevExpress.XtraEditors.LabelControl lbc2;
-        private DevExpress.XtraEditors.LabelControl labelControl21;
+        private DevExpress.XtraEditors.LabelControl lbybc;
         private DevExpress.XtraEditors.LabelControl lbc1;
         private DevExpress.XtraEditors.LabelControl labelControl15;
         private DevExpress.XtraEditors.LabelControl lbv3;
-        private DevExpress.XtraEditors.LabelControl labelControl13;
+        private DevExpress.XtraEditors.LabelControl lbdbv;
         private DevExpress.XtraEditors.LabelControl lbv2;
-        private DevExpress.XtraEditors.LabelControl labelControl11;
+        private DevExpress.XtraEditors.LabelControl lbybv;
         private DevExpress.XtraEditors.LabelControl lbv1;
         private DevExpress.XtraEditors.LabelControl labelControl12;
         private DevExpress.XtraEditors.LabelControl labelControl14;
@@ -1837,5 +2048,25 @@
         private DevExpress.XtraEditors.LabelControl lbtime;
         private DevExpress.XtraBars.BarEditItem TxtOffset11;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit TxtOffset;
+        private DevExpress.XtraEditors.CheckEdit ckLineShow;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private DevExpress.XtraEditors.LabelControl labelControl7;
+        private DevExpress.XtraEditors.LabelControl lbdbcT2;
+        private DevExpress.XtraEditors.LabelControl lbv2T2;
+        private DevExpress.XtraEditors.LabelControl lbybvT2;
+        private DevExpress.XtraEditors.LabelControl lbc2T2;
+        private DevExpress.XtraEditors.LabelControl lbc3T2;
+        private DevExpress.XtraEditors.LabelControl lbTopTimeT2;
+        private DevExpress.XtraEditors.LabelControl lbv1T2;
+        private DevExpress.XtraEditors.LabelControl lbybcT2;
+        private DevExpress.XtraEditors.LabelControl lbdbvT2;
+        private DevExpress.XtraEditors.LabelControl lbc1T2;
+        private DevExpress.XtraEditors.LabelControl labelControl28;
+        private DevExpress.XtraEditors.LabelControl lbv3T2;
+        private DevExpress.XtraEditors.LabelControl lbBottomTimeT2;
+        private DevExpress.XtraEditors.LabelControl labelControl31;
+        private DevExpress.XtraEditors.LabelControl labelControl32;
     }
 }

@@ -71,7 +71,8 @@
             this.labelControl14 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtGetUnit = new DevExpress.XtraEditors.TextEdit();
+            this.txtGetUnit = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.labelControl19 = new DevExpress.XtraEditors.LabelControl();
             this.txtEA = new DevExpress.XtraEditors.TextEdit();
             this.txtSA = new DevExpress.XtraEditors.TextEdit();
             this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
@@ -546,6 +547,7 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.txtGetUnit);
+            this.groupBox3.Controls.Add(this.labelControl19);
             this.groupBox3.Controls.Add(this.txtEA);
             this.groupBox3.Controls.Add(this.txtSA);
             this.groupBox3.Controls.Add(this.labelControl11);
@@ -562,15 +564,44 @@
             // 
             // txtGetUnit
             // 
-            this.txtGetUnit.Location = new System.Drawing.Point(146, 64);
+            this.txtGetUnit.EditValue = "5";
+            this.txtGetUnit.Location = new System.Drawing.Point(175, 66);
             this.txtGetUnit.Name = "txtGetUnit";
-            this.txtGetUnit.Properties.Mask.EditMask = "[0-9]*";
-            this.txtGetUnit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
-            this.txtGetUnit.Size = new System.Drawing.Size(37, 24);
-            this.txtGetUnit.TabIndex = 17;
+            this.txtGetUnit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.txtGetUnit.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtGetUnit.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtGetUnit.Properties.Items.AddRange(new object[] {
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"});
+            this.txtGetUnit.Size = new System.Drawing.Size(48, 24);
+            this.txtGetUnit.TabIndex = 19;
+            // 
+            // labelControl19
+            // 
+            this.labelControl19.Location = new System.Drawing.Point(224, 71);
+            this.labelControl19.Name = "labelControl19";
+            this.labelControl19.Size = new System.Drawing.Size(8, 18);
+            this.labelControl19.TabIndex = 18;
+            this.labelControl19.Text = "S";
             // 
             // txtEA
             // 
+            this.txtEA.EditValue = "1";
             this.txtEA.Location = new System.Drawing.Point(283, 39);
             this.txtEA.Name = "txtEA";
             this.txtEA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
@@ -579,6 +610,7 @@
             // 
             // txtSA
             // 
+            this.txtSA.EditValue = "0.5";
             this.txtSA.Location = new System.Drawing.Point(186, 39);
             this.txtSA.Name = "txtSA";
             this.txtSA.Properties.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
@@ -826,7 +858,6 @@
         private DevExpress.XtraEditors.TextEdit txtEA;
         private DevExpress.XtraEditors.LabelControl labelControl11;
         private DevExpress.XtraEditors.LabelControl labelControl12;
-        private DevExpress.XtraEditors.TextEdit txtGetUnit;
         private System.Windows.Forms.GroupBox groupBox5;
         private DevExpress.XtraEditors.CheckEdit ckV1;
         private DevExpress.XtraEditors.CheckEdit ckV2;
@@ -859,5 +890,7 @@
         private DevExpress.XtraEditors.LabelControl labelControl17;
         private DevExpress.XtraEditors.CheckEdit ckIsTop;
         private DevExpress.XtraEditors.DateEdit txtTEST_TIME;
+        private DevExpress.XtraEditors.LabelControl labelControl19;
+        private DevExpress.XtraEditors.ComboBoxEdit txtGetUnit;
     }
 }

@@ -217,6 +217,7 @@
   <ItemGroup>
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +280,9 @@
     <Content Include="ImgIcon\项目4.ico" />
     <Content Include="ImgIcon\项目6.bmp" />
     <Content Include="ImgIcon\项目7.bmp" />
+    <Content Include="版本日志.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\有载分接开关软件界面图标-12.png" />
     <None Include="Resources\有载分接开关软件界面图标-11.png" />
     <None Include="Resources\有载分接开关软件界面图标-10.png" />

@@ -37,6 +37,7 @@ namespace Basic_Controls
             if (oldmodel != null && !string.IsNullOrEmpty(oldmodel.DVNAME))
             {
                 Page_Data_Bind();
+                txtTEST_TIME.Enabled = false;
             }
         }
 
@@ -47,7 +48,7 @@ namespace Basic_Controls
             oldmodel = new Test_Plan();
             oldmodel.ISEDIT = "1";
             txtCONTACT_NUM.Text = "5";
-            this.txtTEST_TIME.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            this.txtTEST_TIME.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             rdoTEST_TYPE.SelectedIndex = 1;
 
             rdoGETINFO.SelectedIndex = 0;
@@ -310,6 +311,27 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
+            int n;
+            if (int.TryParse(txtGetUnit.Text, out n))
+            {
+                if (Convert.ToInt32(txtGetUnit.Text) > 20|| Convert.ToInt32(txtGetUnit.Text)<5)
+                {
+                    MessageBox.Show("请输入2-20 范围的时间");
+                    this.txtGetUnit.Focus();
+                    txtGetUnit.Text = "";
+                    return;
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("请输入正确的时间");
+                this.txtGetUnit.Focus();
+                txtGetUnit.Text = "";
+                return;
+            }
+
+
             Save();
             this.DialogResult = DialogResult.OK;
         }
