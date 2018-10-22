@@ -22,7 +22,7 @@ namespace Basic_Controls
         {
 
             InitializeComponent();
-            Init();
+           
         }
         public FmAddTest(Test_Plan model)
         {
@@ -38,6 +38,10 @@ namespace Basic_Controls
             {
                 Page_Data_Bind();
                 txtTEST_TIME.Enabled = false;
+            }
+            else
+            {
+                Init();
             }
         }
 

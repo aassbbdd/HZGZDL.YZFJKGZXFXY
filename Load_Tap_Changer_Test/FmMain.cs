@@ -3975,6 +3975,9 @@ namespace Basic_Controls
         /// <param name="Id"></param>
         private void Set_Foucs(string Id)
         {
+
+
+            
             List<TreeListNode> list = treeList.GetNodeList();
             foreach (TreeListNode n in list)
             {
@@ -3992,39 +3995,39 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void treeList_GetSelectImage(object sender, GetSelectImageEventArgs e)
-        {
-            if (e.Node.GetValue("PARENTID").ToString() == "0")
-            {
-                e.NodeImageIndex = 2;
-            }
-            else
-            {
-                e.NodeImageIndex = 3;
-            }
-        }
+        //private void treeList_GetSelectImage(object sender, GetSelectImageEventArgs e)
+        //{
+        //    if (e.Node.GetValue("PARENTID").ToString() == "0")
+        //    {
+        //        e.NodeImageIndex = 2;
+        //    }
+        //    else
+        //    {
+        //        e.NodeImageIndex = 3;
+        //    }
+        //}
 
-        /// <summary>
-        /// 树形图片
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void treeList_CustomDrawNodeImages(object sender, CustomDrawNodeImagesEventArgs e)
-        {
-            if (e.Node.Nodes.Count > 0)
-            {
-                if (e.Node.Expanded)
-                {
-                    e.SelectImageIndex = 2;
-                    return;
-                }
-                e.SelectImageIndex = 1;
-            }
-            else
-            {
-                e.SelectImageIndex = 0;
-            }
-        }
+        ///// <summary>
+        ///// 树形图片
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void treeList_CustomDrawNodeImages(object sender, CustomDrawNodeImagesEventArgs e)
+        //{
+        //    //if (e.Node.Nodes.Count > 0)
+        //    //{
+        //    //    if (e.Node.Expanded)
+        //    //    {
+        //    //        e.SelectImageIndex = 2;
+        //    //        return;
+        //    //    }
+        //    //    e.SelectImageIndex = 1;
+        //    //}
+        //    //else
+        //    //{
+        //    //    e.SelectImageIndex = 0;
+        //    //}
+        //}
 
         #endregion
 
@@ -4048,8 +4051,6 @@ namespace Basic_Controls
                 string time = linex[11][linex[11].Length - 1].ToString();
                 Single = false;
                 lond_Enum = Lond_Enum.包络线加载;
-
-
                 //  Chart_Init();
                 Chart_Config(time);
                 Chart_Data_Envelope_Lond();
@@ -4062,8 +4063,7 @@ namespace Basic_Controls
             {
                 string ex1 = ex.ToString();
             }
-
-        }
+         }
         /// <summary>
         /// 转换包络线数据
         /// </summary>

@@ -1189,7 +1189,7 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(1, 158);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(226, 465);
+            this.xtraTabControl1.Size = new System.Drawing.Size(226, 392);
             this.xtraTabControl1.TabIndex = 81;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1});
@@ -1205,7 +1205,7 @@
             this.xtraTabPage1.Controls.Add(this.labelControl6);
             this.xtraTabPage1.Controls.Add(this.lbVoltage);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(219, 429);
+            this.xtraTabPage1.Size = new System.Drawing.Size(219, 356);
             this.xtraTabPage1.Text = "设备波形参数";
             // 
             // lbtime
@@ -1508,7 +1508,7 @@
             // 
             // ckLineShow
             // 
-            this.ckLineShow.Location = new System.Drawing.Point(8, 322);
+            this.ckLineShow.Location = new System.Drawing.Point(7, 322);
             this.ckLineShow.MenuManager = this.barManager1;
             this.ckLineShow.Name = "ckLineShow";
             this.ckLineShow.Properties.Caption = "显示坐标线";
@@ -1732,12 +1732,9 @@
             this.treeList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.删除,
             this.repositoryItemButtonEdit1});
-            this.treeList.SelectImageList = this.imageList;
             this.treeList.Size = new System.Drawing.Size(214, 833);
             this.treeList.TabIndex = 57;
-            this.treeList.GetSelectImage += new DevExpress.XtraTreeList.GetSelectImageEventHandler(this.treeList_GetSelectImage);
             this.treeList.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeList_FocusedNodeChanged);
-            this.treeList.CustomDrawNodeImages += new DevExpress.XtraTreeList.CustomDrawNodeImagesEventHandler(this.treeList_CustomDrawNodeImages);
             this.treeList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeList_MouseDown);
             this.treeList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeList_MouseUp);
             // 
@@ -1769,12 +1766,9 @@
             // 
             // imageList
             // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "1.jpg");
-            this.imageList.Images.SetKeyName(1, "2.jpg");
-            this.imageList.Images.SetKeyName(2, "3.jpg");
-            this.imageList.Images.SetKeyName(3, "4.jpg");
             // 
             // barLargeButtonItem9
             // 
