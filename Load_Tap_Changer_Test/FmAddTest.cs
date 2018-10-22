@@ -20,15 +20,12 @@ namespace Basic_Controls
         public string id;
         public FmAddTest()
         {
-
             InitializeComponent();
-           
         }
         public FmAddTest(Test_Plan model)
         {
             InitializeComponent();
             this.oldmodel = model;
-
         }
         Test_Plan oldmodel;
         private void FmAddTest_Load(object sender, EventArgs e)

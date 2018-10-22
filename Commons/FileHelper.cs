@@ -253,7 +253,7 @@ namespace DocDecrypt.Common
         }
 
         /// <summary>
-        /// 移动整个文件夹
+        /// 移动整个文件夹下文件
         /// </summary>
         /// <param name="srcDir"></param>
         /// <param name="tgtDir"></param>
@@ -303,6 +303,11 @@ namespace DocDecrypt.Common
             }
         }
 
+        /// <summary>
+        /// 复制整个文件夹下文件
+        /// </summary>
+        /// <param name="srcDir"></param>
+        /// <param name="tgtDir"></param>
         public static void CopyDirectory(string srcDir, string tgtDir)
         {
             if (srcDir.ToLower() == tgtDir.ToLower())
@@ -344,6 +349,50 @@ namespace DocDecrypt.Common
             }
         }
 
+
+        /// <summary>  
+        /// 复制文件夹中的所有文件夹与文件到另一个文件夹
+        /// </summary>
+        /// <param name="sourcePath">源文件夹</param>
+        /// <param name="destPath">目标文件夹</param>
+        public static void CopyFolder(string sourcePath, string destPath)
+        {
+            if (Directory.Exists(sourcePath))
+            {
+                if (!Directory.Exists(destPath))
+                {
+                    //目标目录不存在则创建
+                    try
+                    {
+                        Directory.CreateDirectory(destPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("创建目标目录失败：" + ex.Message);
+                    }
+                }
+                //获得源文件下所有文件
+                List<string> files = new List<string>(Directory.GetFiles(sourcePath));
+                files.ForEach(c =>
+                {
+                    string destFile = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
+                    File.Copy(c, destFile, true);//覆盖模式
+                });
+                //获得源文件下所有目录文件
+                List<string> folders = new List<string>(Directory.GetDirectories(sourcePath));
+                folders.ForEach(c =>
+                {
+                    string destDir = Path.Combine(new string[] { destPath, Path.GetFileName(c) });
+                    //采用递归的方法实现
+                    CopyFolder(c, destDir);
+                });
+            }
+            else
+            {
+                throw new DirectoryNotFoundException("源目录不存在！");
+            }
+        }
+ 
         public static void DeleteFile(string fileName)
         {
             try
@@ -394,8 +443,8 @@ namespace DocDecrypt.Common
         {
             try
             {
-                string dir = Path.GetDirectoryName(fileName);
-                CreateDirectoy(dir);
+                //string dir = Path.GetDirectoryName(fileName);
+                CreateDirectoy(fileName);
             }
             catch (Exception ex)
             {

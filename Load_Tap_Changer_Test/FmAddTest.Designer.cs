@@ -779,7 +779,7 @@
             this.MinimumSize = new System.Drawing.Size(640, 666);
             this.Name = "FmAddTest";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "新建测试计划";
+            this.Text = "新建设备";
             this.Load += new System.EventHandler(this.FmAddTest_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -138,6 +138,7 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.lbtime = new DevExpress.XtraEditors.LabelControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lbv2T2 = new DevExpress.XtraEditors.LabelControl();
@@ -175,7 +176,6 @@
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.ckFollow = new DevExpress.XtraEditors.CheckEdit();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
-            this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.plLinePath = new DevExpress.XtraEditors.PanelControl();
             this.ckV2 = new DevExpress.XtraEditors.CheckEdit();
             this.ckV1 = new DevExpress.XtraEditors.CheckEdit();
@@ -389,7 +389,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLeftShift, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.TxtOffset11),
+            new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.Caption | DevExpress.XtraBars.BarLinkUserDefines.PaintStyle))), this.TxtOffset11, "单位(ms):", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRightShift1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnlarge, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNarrow, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -402,7 +402,7 @@
             // 
             // btnAddTest
             // 
-            this.btnAddTest.Caption = "新建测试";
+            this.btnAddTest.Caption = "新建设备";
             this.btnAddTest.Id = 29;
             this.btnAddTest.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnAddTest.ImageOptions.Image")));
             this.btnAddTest.Name = "btnAddTest";
@@ -428,7 +428,7 @@
             // 
             // btnSaveData
             // 
-            this.btnSaveData.Caption = "保存数据";
+            this.btnSaveData.Caption = "导出到桌面";
             this.btnSaveData.Id = 31;
             this.btnSaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveData.ImageOptions.Image")));
             this.btnSaveData.Name = "btnSaveData";
@@ -496,7 +496,7 @@
             // 
             this.TxtOffset11.Caption = "偏移时间";
             this.TxtOffset11.Edit = this.TxtOffset;
-            this.TxtOffset11.EditValue = 0.01D;
+            this.TxtOffset11.EditValue = 10;
             this.TxtOffset11.Id = 125;
             this.TxtOffset11.Name = "TxtOffset11";
             this.TxtOffset11.EditValueChanged += new System.EventHandler(this.TxtOffset11_EditValueChanged);
@@ -504,7 +504,7 @@
             // TxtOffset
             // 
             this.TxtOffset.AutoHeight = false;
-            this.TxtOffset.Mask.EditMask = "\\d+(\\R.\\d{0,2})?";
+            this.TxtOffset.Mask.EditMask = "[-]?[1-9]{1}\\d*|^[0]{1}";
             this.TxtOffset.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             this.TxtOffset.Name = "TxtOffset";
             // 
@@ -982,7 +982,7 @@
             // 
             // barButtonItem3
             // 
-            this.barButtonItem3.Caption = "新增设备";
+            this.barButtonItem3.Caption = "新建设备";
             this.barButtonItem3.Id = 126;
             this.barButtonItem3.Name = "barButtonItem3";
             this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
@@ -1196,6 +1196,7 @@
             // 
             // xtraTabPage1
             // 
+            this.xtraTabPage1.Controls.Add(this.lbVoltage);
             this.xtraTabPage1.Controls.Add(this.lbtime);
             this.xtraTabPage1.Controls.Add(this.groupBox2);
             this.xtraTabPage1.Controls.Add(this.groupBox1);
@@ -1203,14 +1204,21 @@
             this.xtraTabPage1.Controls.Add(this.labelControl5);
             this.xtraTabPage1.Controls.Add(this.ckFollow);
             this.xtraTabPage1.Controls.Add(this.labelControl6);
-            this.xtraTabPage1.Controls.Add(this.lbVoltage);
             this.xtraTabPage1.Name = "xtraTabPage1";
             this.xtraTabPage1.Size = new System.Drawing.Size(219, 356);
             this.xtraTabPage1.Text = "设备波形参数";
             // 
+            // lbVoltage
+            // 
+            this.lbVoltage.Location = new System.Drawing.Point(52, 8);
+            this.lbVoltage.Name = "lbVoltage";
+            this.lbVoltage.Size = new System.Drawing.Size(8, 18);
+            this.lbVoltage.TabIndex = 54;
+            this.lbVoltage.Text = "0";
+            // 
             // lbtime
             // 
-            this.lbtime.Location = new System.Drawing.Point(142, 8);
+            this.lbtime.Location = new System.Drawing.Point(133, 8);
             this.lbtime.Name = "lbtime";
             this.lbtime.Size = new System.Drawing.Size(8, 18);
             this.lbtime.TabIndex = 81;
@@ -1518,7 +1526,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(110, 8);
+            this.labelControl5.Location = new System.Drawing.Point(101, 8);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Size = new System.Drawing.Size(36, 18);
             this.labelControl5.TabIndex = 82;
@@ -1541,14 +1549,6 @@
             this.labelControl6.Size = new System.Drawing.Size(45, 18);
             this.labelControl6.TabIndex = 55;
             this.labelControl6.Text = "电压：";
-            // 
-            // lbVoltage
-            // 
-            this.lbVoltage.Location = new System.Drawing.Point(57, 8);
-            this.lbVoltage.Name = "lbVoltage";
-            this.lbVoltage.Size = new System.Drawing.Size(8, 18);
-            this.lbVoltage.TabIndex = 54;
-            this.lbVoltage.Text = "0";
             // 
             // plLinePath
             // 

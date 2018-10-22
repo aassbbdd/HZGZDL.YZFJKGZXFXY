@@ -61,7 +61,7 @@ namespace Basic_Controls
                 Tester_List_Bind();//获取测试计划绑定到页面树
 
             }
-            MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
+            // MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
             this.Text = "有载调压开关故障诊断系统(v" + Version + ")";
             //测试连接通信
             // sendUdp(agreement._1_CMD_HEARTBEAT);
@@ -215,7 +215,7 @@ namespace Basic_Controls
         }
 
         /// <summary>
-        /// 保存数据
+        /// 导出数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -223,17 +223,16 @@ namespace Basic_Controls
         {
             try
             {
-                if (list.Count > 0)
-                {
-                    string path = AppDomain.CurrentDomain.BaseDirectory;
-                    ListToText.Instance.WriteListToTextFile(list, path);
-                    //ListToText.Instance.WriteListToTextFile1(list, path);
-                }
+                string pathForm = AppDomain.CurrentDomain.BaseDirectory + FileHelper.Xml_Path;
+                string pathTo = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "//波形数据";
+
+                FileHelper.CreateDirectoyByFileName(pathTo);//创建文件夹
+                FileHelper.CopyFolder(pathForm, pathTo);//复制文件到创建文件夹
+                MessageBox.Show("【波形数据】导出到桌面!");
             }
             catch (Exception ex)
             {
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
-
                 MessageBox.Show("ex:" + ex.ToString());
             }
         }
@@ -1301,7 +1300,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void TxtOffset11_EditValueChanged(object sender, EventArgs e)
         {
-            MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
+            MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue) / 1000;
         }
         #endregion
 
@@ -1544,7 +1543,7 @@ namespace Basic_Controls
             this.lbBottomTimeT2.Text = "0";
 
 
-            this.lbtime.Text = "0";
+            this.lbtime.Text = "0ms";
 
             if (lond_Enum == Lond_Enum.数据对比加载)
             {
@@ -1589,7 +1588,7 @@ namespace Basic_Controls
             cursorTool_Front.Active = true;
             cursorTool_Front.FollowMouse = ckFollow.Checked;
 
-            cursorTool_Front.Series=tChart.Series[0];
+            cursorTool_Front.Series = tChart.Series[0];
             cursorTool_Front.Style = CursorToolStyles.Vertical;
             cursorTool_Front.Pen.Color = Color.Blue;
             cursorTool_Front.Pen.Style = DashStyle.Custom;
@@ -1609,7 +1608,7 @@ namespace Basic_Controls
                         return;
                     }
 
-                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString() + "s";
+                    lbtime.Text = Rounding((cursorTool_After.XValue - cursorTool_Front.XValue) * 1000, 2).ToString() + "ms";
                     int length = Convert.ToInt32(allnum * cursorTool_Front.XValue) + (int)(allnum * Offset);
 
                     if (aotuzoom == 0)
@@ -1684,7 +1683,7 @@ namespace Basic_Controls
             cursorTool_After = new CursorTool();
             cursorTool_After.Active = true;
             cursorTool_After.FollowMouse = false;
-             cursorTool_After.Series = tChart.Series[0];
+            cursorTool_After.Series = tChart.Series[0];
             cursorTool_After.Style = CursorToolStyles.Vertical;
             cursorTool_After.Pen.Color = Color.Red;
             cursorTool_After.Pen.Style = DashStyle.Custom;
@@ -1705,7 +1704,7 @@ namespace Basic_Controls
                         return;
                     }
 
-                    lbtime.Text = Rounding(cursorTool_After.XValue - cursorTool_Front.XValue).ToString() + "s";
+                    lbtime.Text = Rounding((cursorTool_After.XValue - cursorTool_Front.XValue) * 1000, 2).ToString() + "ms";
                     int length = Convert.ToInt32(allnum * cursorTool_After.XValue) + (int)(allnum * Offset);
 
                     if (aotuzoom == 0)
@@ -1792,9 +1791,9 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        private string Rounding(double num)
+        private string Rounding(double num, int length = 3)
         {
-            string remsg = Math.Round(num, 3, MidpointRounding.AwayFromZero).ToString();
+            string remsg = Math.Round(num, length, MidpointRounding.AwayFromZero).ToString();
             return remsg;
         }
 
@@ -2432,7 +2431,7 @@ namespace Basic_Controls
                     vline2.Color = Color.Red;
                 }
                 //绘制画布
-               // AddCustomAxis_Contrast(1);
+                // AddCustomAxis_Contrast(1);
                 AddCustomAxis_Contrast1(1);
                 tChart.Refresh();
             }
@@ -3848,7 +3847,6 @@ namespace Basic_Controls
                     }
                 }
             }
-
             //以下是鼠标右键删除用
             if (e.Button == MouseButtons.Right)
             {
@@ -3977,7 +3975,7 @@ namespace Basic_Controls
         {
 
 
-            
+
             List<TreeListNode> list = treeList.GetNodeList();
             foreach (TreeListNode n in list)
             {
@@ -4063,7 +4061,7 @@ namespace Basic_Controls
             {
                 string ex1 = ex.ToString();
             }
-         }
+        }
         /// <summary>
         /// 转换包络线数据
         /// </summary>
