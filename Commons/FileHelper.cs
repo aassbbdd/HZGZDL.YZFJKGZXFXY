@@ -47,7 +47,7 @@ namespace DocDecrypt.Common
         /// <summary>
         /// 获取当前运行程序文件夹路径
         /// </summary>
-        public static string  Local_Path_Get()
+        public static string Local_Path_Get()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -303,6 +303,7 @@ namespace DocDecrypt.Common
             }
         }
 
+ 
         /// <summary>
         /// 复制整个文件夹下文件
         /// </summary>
@@ -392,7 +393,7 @@ namespace DocDecrypt.Common
                 throw new DirectoryNotFoundException("源目录不存在！");
             }
         }
- 
+
         public static void DeleteFile(string fileName)
         {
             try
@@ -476,7 +477,6 @@ namespace DocDecrypt.Common
             {
                 // ignored
             }
-
             return all;
         }
 

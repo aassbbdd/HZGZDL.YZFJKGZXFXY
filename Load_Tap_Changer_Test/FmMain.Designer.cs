@@ -428,7 +428,7 @@
             // 
             // btnSaveData
             // 
-            this.btnSaveData.Caption = "导出到桌面";
+            this.btnSaveData.Caption = "导出数据";
             this.btnSaveData.Id = 31;
             this.btnSaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveData.ImageOptions.Image")));
             this.btnSaveData.Name = "btnSaveData";
@@ -1210,7 +1210,7 @@
             // 
             // lbVoltage
             // 
-            this.lbVoltage.Location = new System.Drawing.Point(52, 8);
+            this.lbVoltage.Location = new System.Drawing.Point(47, 8);
             this.lbVoltage.Name = "lbVoltage";
             this.lbVoltage.Size = new System.Drawing.Size(8, 18);
             this.lbVoltage.TabIndex = 54;
@@ -1400,7 +1400,7 @@
             this.groupBox1.Size = new System.Drawing.Size(102, 256);
             this.groupBox1.TabIndex = 100;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "d";
+            this.groupBox1.Text = "T1";
             // 
             // lbv2
             // 
@@ -1544,7 +1544,7 @@
             // 
             // labelControl6
             // 
-            this.labelControl6.Location = new System.Drawing.Point(10, 8);
+            this.labelControl6.Location = new System.Drawing.Point(5, 8);
             this.labelControl6.Name = "labelControl6";
             this.labelControl6.Size = new System.Drawing.Size(45, 18);
             this.labelControl6.TabIndex = 55;

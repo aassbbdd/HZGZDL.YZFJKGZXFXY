@@ -223,12 +223,19 @@ namespace Basic_Controls
         {
             try
             {
-                string pathForm = AppDomain.CurrentDomain.BaseDirectory + FileHelper.Xml_Path;
-                string pathTo = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "//波形数据";
+                string pathForm = filepath;// FileHelper.Xml_Path;//导出指定文件到左面
+                string pathTo = "";
 
-                FileHelper.CreateDirectoyByFileName(pathTo);//创建文件夹
-                FileHelper.CopyFolder(pathForm, pathTo);//复制文件到创建文件夹
-                MessageBox.Show("【波形数据】导出到桌面!");
+                // FileHelper.CreateDirectoyByFileName(pathTo);//创建文件夹
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    pathTo = fbd.SelectedPath;
+                }
+
+                FileHelper.CopyFile(pathForm, pathTo + "//" + pub_Test_Plan.DVNAME + ".xml");//复制文件到创建文件夹
+
+                MessageBox.Show("已导出到指定目录!");
             }
             catch (Exception ex)
             {
@@ -267,39 +274,31 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSaveImg_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            string path = FileHelper.Local_Path_Get() + "TestLineImage";
-            FileHelper.CreateDirectoy(path);
-            //文件夹名字
-            string filename = DateTime.Now.ToString("d");
-            path = path + "\\" + filename;
-            FileHelper.CreateDirectoy(path);
-            string imgname = "\\" + DateTime.Now.ToString("HHmmss") + ".png";
-            tChart.Export.Image.PNG.Save(path + "\\" + imgname);
-
-            #region 截屏 暂时不用
-            //Rectangle ScreenArea = System.Windows.Forms.Screen.GetBounds(this);
-            //int width1 = ScreenArea.Width; //屏幕宽度 
-            //int height1 = ScreenArea.Height; //屏幕高度
-
-            //System.Drawing.Rectangle rec = Screen.GetWorkingArea(this);
-
-            //int SH = rec.Height;
-
-            //int SW = rec.Width;
-
-            //int SH1 = Screen.PrimaryScreen.Bounds.Height;
-
-            //int SW1 = Screen.PrimaryScreen.Bounds.Width;
-
-
-            //Bitmap bit = new Bitmap(width1, height1);//实例化一个和窗体一样大的bitmap
-            //Graphics g = Graphics.FromImage(bit);
-            //g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
-            //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(width1, height1));//保存整个窗体为图片
-            //                                                                                                       //g.CopyFromScreen(panel游戏区 .PointToScreen(Point.Empty), Point.Empty, panel游戏区.Size);//只保存某个控件（这里是panel游戏区）
-            //bit.Save(path + "weiboTemp.png");//默认保存格式为PNG，保存成jpg格式质量不是很好
-
+            #region 老的保存
+            //string path = FileHelper.Local_Path_Get() + "TestLineImage";
+            //FileHelper.CreateDirectoy(path);
+            ////文件夹名字
+            //string filename = DateTime.Now.ToString("d");
+            //path = path + "\\" + filename;
+            //FileHelper.CreateDirectoy(path);
+            //string imgname = "\\" + DateTime.Now.ToString("HHmmss") + ".png";
+            //tChart.Export.Image.PNG.Save(path + "\\" + imgname);
             #endregion
+
+            string path = "";
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                path = fbd.SelectedPath;
+            }
+
+            cursorTool_After.Active = false;
+            cursorTool_Front.Active = false;
+
+            tChart.Export.Image.PNG.Save(path + "//" + pub_Test_Plan.DVNAME + ".png");
+            MessageBox.Show("已保存到指定目录!");
+            cursorTool_After.Active = true;
+            cursorTool_Front.Active = true;
         }
 
         /// <summary>
@@ -2382,7 +2381,6 @@ namespace Basic_Controls
         /// 4 电流 5震动 6平均电流 7平均震动
         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>
-
         private void Chart_Data_Envelope_Lond()
         {
             //double[] Out_x, double[] Out_y, double[] Out_x1 = null  , double[] Out_y1 = null,
@@ -3688,7 +3686,7 @@ namespace Basic_Controls
         }
 
         #endregion
-
+        string filepath = "";
         /// <summary>
         /// 单击树 行获取 行信息 并修改图表标题
         /// </summary>
@@ -3700,6 +3698,8 @@ namespace Basic_Controls
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
+                btnSaveData.Enabled = false;
+                btnSaveImg.Enabled = false;
                 lbVoltage.Text = "0 v";//单击时电压清空
                 if (treeList.Appearance.FocusedCell.BackColor != Color.SteelBlue)//选中测试计划 改变颜色
                 {
@@ -3808,6 +3808,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_MouseDown(object sender, MouseEventArgs e)
         {
+
             //双击左键弹出页面用
             if (e.Button == MouseButtons.Left && e.Clicks == 2)
             {
@@ -3823,7 +3824,10 @@ namespace Basic_Controls
                     model.ISEDIT = "2";
                     if (model.PARENTID != "0")
                     {
-                        string filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
+
+                        btnSaveData.Enabled = true;
+                        btnSaveImg.Enabled = true;
+                        filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
                         bool isdd = FileHelper.IsFileExist(filepath);
                         if (FileHelper.IsFileExist(filepath))
                         {
@@ -4308,7 +4312,7 @@ namespace Basic_Controls
             }
         }
         /// <summary>
-        /// 新增设备
+        ///  新增设备
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
