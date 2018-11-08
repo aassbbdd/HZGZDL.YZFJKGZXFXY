@@ -46,7 +46,7 @@ namespace Basic_Controls
         {
             InitializeComponent();
         }
-
+        Series Serie;
         private void FmMain_Load(object sender, EventArgs e)
         {
             //barManager1.ToolTipController.ca
@@ -57,6 +57,15 @@ namespace Basic_Controls
             {
                 Event_Bind();//绑定注册事件
                 Chart_Init();//初始化图表
+
+                //Serie = tChart.Series[0];
+
+                //Add_CursorTool();
+
+                //cursorTool_After.Series = Serie;
+                //cursorTool_Front.Series = Serie;
+
+
                 CreateDb();//生成数据库
                 Tester_List_Bind();//获取测试计划绑定到页面树
 
@@ -65,6 +74,7 @@ namespace Basic_Controls
             this.Text = "有载调压开关故障诊断系统(v" + Version + ")";
             //测试连接通信
             // sendUdp(agreement._1_CMD_HEARTBEAT);
+
         }
 
         #region 页面初始化参数
@@ -543,6 +553,7 @@ namespace Basic_Controls
                     if (FileHelper.IsFileExist(filepath))
                     {
                         Chart_Lond(filepath);
+                        Add_CursorTool();
                     }
                     else
                     {
@@ -831,6 +842,10 @@ namespace Basic_Controls
             tChart.MouseMove += new MouseEventHandler(chart_MouseMove);
             tChart.MouseUp += new MouseEventHandler(chart_MouseUp);
             tChart.MouseDown += new MouseEventHandler(chart_MouseDown);
+
+            tChart.AfterDraw += new PaintChartEventHandler(tChart_AfterDraw);
+
+
             //  tChart.Zoomed += new EventHandler(chart_Zoomed);//自带 放大缩小 事件
         }
 
@@ -955,6 +970,9 @@ namespace Basic_Controls
             tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
             tChart.Axes.Top.SetMinMax(NewXMin, NewXMax);
             Add_CursorTool();
+            //显示 竖坐标
+            //ckLineShow.Checked = true;
+            //ckLineShow_CheckedChanged(null, null);
             //if (aotuzoom < 7)
             //{
             aotuzoom++;
@@ -1048,7 +1066,7 @@ namespace Basic_Controls
                 cline1.Clear();
                 cline2.Clear();
                 cline3.Clear();
-
+                tChart.Graphics3D.ClearClipRegions();
                 tChart.Refresh();
             }
             else
@@ -1064,7 +1082,43 @@ namespace Basic_Controls
         private void btnReNew_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             //tChart.Zoom.Undo();
+            tChart.Graphics3D.ClearClipRegions();
+
             Reduction();
+        }
+
+        private void DrawShape(Steema.TeeChart.Drawing.Graphics3D gg)
+        {
+            gg.Brush.Color = Color.Yellow;
+            gg.Pen.Visible = true;
+            gg.Pen.Style = System.Drawing.Drawing2D.DashStyle.Dash;
+            gg.Brush.Visible = true;
+            gg.Ellipse(1, 1, gg.Chart.Width - 1, gg.Chart.Height - 1);
+        }
+
+        /// <summary>
+        /// 矩形相关参数 X Y WIDTH HEIGHT
+        /// </summary>
+        Rectangle r;
+        /// <summary>
+        /// 增加矩形
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="g"></param>
+        private void tChart_AfterDraw(object sender, Steema.TeeChart.Drawing.Graphics3D g)
+        {
+            g.FillRectangle(new SolidBrush(Color.FromArgb(50, Color.LightBlue)), r.X, r.Y, r.Width, r.Height);
+        }
+
+        /// <summary>
+        /// 删除矩形
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="g"></param>
+        private void tChart_AfterDraw_Del(object sender, Steema.TeeChart.Drawing.Graphics3D g)
+        {
+            g.FillRectangle(Brushes.Blue, 0, 0, 0, 0);
+            tChart.Refresh();
         }
 
         /// <summary>
@@ -1136,6 +1190,16 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseMove(object sender, MouseEventArgs e)
         {
+            #region 矩形框点位长宽
+            if (r.X != 0)
+            {
+                r.Width = e.X - r.X;
+                r.Height = e.Y - r.Y;
+                tChart_AfterDraw(null, tChart.Graphics3D);
+                tChart.Refresh();
+            }
+            #endregion
+
             MouseX = e.X;
             double BottomNum = tChart.Axes.Bottom.CalcPosPoint(e.X);
             double TopNum = tChart.Axes.Top.CalcPosPoint(e.X);
@@ -1147,6 +1211,10 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseDown(object sender, MouseEventArgs e)
         {
+            tChart.Graphics3D.ClearClipRegions();
+            r = new Rectangle(e.X, e.Y, 1, 1);
+            tChart_AfterDraw(null, tChart.Graphics3D);
+
             sx = e.X;
             sy = e.Y;
             startTime1 = DateTime.Now;
@@ -1167,10 +1235,12 @@ namespace Basic_Controls
                     // 开始位置大于结束位置    开始位置大于0  是鼠标左键
                     if ((sx < e.X || sy < e.Y) && sx > 0 && sy > 0)
                     {
-                        if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                        if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 100)
                         {
                             if (linex == null)//数据为空
                             {
+                                r = new Rectangle();
+                                tChart_AfterDraw_Del(null, tChart.Graphics3D);
                                 return;
                             }
                             if (aotuzoom == 0)
@@ -1204,19 +1274,33 @@ namespace Basic_Controls
                                 cursorTool_After.XValue = min + ((max - min) / 2);
                             }
                         }
+                        else
+                        {
+
+                        }
 
                     }
                     else if ((sx > e.X || sy > e.Y) && sx > 0 && sy > 0)
                     {
-                        if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
-                        {
-                            Reduction();
-                            startTime = DateTime.Now;
-                        }
+                        //if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                        //{
+                        Reduction();
+                        //startTime = DateTime.Now;
+                        //}
+                        //else
+                        //{
+
+                        //}
+
+                    }
+                    else
+                    {
 
                     }
                 }
             }
+            r = new Rectangle();
+            tChart_AfterDraw_Del(null, tChart.Graphics3D);
         }
 
         /// <summary>
@@ -1329,7 +1413,6 @@ namespace Basic_Controls
         /// TChart 控件初始化
         /// </summary>
         private TChart tChart = new TChart();
-
 
         /// <summary>
         /// //计算坐标百分比参数
@@ -1469,16 +1552,13 @@ namespace Basic_Controls
             tChart.Legend.Visible = false;//显示/隐藏线的注释 
 
             // tChart.Header.Text = "有载调压开关故障诊断系统波形";
-
+            tChart.Axes.Top.Visible = false;
             tChart.Legend.LegendStyle = LegendStyles.Series;
             tChart.Axes.Bottom.Labels.ValueFormat = "0.00";
             tChart.Axes.Bottom.Title.Text = "时间单位:" + time + "秒(sec)";
 
-
             //tChart.Axes.Bottom.Labels.Tag = "sec";
             //tChart.Axes.Bottom.Labels.
-
-
             //默认10秒
             tChart.Axes.Bottom.SetMinMax(0, alltime);
 
@@ -1490,8 +1570,8 @@ namespace Basic_Controls
             tChart.Panel.MarginRight = 10;
             tChart.Panel.MarginBottom = 5;
             tChart.Panel.MarginTop = 10;
-
             tChart.Zoom.Allow = false;
+            //  tChart.Zoom.Zoomed = true;
             min = tChart.Axes.Bottom.Minimum;
             max = tChart.Axes.Bottom.Maximum;
         }
@@ -1581,6 +1661,8 @@ namespace Basic_Controls
             {
                 ckLineShow.Checked = true;
             }
+            //ckLineShow.Checked = false;
+            //ckLineShow_CheckedChanged(null,null);//执行竖坐标是否显示按钮
             Clear_CursorTool();
 
             cursorTool_Front = new CursorTool();
@@ -1603,7 +1685,7 @@ namespace Basic_Controls
                 {
                     if (cursorTool_Front.XValue > cursorTool_After.XValue)
                     {
-                        cursorTool_Front.XValue = tChart.Axes.Bottom.Minimum + 0.02;
+                        cursorTool_Front.XValue = cursorTool_After.XValue - 0.09;
                         return;
                     }
 
@@ -1671,7 +1753,6 @@ namespace Basic_Controls
                         lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX)) + "s";
                     }
                     lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + "s";
-
                     OpenCursortTime = DateTime.Now;
                 }
                 catch
@@ -1697,9 +1778,9 @@ namespace Basic_Controls
             {
                 try
                 {
-                    if (cursorTool_After.XValue > cursorTool_After.XValue)
+                    if (cursorTool_Front.XValue > cursorTool_After.XValue)
                     {
-                        cursorTool_After.XValue = tChart.Axes.Bottom.Minimum + 0.09;
+                        cursorTool_After.XValue = cursorTool_Front.XValue + 0.09;
                         return;
                     }
 
@@ -1905,7 +1986,7 @@ namespace Basic_Controls
         /// 添加对比数据线
         /// </summary>
         /// <param name="count"></param>
-        private void AddCustomAxis_Contrast1(int count)
+        private void AddCustomAxis_Contrast_Envelope(int count)
         {
             double single = (100 / count) - space;
             List<BaseLine> listBaseLine = new List<BaseLine>();
@@ -1930,7 +2011,10 @@ namespace Basic_Controls
 
             tChart.Axes.Custom.Add(axis);
             listBaseLine[0].CustomVertAxis = axis;
-
+            if (count > 1)
+            {
+                listBaseLine[1].CustomVertAxis = axis;
+            }
         }
 
 
@@ -2053,7 +2137,7 @@ namespace Basic_Controls
                 tChart.Series.Clear();
                 tChart.Axes.Custom.Clear();
                 tChart.Zoom.Allow = false;
-                Event_Chart_Bind();
+                //    Event_Chart_Bind();
                 tChart.Axes.Bottom.SetMinMax(0, alltime);
             }
         }
@@ -2274,10 +2358,6 @@ namespace Basic_Controls
 
                 //绘制画布
                 AddCustomAxis(tChart.Series.Count);
-                //增加十字
-                // Add_CursorTool();
-
-                tChart.Refresh();
             }
             catch (Exception ex)
             {
@@ -2377,8 +2457,8 @@ namespace Basic_Controls
 
         /// <summary>
         /// 对比数据加载加载图表
-        /// 0 电流 1震动 2平均电流 3 平均震动
-        /// 4 电流 5震动 6平均电流 7平均震动
+        /// 0 电流1 1震动1 2平均电流1 3 平均震动1
+        /// 4 电流2 5震动2 6平均电流2 7平均震动2
         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>
         private void Chart_Data_Envelope_Lond()
@@ -2386,11 +2466,12 @@ namespace Basic_Controls
             //double[] Out_x, double[] Out_y, double[] Out_x1 = null  , double[] Out_y1 = null,
             try
             {
+                int count = 1;
                 alltime = 20;
                 Chart_DataTable_Init();
 
                 vline1 = new Line();
-                vline1.Title = string.Format("包络线");
+                vline1.Title = string.Format("【震动1】包络线");
                 if (aotuzoom > 0)
                 {
                     vx1 = linex[14];
@@ -2406,14 +2487,17 @@ namespace Basic_Controls
                 vline1.Color = Color.Green;
                 tChart.Series.Add(vline1);
 
+
                 if (Single)
                 {
+                    count++;
                     vline2 = new Line();
                     tChart.Series.Add(vline2);
-                    vline1.Title = string.Format("包络线 (绿色【样本数据】   红色【对比数据】)");
+                    vline1.Title = string.Format("【震动】包络线  绿色【样本数据】红色【对比数据】");
 
                     vline1.HorizAxis = HorizontalAxis.Top;
                     vline2.HorizAxis = HorizontalAxis.Bottom;
+
                     if (aotuzoom > 0)
                     {
                         vx2 = linex[15];
@@ -2424,14 +2508,60 @@ namespace Basic_Controls
                         vx2 = linex[13];
                         vy2 = liney[13];
                     }
-
                     vline2.Add(vx2, vy2);
                     vline2.Color = Color.Red;
                 }
+
+
+                if (aotuzoom > 0)
+                {
+                    cx1 = linex[0];
+                    cy1 = liney[0];
+                }
+                else
+                {
+                    cx1 = linex[2];
+                    cy1 = liney[2];
+                }
+                cline1 = new Line();
+                cline1.Title = string.Format("【电流1】");
+                cline1.Add(cx1, cy1);
+                cline1.Color = Color.Orange;
+                tChart.Series.Add(cline1);
+
+                if (Single)
+                {
+                    if (aotuzoom > 0)
+                    {
+                        cx2 = linex[4];
+                        cy2 = liney[4];
+                    }
+                    else
+                    {
+                        cx2 = linex[6];
+                        cy2 = liney[6];
+                    }
+                    cline2 = new Line();
+
+                    cline2.Add(cx2, cy2);
+                    cline2.Color = Color.Blue;
+                    tChart.Series.Add(cline2);
+
+                    cline1.HorizAxis = HorizontalAxis.Top;
+                    cline2.HorizAxis = HorizontalAxis.Bottom;
+
+                    AddCustomAxis_Contrast(2);
+                }
+                else
+                {
+                    //AddCustomAxis_Contrast_Envelope(count);
+                    AddCustomAxis(tChart.Series.Count);
+                }
+
+
                 //绘制画布
                 // AddCustomAxis_Contrast(1);
-                AddCustomAxis_Contrast1(1);
-                tChart.Refresh();
+                // tChart.Refresh();
             }
             catch (Exception ex)
             {
@@ -2572,7 +2702,6 @@ namespace Basic_Controls
             Invoke(new ThreadStart(delegate ()
             {
                 panelControl1.Enabled = true;
-
                 pc2.Enabled = true;
                 //IsSaveData = false;
             }));
@@ -3698,6 +3827,10 @@ namespace Basic_Controls
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
+                //隐藏 竖坐标
+                ckLineShow.Checked = false;
+                ckLineShow_CheckedChanged(null, null);
+
                 btnSaveData.Enabled = false;
                 btnSaveImg.Enabled = false;
                 lbVoltage.Text = "0 v";//单击时电压清空
@@ -3827,11 +3960,15 @@ namespace Basic_Controls
 
                         btnSaveData.Enabled = true;
                         btnSaveImg.Enabled = true;
+                        btnEnvelope.Enabled = true;
                         filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
                         bool isdd = FileHelper.IsFileExist(filepath);
                         if (FileHelper.IsFileExist(filepath))
                         {
                             Chart_Lond(filepath);
+                            //显示 竖坐标
+                            //ckLineShow.Checked = true;
+                            //ckLineShow_CheckedChanged(null, null);
                             Add_CursorTool();
                         }
                         else
@@ -3977,9 +4114,6 @@ namespace Basic_Controls
         /// <param name="Id"></param>
         private void Set_Foucs(string Id)
         {
-
-
-
             List<TreeListNode> list = treeList.GetNodeList();
             foreach (TreeListNode n in list)
             {
@@ -4058,6 +4192,11 @@ namespace Basic_Controls
                 Chart_Data_Envelope_Lond();
                 plLinePath.Enabled = false;
                 Add_CursorTool();
+
+                //显示 竖坐标
+                //ckLineShow.Checked = true;
+                //ckLineShow_CheckedChanged(null, null);
+
                 tChart.Refresh();
                 Show_End();
             }
@@ -4079,7 +4218,6 @@ namespace Basic_Controls
             Envelope_Algorithm.Instance.Envelope(spacing, In_x, In_y
                 , out Out_x, out Out_y
                 , rc_dn, rc_up);
-
         }
 
         /// <summary>
@@ -4227,9 +4365,14 @@ namespace Basic_Controls
                         lond_Enum = Lond_Enum.数据对比加载;
                         Chart_Data_Contrast_Lond();
                     }
-
+                    //显示 竖坐标
+                    //ckLineShow.Checked = true;
+                    //ckLineShow_CheckedChanged(null, null);
                     Add_CursorTool();
-                    //cursorTool.Active = true;
+                    //cursorTool_Front.Series = tChart.Series[0];
+                    //cursorTool_After.Series = tChart.Series[0]; 
+
+
                     Show_End();
                     btnEnvelope.Enabled = false;
                 }
@@ -4298,7 +4441,7 @@ namespace Basic_Controls
         {
             if (ckLineShow.Checked)
             {
-                if (cursorTool_After.XValue == 0)
+                if (tChart.Tools.Count == 0)
                 {
                     Add_CursorTool();
                 }
