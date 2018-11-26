@@ -1726,6 +1726,7 @@
             this.treeList.Location = new System.Drawing.Point(2, 2);
             this.treeList.Name = "treeList";
             this.treeList.OptionsBehavior.PopulateServiceColumns = true;
+            this.treeList.OptionsMenu.EnableColumnMenu = false;
             this.treeList.OptionsMenu.ShowConditionalFormattingItem = true;
             this.treeList.OptionsView.ShowIndicator = false;
             this.treeList.ParentFieldName = "PARENTID";
@@ -1746,6 +1747,7 @@
             this.ID.Name = "ID";
             this.ID.OptionsColumn.AllowEdit = false;
             this.ID.OptionsColumn.AllowMove = false;
+            this.ID.OptionsColumn.AllowSort = false;
             this.ID.OptionsColumn.ReadOnly = true;
             this.ID.Visible = true;
             this.ID.VisibleIndex = 0;

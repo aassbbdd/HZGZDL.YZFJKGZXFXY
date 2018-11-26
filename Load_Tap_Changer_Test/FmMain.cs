@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -1624,7 +1624,7 @@ namespace Basic_Controls
 
             this.lbtime.Text = "0ms";
 
-            if (lond_Enum == Lond_Enum.数据对比加载)
+            if (lond_Enum == Lond_Enum.数据对比加载 || lond_Enum == Lond_Enum.包络数据对比加载 )
             {
                 this.lbdbv.Text = "对比V:";
                 this.lbdbc.Text = "对比C:";
@@ -2050,8 +2050,16 @@ namespace Basic_Controls
 
                 axis.Title.Text = title;
                 axis.Title.Color = Color.Red;
-                axis.Maximum = 5;//最大值
-                axis.Minimum = -5;//最小值
+                if (title.Substring(0, 2) == "电流")
+                {
+                    axis.Maximum = 5;//最大值
+                    axis.Minimum = -5;//最小值
+                }
+                else
+                {
+                    axis.Maximum = 10;//最大值
+                    axis.Minimum = -10;//最小值
+                }
 
                 tChart.Axes.Custom.Add(axis);
                 listBaseLine[i * 2].CustomVertAxis = axis;
@@ -2158,32 +2166,6 @@ namespace Basic_Controls
                 Show_Open();
                 bool IsNotNull;
                 Reduction();
-                //XmlHelper.Xml_To_Array(filepath, cks,
-                //   out vx1, out vy1,
-                //   out vx2, out vy2,
-                //   out vx3, out vy3,
-                //   out cx1, out cy1,
-                //   out cx2, out cy2,
-                //   out cx3, out cy3,
-                //   out IsNotNull
-                //    );
-
-
-                ////取平均数据组
-                //XmlHelper.Xml_To_Average_Array(filepath, cks,
-                //   out vx1, out vy1,
-                //   out vx2, out vy2,
-                //   out vx3, out vy3,
-                //   out cx1, out cy1,
-                //   out cx2, out cy2,
-                //   out cx3, out cy3,
-                //   out IsNotNull, firstAverageNum
-                //    );
-                //XmlHelper.Xml_To_Average_Array(filepath, cks,
-                //   out linex, out liney,
-
-                //   out IsNotNull, firstAverageNum
-                //    );Xml_To_AverageAndArray
 
                 XmlHelper.Xml_To_AverageAndArray(filepath, cks,
                    out linex, out liney,
@@ -2203,7 +2185,6 @@ namespace Basic_Controls
                     Clear_CursorTool();
                     return;
                 }
-                // string time = vx1[vx1.Length - 1].ToString();
                 string time = linex[0][linex[0].Length - 1].ToString();
                 tChart.Axes.Bottom.Title.Text = "时间单位:" + time + "秒(sec)";
 
@@ -2230,6 +2211,10 @@ namespace Basic_Controls
                     Chart_Data_Lond();//点击显示
                 }
                 else if (lond_Enum == Lond_Enum.包络线加载)
+                {
+                    Chart_Data_Envelope_Lond();
+                }
+                else if (lond_Enum == Lond_Enum.包络数据对比加载)
                 {
                     Chart_Data_Envelope_Lond();
                 }
@@ -2456,7 +2441,7 @@ namespace Basic_Controls
         bool Single = false;
 
         /// <summary>
-        /// 对比数据加载加载图表
+        /// 包络对比数据加载 图表
         /// 0 电流1 1震动1 2平均电流1 3 平均震动1
         /// 4 电流2 5震动2 6平均电流2 7平均震动2
         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
@@ -4279,7 +4264,7 @@ namespace Basic_Controls
 
                             XmlHelper.Xml_To_Array_AverageAndContrast(
                                                             filepath, cks,
-                                                             linex, liney, 0, 100
+                                                             linex, liney, 0, firstAverageNum
                                                             );
                         }
                     }
@@ -4301,7 +4286,7 @@ namespace Basic_Controls
 
                             XmlHelper.Xml_To_Array_AverageAndContrast(
                                                             filepath, cks,
-                                                             linex, liney, 4, 100
+                                                             linex, liney, 4, firstAverageNum
                                                             );
                         }
                     }
@@ -4345,8 +4330,7 @@ namespace Basic_Controls
                     if (form.IsBlx)
                     {
                         tChart.Header.Text = "包络线对比";
-
-                        lond_Enum = Lond_Enum.包络线加载;
+                         lond_Enum = Lond_Enum.包络数据对比加载;
                         //   平均
                         Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
                         Re_Envelope_Data(linex[7], liney[7], out linex[13], out liney[13]);
@@ -4363,6 +4347,7 @@ namespace Basic_Controls
                         tChart.Header.Text = "完整数据对比";
 
                         lond_Enum = Lond_Enum.数据对比加载;
+                        Dv_Parameter_Init();
                         Chart_Data_Contrast_Lond();
                     }
                     //显示 竖坐标
@@ -4378,36 +4363,6 @@ namespace Basic_Controls
                 }
             }
         }
-        ///// <summary>
-        ///// 对比和样本名字的切换
-        ///// </summary>
-        //private void DbOrYbNameSwitch()
-        //{
-        //    if (lond_Enum == Lond_Enum.数据对比加载)
-        //    {
-        //        this.lbdbv.Text = "对比震动";
-        //        this.lbdbc.Text = "对比电流";
-        //        this.lbybv.Text = "样本震动";
-        //        this.lbybc.Text = "样本电流";
-
-        //        this.lbdbvT2.Text = "对比震动";
-        //        this.lbdbcT2.Text = "对比电流";
-        //        this.lbybvT2.Text = "样本震动";
-        //        this.lbybcT2.Text = "样本电流";
-        //    }
-        //    else
-        //    {
-        //        this.lbdbv.Text = "震动1";
-        //        this.lbdbc.Text = "电流1";
-        //        this.lbybv.Text = "震动2";
-        //        this.lbybc.Text = "电流2";
-
-        //        this.lbdbvT2.Text = "震动1";
-        //        this.lbdbcT2.Text = "电流1";
-        //        this.lbybvT2.Text = "震动2";
-        //        this.lbybcT2.Text = "电流2";
-        //    }
-        //}
 
         private void ckChecked()
         {
