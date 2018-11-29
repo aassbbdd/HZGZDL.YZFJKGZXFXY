@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -525,6 +525,7 @@ namespace Basic_Controls
                 XmlHelper.Init(pub_Test_Plan.DVNAME, pub_Test_Plan);
                 btnSTest.Enabled = false;
 
+
                 if (sendUdp(agreement._2_CMD_STARTTESTER))
                 {
                     Start_Chart();
@@ -774,7 +775,6 @@ namespace Basic_Controls
             {
                 Invoke(new ThreadStart(delegate ()
                 {
-                    ListToText.Instance.WriteListToTextFile1(e.Hearder);
                     if (e.Hearder == "00FF00FF")
                     {
                         Open_Type("1");
@@ -785,6 +785,15 @@ namespace Basic_Controls
                         // 通信超时后停止操作 
                         End_Chart();
                         Open_Type("0");
+
+                        //foreach (var item in Porint_List)
+                        //{
+                        //    ListToText.Instance.WriteListToTextFile1(ProtocolUtil.byteToHexStr(item) + "\n");
+                        //}
+
+
+                        ListToText.Instance.WriteListToTextFile1(e.Hearder + ":设备通信超时！");
+
                         MessageBox.Show("设备通信超时！");
 
                     }
@@ -816,6 +825,8 @@ namespace Basic_Controls
             }
         }
 
+
+
         /// <summary>
         /// 事件回调执行方法 存储接收到的 udp数据
         /// </summary>
@@ -823,8 +834,9 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void Run(object sender, byte[] e)
         {
-            Porint_List.Enqueue(e);
 
+
+            Porint_List.Enqueue(e);
         }
 
         #endregion
@@ -1624,7 +1636,7 @@ namespace Basic_Controls
 
             this.lbtime.Text = "0ms";
 
-            if (lond_Enum == Lond_Enum.数据对比加载 || lond_Enum == Lond_Enum.包络数据对比加载 )
+            if (lond_Enum == Lond_Enum.数据对比加载 || lond_Enum == Lond_Enum.包络数据对比加载)
             {
                 this.lbdbv.Text = "对比V:";
                 this.lbdbc.Text = "对比C:";
@@ -2016,7 +2028,6 @@ namespace Basic_Controls
                 listBaseLine[1].CustomVertAxis = axis;
             }
         }
-
 
         /// <summary>
         /// 添加对比数据线
@@ -2639,14 +2650,14 @@ namespace Basic_Controls
             //thread_List = new Thread(Job_Queue);
             if (pub_Test_Plan.GETINFO == "2")
             {
-                thread_List = new Thread(Job_Queue_01);
-                // Xml_Save_ON_OFF();
+                // thread_List = new Thread(Job_Queue_01);
+                thread_List = new Thread(Job_Queue_011);
+
             }
             else
             {
-                thread_List = new Thread(Job_Queue_03);
-                //thread_List = new Thread(Job_Queue_04);
-
+                //  thread_List = new Thread(Job_Queue_03);
+                thread_List = new Thread(Job_Queue_033);
 
             }
             thread_List.IsBackground = true;
@@ -2760,197 +2771,433 @@ namespace Basic_Controls
         /// </summary>
         private void Job_Queue_01()
         {
-            addNum = 0;
-            c1x = new double[alladdnum];
-            c1y = new double[alladdnum];
-
-            c2x = new double[alladdnum];
-            c2y = new double[alladdnum];
-
-            c3x = new double[alladdnum];
-            c3y = new double[alladdnum];
-
-            v1x = new double[alladdnum];
-            v1y = new double[alladdnum];
-
-            v2x = new double[alladdnum];
-            v2y = new double[alladdnum];
-
-            v3x = new double[alladdnum];
-            v3y = new double[alladdnum];
-
-            while (isAbort)
+            try
             {
-                if (Porint_List.Count > 0)
+                addNum = 0;
+                c1x = new double[alladdnum];
+                c1y = new double[alladdnum];
+
+                c2x = new double[alladdnum];
+                c2y = new double[alladdnum];
+
+                c3x = new double[alladdnum];
+                c3y = new double[alladdnum];
+
+                v1x = new double[alladdnum];
+                v1y = new double[alladdnum];
+
+                v2x = new double[alladdnum];
+                v2y = new double[alladdnum];
+
+                v3x = new double[alladdnum];
+                v3y = new double[alladdnum];
+
+                while (isAbort)
                 {
-                    byte[] bytes;
-                    Porint_List.TryDequeue(out bytes);//取出队里数据并删除
-                                                      //截取返回数据
-                    Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-                    e.DataBaty = bytes;
-                    e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
-                    if (bytes.Length > 300)
+                    if (Porint_List.Count > 0)
                     {
-                        string data = e.Msg.Substring(8, e.Msg.Length - 8);
-                        int Porints = 80 / LessPoint;
-                        double x = new double();
-                        double y = new double();
+                        byte[] bytes;
+                        Porint_List.TryDequeue(out bytes);//取出队里数据并删除
+                                                          //截取返回数据
+                        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                        e.DataBaty = bytes;
 
-                        for (int i = 0; i < Porints; i++)
+                        int Code = ((bytes[0] << 8) | bytes[1]);
+
+                        e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
+
+                        switch (Code)
                         {
-                            int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
-                            #region 计算保存新点位数据
-
-                            x = porintadd * newXvalue;
-                            if (v1)
-                            {
-                                string V = data.Substring(0 + length, 4);
-                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
-
-                                v1x[addNum] = x;
-                                v1y[addNum] = Vd;
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
+                            case 0x00000909:
                                 {
-                                    vline1.Add(v1x, v1y, true);
-                                    v1x = new double[alladdnum];
-                                    v1y = new double[alladdnum];
+                                    string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                                    int Porints = 80 / LessPoint;
+                                    double x = new double();
+                                    for (int i = 0; i < Porints; i++)
+                                    {
+                                        int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
+                                        #region 计算保存新点位数据
+
+                                        x = porintadd * newXvalue;//计算X轴的位置
+                                        if (v1)
+                                        {
+                                            string V = data.Substring(0 + length, 4);
+
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            v1x[addNum] = x;
+                                            v1y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline1.Add(v1x, v1y, true);
+                                                v1x = new double[alladdnum];
+                                                v1y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (v2)
+                                        {
+                                            string V = data.Substring(4 + length, 4);
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            v2x[addNum] = x;
+                                            v2y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline2.Add(v2x, v2y, true);
+                                                v2x = new double[alladdnum];
+                                                v2y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (v3)
+                                        {
+                                            string V = data.Substring(8 + length, 4);
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            v3x[addNum] = x;
+                                            v3y[addNum] = Vd;
+
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline3.Add(v3x, v3y, true);
+                                                v3x = new double[alladdnum];
+                                                v3y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (c1)
+                                        {
+                                            string C = data.Substring(12 + length, 4);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
+
+                                            c1x[addNum] = x;
+                                            c1y[addNum] = Cd;
+
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline1.Add(c1x, c1y, true);
+                                                c1x = new double[alladdnum];
+                                                c1y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (c2)
+                                        {
+                                            string C = data.Substring(16 + length, 4);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
+
+                                            c2x[addNum] = x;
+                                            c2y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline2.Add(c2x, c2y, true);
+                                                c2x = new double[alladdnum];
+                                                c2y = new double[alladdnum];
+                                            }
+
+                                        }
+                                        if (c3)
+                                        {
+                                            string C = data.Substring(20 + length, 4);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
+
+                                            c3x[addNum] = x;
+                                            c3y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline3.Add(c3x, c3y, true);
+                                                c3x = new double[alladdnum];
+                                                c3y = new double[alladdnum];
+                                            }
+                                        }
+                                        #endregion
+
+                                        if (addNum == alladdnum - 1)
+                                        {
+                                            addNum = 0;
+                                        }
+                                        else
+                                        {
+                                            addNum++;
+                                        }
+                                        #region 存储数据
+
+                                        //判断数据是否超标了
+                                        if (porintadd >= linlength)
+                                        {
+                                            //是停止
+                                            this.BeginInvoke(new MethodInvoker(() =>
+                                            {
+                                                tChart.Refresh();
+                                                Stop_Test(false);
+
+                                            }));
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            if (i == 0)
+                                            {
+                                                Save_Db_Source.Enqueue(e);
+                                            }
+                                        }
+                                        #endregion
+
+                                        porintadd++;
+                                    }
+                                    continue;
                                 }
-                            }
-                            if (v2)
-                            {
-                                string V = data.Substring(4 + length, 4);
-                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
-
-                                v2x[addNum] = x;
-                                v2y[addNum] = Vd;
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
+                            case 0x00005050:
                                 {
-                                    vline2.Add(v2x, v2y, true);
-                                    v2x = new double[alladdnum];
-                                    v2y = new double[alladdnum];
+                                    e.Hearder = e.Msg.Substring(0, 4);
+                                    if (e.Hearder == "5050")//返回电压只 要存储 
+                                    {
+                                        string vv = e.Msg.Substring(4, 4);
+                                        int v = Convert.ToInt16(vv, 16);
+
+                                        //addv[vcount] = vv;
+                                        //addvv[vcount] = v;
+                                        if (v > 0)
+                                        {
+                                            allv = allv + v;
+
+                                            vcount++;
+                                            Invoke(new ThreadStart(delegate ()
+                                            {
+                                                lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
+                                            }));
+                                        }
+                                    }
+                                    continue;
                                 }
-                            }
-                            if (v3)
-                            {
-                                string V = data.Substring(8 + length, 4);
-                                double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
-
-                                v3x[addNum] = x;
-                                v3y[addNum] = Vd;
-
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
-                                {
-                                    vline3.Add(v3x, v3y, true);
-                                    v3x = new double[alladdnum];
-                                    v3y = new double[alladdnum];
-                                }
-                            }
-                            if (c1)
-                            {
-                                string C = data.Substring(12 + length, 4);
-                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
-
-                                c1x[addNum] = x;
-                                c1y[addNum] = Cd;
-
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
-                                {
-                                    cline1.Add(c1x, c1y, true);
-                                    c1x = new double[alladdnum];
-                                    c1y = new double[alladdnum];
-                                }
-                            }
-                            if (c2)
-                            {
-                                string C = data.Substring(16 + length, 4);
-                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
-
-                                c2x[addNum] = x;
-                                c2y[addNum] = Cd;
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
-                                {
-                                    cline2.Add(c2x, c2y, true);
-                                    c2x = new double[alladdnum];
-                                    c2y = new double[alladdnum];
-                                }
-
-                            }
-                            if (c3)
-                            {
-                                string C = data.Substring(20 + length, 4);
-                                double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
-
-                                c3x[addNum] = x;
-                                c3y[addNum] = Cd;
-                                if (addNum == alladdnum - 1 || porintadd >= linlength)
-                                {
-                                    cline3.Add(c3x, c3y, true);
-                                    c3x = new double[alladdnum];
-                                    c3y = new double[alladdnum];
-                                }
-                            }
-                            #endregion
-
-                            if (addNum == alladdnum - 1)
-                            {
-                                addNum = 0;
-                            }
-                            else
-                            {
-                                addNum++;
-                            }
-                            #region 存储数据
-
-                            //判断数据是否超标了
-                            if (porintadd >= linlength)
-                            {
-                                //是停止
-                                this.BeginInvoke(new MethodInvoker(() =>
-                                {
-                                    tChart.Refresh();
-                                    Stop_Test(false);
-
-                                }));
-                                return;
-                            }
-                            else
-                            {
-                                if (i == 0)
-                                {
-                                    Save_Db_Source.Enqueue(e);
-                                }
-                            }
-                            #endregion
-
-                            porintadd++;
-                        }
-                    }
-                    else
-                    {
-                        //Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
-                        e.Hearder = e.Msg.Substring(0, 4);
-                        if (e.Hearder == "5050")//返回电压只 要存储 
-                        {
-                            string vv = e.Msg.Substring(4, 4);
-                            int v = Convert.ToInt16(vv, 16);
-
-                            //addv[vcount] = vv;
-                            //addvv[vcount] = v;
-                            if (v > 0)
-                            {
-                                allv = allv + v;
-
-                                vcount++;
-                                Invoke(new ThreadStart(delegate ()
-                                {
-                                    lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
-                                }));
-                            }
                         }
                     }
                 }
+                //所有结束后执行
+                Print_End_Bind(addNum);
             }
-            Print_End_Bind(addNum);
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// 前往后走图形 按时间走波形
+        /// </summary>
+        private void Job_Queue_011()
+        {
+            try
+            {
+                addNum = 0;
+                c1x = new double[alladdnum];
+                c1y = new double[alladdnum];
+
+                c2x = new double[alladdnum];
+                c2y = new double[alladdnum];
+
+                c3x = new double[alladdnum];
+                c3y = new double[alladdnum];
+
+                v1x = new double[alladdnum];
+                v1y = new double[alladdnum];
+
+                v2x = new double[alladdnum];
+                v2y = new double[alladdnum];
+
+                v3x = new double[alladdnum];
+                v3y = new double[alladdnum];
+
+                while (isAbort)
+                {
+                    if (Porint_List.Count > 0)
+                    {
+                        byte[] bytes;
+                        Porint_List.TryDequeue(out bytes);//取出队里数据并删除
+                                                          //截取返回数据
+                        Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                        e.DataBaty = bytes;
+
+                        int Code = ((bytes[0] << 8) | bytes[1]);
+
+                        //    e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
+
+                        switch (Code)
+                        {
+                            case 0x00000909:
+                                {
+                                    //  string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                                    int Porints = 80 / LessPoint;
+                                    double x = new double();
+                                    // double y = new double();
+
+                                    for (int i = 0; i < Porints; i++)
+                                    {
+                                        //   int length = 24 * (i);//截取位置 +1 默认不取第一个点位
+
+                                        int length = 16 * (i);//截取位置 +1 默认不取第一个点位
+                                        #region 计算保存新点位数据
+
+                                        x = porintadd * newXvalue;
+                                        if (v1)
+                                        {
+                                            //string V1 = data.Substring(0 + length, 4);
+                                            //double Vd1 = Algorithm.Instance.Vibration_Algorithm_Double(V1);
+                                            int V = ProtocolUtil.ByteToInt(bytes[4], bytes[5]); 
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            //  ListToText.Instance.WriteListToTextFile1(V1 + ":" + Vd1 + "  ," + V + ":" + Vd);
+                                            v1x[addNum] = x;
+                                            v1y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline1.Add(v1x, v1y, true);
+                                                v1x = new double[alladdnum];
+                                                v1y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (v2)
+                                        {
+                                            int V = ProtocolUtil.ByteToInt(bytes[6], bytes[7]);
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            v2x[addNum] = x;
+                                            v2y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline2.Add(v2x, v2y, true);
+                                                v2x = new double[alladdnum];
+                                                v2y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (v3)
+                                        {
+                                            int V = ProtocolUtil.ByteToInt(bytes[8], bytes[9]);
+                                            double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                            v3x[addNum] = x;
+                                            v3y[addNum] = Vd;
+
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                vline3.Add(v3x, v3y, true);
+                                                v3x = new double[alladdnum];
+                                                v3y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (c1)
+                                        {
+
+                                            //string C1 = data.Substring(12 + length, 4);
+                                            //double Cd1 = Algorithm.Instance.Current_Algorithm_Double(C1);
+
+
+                                            int C = ProtocolUtil.ByteToInt(bytes[10], bytes[11]);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                            c1x[addNum] = x;
+                                            c1y[addNum] = Cd;
+
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline1.Add(c1x, c1y, true);
+                                                c1x = new double[alladdnum];
+                                                c1y = new double[alladdnum];
+                                            }
+                                        }
+                                        if (c2)
+                                        {
+                                            //string C = data.Substring(16 + length, 4);
+                                            //double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
+                                            int C = ProtocolUtil.ByteToInt(bytes[12], bytes[13]);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                            c2x[addNum] = x;
+                                            c2y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline2.Add(c2x, c2y, true);
+                                                c2x = new double[alladdnum];
+                                                c2y = new double[alladdnum];
+                                            }
+
+                                        }
+                                        if (c3)
+                                        {
+                                            //string C = data.Substring(20 + length, 4);
+                                            //double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
+                                            int C = ProtocolUtil.ByteToInt(bytes[14], bytes[15]);
+                                            double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                            c3x[addNum] = x;
+                                            c3y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1 || porintadd >= linlength)
+                                            {
+                                                cline3.Add(c3x, c3y, true);
+                                                c3x = new double[alladdnum];
+                                                c3y = new double[alladdnum];
+                                            }
+                                        }
+                                        #endregion
+
+                                        if (addNum == alladdnum - 1)
+                                        {
+                                            addNum = 0;
+                                        }
+                                        else
+                                        {
+                                            addNum++;
+                                        }
+                                        #region 存储数据
+
+                                        //判断数据是否超标了
+                                        if (porintadd >= linlength)
+                                        {
+                                            //是停止
+                                            this.BeginInvoke(new MethodInvoker(() =>
+                                            {
+                                                tChart.Refresh();
+                                                Stop_Test(false);
+                                            }));
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            if (i == 0)
+                                            {
+                                                Save_Db_Source.Enqueue(e);
+                                            }
+                                        }
+                                        #endregion
+                                        porintadd++;
+                                    }
+                                    continue;
+                                }
+                            case 0x00005050:
+                                {
+                                    e.Hearder = e.Msg.Substring(0, 4);
+                                    if (e.Hearder == "5050")//返回电压只 要存储 
+                                    {
+                                        string vv = e.Msg.Substring(4, 4);
+                                        int v = Convert.ToInt16(vv, 16);
+                                        if (v > 0)
+                                        {
+                                            allv = allv + v;
+
+                                            vcount++;
+                                            Invoke(new ThreadStart(delegate ()
+                                            {
+                                                lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
+                                            }));
+                                        }
+                                    }
+                                    continue;
+                                }
+                        }
+                    }
+                }
+                //所有结束后执行
+                Print_End_Bind(addNum);
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -3019,14 +3266,6 @@ namespace Basic_Controls
 
         }
 
-        /// <summary>
-        /// 开始前后存1秒数据 前 1250 后1250 *2 =2500
-        /// </summary>
-        //int around = 1;
-        /// <summary>
-        /// 开始前后是否存数据开关 true 开 false 关
-        /// </summary>
-        //bool isaround = true;
         /// <summary>
         /// 到达2000是 进行一次运算
         /// </summary>
@@ -3099,18 +3338,17 @@ namespace Basic_Controls
 
                     if (bytes.Length > 300)
                     {
-
                         if (Top_End_Data.Count < 1250)
                         {
                             Top_End_Data.Enqueue(e);
                         }
-
                         string data = e.Msg.Substring(8, e.Msg.Length - 8);
                         int Porints = 80 / LessPoint;
                         double x = new double();
                         double y = new double();
                         for (int i = 0; i < Porints; i++)
                         {
+
                             int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
                             #region 计算保存新点位数据
 
@@ -3119,6 +3357,7 @@ namespace Basic_Controls
                             {
                                 string V = data.Substring(0 + length, 4);
                                 double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
                                 if (isFist)
                                 {
                                     vline1.YValues[porintadd] = Vd;
@@ -3139,7 +3378,6 @@ namespace Basic_Controls
                             {
                                 string V = data.Substring(4 + length, 4);
                                 double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
-
                                 if (isFist)
                                 {
                                     vline2.YValues[porintadd] = Vd;
@@ -3160,6 +3398,7 @@ namespace Basic_Controls
                             {
                                 string V = data.Substring(8 + length, 4);
                                 double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
                                 if (isFist)
                                 {
                                     vline3.YValues[porintadd] = Vd;
@@ -3181,7 +3420,6 @@ namespace Basic_Controls
                             {
                                 string C = data.Substring(12 + length, 4);
                                 double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
-
                                 if (isFist)
                                 {
                                     cline1.YValues[porintadd] = Cd;
@@ -3307,18 +3545,6 @@ namespace Basic_Controls
                             colorFrom = Math.Round(swidth, 2, MidpointRounding.AwayFromZero);
                             colorTo = width;
                             Print_Color_Bind();
-
-                            //Invoke(new ThreadStart(delegate ()
-                            //{
-                            //    try
-                            //    {
-                            //        tChart.Refresh();
-                            //    }
-                            //    catch (Exception ex)
-                            //    {
-                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
-                            //    }
-                            //}));
                         }
                         #endregion
                         //运算 电流是否达到开启值
@@ -3329,18 +3555,7 @@ namespace Basic_Controls
 
                             //储存数量 10秒  
                             Save_Db_Source.Enqueue(e);
-                            ////到达10秒后 SCURRENT=false isaround=true
-                            //Invoke(new ThreadStart(delegate ()
-                            //{
-                            //    try
-                            //    {
-                            //        blSavePorint.Text = CurrentNum.ToString();
-                            //    }
-                            //    catch (Exception ex)
-                            //    {
-                            //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
-                            //    }
-                            //}));
+
                             CurrentNum++;
                             if (CurrentNum > 23750) //存储达到 12500条 10秒的数据时 17500
                             {
@@ -3384,8 +3599,6 @@ namespace Basic_Controls
                             string vv = e.Msg.Substring(4, 4);
                             int v = Convert.ToInt16(vv, 16);
 
-                            //addv[vcount] = vv;
-                            //addvv[vcount] = v;
                             if (v > 0)
                             {
                                 allv = allv + v;
@@ -3402,6 +3615,343 @@ namespace Basic_Controls
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 电流触发 改
+        /// </summary>
+        private void Job_Queue_033()
+        {
+            addNum = 0;
+            c1x = new double[alladdnum];
+            c1y = new double[alladdnum];
+
+            c2x = new double[alladdnum];
+            c2y = new double[alladdnum];
+
+            c3x = new double[alladdnum];
+            c3y = new double[alladdnum];
+
+            v1x = new double[alladdnum];
+            v1y = new double[alladdnum];
+
+            v2x = new double[alladdnum];
+            v2y = new double[alladdnum];
+
+            v3x = new double[alladdnum];
+            v3y = new double[alladdnum];
+            bool isFist = false;
+
+            while (isAbort)
+            {
+                if (Porint_List.Count > 0)
+                {
+                    byte[] bytes;
+                    Porint_List.TryDequeue(out bytes);//取出队里数据并删除
+                                                      //截取返回数据
+                    Udp_EventArgs e = new Udp_EventArgs();//初始化 实体
+                    e.DataBaty = bytes;
+                    e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
+                    int Code = ProtocolUtil.ByteToInt(bytes[0] , bytes[1]);
+                    switch (Code)
+                    {
+                        case 0x00000909:
+                            {
+                                if (Top_End_Data.Count < 1250)
+                                {
+                                    Top_End_Data.Enqueue(e);
+                                }
+                                string data = e.Msg.Substring(8, e.Msg.Length - 8);
+                                int Porints = 80 / LessPoint;
+                                double x = new double();
+                                double y = new double();
+                                for (int i = 0; i < Porints; i++)
+                                {
+                                    int length = 16 * (i);//截取位置 +1 默认不取第一个点位
+
+                                    //int length = 24 * (i + 1);//截取位置 +1 默认不取第一个点位
+                                    #region 计算保存新点位数据
+
+                                    x = porintadd * newXvalue;
+                                    if (v1)
+                                    {
+                                        //string V = data.Substring(0 + length, 4);
+                                        //double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                        int V = ProtocolUtil.ByteToInt(bytes[4], bytes[5]);
+                                        double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+
+                                        if (isFist)
+                                        {
+                                            vline1.YValues[porintadd] = Vd;
+                                        }
+                                        else
+                                        {
+                                            v1x[addNum] = x;
+                                            v1y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                vline1.Add(v1x, v1y, true);
+                                                v1x = new double[alladdnum];
+                                                v1y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    if (v2)
+                                    {
+                                        //string V = data.Substring(4 + length, 4);
+                                        //double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+                                        int V = ProtocolUtil.ByteToInt(bytes[6], bytes[7]);
+                                        double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+                                        if (isFist)
+                                        {
+                                            vline2.YValues[porintadd] = Vd;
+                                        }
+                                        else
+                                        {
+                                            v2x[addNum] = x;
+                                            v2y[addNum] = Vd;
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                vline2.Add(v2x, v2y, true);
+                                                v2x = new double[alladdnum];
+                                                v2y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    if (v3)
+                                    {
+                                        //string V = data.Substring(8 + length, 4);
+                                        //double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+                                        int V = ProtocolUtil.ByteToInt(bytes[8], bytes[9]);
+                                        double Vd = Algorithm.Instance.Vibration_Algorithm_Double(V);
+
+                                        if (isFist)
+                                        {
+                                            vline3.YValues[porintadd] = Vd;
+                                        }
+                                        else
+                                        {
+                                            v3x[addNum] = x;
+                                            v3y[addNum] = Vd;
+
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                vline3.Add(v3x, v3y, true);
+                                                v3x = new double[alladdnum];
+                                                v3y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    if (c1)
+                                    {
+                                        //    string C = data.Substring(12 + length, 4);
+                                        //    double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                        int C = ProtocolUtil.ByteToInt(bytes[10], bytes[11]);
+                                        double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+                                        if (isFist)
+                                        {
+                                            cline1.YValues[porintadd] = Cd;
+                                        }
+                                        else
+                                        {
+                                            c1x[addNum] = x;
+                                            c1y[addNum] = Cd;
+
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                cline1.Add(c1x, c1y, true);
+
+                                                c1x = new double[alladdnum];
+                                                c1y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    if (c2)
+                                    {
+                                        //string C = data.Substring(16 + length, 4);
+                                        //double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                        int C = ProtocolUtil.ByteToInt(bytes[12], bytes[13]);
+                                        double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                        if (isFist)
+                                        {
+                                            cline2.YValues[porintadd] = Cd;
+                                        }
+                                        else
+                                        {
+                                            c2x[addNum] = x;
+                                            c2y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                cline2.Add(c2x, c2y, true);
+                                                c2x = new double[alladdnum];
+                                                c2y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    if (c3)
+                                    {
+                                        //string C = data.Substring(20 + length, 4);
+                                        //double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                        int C = ProtocolUtil.ByteToInt(bytes[14], bytes[15]);
+                                        double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
+                                        if (isFist)
+                                        {
+                                            cline3.YValues[porintadd] = Cd;
+                                        }
+                                        else
+                                        {
+                                            c3x[addNum] = x;
+                                            c3y[addNum] = Cd;
+                                            if (addNum == alladdnum - 1)
+                                            {
+                                                cline3.Add(c3x, c3y, true);
+                                                c3x = new double[alladdnum];
+                                                c3y = new double[alladdnum];
+                                            }
+                                        }
+                                    }
+                                    #endregion
+
+                                    if (addNum == alladdnum - 1)
+                                    {
+                                        addNum = 0;
+                                    }
+                                    else
+                                    {
+                                        addNum++;
+                                    }
+                                    porintadd++;
+                                }
+                                // 处理数据线程结束后 触发
+                                if (!isAbort && Porint_List.Count == 0)
+                                {
+                                    Print_End_Bind(addNum);
+                                }
+                                #region 数据大于10秒时执行 横条删除效果
+                                if (porintadd > linlength - 1 && addNum == 0)
+                                {
+                                    if (WinRefreshNum > 5)
+                                    {
+                                        WinRefreshNum = 0;
+                                        BeginInvoke(new MethodInvoker(() =>
+                                        {
+                                            Stop_Test(false, 2);
+                                        }));
+                                        return;
+                                    }
+
+                                    isFist = true;
+                                    porintadd = 0;//归零
+
+                                    WinRefreshNum++;
+                                    istrue = true;//开启进入标识
+                                    double swidth = 0;//初始位置
+                                    double width = swidth;//结束时位置
+
+                                    for (int i = 0; i < 500; i++)
+                                    {
+                                        width = (porintadd + i) * newXvalue;
+                                        //Print_Bind((porintadd + i));
+                                    }
+                                    colorFrom = swidth;
+                                    colorTo = width;
+                                    Print_Color_Bind();
+
+                                }
+                                else if (istrue && addNum == 0)
+                                {
+                                    double swidth = Math.Round((porintadd + 1) * newXvalue, 2, MidpointRounding.AwayFromZero);//初始位置
+                                    double width = swidth;//结束时位置
+                                    for (int i = 0; i < 500; i++)
+                                    {
+                                        if (porintadd + 1 + i <= linlength - 1)
+                                        {
+                                            width = (porintadd + 1 + i) * newXvalue;
+                                            //Print_Bind((porintadd + 1 + i));
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    colorFrom = Math.Round(swidth, 2, MidpointRounding.AwayFromZero);
+                                    colorTo = width;
+                                    Print_Color_Bind();
+
+                                }
+                                #endregion
+                                //运算 电流是否达到开启值
+                                Current_Open(data);
+
+                                if (SCURRENT)//true 电流到达开启值  
+                                {
+                                    //储存数量 10秒  
+                                    Save_Db_Source.Enqueue(e);
+                                    CurrentNum++;
+                                    if (CurrentNum > 23750) //存储达到 12500条 10秒的数据时 17500
+                                    {
+                                        SCURRENT = false;//关闭有效波段存储
+                                        topnum++;
+                                        this.BeginInvoke(new MethodInvoker(() =>
+                                        {
+                                            Stop_Test(true, 1);
+                                        }));
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (AroundSecond == 2)//电流到达关闭值
+                                    {
+                                        SCURRENT = false;//关闭有效波段存储
+                                                         // 异步方法
+                                        if (endprint < 2500)
+                                        {
+                                            Save_Db_Source.Enqueue(e);
+                                            endprint++;
+                                        }
+                                        else
+                                        {
+                                            this.BeginInvoke(new MethodInvoker(() =>
+                                            {
+                                                topnum++;
+                                                Stop_Test(true, 1);
+                                            }));
+                                            break;
+                                        }
+                                    }
+                                }
+                                continue;
+                            }
+                        case 0x00005050:
+                            {
+                                e.Hearder = e.Msg.Substring(0, 4);
+                                if (e.Hearder == "5050")//返回电压只 要存储 
+                                {
+                                    string vv = e.Msg.Substring(4, 4);
+                                    int v = Convert.ToInt16(vv, 16);
+                                    if (v > 0)
+                                    {
+                                        allv = allv + v;
+
+                                        vcount++;
+                                        Invoke(new ThreadStart(delegate ()
+                                        {
+                                            lbVoltage.Text = ((double)allv / vcount).ToString("#0.0") + " v";
+                                        }));
+                                    }
+                                }
+                                continue;
+                            }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -3425,7 +3975,6 @@ namespace Basic_Controls
         /// <returns></returns>
         private void Current_Open(string data)
         {
-
             //数据需要重新计算
             /*
              运算公式   (x1*x1)+(x2*x2)+...(xn*xn)   //计算平方 n为2000
@@ -3460,7 +4009,6 @@ namespace Basic_Controls
                 operation++;
                 if (operation >= 2000)
                 {
-
                     //否 存储
                     // 判断电流是否启动 电流存储
                     double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
@@ -3704,9 +4252,13 @@ namespace Basic_Controls
                     {
                         foreach (Udp_EventArgs e in Top_End_Data)
                         {
+                            e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
+
                             model = new Xml_Node_Model();
                             //  model.AddDate = e.AddDate;
-                            model.Id = e.Msg.Substring(4, 4);
+
+                            int Code = ProtocolUtil.ByteToInt(e.DataBaty[2], e.DataBaty[3]);
+                            model.Id = Code.ToString("X2");
                             model.DataSource = e.Msg;
                             model.Data = new List<Xml_Element_Model>();
                             XmlHelper.Insert(model);
@@ -3728,9 +4280,13 @@ namespace Basic_Controls
                     {
                         Udp_EventArgs e = new Udp_EventArgs();
                         Save_Db_Source.TryDequeue(out e);//取出队里数据并删除
-
+                        e.Msg = ProtocolUtil.byteToHexStr(e.DataBaty);
                         model = new Xml_Node_Model();
-                        model.Id = e.Msg.Substring(4, 4);
+                       // model.Id = e.Msg.Substring(4, 4);
+
+                        int Code = ProtocolUtil.ByteToInt(e.DataBaty[2], e.DataBaty[3]);
+                        model.Id = Code.ToString("X2");
+
                         model.AddDate = e.AddDate;
                         model.DataSource = e.Msg;
                         model.Data = new List<Xml_Element_Model>();
@@ -3743,33 +4299,6 @@ namespace Basic_Controls
                         i++;
                     }
                 }
-                //if (pub_Test_Plan.GETINFO == "1")
-                //{
-                //    #region 结束后插入分割线
-
-                //    model = new Xml_Node_Model();
-                //    model.DataSource = "分割线开始";
-                //    model.Id = "1";
-                //    XmlHelper.Insert(model);
-                //    for (int j = 0; j < AroundSecond; j++)
-                //    {
-                //        foreach (Udp_EventArgs e in Top_End_Data)
-                //        {
-                //            model = new Xml_Node_Model();
-                //            model.Id = e.Msg.Substring(4, 4);
-                //            model.DataSource = e.Msg;
-                //            model.Data = new List<Xml_Element_Model>();
-                //            XmlHelper.Insert(model);
-                //        }
-                //    }
-                //    Top_End_Data = new ConcurrentQueue<Udp_EventArgs>();
-                //    model = new Xml_Node_Model();
-                //    model.Id = "1";
-                //    model.DataSource = "分割线结束";
-                //    XmlHelper.Insert(model);
-                //    //}
-                //    #endregion
-                //}
                 //结束后保存下防止 漏数据
                 XmlHelper.Save();
             }
@@ -4330,7 +4859,7 @@ namespace Basic_Controls
                     if (form.IsBlx)
                     {
                         tChart.Header.Text = "包络线对比";
-                         lond_Enum = Lond_Enum.包络数据对比加载;
+                        lond_Enum = Lond_Enum.包络数据对比加载;
                         //   平均
                         Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
                         Re_Envelope_Data(linex[7], liney[7], out linex[13], out liney[13]);

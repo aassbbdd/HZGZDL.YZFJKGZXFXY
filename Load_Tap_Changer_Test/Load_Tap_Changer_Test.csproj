@@ -240,60 +240,138 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GZDL.ico" />
-    <Content Include="ImgIcon\1.jpg" />
-    <Content Include="ImgIcon\1529.bmp" />
-    <Content Include="ImgIcon\1530.bmp" />
-    <Content Include="ImgIcon\1537.bmp" />
-    <Content Include="ImgIcon\1547.bmp" />
-    <Content Include="ImgIcon\2.jpg" />
-    <Content Include="ImgIcon\3.bmp" />
-    <Content Include="ImgIcon\3函数.bmp" />
-    <Content Include="ImgIcon\Arrow next3.bmp" />
+    <Content Include="ImgIcon\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\1529.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\1530.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\1537.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\1547.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\3函数.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\Arrow next3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\Favorite.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImgIcon\GZDL.ico" />
-    <Content Include="ImgIcon\函数.bmp" />
-    <Content Include="ImgIcon\勾.bmp" />
-    <Content Include="ImgIcon\勾2.bmp" />
-    <Content Include="ImgIcon\勾3.bmp" />
-    <Content Include="ImgIcon\图标12.bmp" />
-    <Content Include="ImgIcon\图标13.bmp" />
-    <Content Include="ImgIcon\图标14.bmp" />
-    <Content Include="ImgIcon\图标15.bmp" />
-    <Content Include="ImgIcon\图标16.bmp" />
-    <Content Include="ImgIcon\图标17.bmp" />
-    <Content Include="ImgIcon\图标T.bmp" />
-    <Content Include="ImgIcon\字母I1.bmp" />
-    <Content Include="ImgIcon\字母i2.bmp" />
+    <Content Include="ImgIcon\GZDL.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\函数.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\勾.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\勾2.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\勾3.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标12.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标13.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标14.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标15.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标16.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标17.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\图标T.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\字母I1.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\字母i2.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\有载分接开关软件界面图标-11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ImgIcon\有载分接开关软件界面图标-12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImgIcon\设置图标.bmp" />
+    <Content Include="ImgIcon\设置图标.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ImgIcon\项目1525.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ImgIcon\项目18.bmp" />
-    <Content Include="ImgIcon\项目4.ico" />
-    <Content Include="ImgIcon\项目6.bmp" />
-    <Content Include="ImgIcon\项目7.bmp" />
+    <Content Include="ImgIcon\项目18.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\项目4.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\项目6.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImgIcon\项目7.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="版本日志.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\有载分接开关软件界面图标-12.png" />
-    <None Include="Resources\有载分接开关软件界面图标-11.png" />
-    <None Include="Resources\有载分接开关软件界面图标-10.png" />
-    <None Include="Resources\有载分接开关软件界面图标-09.png" />
-    <None Include="Resources\有载分接开关软件界面图标-08.png" />
-    <None Include="Resources\有载分接开关软件界面图标-06.png" />
-    <None Include="Resources\有载分接开关软件界面图标-05.png" />
-    <None Include="Resources\有载分接开关软件界面图标-04.png" />
-    <None Include="Resources\有载分接开关软件界面图标-03.png" />
-    <None Include="Resources\有载分接开关软件界面图标-02.png" />
-    <None Include="Resources\有载分接开关软件界面图标-01.png" />
+    <None Include="Resources\有载分接开关软件界面图标-12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-09.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-08.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-06.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\有载分接开关软件界面图标-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">

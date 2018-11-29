@@ -135,6 +135,19 @@ namespace Commons
             System.Text.Encoding chs = System.Text.Encoding.GetEncoding(charset);
             return chs.GetString(bytes);
         }
+
+        /// <summary>
+        ///  byet 转 int 16进制
+        /// </summary>
+        /// <param name="b1">高位</param>
+        /// <param name="b2">低位</param>
+        /// <returns></returns>
+        public static int ByteToInt(byte b1, byte b2)
+        {
+            return ((b1 << 8) | b2);
+        }
+
+
     }
 
 }

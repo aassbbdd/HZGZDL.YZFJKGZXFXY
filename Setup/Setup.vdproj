@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0497C0CE13EB44979066A078F386757B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_07B6C378B224A88360BCFE9A9F7868B5"
         "OwnerKey" = "8:_812AE8A3E7863F28E10104D034AD4750"
         "MsmSig" = "8:_UNDEFINED"
@@ -39,6 +45,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_09136998D02E4A4E8B0AFCAA1331A37C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_11B70D0B617A4F38BA697C0E702513F7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_14F4A435C19BD6D10FBD75ABBC6E4664"
         "OwnerKey" = "8:_B17CBF5DB4AC46EE9CD2B6B7D6052033"
         "MsmSig" = "8:_UNDEFINED"
@@ -59,6 +77,18 @@
         {
         "MsmKey" = "8:_2275743855067FE6ED3D6A2AC52BC63B"
         "OwnerKey" = "8:_C8EE02EE3D42B59915D07A156064AA03"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_26C9D435FE3E4957BF739972F1739E5C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2A0065688D86434DBB49C49AEFCBCBE2"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,8 +135,38 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_38E9BB1A6F22450CAB7850272DD4F573"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3EA1AAB08B0F42E6B55E078E61085ACB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_42B101C5B65F4362AB4CE5B21516C20A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_435A0D1258244190A82A5B3FD2BE6781"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_47198903D22E323127A2FAB5EAB45B7B"
         "OwnerKey" = "8:_B17CBF5DB4AC46EE9CD2B6B7D6052033"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4B99E669DA694763A8D718392DE63436"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -243,6 +303,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5D2FC265B05F4C35B8BB110059A07FF9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_603849EB525C4D288CCAD57935177584"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6064FA0A3F73421EA535C87B6411B787"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_63BC7759FD3C0CD837C2456480704D4D"
         "OwnerKey" = "8:_14F4A435C19BD6D10FBD75ABBC6E4664"
         "MsmSig" = "8:_UNDEFINED"
@@ -273,6 +351,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_65B2FED902834A59A92517659840C726"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6B83EE589BEBB6829CCD5ECBBC5C0E9A"
         "OwnerKey" = "8:_B17CBF5DB4AC46EE9CD2B6B7D6052033"
         "MsmSig" = "8:_UNDEFINED"
@@ -299,6 +383,12 @@
         {
         "MsmKey" = "8:_743ADB9EA2524BE61F610C04B116AD07"
         "OwnerKey" = "8:_B17CBF5DB4AC46EE9CD2B6B7D6052033"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7445AFBF96BB496FB78EBDBFA5C13DD9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -453,8 +543,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_90507F298898429B9199D1C7399E99F1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9444028A37505A4088591D418BE38021"
         "OwnerKey" = "8:_B17CBF5DB4AC46EE9CD2B6B7D6052033"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_97437DF311EA49E9ABA55D4F6F9A1F03"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -669,7 +771,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DBD539B777BE49C189D854D1738B552B"
+        "MsmKey" = "8:_E02A0ECA55FF41C394CEE7006C65FFE1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1014,6 +1116,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0497C0CE13EB44979066A078F386757B"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\函数.bmp"
+            "TargetName" = "8:函数.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_07B6C378B224A88360BCFE9A9F7868B5"
             {
             "AssemblyRegister" = "3:1"
@@ -1043,6 +1165,46 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_09136998D02E4A4E8B0AFCAA1331A37C"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\有载分接开关软件界面图标-12.png"
+            "TargetName" = "8:有载分接开关软件界面图标-12.png"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11B70D0B617A4F38BA697C0E702513F7"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-11.png"
+            "TargetName" = "8:有载分接开关软件界面图标-11.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_14F4A435C19BD6D10FBD75ABBC6E4664"
@@ -1105,6 +1267,46 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_26C9D435FE3E4957BF739972F1739E5C"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-05.png"
+            "TargetName" = "8:有载分接开关软件界面图标-05.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2A0065688D86434DBB49C49AEFCBCBE2"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\GZDL.ico"
+            "TargetName" = "8:GZDL.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2E2E54700DB86A64006EDBAE0F99C98C"
@@ -1200,6 +1402,86 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_38E9BB1A6F22450CAB7850272DD4F573"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\勾.bmp"
+            "TargetName" = "8:勾.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3EA1AAB08B0F42E6B55E078E61085ACB"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\勾2.bmp"
+            "TargetName" = "8:勾2.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_42B101C5B65F4362AB4CE5B21516C20A"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-02.png"
+            "TargetName" = "8:有载分接开关软件界面图标-02.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_435A0D1258244190A82A5B3FD2BE6781"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-04.png"
+            "TargetName" = "8:有载分接开关软件界面图标-04.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47198903D22E323127A2FAB5EAB45B7B"
             {
             "AssemblyRegister" = "3:1"
@@ -1229,6 +1511,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B99E669DA694763A8D718392DE63436"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-10.png"
+            "TargetName" = "8:有载分接开关软件界面图标-10.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_522875128E65F3F6EE6C1FD0284A7203"
@@ -1324,6 +1626,66 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5D2FC265B05F4C35B8BB110059A07FF9"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\勾3.bmp"
+            "TargetName" = "8:勾3.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_603849EB525C4D288CCAD57935177584"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-06.png"
+            "TargetName" = "8:有载分接开关软件界面图标-06.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6064FA0A3F73421EA535C87B6411B787"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\ImgIcon\\有载分接开关软件界面图标-11.png"
+            "TargetName" = "8:有载分接开关软件界面图标-11.png"
+            "Tag" = "8:"
+            "Folder" = "8:_CCEF4BE2CE84465FB820223674A3B398"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_63BC7759FD3C0CD837C2456480704D4D"
             {
             "AssemblyRegister" = "3:1"
@@ -1353,6 +1715,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_65B2FED902834A59A92517659840C726"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-01.png"
+            "TargetName" = "8:有载分接开关软件界面图标-01.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6B83EE589BEBB6829CCD5ECBBC5C0E9A"
@@ -1468,6 +1850,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7445AFBF96BB496FB78EBDBFA5C13DD9"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-08.png"
+            "TargetName" = "8:有载分接开关软件界面图标-08.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_76CEB8CA15982A4E397B6B807915FFA3"
             {
             "AssemblyRegister" = "3:1"
@@ -1581,6 +1983,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_90507F298898429B9199D1C7399E99F1"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-09.png"
+            "TargetName" = "8:有载分接开关软件界面图标-09.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9444028A37505A4088591D418BE38021"
             {
             "AssemblyRegister" = "3:1"
@@ -1610,6 +2032,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_97437DF311EA49E9ABA55D4F6F9A1F03"
+            {
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-12.png"
+            "TargetName" = "8:有载分接开关软件界面图标-12.png"
+            "Tag" = "8:"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_97947F7FE26CD46D252688480A957804"
@@ -1953,12 +2395,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DBD539B777BE49C189D854D1738B552B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E02A0ECA55FF41C394CEE7006C65FFE1"
             {
-            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\bin\\Debug\\x64\\SQLite.Interop.dll"
-            "TargetName" = "8:SQLite.Interop.dll"
+            "SourcePath" = "8:..\\Load_Tap_Changer_Test\\Resources\\有载分接开关软件界面图标-03.png"
+            "TargetName" = "8:有载分接开关软件界面图标-03.png"
             "Tag" = "8:"
-            "Folder" = "8:_78D63445A5DE47668296C0D8D99638EB"
+            "Folder" = "8:_555D278968BA4C919B611704E2C683B8"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2115,6 +2557,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_555D278968BA4C919B611704E2C683B8"
+                    {
+                    "Name" = "8:Resources"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_09B6E501A87A4936961B00DECF8E6958"
+                        "Folders"
+                        {
+                        }
+                    }
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_78D63445A5DE47668296C0D8D99638EB"
                     {
                     "Name" = "8:x64"
@@ -2133,6 +2586,17 @@
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_C5E33F5329BA46ADB10D6AC2326AEB90"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_CCEF4BE2CE84465FB820223674A3B398"
+                    {
+                    "Name" = "8:ImgIcon"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_1A0D13F671564C79A43C727A70266A79"
                         "Folders"
                         {
                         }
@@ -2156,7 +2620,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Load_Tap_Changer_Test"
         "ProductCode" = "8:{9C72C59B-D23E-499C-9485-0F3B59993C3D}"
-        "PackageCode" = "8:{C56DE14E-817A-468A-BCD7-AAB1B03C4FB4}"
+        "PackageCode" = "8:{02E55FE1-2DBA-4559-83C8-BDD3825880EF}"
         "UpgradeCode" = "8:{C2E6C1E5-6480-42DE-98FC-D73187C6F77F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
