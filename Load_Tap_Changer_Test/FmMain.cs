@@ -3051,6 +3051,10 @@ namespace Basic_Controls
                                                 vline1.Add(v1x, v1y, true);
                                                 v1x = new double[alladdnum];
                                                 v1y = new double[alladdnum];
+                                                if (vline1.Count > linlength)
+                                                {
+                                                    vline1.Delete(linlength, vline1.Count - linlength);
+                                                }
                                             }
                                         }
                                         if (v2)
@@ -3065,6 +3069,10 @@ namespace Basic_Controls
                                                 vline2.Add(v2x, v2y, true);
                                                 v2x = new double[alladdnum];
                                                 v2y = new double[alladdnum];
+                                                if (vline2.Count > linlength)
+                                                {
+                                                    vline2.Delete(linlength, vline2.Count - linlength);
+                                                }
                                             }
                                         }
                                         if (v3)
@@ -3080,6 +3088,10 @@ namespace Basic_Controls
                                                 vline3.Add(v3x, v3y, true);
                                                 v3x = new double[alladdnum];
                                                 v3y = new double[alladdnum];
+                                                if (vline3.Count > linlength)
+                                                {
+                                                    vline3.Delete(linlength, vline3.Count - linlength);
+                                                }
                                             }
                                         }
                                         if (c1)
@@ -3100,6 +3112,10 @@ namespace Basic_Controls
                                                 cline1.Add(c1x, c1y, true);
                                                 c1x = new double[alladdnum];
                                                 c1y = new double[alladdnum];
+                                                if (cline1.Count > linlength)
+                                                {
+                                                    cline1.Delete(linlength, cline1.Count - linlength);
+                                                }
                                             }
                                         }
                                         if (c2)
@@ -3115,6 +3131,10 @@ namespace Basic_Controls
                                                 cline2.Add(c2x, c2y, true);
                                                 c2x = new double[alladdnum];
                                                 c2y = new double[alladdnum];
+                                                if (cline2.Count > linlength)
+                                                {
+                                                    cline2.Delete(linlength, cline2.Count - linlength);
+                                                }
                                             }
 
                                         }
@@ -3124,6 +3144,7 @@ namespace Basic_Controls
                                             //double Cd = Algorithm.Instance.Current_Algorithm_Double(C);
                                             int C = ProtocolUtil.ByteToInt(bytes[14], bytes[15]);
                                             double Cd = Algorithm.Instance.Current_Algorithm_Double(C, I);
+
                                             c3x[addNum] = x;
                                             c3y[addNum] = Cd;
                                             if (addNum == alladdnum - 1 || porintadd >= linlength)
@@ -3131,7 +3152,11 @@ namespace Basic_Controls
                                                 cline3.Add(c3x, c3y, true);
                                                 c3x = new double[alladdnum];
                                                 c3y = new double[alladdnum];
-                                            }
+                                                if (cline3.Count > linlength)
+                                                {
+                                                    cline3.Delete(linlength, cline3.Count - linlength);
+                                                }
+                                             }
                                         }
                                         #endregion
 
@@ -3151,6 +3176,7 @@ namespace Basic_Controls
                                             //是停止
                                             this.BeginInvoke(new MethodInvoker(() =>
                                             {
+                                              
                                                 tChart.Refresh();
                                                 Stop_Test(false);
                                             }));
@@ -3193,6 +3219,7 @@ namespace Basic_Controls
                 }
                 //所有结束后执行
                 Print_End_Bind(addNum);
+
             }
             catch (Exception ex)
             {
