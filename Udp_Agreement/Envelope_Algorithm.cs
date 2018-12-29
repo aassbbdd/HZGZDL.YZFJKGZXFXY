@@ -40,8 +40,9 @@ namespace Udp_Agreement
         /// <param name="rc_up">上升 rc值</param>
         public void Envelope(double spacing, double[] x, double[] y
             , out double[] Out_x, out double[] Out_y
-            , double rc_dn = 0.01, double rc_up = 0.0001)
+             ,double rc_dn = 0.01, double rc_up = 0.0001)
         {
+  
             double[] yNew = (double[])y.Clone();
             double[] xNew = (double[])x.Clone();
 
@@ -51,7 +52,7 @@ namespace Udp_Agreement
 
             Out_x = x;
             Out_y = outY;
-        }
+         }
 
         #endregion
 
@@ -181,6 +182,7 @@ namespace Udp_Agreement
             }
         }
 
+
         /// <summary>
         /// 返回包络线数据
         /// </summary>
@@ -193,18 +195,21 @@ namespace Udp_Agreement
             double xx = 0.0;
             int i;
             double t = 0.000001;
+
             Out_y[0] = Math.Abs(In_y[0]);
             for (i = 1; i < In_y.Length; i++)
             {
                 xx = In_y[i];
                 if ((xx) > Out_y[i - 1])
                 {
-                    Out_y[i] = Out_y[i - 1] + ((xx - Out_y[i - 1]) * (1 - Math.Exp(-t / rc_up)));
+                    Out_y[i] = Math.Round(Out_y[i - 1] + ((xx - Out_y[i - 1]) * (1 - Math.Exp(-t / rc_up))),2);
                 }
                 else
                 {
-                    Out_y[i] = Out_y[i - 1] - ((Out_y[i - 1] - xx) * (1 - Math.Exp(-t / rc_dn)));
+                    Out_y[i] =Math.Round( Out_y[i - 1] - ((Out_y[i - 1] - xx) * (1 - Math.Exp(-t / rc_dn))),2);
                 }
+
+
             }
         }
 

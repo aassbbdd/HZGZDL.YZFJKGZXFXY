@@ -117,8 +117,8 @@ namespace Udp_Agreement
             //振动采集到的AD值 0-32767（正）,32768-65535（负）
             //参考电压：2.5V固定  衰减倍数：5固定
             //计算加速度：x
-            double x = Math.Round((ad * 2.5 * 5 * G * k) / (32768 * V),2);
-            return x;
+            double x = Math.Round((ad * 2.5 * 5 * G * k) / (32768 * V), 2);
+            return Math.Round(x, 2);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Udp_Agreement
             //振动采集到的AD值 0-32767（正）,32768-65535（负）
             //参考电压：2.5V固定  衰减倍数：5固定
             //计算加速度：x
-            double x = Math.Round((AD * 2.5 * 5 * G * k) / (32768 * V),2);
+            double x = Math.Round((AD * 2.5 * 5 * G * k) / (32768 * V), 2);
             return x;
         }
 
@@ -272,7 +272,7 @@ namespace Udp_Agreement
             //    ad = -(65535 - ad);
             //}
             double x = (ad * 2.5 * 1 * I * k) / (32768 * V);
-            return x;
+            return Math.Round(x, 2);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Udp_Agreement
                 AD = -(65535 - AD);
             }
 
-            double x =Math.Round((AD * 2.5 * 1 * I * k) / (32768 * V),2);
+            double x = Math.Round((AD * 2.5 * 1 * I * k) / (32768 * V), 2);
             return x;
         }
 

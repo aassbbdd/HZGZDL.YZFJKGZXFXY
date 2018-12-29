@@ -733,7 +733,6 @@ namespace DbHelper
         private static void Algorithm_To_Arrey1(XElement model, int jinex, int AverageNum
             )
         {
-
             //基本宽度
             int num = 1;
             //一组数据总计算次数
@@ -765,6 +764,31 @@ namespace DbHelper
                 newy[3][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
                 newy[4][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
                 newy[5][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+
+                if (newy[0][id] > leftMax[0])
+                {
+                    leftMax[0] = newy[0][id];
+                }
+                if (newy[1][id] > leftMax[1])
+                {
+                    leftMax[1] = newy[1][id];
+                }
+                if ( Math.Abs( newy[2][id]) > leftMax[2])
+                {
+                    leftMax[2] = newy[2][id];
+                }
+                if (newy[3][id] > leftMax[3])
+                {
+                    leftMax[3] = newy[3][id];
+                }
+                if (newy[4][id] > leftMax[4])
+                {
+                    leftMax[4] = newy[4][id];
+                }
+                if (newy[5][id] > leftMax[5])
+                {
+                    leftMax[5] = newy[5][id];
+                }
 
                 //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
                 double newXvalue = (double)((jinex * count) + num + i) / allnum;
@@ -1291,6 +1315,12 @@ namespace DbHelper
         static double[][] newy;
 
         /// <summary>
+        /// 左边轴高低 0 电流1 ，1 电流2 ，2 电流3，3 震动1 ，4 震动2 5 震动3
+        /// </summary>
+        static double[] leftMax;
+
+
+        /// <summary>
         /// xml转 平均数组和完整数组
         /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
         /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
@@ -1301,7 +1331,7 @@ namespace DbHelper
         /// <returns></returns>
         public static void Xml_To_AverageAndArray(string path, bool[] cks,
             out double[][] linex, out double[][] liney,
-            out bool IsNotNull, int AverageNum = 100
+            out bool IsNotNull, out double[] leftMaxs, int AverageNum = 100
             )
         {
             try
@@ -1393,6 +1423,8 @@ namespace DbHelper
                 }
                 int index = 0; //index 为 震动电流 每个点的 索引位置值
 
+                leftMax = new double[6];
+
                 foreach (XElement item in eles)
                 {
                     Algorithm_To_Arrey1(item, index, AverageNum);
@@ -1415,6 +1447,7 @@ namespace DbHelper
                   = linex[11][j]
                   = (double)(j * AverageCoun) / allnum;
                 }
+                leftMaxs = leftMax;
             }
             catch (Exception ex)
             {
@@ -1493,11 +1526,13 @@ namespace DbHelper
         /// <param name="path">xml路径</param>
         /// <returns></returns>
         public static void Xml_To_Array_AverageAndContrast(string path, bool[] cks,
-             double[][] linex, double[][] liney, int Datalength, int AverageNum = 100
+             double[][] linex, double[][] liney, out double[] leftMaxs
+            , int Datalength, int AverageNum = 100
             )
         {
             try
             {
+                leftMax = new double[6];
                 XDocument document;
                 try
                 {
@@ -1556,6 +1591,7 @@ namespace DbHelper
                   = newx[3 + newDatalength][j]
                   = newXvalue1;
                 }
+                leftMaxs = leftMax;
             }
             catch (Exception ex)
             {
@@ -1646,7 +1682,7 @@ namespace DbHelper
 
             string DataSource = model.Element("DataSource").Value;
             string data = DataSource.Substring(8, DataSource.Length - 8);
-
+            double max = 0;
             for (int i = 0; i < count; i++)
             {
                 int length = 24 * i;//截取位置
@@ -1657,32 +1693,69 @@ namespace DbHelper
                     //计算
                     string Current1 = data.Substring(12 + length, 4);
                     newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+
+                    if (leftMax[0] > Math.Abs(newy[0 + newDatalength][id]))
+                    {
+                        leftMax[0] = Math.Abs(newy[0 + newDatalength][id]);
+                    }
+
                 }
                 else if (cks[1])
                 {
                     string Current2 = data.Substring(16 + length, 4);
                     newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+
+                    if (leftMax[1] > Math.Abs(newy[0 + newDatalength][id]))
+                    {
+                        leftMax[1] = Math.Abs(newy[0 + newDatalength][id]);
+                    }
+
                 }
                 else if (cks[2])
                 {
                     string Current3 = data.Substring(20 + length, 4);
                     newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+                    //if (leftMax[2] > Math.Abs(newy[0 + newDatalength][id]))
+                    //{
+                    //    leftMax[2] = Math.Abs(newy[0 + newDatalength][id]);
+                    //}
+                    if (leftMax[2] > newy[0 + newDatalength][id])
+                    {
+                        leftMax[2] = newy[0 + newDatalength][id];
+                    }
                 }
 
                 if (cks[3])
                 {
                     string Vibration1 = data.Substring(0 + length, 4);
                     newy[1 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                    //if (leftMax[3] > Math.Abs(newy[1 + newDatalength][id]))
+                    //{
+                    //    leftMax[3] = Math.Abs(newy[1 + newDatalength][id]);
+                    //}
+
+                    if (leftMax[3] > newy[1 + newDatalength][id])
+                    {
+                        leftMax[3] = newy[1 + newDatalength][id];
+                    }
                 }
                 else if (cks[4])
                 {
                     string Vibration2 = data.Substring(4 + length, 4);
                     newy[1 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                    if (leftMax[4] > Math.Abs(newy[1 + newDatalength][id]))
+                    {
+                        leftMax[4] = Math.Abs(newy[1 + newDatalength][id]);
+                    }
                 }
                 else if (cks[5])
                 {
                     string Vibration3 = data.Substring(8 + length, 4);
                     newy[1 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+                    if (leftMax[5] > Math.Abs(newy[1 + newDatalength][id]))
+                    {
+                        leftMax[5] = Math.Abs(newy[1 + newDatalength][id]);
+                    }
                 }
                 //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
                 double newXvalue = (double)((jinex * count) + num + i) / allnum;

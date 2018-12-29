@@ -31,7 +31,7 @@ namespace Basic_Controls
         private void FmAddTest_Load(object sender, EventArgs e)
         {
             txtTEST_TIME.Properties.VistaEditTime = DefaultBoolean.True;
-            if (oldmodel != null && !string.IsNullOrEmpty(oldmodel.DVNAME))
+            if (oldmodel != null && !string.IsNullOrEmpty(oldmodel.DVNAME)&& oldmodel.ISEDIT=="2")
             {
                 Page_Data_Bind();
                 txtTEST_TIME.Enabled = false;
@@ -90,6 +90,10 @@ namespace Basic_Controls
         /// </summary>
         private void Page_Data_Bind()
         {
+
+            ckC1.Checked = false;
+            ckV1.Checked = false;
+
             string dvname = oldmodel.DVNAME;
             //if (oldmodel.ISEDIT == "1")
             //{

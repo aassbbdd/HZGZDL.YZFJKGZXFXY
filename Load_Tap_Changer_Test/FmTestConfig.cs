@@ -111,6 +111,14 @@ namespace Load_Tap_Changer_Test
         /// </summary>
         private void Page_Data_Bind()
         {
+            if (oldmodel.ISEDIT == "2")
+            {
+                ckC1.Checked = false;
+                ckV1.Checked = false;
+
+            }
+
+
             string dvname = oldmodel.DVNAME;
 
             this.cmbBaseC.Text = "10";

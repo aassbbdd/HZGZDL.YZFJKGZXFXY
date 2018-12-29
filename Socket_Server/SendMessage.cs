@@ -244,6 +244,7 @@ namespace Socket_Server
                 SendMessagesStop("05550555", ipPoint);
                 DateTime startTime = DateTime.Now;
                 sendUdpClient.Send(sendbytes, sendbytes.Length, ipPoint);
+                int j = 0;
                 while (continueLoop)// && DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) <= outTime * 1000)
                 {
                     if (sendUdpClient.Client.Available > 0)
@@ -257,6 +258,7 @@ namespace Socket_Server
                                 {
                                     udp_Event("", recData);
                                     i++;
+                                    j++;
                                     if (i == 100)// 设备刚开启时，很容易断开，设备运行一段时间后，又正常了。
                                     {
                                         sendUdpClient.Send(confirm, confirm.Length, ipPoint);
