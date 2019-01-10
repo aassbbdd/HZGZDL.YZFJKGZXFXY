@@ -193,11 +193,11 @@ namespace Load_Tap_Changer_Test
                     int EPlace = Convert.ToInt32(this.txtEPlace.Text);
                     if (EPlace > SPlace)
                     {
-                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + SPlace + "-" + (SPlace + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + SPlace + "-" + (SPlace + 1) + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss");
                     }
                     else
                     {
-                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + EPlace + "-" + (EPlace - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + EPlace + "-" + (EPlace - 1) + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss");
                     }
                 }
                 else
@@ -205,11 +205,11 @@ namespace Load_Tap_Changer_Test
                     int Place = Convert.ToInt32(this.CmbPlace.Text);
                     if (RdoOrder.Text == "1")
                     {
-                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place + 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place + 1) + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss");
                     }
                     else
                     {
-                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place - 1) + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        oldmodel.DVNAME = oldmodel.DVNAME + "_" + Place + "-" + (Place - 1) + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss");
                     }
                 }
 

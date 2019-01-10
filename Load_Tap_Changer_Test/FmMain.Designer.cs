@@ -47,6 +47,7 @@
             this.btnPant = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnSTest = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnStopTest = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.btnRestore = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnEnvelope = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnLeftShift = new DevExpress.XtraBars.BarLargeButtonItem();
             this.TxtOffset11 = new DevExpress.XtraBars.BarEditItem();
@@ -56,6 +57,7 @@
             this.btnNarrow = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnClear = new DevExpress.XtraBars.BarLargeButtonItem();
             this.btnReNew = new DevExpress.XtraBars.BarLargeButtonItem();
+            this.barLargeButtonItem2 = new DevExpress.XtraBars.BarLargeButtonItem();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barButtonItem11 = new DevExpress.XtraBars.BarButtonItem();
@@ -118,7 +120,16 @@
             this.barLinkContainerItem2 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.btnRightShift = new DevExpress.XtraBars.BarHeaderItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.barHeaderItem1 = new DevExpress.XtraBars.BarHeaderItem();
+            this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pcAfter = new System.Windows.Forms.PictureBox();
+            this.pcFront = new System.Windows.Forms.PictureBox();
+            this.staffgauge1 = new Load_Tap_Changer_Test.Staffgauge.Staffgauge();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.lbybname = new DevExpress.XtraEditors.LabelControl();
@@ -138,6 +149,7 @@
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
+            this.IsFilterData = new DevExpress.XtraEditors.CheckEdit();
             this.lbVoltage = new DevExpress.XtraEditors.LabelControl();
             this.lbtime = new DevExpress.XtraEditors.LabelControl();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -202,7 +214,6 @@
             this.popupMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.splashScreenManager = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::Load_Tap_Changer_Test.WaitForm), true, true);
             this.barLargeButtonItem24 = new DevExpress.XtraBars.BarLargeButtonItem();
-            this.barLargeButtonItem2 = new DevExpress.XtraBars.BarLargeButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TxtOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
@@ -210,6 +221,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).BeginInit();
             this.pclChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcAfter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcFront)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
@@ -217,6 +230,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IsFilterData.Properties)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ckLineShow.Properties)).BeginInit();
@@ -358,9 +372,13 @@
             this.btnReNew,
             this.TxtOffset11,
             this.barButtonItem3,
-            this.barLargeButtonItem2});
+            this.barLargeButtonItem2,
+            this.barHeaderItem1,
+            this.barStaticItem1,
+            this.barStaticItem2,
+            this.btnRestore});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 128;
+            this.barManager1.MaxItemId = 132;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemTextEdit1,
             this.repositoryItemTextEdit2,
@@ -389,8 +407,9 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPant, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnSTest),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnStopTest, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLeftShift, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRestore, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnvelope, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLeftShift, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.Caption | DevExpress.XtraBars.BarLinkUserDefines.PaintStyle))), this.TxtOffset11, "单位(ms):", false, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRightShift1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEnlarge, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -456,7 +475,7 @@
             // 
             // btnPant
             // 
-            this.btnPant.Caption = "心跳";
+            this.btnPant.Caption = "检查连接";
             this.btnPant.Id = 83;
             this.btnPant.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.勾;
             this.btnPant.Name = "btnPant";
@@ -478,6 +497,14 @@
             this.btnStopTest.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnStopTest.ImageOptions.Image")));
             this.btnStopTest.Name = "btnStopTest";
             this.btnStopTest.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnStopTest_ItemClick);
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Caption = "还原图形";
+            this.btnRestore.Id = 131;
+            this.btnRestore.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.Arrow_next3;
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRestore_ItemClick);
             // 
             // btnEnvelope
             // 
@@ -550,6 +577,14 @@
             this.btnReNew.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.有载分接开关软件界面图标_08;
             this.btnReNew.Name = "btnReNew";
             this.btnReNew.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReNew_ItemClick);
+            // 
+            // barLargeButtonItem2
+            // 
+            this.barLargeButtonItem2.Caption = "退出";
+            this.barLargeButtonItem2.Id = 127;
+            this.barLargeButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem2.ImageOptions.Image")));
+            this.barLargeButtonItem2.Name = "barLargeButtonItem2";
+            this.barLargeButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem2_ItemClick);
             // 
             // bar2
             // 
@@ -990,15 +1025,44 @@
             this.barButtonItem3.Name = "barButtonItem3";
             this.barButtonItem3.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem3_ItemClick);
             // 
+            // barHeaderItem1
+            // 
+            this.barHeaderItem1.Caption = "还原图形";
+            this.barHeaderItem1.Id = 128;
+            this.barHeaderItem1.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标14;
+            this.barHeaderItem1.Name = "barHeaderItem1";
+            // 
+            // barStaticItem1
+            // 
+            this.barStaticItem1.Caption = "还原图";
+            this.barStaticItem1.Id = 129;
+            this.barStaticItem1.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources.图标13;
+            this.barStaticItem1.Name = "barStaticItem1";
+            this.barStaticItem1.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
+            // barStaticItem2
+            // 
+            this.barStaticItem2.Caption = "barStaticItem2";
+            this.barStaticItem2.Id = 130;
+            this.barStaticItem2.ImageOptions.Image = global::Load_Tap_Changer_Test.Properties.Resources._3;
+            this.barStaticItem2.Name = "barStaticItem2";
+            this.barStaticItem2.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
             // pclChart
             // 
             this.pclChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pclChart.Appearance.BackColor = System.Drawing.Color.White;
+            this.pclChart.Appearance.BackColor = System.Drawing.SystemColors.Control;
             this.pclChart.Appearance.Options.UseBackColor = true;
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pclChart.Controls.Add(this.label3);
+            this.pclChart.Controls.Add(this.label2);
+            this.pclChart.Controls.Add(this.label1);
+            this.pclChart.Controls.Add(this.pcAfter);
+            this.pclChart.Controls.Add(this.pcFront);
+            this.pclChart.Controls.Add(this.staffgauge1);
             this.pclChart.Controls.Add(this.labelControl3);
             this.pclChart.Controls.Add(this.labelControl4);
             this.pclChart.Controls.Add(this.lbybname);
@@ -1018,6 +1082,67 @@
             this.pclChart.Name = "pclChart";
             this.pclChart.Size = new System.Drawing.Size(1043, 837);
             this.pclChart.TabIndex = 30;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(120, 122);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 18);
+            this.label3.TabIndex = 71;
+            this.label3.Text = "label3";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(40, 122);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 18);
+            this.label2.TabIndex = 70;
+            this.label2.Text = "label2";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(132, 97);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 18);
+            this.label1.TabIndex = 69;
+            this.label1.Text = "label1";
+            // 
+            // pcAfter
+            // 
+            this.pcAfter.Location = new System.Drawing.Point(442, 6);
+            this.pcAfter.Name = "pcAfter";
+            this.pcAfter.Size = new System.Drawing.Size(10, 535);
+            this.pcAfter.TabIndex = 67;
+            this.pcAfter.TabStop = false;
+            // 
+            // pcFront
+            // 
+            this.pcFront.Location = new System.Drawing.Point(296, 6);
+            this.pcFront.Name = "pcFront";
+            this.pcFront.Size = new System.Drawing.Size(10, 535);
+            this.pcFront.TabIndex = 68;
+            this.pcFront.TabStop = false;
+            this.pcFront.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseDown);
+            this.pcFront.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseMove);
+            this.pcFront.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseUp);
+            // 
+            // staffgauge1
+            // 
+            this.staffgauge1.BackColor = System.Drawing.SystemColors.Control;
+            this.staffgauge1.BorderColor = System.Drawing.Color.Empty;
+            this.staffgauge1.IsPcValue = false;
+            this.staffgauge1.Location = new System.Drawing.Point(123, 101);
+            this.staffgauge1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.staffgauge1.Name = "staffgauge1";
+            this.staffgauge1.Size = new System.Drawing.Size(494, 216);
+            this.staffgauge1.TabIndex = 66;
+            this.staffgauge1.XValue = 0;
+            this.staffgauge1.XXValue = null;
+            this.staffgauge1.YValue = 0;
+            this.staffgauge1.YYValue = null;
             // 
             // labelControl3
             // 
@@ -1192,13 +1317,14 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(1, 158);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-            this.xtraTabControl1.Size = new System.Drawing.Size(226, 392);
+            this.xtraTabControl1.Size = new System.Drawing.Size(226, 415);
             this.xtraTabControl1.TabIndex = 81;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1});
             // 
             // xtraTabPage1
             // 
+            this.xtraTabPage1.Controls.Add(this.IsFilterData);
             this.xtraTabPage1.Controls.Add(this.lbVoltage);
             this.xtraTabPage1.Controls.Add(this.lbtime);
             this.xtraTabPage1.Controls.Add(this.groupBox2);
@@ -1208,8 +1334,17 @@
             this.xtraTabPage1.Controls.Add(this.ckFollow);
             this.xtraTabPage1.Controls.Add(this.labelControl6);
             this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(219, 356);
+            this.xtraTabPage1.Size = new System.Drawing.Size(219, 379);
             this.xtraTabPage1.Text = "设备波形参数";
+            // 
+            // IsFilterData
+            // 
+            this.IsFilterData.Location = new System.Drawing.Point(7, 350);
+            this.IsFilterData.MenuManager = this.barManager1;
+            this.IsFilterData.Name = "IsFilterData";
+            this.IsFilterData.Properties.Caption = "是否过滤数据";
+            this.IsFilterData.Size = new System.Drawing.Size(118, 22);
+            this.IsFilterData.TabIndex = 102;
             // 
             // lbVoltage
             // 
@@ -1827,14 +1962,6 @@
             this.barLargeButtonItem24.Id = 115;
             this.barLargeButtonItem24.Name = "barLargeButtonItem24";
             // 
-            // barLargeButtonItem2
-            // 
-            this.barLargeButtonItem2.Caption = "退出";
-            this.barLargeButtonItem2.Id = 127;
-            this.barLargeButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barLargeButtonItem2.ImageOptions.Image")));
-            this.barLargeButtonItem2.Name = "barLargeButtonItem2";
-            this.barLargeButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barLargeButtonItem2_ItemClick);
-            // 
             // FmMain
             // 
             this.Appearance.BackColor = System.Drawing.Color.White;
@@ -1865,6 +1992,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pclChart)).EndInit();
             this.pclChart.ResumeLayout(false);
             this.pclChart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcAfter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pcFront)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRcUp.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRcDn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
@@ -1874,6 +2003,7 @@
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPage1.ResumeLayout(false);
             this.xtraTabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IsFilterData.Properties)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -2076,5 +2206,16 @@
         private DevExpress.XtraEditors.LabelControl labelControl31;
         private DevExpress.XtraEditors.LabelControl labelControl32;
         private DevExpress.XtraBars.BarLargeButtonItem barLargeButtonItem2;
+        private DevExpress.XtraBars.BarLargeButtonItem btnRestore;
+        private DevExpress.XtraBars.BarHeaderItem barHeaderItem1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+        private DevExpress.XtraEditors.CheckEdit IsFilterData;
+        private Load_Tap_Changer_Test.Staffgauge.Staffgauge staffgauge1;
+        private System.Windows.Forms.PictureBox pcFront;
+        private System.Windows.Forms.PictureBox pcAfter;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -439,5 +439,6 @@ namespace Load_Tap_Changer_Test.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+       
     }
 }

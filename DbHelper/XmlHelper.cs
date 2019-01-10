@@ -74,7 +74,7 @@ namespace DbHelper
                 }
 
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
                 //LogHelper.LogError("Error! ", exception);
             }
@@ -773,7 +773,7 @@ namespace DbHelper
                 {
                     leftMax[1] = newy[1][id];
                 }
-                if ( Math.Abs( newy[2][id]) > leftMax[2])
+                if (Math.Abs(newy[2][id]) > leftMax[2])
                 {
                     leftMax[2] = newy[2][id];
                 }
@@ -831,6 +831,153 @@ namespace DbHelper
                   = newXvalue1;
 
                     AverageCoun = 0;
+                    c1 = 0;
+                    c2 = 0;
+                    c3 = 0;
+                    v1 = 0;
+                    v2 = 0;
+                    v3 = 0;
+
+                    j++;
+                }
+                AverageCoun++;
+
+                #endregion
+            }
+        }
+
+
+        /// <summary>
+        /// 存储转换为数组 
+        /// </summary>
+        /// <param name="model">存储数据</param>
+        /// <param name="jinex">数据在数据集合位置</param>
+        /// <param name="LeakNum">偷点数</param>
+        private static void Algorithm_To_Arrey2(XElement model, int jinex, int LeakNum
+            )
+        {
+            //基本宽度
+            int num = 1;
+            //一组数据总计算次数
+            int count = 80;
+
+            string DataSource = model.Element("DataSource").Value;
+            string data = DataSource.Substring(8, DataSource.Length - 8);
+
+            for (int i = 0; i < count; i++)
+            {
+                int length = 24 * i;//截取位置
+
+                string Current1 = data.Substring(12 + length, 4);
+                string Current2 = data.Substring(16 + length, 4);
+                string Current3 = data.Substring(20 + length, 4);
+
+                string Vibration1 = data.Substring(0 + length, 4);
+                string Vibration2 = data.Substring(4 + length, 4);
+                string Vibration3 = data.Substring(8 + length, 4);
+
+                #region 计算全部点数部分
+                int id = (jinex * count) + i;
+
+                //计算
+                newy[0][id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                newy[1][id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                newy[2][id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+
+                newy[3][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                newy[4][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                newy[5][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+
+                if (newy[0][id] > leftMax[0])
+                {
+                    leftMax[0] = newy[0][id];
+                }
+                if (newy[1][id] > leftMax[1])
+                {
+                    leftMax[1] = newy[1][id];
+                }
+                if (Math.Abs(newy[2][id]) > leftMax[2])
+                {
+                    leftMax[2] = newy[2][id];
+                }
+                if (newy[3][id] > leftMax[3])
+                {
+                    leftMax[3] = newy[3][id];
+                }
+                if (newy[4][id] > leftMax[4])
+                {
+                    leftMax[4] = newy[4][id];
+                }
+                if (newy[5][id] > leftMax[5])
+                {
+                    leftMax[5] = newy[5][id];
+                }
+
+                //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+                double newXvalue = (double)((jinex * count) + num + i) / allnum;
+
+                newx[0][id]
+              = newx[1][id]
+              = newx[2][id]
+              = newx[3][id]
+              = newx[4][id]
+              = newx[5][id]
+              = newXvalue;
+
+                #endregion
+
+                #region 计算求平均部分
+
+                if ( Math.Abs( newy[0][id]) > Math.Abs(c1))
+                {
+                    c1 = newy[0][id];
+                }
+
+                if (Math.Abs(newy[1][id]) > Math.Abs(c2))
+                {
+                    c2 = newy[1][id];
+                }
+
+                if (Math.Abs(newy[2][id]) > Math.Abs(c3))
+                {
+                    c3 = newy[2][id];
+                }
+
+                if (Math.Abs(newy[3][id]) > Math.Abs(v1))
+                {
+                    v1 = newy[3][id];
+                }
+
+                if (Math.Abs(newy[4][id]) > Math.Abs(v2))
+                {
+                    v2 = newy[4][id];
+                }
+
+                if (Math.Abs(newy[5][id]) > Math.Abs(v3))
+                {
+                    v3 = newy[5][id];
+                }
+
+                if (AverageCoun >= LeakNum)
+                {
+                     newy[6][j] = c1;
+                     newy[7][j] = c2;
+                     newy[8][j] = c3;
+                     newy[9][j] = v1;
+                    newy[10][j] = v2;
+                    newy[11][j] = v3;
+
+                    double newXvalue1 = (double)(j * AverageCoun) / allnum;
+                     newx[6][j]
+                  =  newx[7][j]
+                  =  newx[8][j]
+                  =  newx[9][j]
+                  = newx[10][j]
+                  = newx[11][j]
+                  = newXvalue1;
+
+                    AverageCoun = 0;
+
                     c1 = 0;
                     c2 = 0;
                     c3 = 0;
@@ -1454,6 +1601,149 @@ namespace DbHelper
                 throw ex;
             }
         }
+
+
+
+        /// <summary>
+        /// xml转 偷点数组和完整数组
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// </summary>
+        /// <param name="path">储存路径</param>
+        /// <param name="cks">展示那几个通道</param>
+        /// <param name="linex">X轴数组集合 1 2 3 电路和震动</param>
+        /// <param name="liney">Y轴数组集合 1 2 3 电路和震动</param>
+        /// <param name="IsNotNull">数据是否为空</param>
+        /// <param name="leftMaxs">Y轴坐标卡尺</param>
+        /// <param name="LeakNum">偷点漏点数</param>
+        public static void Xml_To_Leak_And_Array(string path, bool[] cks,
+            out double[][] linex, out double[][] liney,
+            out bool IsNotNull, out double[] leftMaxs, int LeakNum = 10
+            )
+        {
+            try
+            {
+                IsNotNull = true;
+                XDocument document;
+                try
+                {
+                    document = XDocument.Load(path);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                XElement root = document.Root;
+
+                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+
+                XElement ele = root.Element("Test_Plan");
+
+                if (ele == null)
+                {
+                    I = 10;
+                }
+                else
+                {
+                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                }
+
+                linex = new double[20][];
+                liney = new double[20][];
+                #region  完全数据组
+                int count = eles.Count() * 80;
+
+                linex[0] = new double[count];
+                linex[1] = new double[count];
+                linex[2] = new double[count];
+                linex[3] = new double[count];
+                linex[4] = new double[count];
+                linex[5] = new double[count];
+
+                liney[0] = new double[count];
+                liney[1] = new double[count];
+                liney[2] = new double[count];
+                liney[3] = new double[count];
+                liney[4] = new double[count];
+                liney[5] = new double[count];
+                #endregion
+
+                #region 偷点数组
+
+                count = (eles.Count() * 80) / LeakNum;
+
+                linex[6] = new double[count];
+                linex[7] = new double[count];
+                linex[8] = new double[count];
+                linex[9] = new double[count];
+                linex[10] = new double[count];
+                linex[11] = new double[count];
+
+                liney[6] = new double[count];
+                liney[7] = new double[count];
+                liney[8] = new double[count];
+                liney[9] = new double[count];
+                liney[10] = new double[count];
+                liney[11] = new double[count];
+
+                #endregion
+
+                newx = linex;
+                newy = liney;
+
+                #region 初始化
+
+                v1 = 0;
+                v2 = 0;
+                v3 = 0;
+
+                c1 = 0;
+                c2 = 0;
+                c3 = 0;
+                AverageCoun = 0;//累加次数
+                j = 0;//数组所在位置
+
+                #endregion
+                if (count == 0)
+                {
+                    IsNotNull = false;
+                }
+                int index = 0; //index 为 震动电流 每个点的 索引位置值
+
+                leftMax = new double[6];
+
+                foreach (XElement item in eles)
+                {
+                    Algorithm_To_Arrey2(item, index, LeakNum);
+                    index++;
+                }
+                if (AverageCoun > 0)
+                {
+                    liney[6][j] = c1 / LeakNum;
+                    liney[7][j] = c2 / LeakNum;
+                    liney[8][j] = c3 / LeakNum;
+                    liney[9][j] = v1 / LeakNum;
+                    liney[10][j] = v2 / LeakNum;
+                    liney[11][j] = v3 / LeakNum;
+
+                    linex[6][j]
+                  = linex[7][j]
+                  = linex[8][j]
+                  = linex[9][j]
+                  = linex[10][j]
+                  = linex[11][j]
+                  = (double)(j * AverageCoun) / allnum;
+                }
+                leftMaxs = leftMax;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
         /// <summary>
         /// xml转数组  对比数据转换方法
