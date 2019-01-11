@@ -124,12 +124,11 @@
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbline2 = new System.Windows.Forms.Label();
+            this.lbline1 = new System.Windows.Forms.Label();
             this.pcAfter = new System.Windows.Forms.PictureBox();
             this.pcFront = new System.Windows.Forms.PictureBox();
-            this.staffgauge1 = new Load_Tap_Changer_Test.Staffgauge.Staffgauge();
+            this.staffgauge = new Load_Tap_Changer_Test.Staffgauge.Staffgauge();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.lbybname = new DevExpress.XtraEditors.LabelControl();
@@ -1057,12 +1056,11 @@
             this.pclChart.Appearance.Options.UseBackColor = true;
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.pclChart.Controls.Add(this.label3);
-            this.pclChart.Controls.Add(this.label2);
-            this.pclChart.Controls.Add(this.label1);
+            this.pclChart.Controls.Add(this.lbline2);
+            this.pclChart.Controls.Add(this.lbline1);
             this.pclChart.Controls.Add(this.pcAfter);
             this.pclChart.Controls.Add(this.pcFront);
-            this.pclChart.Controls.Add(this.staffgauge1);
+            this.pclChart.Controls.Add(this.staffgauge);
             this.pclChart.Controls.Add(this.labelControl3);
             this.pclChart.Controls.Add(this.labelControl4);
             this.pclChart.Controls.Add(this.lbybname);
@@ -1083,32 +1081,25 @@
             this.pclChart.Size = new System.Drawing.Size(1043, 837);
             this.pclChart.TabIndex = 30;
             // 
-            // label3
+            // lbline2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(120, 122);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 18);
-            this.label3.TabIndex = 71;
-            this.label3.Text = "label3";
+            this.lbline2.AutoSize = true;
+            this.lbline2.BackColor = System.Drawing.Color.Transparent;
+            this.lbline2.Location = new System.Drawing.Point(420, 523);
+            this.lbline2.Name = "lbline2";
+            this.lbline2.Size = new System.Drawing.Size(16, 18);
+            this.lbline2.TabIndex = 70;
+            this.lbline2.Text = "2";
             // 
-            // label2
+            // lbline1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 122);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 18);
-            this.label2.TabIndex = 70;
-            this.label2.Text = "label2";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(132, 97);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 18);
-            this.label1.TabIndex = 69;
-            this.label1.Text = "label1";
+            this.lbline1.AutoSize = true;
+            this.lbline1.BackColor = System.Drawing.Color.Transparent;
+            this.lbline1.Location = new System.Drawing.Point(274, 523);
+            this.lbline1.Name = "lbline1";
+            this.lbline1.Size = new System.Drawing.Size(16, 18);
+            this.lbline1.TabIndex = 69;
+            this.lbline1.Text = "1";
             // 
             // pcAfter
             // 
@@ -1117,6 +1108,11 @@
             this.pcAfter.Size = new System.Drawing.Size(10, 535);
             this.pcAfter.TabIndex = 67;
             this.pcAfter.TabStop = false;
+            this.pcAfter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pcAfter_MouseDown);
+            this.pcAfter.MouseEnter += new System.EventHandler(this.pcAfter_MouseEnter);
+            this.pcAfter.MouseLeave += new System.EventHandler(this.pcAfter_MouseLeave);
+            this.pcAfter.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pcAfter_MouseMove);
+            this.pcAfter.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pcAfter_MouseUp);
             // 
             // pcFront
             // 
@@ -1126,23 +1122,26 @@
             this.pcFront.TabIndex = 68;
             this.pcFront.TabStop = false;
             this.pcFront.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseDown);
+            this.pcFront.MouseEnter += new System.EventHandler(this.pcFront_MouseEnter);
+            this.pcFront.MouseLeave += new System.EventHandler(this.pcFront_MouseLeave);
             this.pcFront.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseMove);
             this.pcFront.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pcFront_MouseUp);
             // 
-            // staffgauge1
+            // staffgauge
             // 
-            this.staffgauge1.BackColor = System.Drawing.SystemColors.Control;
-            this.staffgauge1.BorderColor = System.Drawing.Color.Empty;
-            this.staffgauge1.IsPcValue = false;
-            this.staffgauge1.Location = new System.Drawing.Point(123, 101);
-            this.staffgauge1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.staffgauge1.Name = "staffgauge1";
-            this.staffgauge1.Size = new System.Drawing.Size(494, 216);
-            this.staffgauge1.TabIndex = 66;
-            this.staffgauge1.XValue = 0;
-            this.staffgauge1.XXValue = null;
-            this.staffgauge1.YValue = 0;
-            this.staffgauge1.YYValue = null;
+            this.staffgauge.BackColor = System.Drawing.SystemColors.Control;
+            this.staffgauge.BorderColor = System.Drawing.Color.Empty;
+            this.staffgauge.IsPcValue = false;
+            this.staffgauge.Location = new System.Drawing.Point(239, 98);
+            this.staffgauge.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.staffgauge.Name = "staffgauge";
+            this.staffgauge.Size = new System.Drawing.Size(494, 216);
+            this.staffgauge.TabIndex = 66;
+            this.staffgauge.XValue = 0;
+            this.staffgauge.XXValue = null;
+            this.staffgauge.YValue = 0;
+            this.staffgauge.YYValue = null;
+            this.staffgauge.MouseMove += new System.Windows.Forms.MouseEventHandler(this.staffgauge_MouseMove);
             // 
             // labelControl3
             // 
@@ -2211,11 +2210,10 @@
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarStaticItem barStaticItem2;
         private DevExpress.XtraEditors.CheckEdit IsFilterData;
-        private Load_Tap_Changer_Test.Staffgauge.Staffgauge staffgauge1;
+        private Load_Tap_Changer_Test.Staffgauge.Staffgauge staffgauge;
         private System.Windows.Forms.PictureBox pcFront;
         private System.Windows.Forms.PictureBox pcAfter;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbline1;
+        private System.Windows.Forms.Label lbline2;
     }
 }

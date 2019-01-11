@@ -50,8 +50,8 @@ namespace Basic_Controls
 
         private void FmMain_Load(object sender, EventArgs e)
         {
-            //this.MaximizeBox = false;//使最大化窗口失效
-            // this.MinimizeBox = false;//使最小化窗口失效
+            this.MaximizeBox = false;//使最大化窗口失效
+            this.MinimizeBox = false;//使最小化窗口失效
             //更新波形通道
             if (Bind_IsDC())
             {
@@ -66,52 +66,21 @@ namespace Basic_Controls
             // sendUdp(agreement._1_CMD_HEARTBEAT);
             pclChart.Controls.Add(tChart);// 绑定图表位置 
 
-
-
             #region 绑定浮层控件
-
-            staffgauge1.Height = pclChart.Height;
-            staffgauge1.Width = pclChart.Width;
-            staffgauge1.Location = new Point(0, 0);
-            staffgauge1.MouseMove += chart_MouseMove;//chart_MouseDown
-            staffgauge1.MouseDown += chart_MouseDown;
-            staffgauge1.MouseUp += chart_MouseUp;
-            staffgauge1.Visible = true;
-            staffgauge1.Init(tChart.Panel.MarginLeft
-                , tChart.Panel.MarginTop
-                , tChart.Panel.MarginRight
-                , tChart.Panel.MarginBottom);
-
-
-
-            pcAfter.Image = GetImage(4, Height);
-
-            pcAfter.Location = new Point(200, ((int)tChart.Panel.MarginTop * 10) - (int)tChart.Panel.MarginTop);
-
-            pcFront.Image = GetImage(5, Height);
-
-            // pictureBox2.Location = new Point(200, ((int)tChart.Panel.MarginTop * 10) - (int)tChart.Panel.MarginTop);
-
+            BindCount();
             #endregion
+        }
 
-        }
-        bool isP1 = false;
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            isP1 = true;
-        }
+
+
         /// 选择图片
         /// </summary>
         /// <param name="colerIndex"></param>
         /// <returns></returns>
-        private Bitmap GetImage(int colerIndex, int initHeight)
+        private Bitmap GetImage(int colerIndex, int initWidth, int initHeight)
         {
 
             Random rd = new Random();
-            int num = rd.Next(1, 7);//1-7随机数
-            int initWidth = 256;
-            // int initHeight = 256;
-
             Bitmap image = new Bitmap(initWidth, initHeight);//初始化大小
             Graphics g = Graphics.FromImage(image);
             g.SmoothingMode = SmoothingMode.HighQuality;//设置图片质量
@@ -204,12 +173,12 @@ namespace Basic_Controls
         /// <summary>
         /// xml 存储路径
         /// </summary>
-      //  string xmlpath = "";
+        //  string xmlpath = "";
 
         /// <summary>
         /// 接收数据开关
         /// </summary>
-       // bool IsSaveData = false;
+        // bool IsSaveData = false;
 
         /// <summary>
         /// 协议对应参数
@@ -337,9 +306,11 @@ namespace Basic_Controls
             try
             {
                 string filepath = FileHelper.GetOpenFilePath();
-                tChart.Header.Text = "加载数据";
+               // tChart.Header.Text = "加载数据";
 
                 Chart_Lond(filepath);
+                ckLineShow.Checked = true;
+
             }
             catch (Exception ex)
             {
@@ -622,6 +593,8 @@ namespace Basic_Controls
                 {
                     Chart_Init();
                 }
+                ckLineShow.Checked = true;
+
             }
         }
 
@@ -1286,12 +1259,12 @@ namespace Basic_Controls
             MouseX = e.X;
 
 
-            staffgauge1.XValue = MouseX;
+            staffgauge.XValue = MouseX;
 
             double BottomNum = tChart.Axes.Bottom.CalcPosPoint(e.X);
             double TopNum = tChart.Axes.Top.CalcPosPoint(e.X);
-            staffgauge1.XXValue = BottomNum.ToString();
-            staffgauge1.YYValue = TopNum.ToString();
+            staffgauge.XXValue = BottomNum.ToString();
+            staffgauge.YYValue = TopNum.ToString();
 
             //staffgauge1.Enabled = false;
             //staffgauge1.Visible = false;
@@ -1325,7 +1298,7 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void chart_MouseUp(object sender, MouseEventArgs e)
         {
-            isP1 = false;
+
             //放大缩小问题
             // string dd = DateTimeUtil.DateTimeDiff(OpenCursortTime, startTime1) + " " + OpenCursortTime + "" + startTime1;
             if (tChart != null && tChart.Series.Count > 0 && DateTimeUtil.DateTimeDiff(OpenCursortTime, startTime1) > 200)
@@ -1368,38 +1341,38 @@ namespace Basic_Controls
                                 tChart.Axes.Top.SetMinMax(mint, maxt);
                                 startTime = DateTime.Now;
 
-                                if (LeftOrRightNum != 0)
-                                {
+                                //if (LeftOrRightNum != 0)
+                                //{
 
-                                    for (int i = 0; i < cursorToll_After.Length; i++)
-                                    {
-                                        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
-                                        {
-                                            cursorToll_Front[i].XValue = mint + ((maxt - mint) / 4);
-                                            cursorToll_After[i].XValue = mint + ((maxt - mint) / 2);
-                                        }
-                                    }
+                                //    for (int i = 0; i < cursorToll_After.Length; i++)
+                                //    {
+                                //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
+                                //        {
+                                //            cursorToll_Front[i].XValue = mint + ((maxt - mint) / 4);
+                                //            cursorToll_After[i].XValue = mint + ((maxt - mint) / 2);
+                                //        }
+                                //    }
 
 
 
-                                    //cursorTool_Front_V1.XValue = mint + ((maxt - mint) / 4);
-                                    //cursorTool_After_V1.XValue = mint + ((maxt - mint) / 2);
+                                //    //cursorTool_Front_V1.XValue = mint + ((maxt - mint) / 4);
+                                //    //cursorTool_After_V1.XValue = mint + ((maxt - mint) / 2);
 
-                                }
-                                else
-                                {
-                                    for (int i = 0; i < cursorToll_After.Length; i++)
-                                    {
-                                        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
-                                        {
-                                            cursorToll_Front[i].XValue = min + ((max - min) / 4);
-                                            cursorToll_After[i].XValue = min + ((max - min) / 2);
-                                        }
-                                    }
+                                //}
+                                //else
+                                //{
+                                //    for (int i = 0; i < cursorToll_After.Length; i++)
+                                //    {
+                                //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
+                                //        {
+                                //            cursorToll_Front[i].XValue = min + ((max - min) / 4);
+                                //            cursorToll_After[i].XValue = min + ((max - min) / 2);
+                                //        }
+                                //    }
 
-                                    //cursorTool_Front_V1.XValue = min + ((max - min) / 4);
-                                    //cursorTool_After_V1.XValue = min + ((max - min) / 2);
-                                }
+                                //    //cursorTool_Front_V1.XValue = min + ((max - min) / 4);
+                                //    //cursorTool_After_V1.XValue = min + ((max - min) / 2);
+                                //}
                             }
                             else
                             {
@@ -1485,14 +1458,14 @@ namespace Basic_Controls
                 //cursorTool_After_V1.XValue = 4;
 
 
-                for (int i = 0; i < cursorToll_After.Length; i++)
-                {
-                    if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
-                    {
-                        cursorToll_Front[i].XValue = 1;
-                        cursorToll_After[i].XValue = 4;
-                    }
-                }
+                //for (int i = 0; i < cursorToll_After.Length; i++)
+                //{
+                //    if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
+                //    {
+                //        cursorToll_Front[i].XValue = 1;
+                //        cursorToll_After[i].XValue = 4;
+                //    }
+                //}
 
 
                 Select_Chart_Lond();
@@ -1506,16 +1479,13 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void ckFollow_CheckedChanged(object sender, EventArgs e)
         {
-            if (linex != null)
+            if (ckFollow.Checked)
             {
-                if (cursorToll_Front.Length > 0 && cursorToll_Front[0] != null)
-                {
-                    cursorToll_Front[0].FollowMouse = ckFollow.Checked;
-                }
+                Selection = true;
             }
             else
             {
-                ckFollow.Checked = false;
+                Selection = false;
             }
         }
 
@@ -1794,6 +1764,7 @@ namespace Basic_Controls
         {
             try
             {
+                return;
                 if (!ckLineShow.Checked)
                 {
                     ckLineShow.Checked = true;
@@ -1947,35 +1918,25 @@ namespace Basic_Controls
             {
                 if (XValue1 > XValue2)
                 {
-
-                    pcFront.Location = new Point(XValue2 - 1, pcFront.Location.Y);
+                    pcFront.Location = new Point(XValue2 - 5, pcFront.Location.Y);
                     return;
                 }
 
                 lbtime.Text = Rounding((XValue2 - XValue1) * 1000, 2).ToString() + "ms";
-                int length = Convert.ToInt32(allnum * XValue1) + (int)(allnum * Offset);
+                //int length = Convert.ToInt32(allnum * XValue1) + (int)(allnum * Offset);
 
-                if (aotuzoom == 0)
-                {
-                    length = Convert.ToInt32((allnum / firstAverageNum) * XValue1) + (int)((allnum / firstAverageNum) * Offset);
-                }
+                int length = (int)Math.Round((tChart.Axes.Bottom.CalcPosPoint(MouseX) * (double)allnum), 0);
                 if (length < 0)
                 {
                     return;
                 }
-                //for (int i = 0; i < cursorToll_Front.Length; i++)
-                //{
-                //    cursorToll_Front[i].XValue = XValue1;
-                //}
+
                 if (Lond_Enum.数据对比加载 == lond_Enum)
                 {
                     lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX)) + "s";
                 }
                 lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + "s";
-                 length = (int)Math.Round((tChart.Axes.Bottom.CalcPosPoint(MouseX)*(double) allnum),0);
 
-
-                
                 if (length < vline1.YValues.Count)// && ckV1.Checked
                 {
                     lbv1.Text = Rounding(vline1.YValues[length]) + "g";
@@ -2022,7 +1983,7 @@ namespace Basic_Controls
                 {
                     lbc3.Text = Rounding(cline3.YValues[length]) + "a";
                 }
-        
+
 
                 OpenCursortTime = DateTime.Now;
 
@@ -2127,6 +2088,92 @@ namespace Basic_Controls
                 {
                 }
             };
+        }
+
+        /// <summary>
+        /// 后边线方法
+        /// </summary>
+        private void Move_After(int XValue1, int XValue2)
+        {
+
+            try
+            {
+                if (XValue1 > XValue2)
+                {
+                    pcAfter.Location = new Point(XValue1 + 5, pcAfter.Location.Y);
+                    return;
+                }
+
+                lbtime.Text = Rounding((XValue2 - XValue1) * 1000, 2).ToString() + "ms";
+                //int length = Convert.ToInt32(allnum * XValue1) + (int)(allnum * Offset);
+
+                int length = (int)Math.Round((tChart.Axes.Bottom.CalcPosPoint(MouseX) * (double)allnum), 0);
+                if (length < 0)
+                {
+                    return;
+                }
+                if (Lond_Enum.数据对比加载 == lond_Enum)
+                {
+                    lbTopTimeT2.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX)) + "s";
+                }
+                lbBottomTimeT2.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + "s";
+
+
+
+                if (length < vline1.YValues.Count)// && ckV1.Checked
+                {
+                    lbv1T2.Text = Rounding(vline1.YValues[length]) + "g";
+                }
+                if (Offset == 0)
+                {
+                    if (length < vline2.YValues.Count)// && ckV1.Checked
+                    {
+                        lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
+                    }
+                }
+                else
+                {
+                    if (length <= vline2.YValues.Count)
+                    {
+                        lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
+                    }
+                }
+
+                if (length < vline3.YValues.Count)//&& ckV3.Checked
+                {
+                    lbv3T2.Text = Rounding(vline3.YValues[length]) + "g";
+                }
+
+                if (length < cline1.YValues.Count)//&& ckC1.Checked
+                {
+                    lbc1T2.Text = Rounding(cline1.YValues[length]) + "a";
+                }
+                if (Offset == 0)
+                {
+                    if (length < cline2.YValues.Count)// && ckV1.Checked
+                    {
+                        lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                    }
+                }
+                else
+                {
+                    if (length <= cline2.YValues.Count)
+                    {
+                        lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                    }
+                }
+                if (length < cline3.YValues.Count)//&& ckC3.Checked
+                {
+                    lbc3T2.Text = Rounding(cline3.YValues[length]) + "a";
+                }
+
+                OpenCursortTime = DateTime.Now;
+
+            }
+            catch (Exception ex)
+            {
+            }
+
         }
 
 
@@ -2254,8 +2301,8 @@ namespace Basic_Controls
                 axis.AutomaticMaximum = false;//最大刻度禁用
                 axis.AutomaticMinimum = false;//最小刻度禁用
                 axis.Title.Angle = 90;//'标题摆放角度
-                //axis.Maximum = 10;//最大值
-                //axis.Minimum = -10;//最小值
+                                      //axis.Maximum = 10;//最大值
+                                      //axis.Minimum = -10;//最小值
 
                 string title = tChart.Series[i].Title;
 
@@ -2294,10 +2341,6 @@ namespace Basic_Controls
                 listBaseLine.Add((BaseLine)tChart.Series[i]);
             }
             double single = (100 / count) - space;
-            //if (count != 1)
-            //{
-            //    single = (100 - space * (count - 2)) / (count + 1);//单个坐标轴的百分比
-            //}
 
             tChart.Axes.Left.StartPosition = space;
             tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
@@ -2308,7 +2351,6 @@ namespace Basic_Controls
             double endPosition = tChart.Axes.Left.EndPosition;
             startPosition = 0;
             endPosition = 0;
-            // tChart.Axes.Custom.Clear();//清除原先画布
             Axis axis;
 
             for (int i = 0; i < count; i++)
@@ -2321,124 +2363,109 @@ namespace Basic_Controls
                 axis.AutomaticMaximum = false;//最大刻度禁用
                 axis.AutomaticMinimum = false;//最小刻度禁用
                 axis.Title.Angle = 90;//'标题摆放角度
-                //axis.Maximum = 10;//最大值
-                //axis.Minimum = -10;//最小值
+
 
                 string title = tChart.Series[i].Title;
 
                 axis.Title.Text = title;
 
-                double MaxAndMin = 0;
-                //if (leftMax[i] > 1)
-                //{
-                MaxAndMin = leftMax[i] * (1 + leftMax_Num);
-                //}
-                //else
-                //{
-                //    MaxAndMin = leftMax[i] * leftMax_Num;
-                //}
-                if (title.Substring(0, 2) == "电流")
-                {
-                    axis.Maximum = MaxAndMin;//最大值
-                    axis.Minimum = -(MaxAndMin);//最小值
-                }
-                else
-                {
-                    axis.Maximum = MaxAndMin;//最大值
-                    axis.Minimum = -(MaxAndMin);//最小值
-                }
+                double MaxAndMin = leftMax[i] * (1 + leftMax_Num);
+
+                axis.Maximum = MaxAndMin;//最大值
+                axis.Minimum = -(MaxAndMin);//最小值
+
                 tChart.Axes.Custom.Add(axis);
 
                 listBaseLine[i].CustomVertAxis = axis;
             }
         }
 
-        /// <summary>
-        /// 添加对比数据线
-        /// </summary>
-        /// <param name="count"></param>
-        private void AddCustomAxis_Contrast_Envelope(int count)
-        {
-            double single = (100 / count) - space;
-            List<BaseLine> listBaseLine = new List<BaseLine>();
-            for (int i = 0; i < tChart.Series.Count; i++)
-            {
-                listBaseLine.Add((BaseLine)tChart.Series[i]);
-            }
-            Axis axis = new Axis();
+        ///// <summary>
+        ///// 添加对比数据线
+        ///// </summary>
+        ///// <param name="count"></param>
+        //private void AddCustomAxis_Contrast_Envelope(int count)
+        //{
+        //    double single = (100 / count) - space;
+        //    List<BaseLine> listBaseLine = new List<BaseLine>();
+        //    for (int i = 0; i < tChart.Series.Count; i++)
+        //    {
+        //        listBaseLine.Add((BaseLine)tChart.Series[i]);
+        //    }
+        //    Axis axis = new Axis();
 
-            axis.StartPosition = 0;
-            axis.EndPosition = 100;
-            axis.AutomaticMaximum = false;//最大刻度禁用
-            axis.AutomaticMinimum = false;//最小刻度禁用
-            axis.Title.Angle = 90;//'标题摆放角度
+        //    axis.StartPosition = 0;
+        //    axis.EndPosition = 100;
+        //    axis.AutomaticMaximum = false;//最大刻度禁用
+        //    axis.AutomaticMinimum = false;//最小刻度禁用
+        //    axis.Title.Angle = 90;//'标题摆放角度
 
-            string title = tChart.Series[0].Title;
+        //    string title = tChart.Series[0].Title;
 
-            axis.Title.Text = title;
-            axis.Title.Color = Color.Red;
-            axis.Maximum = 5;//最大值
-            axis.Minimum = -5;//最小值
+        //    axis.Title.Text = title;
+        //    axis.Title.Color = Color.Red;
+        //    axis.Maximum = 5;//最大值
+        //    axis.Minimum = -5;//最小值
 
-            tChart.Axes.Custom.Add(axis);
-            listBaseLine[0].CustomVertAxis = axis;
-            if (count > 1)
-            {
-                listBaseLine[1].CustomVertAxis = axis;
-            }
-        }
+        //    tChart.Axes.Custom.Add(axis);
+        //    listBaseLine[0].CustomVertAxis = axis;
+        //    if (count > 1)
+        //    {
+        //        listBaseLine[1].CustomVertAxis = axis;
+        //    }
+        //}
 
-        /// <summary>
-        /// 添加对比数据线
-        /// </summary>
-        /// <param name="count"></param>
-        private void AddCustomAxis_Contrast(int count)
-        {
-            double single = (100 / count) - space;
-            List<BaseLine> listBaseLine = new List<BaseLine>();
-            for (int i = 0; i < tChart.Series.Count; i++)
-            {
-                listBaseLine.Add((BaseLine)tChart.Series[i]);
-            }
-            double startPosition = tChart.Axes.Left.StartPosition;
-            double endPosition = tChart.Axes.Left.EndPosition;
-            startPosition = 0;
-            endPosition = 0;
-            Axis axis;
-            for (int i = 0; i < count; i++)
-            {
-                axis = new Axis();
-                startPosition = endPosition + space;
-                endPosition = startPosition + single;
-                axis.StartPosition = startPosition;
-                axis.EndPosition = endPosition;
-                axis.AutomaticMaximum = false;//最大刻度禁用
-                axis.AutomaticMinimum = false;//最小刻度禁用
-                axis.Title.Angle = 90;//'标题摆放角度
+        ///// <summary>
+        ///// 添加对比数据线
+        ///// </summary>
+        ///// <param name="count"></param>
+        //private void AddCustomAxis_Contrast(int count)
+        //{
+        //    double single = (100 / count) - space;
+        //    List<BaseLine> listBaseLine = new List<BaseLine>();
+        //    for (int i = 0; i < tChart.Series.Count; i++)
+        //    {
+        //        listBaseLine.Add((BaseLine)tChart.Series[i]);
+        //    }
+        //    double startPosition = tChart.Axes.Left.StartPosition;
+        //    double endPosition = tChart.Axes.Left.EndPosition;
+        //    startPosition = 0;
+        //    endPosition = 0;
+        //    Axis axis;
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        axis = new Axis();
+        //        startPosition = endPosition + space;
+        //        endPosition = startPosition + single;
+        //        axis.StartPosition = startPosition;
+        //        axis.EndPosition = endPosition;
+        //        axis.AutomaticMaximum = false;//最大刻度禁用
+        //        axis.AutomaticMinimum = false;//最小刻度禁用
+        //        axis.Title.Angle = 90;//'标题摆放角度
 
-                string title = tChart.Series[i * 2].Title;
+        //        string title = tChart.Series[i * 2].Title;
 
-                axis.Title.Text = title;
-                axis.Title.Color = Color.Red;
-                if (title.Substring(0, 2) == "电流")
-                {
-                    axis.Maximum = 5;//最大值
-                    axis.Minimum = -5;//最小值
-                }
-                else
-                {
-                    axis.Maximum = 10;//最大值
-                    axis.Minimum = -10;//最小值
-                }
+        //        axis.Title.Text = title;
+        //        axis.Title.Color = Color.Red;
+        //        if (title.Substring(0, 2) == "电流")
+        //        {
+        //            axis.Maximum = 5;//最大值
+        //            axis.Minimum = -5;//最小值
+        //        }
+        //        else
+        //        {
+        //            axis.Maximum = 10;//最大值
+        //            axis.Minimum = -10;//最小值
+        //        }
 
-                tChart.Axes.Custom.Add(axis);
-                listBaseLine[i * 2].CustomVertAxis = axis;
-                if (count > 1)
-                {
-                    listBaseLine[(i * 2) + 1].CustomVertAxis = axis;
-                }
-            }
-        }
+        //        tChart.Axes.Custom.Add(axis);
+        //        listBaseLine[i * 2].CustomVertAxis = axis;
+        //        if (count > 1)
+        //        {
+        //            listBaseLine[(i * 2) + 1].CustomVertAxis = axis;
+        //        }
+        //    }
+        //}
 
 
         /// <summary>
@@ -2471,37 +2498,23 @@ namespace Basic_Controls
 
                 string title = tChart.Series[i * 2].Title;
 
-                axis.Title.Text = title;
+             //   axis.Title.Text = title;
                 axis.Title.Color = Color.Red;
-                if (title.Substring(0, 2) == "电流")
-                {
-                    //if (leftMax[i] > 5.0)
-                    //{
-                    axis.Maximum = leftMax[i] * leftMax_Num;//最大值
-                    axis.Minimum = -(leftMax[i] * leftMax_Num);//最小值
 
-                    //}
-                    //else
-                    //{
-                    //    axis.Maximum = 5;//最大值
-                    //    axis.Minimum = -5;//最小值
-                    //}
-                }
-                else
-                {
+                double MaxAndMin = 0;
+                //if (leftMax[i] > 1)
+                //{
+                MaxAndMin = leftMax[i] * (1 + leftMax_Num);
+                //}
+                //else
+                //{
+                //    MaxAndMin = leftMax[i] * leftMax_Num;
+                //}
 
-                    //if (leftMax[i] > 10)
-                    //{
-                    axis.Maximum = leftMax[i] * leftMax_Num;//最大值
-                    axis.Minimum = -(leftMax[i] * leftMax_Num);//最小值
 
-                    //}
-                    //else
-                    //{
-                    //    axis.Maximum = 10;//最大值
-                    //    axis.Minimum = -10;//最小值
-                    //}
-                }
+                axis.Maximum = MaxAndMin;//最大值
+                axis.Minimum = -(MaxAndMin);//最小值
+
 
                 tChart.Axes.Custom.Add(axis);
                 listBaseLine[i * 2].CustomVertAxis = axis;
@@ -2679,134 +2692,134 @@ namespace Basic_Controls
             }
             //对比包络线
         }
-        /// <summary>
-        /// 重新加载图表
-        /// </summary>
-        private void Chart_Data_Lond()
-        {
-            try
-            {
-                alltime = 20;
-                Chart_DataTable_Init();
-                //震动1路 vline1
-                if (v1)
-                {
-                    vline1 = new Line();
-                    tChart.Series.Add(vline1);
-                    vline1.Title = string.Format("震动曲线{0}", 1);
-                    if (aotuzoom > 0)
-                    {
-                        vx1 = linex[3];
-                        vy1 = liney[3];
-                    }
-                    else
-                    {
-                        vx1 = linex[9];
-                        vy1 = liney[9];
-                    }
-                    vline1.Add(vx1, vy1);
-                }
-                //震动2路 vline2
-                if (v2)
-                {
-                    vline2 = new Line();
-                    tChart.Series.Add(vline2);
-                    vline2.Title = string.Format("震动曲线{0}", 2);
-                    if (aotuzoom > 0)
-                    {
-                        vx2 = linex[4];
-                        vy2 = liney[4];
-                    }
-                    else
-                    {
-                        vx2 = linex[10];
-                        vy2 = liney[10];
-                    }
-                    vline2.Add(vx2, vy2);
-                }
-                //震动3路 vline3
-                if (v3)
-                {
-                    vline3 = new Line();
-                    tChart.Series.Add(vline3);
-                    vline3.Title = string.Format("震动曲线{0}", 3);
+        ///// <summary>
+        ///// 重新加载图表
+        ///// </summary>
+        //private void Chart_Data_Lond()
+        //{
+        //    try
+        //    {
+        //        alltime = 20;
+        //        Chart_DataTable_Init();
+        //        //震动1路 vline1
+        //        if (v1)
+        //        {
+        //            vline1 = new Line();
+        //            tChart.Series.Add(vline1);
+        //            vline1.Title = string.Format("震动曲线{0}", 1);
+        //            if (aotuzoom > 0)
+        //            {
+        //                vx1 = linex[3];
+        //                vy1 = liney[3];
+        //            }
+        //            else
+        //            {
+        //                vx1 = linex[9];
+        //                vy1 = liney[9];
+        //            }
+        //            vline1.Add(vx1, vy1);
+        //        }
+        //        //震动2路 vline2
+        //        if (v2)
+        //        {
+        //            vline2 = new Line();
+        //            tChart.Series.Add(vline2);
+        //            vline2.Title = string.Format("震动曲线{0}", 2);
+        //            if (aotuzoom > 0)
+        //            {
+        //                vx2 = linex[4];
+        //                vy2 = liney[4];
+        //            }
+        //            else
+        //            {
+        //                vx2 = linex[10];
+        //                vy2 = liney[10];
+        //            }
+        //            vline2.Add(vx2, vy2);
+        //        }
+        //        //震动3路 vline3
+        //        if (v3)
+        //        {
+        //            vline3 = new Line();
+        //            tChart.Series.Add(vline3);
+        //            vline3.Title = string.Format("震动曲线{0}", 3);
 
-                    if (aotuzoom > 0)
-                    {
-                        vx3 = linex[5];
-                        vy3 = liney[5];
-                    }
-                    else
-                    {
-                        vx3 = linex[11];
-                        vy3 = liney[11];
-                    }
-                    vline3.Add(vx3, vy3);
-                }
-                //电流1路 cline1
-                if (c1)
-                {
-                    cline1 = new Line();
-                    tChart.Series.Add(cline1);
-                    cline1.Title = string.Format("电流曲线{0}", 1);
-                    if (aotuzoom > 0)
-                    {
-                        cx1 = linex[0];
-                        cy1 = liney[0];
-                    }
-                    else
-                    {
-                        cx1 = linex[6];
-                        cy1 = liney[6];
-                    }
-                    cline1.Add(cx1, cy1);
-                }
-                //电流2路 cline2
-                if (c2)
-                {
-                    cline2 = new Line();
-                    tChart.Series.Add(cline2);
-                    cline2.Title = string.Format("电流曲线{0}", 2);
-                    if (aotuzoom > 0)
-                    {
-                        cx2 = linex[1];
-                        cy2 = liney[1];
-                    }
-                    else
-                    {
-                        cx2 = linex[7];
-                        cy2 = liney[7];
-                    }
-                    cline2.Add(cx2, cy2);
-                }
-                //电流3路 cline3
-                if (c3)
-                {
-                    cline3 = new Line();
-                    tChart.Series.Add(cline3);
-                    cline3.Title = string.Format("电流曲线{0}", 3);
+        //            if (aotuzoom > 0)
+        //            {
+        //                vx3 = linex[5];
+        //                vy3 = liney[5];
+        //            }
+        //            else
+        //            {
+        //                vx3 = linex[11];
+        //                vy3 = liney[11];
+        //            }
+        //            vline3.Add(vx3, vy3);
+        //        }
+        //        //电流1路 cline1
+        //        if (c1)
+        //        {
+        //            cline1 = new Line();
+        //            tChart.Series.Add(cline1);
+        //            cline1.Title = string.Format("电流曲线{0}", 1);
+        //            if (aotuzoom > 0)
+        //            {
+        //                cx1 = linex[0];
+        //                cy1 = liney[0];
+        //            }
+        //            else
+        //            {
+        //                cx1 = linex[6];
+        //                cy1 = liney[6];
+        //            }
+        //            cline1.Add(cx1, cy1);
+        //        }
+        //        //电流2路 cline2
+        //        if (c2)
+        //        {
+        //            cline2 = new Line();
+        //            tChart.Series.Add(cline2);
+        //            cline2.Title = string.Format("电流曲线{0}", 2);
+        //            if (aotuzoom > 0)
+        //            {
+        //                cx2 = linex[1];
+        //                cy2 = liney[1];
+        //            }
+        //            else
+        //            {
+        //                cx2 = linex[7];
+        //                cy2 = liney[7];
+        //            }
+        //            cline2.Add(cx2, cy2);
+        //        }
+        //        //电流3路 cline3
+        //        if (c3)
+        //        {
+        //            cline3 = new Line();
+        //            tChart.Series.Add(cline3);
+        //            cline3.Title = string.Format("电流曲线{0}", 3);
 
-                    if (aotuzoom > 0)
-                    {
-                        cx3 = linex[2];
-                        cy3 = liney[2];
-                    }
-                    else
-                    {
-                        cx3 = linex[8];
-                        cy3 = liney[8];
-                    }
-                    cline3.Add(cx3, cy3);
-                }
+        //            if (aotuzoom > 0)
+        //            {
+        //                cx3 = linex[2];
+        //                cy3 = liney[2];
+        //            }
+        //            else
+        //            {
+        //                cx3 = linex[8];
+        //                cy3 = liney[8];
+        //            }
+        //            cline3.Add(cx3, cy3);
+        //        }
 
-                //绘制画布
-                AddCustomAxis(tChart.Series.Count);
-            }
-            catch (Exception ex)
-            {
-                ListToText.Instance.WriteListToTextFile1(ex.ToString());
-            }
-        }
+        //        //绘制画布
+        //        AddCustomAxis(tChart.Series.Count);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
+        //    }
+        //}
 
         /// <summary>
         /// 重新加载图表
@@ -2952,9 +2965,11 @@ namespace Basic_Controls
             }
         }
 
-
         /// <summary>
         /// 对比数据加载加载图表
+        /// 0 电流 1震动 2平均电流 3 平均震动
+        /// 4 电流 5震动 6平均电流 7平均震动
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>
         private void Chart_Data_Contrast_Lond()
         {
@@ -3002,16 +3017,16 @@ namespace Basic_Controls
 
 
                 Chart_DataTable_Init();
-                if (aotuzoom > 0)
-                {
-                    vx1 = linex[1];
-                    vy1 = liney[1];
-                }
-                else
-                {
-                    vx1 = linex[3];
-                    vy1 = liney[3];
-                }
+                //if (aotuzoom > 0)
+                //{
+                vx1 = linex[1];
+                vy1 = liney[1];
+                //}
+                //else
+                //{
+                //    vx1 = linex[3];
+                //    vy1 = liney[3];
+                //}
                 vline1 = new Line();
                 vline1.HorizAxis = HorizontalAxis.Top;
                 vline1.Title = string.Format("【震动】");
@@ -3019,16 +3034,16 @@ namespace Basic_Controls
                 vline1.Color = Color.Green;
                 tChart.Series.Add(vline1);
 
-                if (aotuzoom > 0)
-                {
-                    vx2 = linex[5];
-                    vy2 = liney[5];
-                }
-                else
-                {
-                    vx2 = linex[7];
-                    vy2 = liney[7];
-                }
+                //if (aotuzoom > 0)
+                //{
+                vx2 = linex[5];
+                vy2 = liney[5];
+                //}
+                //else
+                //{
+                //    vx2 = linex[7];
+                //    vy2 = liney[7];
+                //}
 
                 vline2 = new Line();
                 vline2.HorizAxis = HorizontalAxis.Bottom;
@@ -3036,16 +3051,16 @@ namespace Basic_Controls
                 vline2.Color = Color.Red;
                 tChart.Series.Add(vline2);
 
-                if (aotuzoom > 0)
-                {
-                    cx1 = linex[0];
-                    cy1 = liney[0];
-                }
-                else
-                {
-                    cx1 = linex[2];
-                    cy1 = liney[2];
-                }
+                //if (aotuzoom > 0)
+                //{
+                cx1 = linex[0];
+                cy1 = liney[0];
+                //}
+                //else
+                //{
+                //    cx1 = linex[2];
+                //    cy1 = liney[2];
+                //}
                 cline1 = new Line();
                 cline1.HorizAxis = HorizontalAxis.Top;
                 cline1.Title = string.Format("【电流】");
@@ -3053,16 +3068,16 @@ namespace Basic_Controls
                 cline1.Color = Color.Orange;
                 tChart.Series.Add(cline1);
 
-                if (aotuzoom > 0)
-                {
-                    cx2 = linex[4];
-                    cy2 = liney[4];
-                }
-                else
-                {
-                    cx2 = linex[6];
-                    cy2 = liney[6];
-                }
+                //if (aotuzoom > 0)
+                //{
+                cx2 = linex[4];
+                cy2 = liney[4];
+                //}
+                //else
+                //{
+                //    cx2 = linex[6];
+                //    cy2 = liney[6];
+                //}
                 cline2 = new Line();
                 cline2.HorizAxis = HorizontalAxis.Bottom;
                 cline2.Add(cx2, cy2);
@@ -3325,10 +3340,10 @@ namespace Basic_Controls
         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
         /// </summary>
         double[][] linex;//= new double[12][];
-        /// <summary>
-        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+                         /// <summary>
+                         /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
+                         /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
+                         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
 
         /// </summary>
         double[][] liney;//= new double[12][];
@@ -5224,7 +5239,7 @@ namespace Basic_Controls
                     if (model.PARENTID != "0")
                     {
                         //显示浮层
-                        staffgauge1.Visible = true;
+                        staffgauge.Visible = true;
 
                         btnSaveData.Enabled = true;
                         btnSaveImg.Enabled = true;
@@ -5239,11 +5254,12 @@ namespace Basic_Controls
                             //ckLineShow.Checked = true;
                             //ckLineShow_CheckedChanged(null, null);
                             Add_CursorTool();
-                            staffgauge1.Height = pclChart.Height;
-                            staffgauge1.Width = pclChart.Width;
+                            staffgauge.Height = pclChart.Height;
+                            staffgauge.Width = pclChart.Width;
 
-                            staffgauge1.Location = new Point(0, 0);
+                            staffgauge.Location = new Point(0, 0);
                             // staffgauge1.Show();
+                            ckLineShow.Checked = true;
 
                         }
                         else
@@ -5474,6 +5490,8 @@ namespace Basic_Controls
 
                 tChart.Refresh();
                 Show_End();
+                ckLineShow.Checked = true;
+
             }
             catch (Exception ex)
             {
@@ -5505,6 +5523,8 @@ namespace Basic_Controls
         {
             btnReLond_Click(null, e);
             plLinePath.Enabled = true;
+            ckLineShow.Checked = true;
+
         }
         /// <summary>
         /// 对比
@@ -5635,7 +5655,7 @@ namespace Basic_Controls
 
                     if (form.IsBlx)
                     {
-                        tChart.Header.Text = "包络线对比";
+                        //tChart.Header.Text = "包络线对比";
                         lond_Enum = Lond_Enum.包络数据对比加载;
                         //   平均
                         Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
@@ -5650,7 +5670,7 @@ namespace Basic_Controls
                     }
                     else
                     {
-                        tChart.Header.Text = "完整数据对比";
+                        //tChart.Header.Text = "完整数据对比";
 
                         lond_Enum = Lond_Enum.数据对比加载;
                         Dv_Parameter_Init();
@@ -5667,7 +5687,7 @@ namespace Basic_Controls
                     Show_End();
                     btnEnvelope.Enabled = false;
                     btnRestore.Enabled = false;
-
+                    ckLineShow.Checked = true;
                 }
             }
         }
@@ -5704,18 +5724,31 @@ namespace Basic_Controls
         {
             if (ckLineShow.Checked)
             {
-                if (tChart.Tools.Count == 0)
-                {
-                    Add_CursorTool();
-                }
-                cursorToll_Active(true);
+                //if (tChart.Tools.Count == 0)
+                //{
+                //    Add_CursorTool();
+                //}
+                //cursorToll_Active(true);
+                Show_line(true);
             }
             else
             {
-                cursorToll_Active(false);
+                //cursorToll_Active(false);
+                Show_line(false);
             }
         }
 
+        /// <summary>
+        /// 是否显示拖动轴线
+        /// </summary>
+        /// <param name="isShow"></param>
+        private void Show_line(bool isShow)
+        {
+            pcAfter.Visible = isShow;
+            pcFront.Visible = isShow;
+            lbline1.Visible = isShow;
+            lbline2.Visible = isShow;
+        }
 
 
         /// <summary>
@@ -5733,40 +5766,181 @@ namespace Basic_Controls
             Environment.Exit(0);
         }
 
-        private void pcFront_MouseDown(object sender, MouseEventArgs e)
+
+        #region 轴线 移动时 鼠标事件
+
+        /// <summary>
+        /// 绑定浮层和line线
+        /// </summary>
+        private void BindCount()
         {
-            isP1 = true;
+            #region 浮沉控件
+            staffgauge.Height = pclChart.Height;
+            staffgauge.Width = pclChart.Width;
+            staffgauge.Location = new Point(0, 0);
+            staffgauge.MouseMove += chart_MouseMove;//chart_MouseDown
+            staffgauge.MouseDown += chart_MouseDown;
+            staffgauge.MouseUp += chart_MouseUp;
+
+            #endregion
+
+            #region 前线
+            pcFront.Width = 2;
+            pcFront.Height = tChart.Height - ((int)tChart.Panel.MarginTop * 10) - ((int)tChart.Panel.MarginBottom * 10) - 17;
+            pcFront.Image = GetImage(5, pcFront.Width, pcFront.Height);
+            pcFront.Location = new Point(200, ((int)tChart.Panel.MarginTop * 10) - (int)tChart.Panel.MarginTop + 5);
+            // 2线名字
+            lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 20);
+
+            #endregion
+
+            #region 后线
+            pcAfter.Width = pcFront.Width;
+            pcAfter.Height = pcFront.Height;
+            pcAfter.Image = GetImage(4, pcAfter.Width, pcAfter.Height);
+            pcAfter.Location = new Point(400, ((int)tChart.Panel.MarginTop * 10) - (int)tChart.Panel.MarginTop + 5);
+            // 2线名字
+            lbline2.Location = new Point(pcAfter.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 20);
+
+            #endregion
         }
 
-        private void pcFront_MouseUp(object sender, MouseEventArgs e)
+
+        /// <summary>
+        /// 是否选中
+        /// </summary>
+        bool Selection = false;
+        #region 前线
+        /// <summary>
+        /// 前线按下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcFront_MouseDown(object sender, MouseEventArgs e)
         {
-            isP1 = false;
+            Selection = true;
         }
         /// <summary>
-        /// 轴1
+        /// 前线松开
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcFront_MouseUp(object sender, MouseEventArgs e)
+        {
+            Selection = false;
+        }
+        /// <summary>
+        /// 移动 前线 轴1
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void pcFront_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isP1)
+            if (Selection)
             {
                 Point point = Control.MousePosition;
                 pcFront.Location = new Point(point.X - pclChart.Location.X, pcFront.Location.Y);
                 MouseX = point.X - pclChart.Location.X;
+                Move_Front(MouseX, pcAfter.Location.X);
 
-
-                //  lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + "s";
-
-
-                //CursorTool cursorTool_Front = new CursorTool();
-                //CursorTool cursorTool_After = new CursorTool();
-                //cursorTool_Front.XValue = (double) MouseX;
-                //cursorTool_After.XValue = MouseX+1000;
-
-                Move_Front(MouseX, MouseX + 1000);
+                lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 15);
 
             }
         }
+
+        /// <summary>
+        /// 鼠标移动到上面 改变鼠标样式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcFront_MouseEnter(object sender, EventArgs e)
+        {
+            pcFront.Cursor = Cursors.SizeWE;
+        }
+        /// <summary>
+        /// 鼠标离开控件 改变鼠标样式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcFront_MouseLeave(object sender, EventArgs e)
+        {
+            pcFront.Cursor = Cursors.Default;
+        }
+        #endregion
+
+        #region 后线
+        /// <summary>
+        /// 后线按下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcAfter_MouseDown(object sender, MouseEventArgs e)
+        {
+            Selection = true;
+        }
+        /// <summary>
+        /// 后线松开
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcAfter_MouseUp(object sender, MouseEventArgs e)
+        {
+            Selection = false;
+        }
+        /// <summary>
+        /// 移动 后线 轴1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcAfter_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Selection)
+            {
+                Point point = Control.MousePosition;
+                pcAfter.Location = new Point(point.X - pclChart.Location.X, pcAfter.Location.Y);
+                MouseX = point.X - pclChart.Location.X;
+                Move_After(pcFront.Location.X, MouseX);
+                lbline2.Location = new Point(pcAfter.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 15);
+
+            }
+        }
+        /// <summary>
+        /// 鼠标移动到上面 改变鼠标样式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcAfter_MouseEnter(object sender, EventArgs e)
+        {
+            pcAfter.Cursor = Cursors.SizeWE;
+        }
+        /// <summary>
+        /// 鼠标离开控件 改变鼠标样式
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pcAfter_MouseLeave(object sender, EventArgs e)
+        {
+            pcAfter.Cursor = Cursors.Default;
+        }
+
+        #endregion
+        /// <summary>
+        /// 画布上移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void staffgauge_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (Selection)
+            {
+                Point point = Control.MousePosition;
+
+                pcFront.Location = new Point(point.X - pclChart.Location.X, pcAfter.Location.Y);
+                lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 15);
+
+            }
+        }
+
+        #endregion
     }
 }

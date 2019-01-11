@@ -33,21 +33,13 @@
             this.YY = new System.Windows.Forms.Label();
             this.X = new System.Windows.Forms.Label();
             this.Y = new System.Windows.Forms.Label();
-            this.pcFront = new System.Windows.Forms.PictureBox();
-            this.pcAfter = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pcFront)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pcAfter)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(740, 52);
+            this.label1.Location = new System.Drawing.Point(355, 398);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 0;
@@ -89,60 +81,11 @@
             this.Y.TabIndex = 4;
             this.Y.Text = "Y";
             // 
-            // pcFront
-            // 
-            this.pcFront.BackColor = System.Drawing.Color.Transparent;
-            this.pcFront.Location = new System.Drawing.Point(280, 156);
-            this.pcFront.Name = "pcFront";
-            this.pcFront.Size = new System.Drawing.Size(10, 562);
-            this.pcFront.TabIndex = 5;
-            this.pcFront.TabStop = false;
-            // 
-            // pcAfter
-            // 
-            this.pcAfter.BackColor = System.Drawing.Color.Transparent;
-            this.pcAfter.Location = new System.Drawing.Point(516, 156);
-            this.pcAfter.Name = "pcAfter";
-            this.pcAfter.Size = new System.Drawing.Size(10, 562);
-            this.pcAfter.TabIndex = 6;
-            this.pcAfter.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(697, 272);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(46, 68);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(455, 426);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 15);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(110, 409);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 15);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "label3";
-            // 
             // Staffgauge
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.pcAfter);
-            this.Controls.Add(this.pcFront);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Y);
             this.Controls.Add(this.X);
             this.Controls.Add(this.YY);
@@ -154,9 +97,6 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Staffgauge_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Staffgauge_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Staffgauge_MouseUp);
-            ((System.ComponentModel.ISupportInitialize)(this.pcFront)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pcAfter)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,10 +109,5 @@
         private System.Windows.Forms.Label YY;
         private System.Windows.Forms.Label X;
         private System.Windows.Forms.Label Y;
-        private System.Windows.Forms.PictureBox pcFront;
-        private System.Windows.Forms.PictureBox pcAfter;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
     }
 }

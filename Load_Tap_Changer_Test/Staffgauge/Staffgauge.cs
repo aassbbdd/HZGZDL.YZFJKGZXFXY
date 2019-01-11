@@ -16,8 +16,6 @@ namespace Load_Tap_Changer_Test.Staffgauge
         public Staffgauge()
         {
             InitializeComponent();
-
-
         }
         #region 基础配置
         private Color _borderColor;
@@ -91,17 +89,9 @@ namespace Load_Tap_Changer_Test.Staffgauge
 
             if (this._borderWidth > 0)
             {
-
                 Pen pen = new Pen(this._borderColor, this._borderWidth);
                 pen.DashStyle = this._borderStyle;
-
-                //  e.Graphics.DrawRectangle(pen, e.ClipRectangle.Left, e.ClipRectangle.Top, this.Width - 1, this.Height - 1);
-
                 e.Graphics.DrawRectangle(pen, e.ClipRectangle.Left, e.ClipRectangle.Top, this.Width - 1, this.Height - 1);
-
-
-
-
                 pen.Dispose();
             }
         }
@@ -207,9 +197,6 @@ namespace Load_Tap_Changer_Test.Staffgauge
         /// <param name="e"></param>
         private void Staffgauge_MouseUp(object sender, MouseEventArgs e)
         {
-            pcAfter.Location = new Point(e.X, pcAfter.Location.Y);
-            pcFront.Location = new Point(e.X - 50, pcAfter.Location.Y);
-            // pcFront.Refresh();
         }
 
         /// <summary>
@@ -219,10 +206,6 @@ namespace Load_Tap_Changer_Test.Staffgauge
         /// <param name="e"></param>
         private void Staffgauge_MouseDown(object sender, MouseEventArgs e)
         {
-            // sendpic();
-
-
-
         }
 
         /// <summary>
@@ -234,54 +217,21 @@ namespace Load_Tap_Changer_Test.Staffgauge
         {
             this._opacity = 0;
             //this._borderWidth = 0;
-
-            //if (pcAfter.Location.X <= e.X && pcAfter.Location.X + pcAfter.Width >= e.X)
-            //{
-            //    pcAfter.Location = new Point(e.X, pcAfter.Location.Y);
-            //    pcFront.Location = new Point(e.X - 50, pcAfter.Location.Y);
-
-            //}
-
-            //YValue = e.Y;
-            //XValue = e.X;
-
-            //pcFront.Location = new Point(e.X, pcFront.Location.Y);
-            //this.DoubleBuffered = false;
-            // label3.Location = new Point(e.X, pcFront.Location.Y);
-            //this.pcFront.Refresh();
-            // this.Refresh();
-
-
-
-
         }
         #endregion
 
         #region 私有方法
-        PictureBox pictureBox_Loading;
-
-
         private void Staffgauge_Load(object sender, EventArgs e)
         {
-            //this.DoubleBuffered = true;
-            //pictureBox_Loading = new PictureBox();
+            bool isShowText = false;
 
-            //pictureBox_Loading.Size = new System.Drawing.Size(11, 2248);
+            X.Visible = isShowText;
+            Y.Visible = isShowText;
+            XX.Visible = isShowText;
+            YY.Visible = isShowText;
 
-            //pictureBox_Loading.Image = bitmap;
-
-            //this.Controls.Add(pictureBox_Loading);
-            pcAfter.Enabled = false;
-            pcAfter.Visible = false;
-
-            pcFront.Enabled = false;
-            pcFront.Visible = false;
-
-
-
+            label1.Visible = isShowText;
         }
-
-
         /// 选择图片
         /// </summary>
         /// <param name="colerIndex"></param>
@@ -347,24 +297,14 @@ namespace Load_Tap_Changer_Test.Staffgauge
                         , double MarginBottom)
         {
 
-
-
-            int Width = this.Width;
-            int Height = this.Height;
-
-            var ddd = this.Location;
-            pcFront.Image = GetImage(4, Height);
-
-            pcFront.Location = new Point(200, ((int)MarginTop * 10) - (int)MarginTop);
-
-            pcAfter.Image = GetImage(6, Height);
-
         }
 
 
 
 
         #endregion
+
+
     }
 
     #endregion
