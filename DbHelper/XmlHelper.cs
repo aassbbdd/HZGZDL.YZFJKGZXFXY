@@ -888,27 +888,27 @@ namespace DbHelper
                 newy[4][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
                 newy[5][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
 
-                if (newy[0][id] > leftMax[0])
+                if (Math.Abs(newy[0][id]) > Math.Abs(leftMax[0]))
                 {
                     leftMax[0] = newy[0][id];
                 }
-                if (newy[1][id] > leftMax[1])
+                if (Math.Abs(newy[1][id]) > Math.Abs(leftMax[1]))
                 {
                     leftMax[1] = newy[1][id];
                 }
-                if (Math.Abs(newy[2][id]) > leftMax[2])
+                if (Math.Abs(newy[2][id]) > Math.Abs(leftMax[2]))
                 {
                     leftMax[2] = newy[2][id];
                 }
-                if (newy[3][id] > leftMax[3])
+                if (Math.Abs(newy[3][id]) > Math.Abs(leftMax[3]))
                 {
                     leftMax[3] = newy[3][id];
                 }
-                if (newy[4][id] > leftMax[4])
+                if (Math.Abs(newy[4][id]) > Math.Abs(leftMax[4]))
                 {
                     leftMax[4] = newy[4][id];
                 }
-                if (newy[5][id] > leftMax[5])
+                if (Math.Abs(newy[5][id]) > Math.Abs(leftMax[5]))
                 {
                     leftMax[5] = newy[5][id];
                 }
@@ -928,7 +928,7 @@ namespace DbHelper
 
                 #region 计算求平均部分
 
-                if ( Math.Abs( newy[0][id]) > Math.Abs(c1))
+                if (Math.Abs(newy[0][id]) > Math.Abs(c1))
                 {
                     c1 = newy[0][id];
                 }
@@ -960,21 +960,21 @@ namespace DbHelper
 
                 if (AverageCoun >= LeakNum)
                 {
-                     newy[6][j] = c1;
-                     newy[7][j] = c2;
-                     newy[8][j] = c3;
-                     newy[9][j] = v1;
+                    newy[6][j] = c1;
+                    newy[7][j] = c2;
+                    newy[8][j] = c3;
+                    newy[9][j] = v1;
                     newy[10][j] = v2;
                     newy[11][j] = v3;
 
                     double newXvalue1 = (double)(j * AverageCoun) / allnum;
-                     newx[6][j]
-                  =  newx[7][j]
-                  =  newx[8][j]
-                  =  newx[9][j]
-                  = newx[10][j]
-                  = newx[11][j]
-                  = newXvalue1;
+                    newx[6][j]
+                 = newx[7][j]
+                 = newx[8][j]
+                 = newx[9][j]
+                 = newx[10][j]
+                 = newx[11][j]
+                 = newXvalue1;
 
                     AverageCoun = 0;
 
@@ -1640,6 +1640,9 @@ namespace DbHelper
 
                 XElement ele = root.Element("Test_Plan");
 
+
+                //计算好的数据
+                XElement AllEleData = root.Element("Xml_Line_Data");
                 if (ele == null)
                 {
                     I = 10;
@@ -1712,30 +1715,100 @@ namespace DbHelper
                 int index = 0; //index 为 震动电流 每个点的 索引位置值
 
                 leftMax = new double[6];
+                Xml_Line_Data model = new Xml_Line_Data();
 
-                foreach (XElement item in eles)
+                if (AllEleData == null)
                 {
-                    Algorithm_To_Arrey2(item, index, LeakNum);
-                    index++;
-                }
-                if (AverageCoun > 0)
-                {
-                    liney[6][j] = c1 / LeakNum;
-                    liney[7][j] = c2 / LeakNum;
-                    liney[8][j] = c3 / LeakNum;
-                    liney[9][j] = v1 / LeakNum;
-                    liney[10][j] = v2 / LeakNum;
-                    liney[11][j] = v3 / LeakNum;
 
-                    linex[6][j]
-                  = linex[7][j]
-                  = linex[8][j]
-                  = linex[9][j]
-                  = linex[10][j]
-                  = linex[11][j]
-                  = (double)(j * AverageCoun) / allnum;
+                    foreach (XElement item in eles)
+                    {
+                        Algorithm_To_Arrey2(item, index, LeakNum);
+                        index++;
+                    }
+                    if (AverageCoun > 0)
+                    {
+                        liney[6][j] = c1 / LeakNum;
+                        liney[7][j] = c2 / LeakNum;
+                        liney[8][j] = c3 / LeakNum;
+                        liney[9][j] = v1 / LeakNum;
+                        liney[10][j] = v2 / LeakNum;
+                        liney[11][j] = v3 / LeakNum;
+
+                        linex[6][j]
+                      = linex[7][j]
+                      = linex[8][j]
+                      = linex[9][j]
+                      = linex[10][j]
+                      = linex[11][j]
+                      = (double)(j * AverageCoun) / allnum;
+                    }
+                    leftMaxs = leftMax;
+
+                    model.leftMaxs= string.Join(",", leftMaxs);
+                    model.CY1 = string.Join(",", liney[0]);
+                    model.CY2 = string.Join(",", liney[1]);
+                    model.CY3 = string.Join(",", liney[2]);
+
+                    model.VY1 = string.Join(",", liney[3]);
+                    model.VY2 = string.Join(",", liney[4]);
+                    model.VY3 = string.Join(",", liney[5]);
+                    model.ALLX = string.Join(",", linex[0]);
+
+                    AllEleData = ToXElement(model);
+
+
+                    root.Add(AllEleData);
+                    root.Save(path);
                 }
-                leftMaxs = leftMax;
+                else
+                {
+                    leftMaxs = new double[6];
+
+                    //  model = Deserialize(typeof(Xml_Line_Data), AllEleData.ToString()) as Xml_Line_Data;
+
+                    model.CY1 = AllEleData.Element("CY1").Value;
+                    model.CY2 = AllEleData.Element("CY2").Value;
+                    model.CY3 = AllEleData.Element("CY3").Value;
+
+
+                    model.VY1 = AllEleData.Element("VY1").Value;
+                    model.VY2 = AllEleData.Element("VY2").Value;
+                    model.VY3 = AllEleData.Element("VY3").Value;
+                    model.ALLX = AllEleData.Element("ALLX").Value;
+                    model.leftMaxs = AllEleData.Element("leftMaxs").Value;
+
+
+
+
+                    liney[0] = Array.ConvertAll(model.CY1.Split(','), s => double.Parse(s));
+                    liney[1] = Array.ConvertAll(model.CY2.Split(','), s => double.Parse(s));
+                    liney[2] = Array.ConvertAll(model.CY3.Split(','), s => double.Parse(s));
+
+                    liney[3] = Array.ConvertAll(model.VY1.Split(','), s => double.Parse(s));
+                    liney[4] = Array.ConvertAll(model.VY2.Split(','), s => double.Parse(s));
+                    liney[5] = Array.ConvertAll(model.VY3.Split(','), s => double.Parse(s));
+
+
+                    linex[0] =
+                    linex[1] =
+                    linex[2] =
+
+                    linex[3] =
+                    linex[4] =
+                    linex[5] = Array.ConvertAll(model.ALLX.Split(','), s => double.Parse(s));
+
+                    leftMaxs= Array.ConvertAll(model.leftMaxs.Split(','), s => double.Parse(s)); 
+
+                }
+
+
+
+
+
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -2080,6 +2153,36 @@ namespace DbHelper
         }
 
         #region 反序列化
+
+
+        /// <summary>
+        /// 从某一XML文件反序列化到某一类型
+        /// </summary>
+        /// <param name="filePath">待反序列化的XML文件名称</param>
+        /// <param name="type">反序列化出的</param>
+        /// <returns></returns>
+        public static T DeserializeFromXml<T>(string filePath)
+        {
+            try
+            {
+                if (!System.IO.File.Exists(filePath))
+                    throw new ArgumentNullException(filePath + " not Exists");
+
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(filePath))
+                {
+                    System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(T));
+                    T ret = (T)xs.Deserialize(reader);
+                    return ret;
+                }
+            }
+            catch (Exception ex)
+            {
+                return default(T);
+            }
+        }
+
+
+
         /// <summary>
         /// 反序列化
         /// </summary>

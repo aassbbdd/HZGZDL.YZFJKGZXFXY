@@ -17,22 +17,32 @@ namespace Load_Tap_Changer_Test.Staffgauge
         {
             InitializeComponent();
         }
+
+        #region 绘图配置
+        public Point point;
+        public Graphics g;
+
+        #endregion
+
         #region 基础配置
         private Color _borderColor;
         private int _borderWidth = 1;
         private DashStyle _borderStyle = DashStyle.Solid;
         private int _opacity = 125;
-
+        private string _tborderStyle = "";
 
         #region Property
-        [Category("Custom"), Description("Border Color")]
+
+        #region setting
+
+        [Category("Custom"), Description("背景颜色")]
         public Color BorderColor
         {
             set { _borderColor = value; }
             get { return _borderColor; }
         }
 
-        [Category("Custom"), Description("Border Width"), DefaultValue(1)]
+        [Category("Custom"), Description("背景宽度"), DefaultValue(1)]
         public int BorderWidth
         {
             set
@@ -43,25 +53,23 @@ namespace Load_Tap_Changer_Test.Staffgauge
             get { return _borderWidth; }
         }
 
-        [Category("Custom"), Description("Border Style"), DefaultValue(DashStyle.Solid)]
+        [Category("Custom"), Description("背景样式类型"), DefaultValue(DashStyle.Solid)]
         public DashStyle BorderStyle
         {
             set { this._borderStyle = value; this.Invalidate(); }
             get { return this._borderStyle; }
         }
 
-        //[Bindable(true), Category("Custom"), DefaultValue(125), Description("背景的透明度. 有效值0-255")]
-        //public int Opacity
-        //{
-        //    get { return _opacity; }
-        //    set
-        //    {
-        //        if (value > 255) value = 255;
-        //        else if (value < 0) value = 0;
-        //        _opacity = value;
-        //        this.Invalidate();
-        //    }
-        //}
+        [Category("Custom"), Description("测试属性"), DefaultValue("3")]
+        public string tBorderStyle
+        {
+            set { this._tborderStyle = value; }
+            get { return this._tborderStyle; }
+        }
+
+
+        #endregion
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs e)
@@ -96,6 +104,7 @@ namespace Load_Tap_Changer_Test.Staffgauge
             }
         }
         #endregion
+
         #region 自定义属性方法
 
         #region 属性
@@ -169,8 +178,6 @@ namespace Load_Tap_Changer_Test.Staffgauge
             }
         }
 
-
-
         /// <summary>
         /// 是否选中
         /// </summary>
@@ -197,8 +204,11 @@ namespace Load_Tap_Changer_Test.Staffgauge
         /// <param name="e"></param>
         private void Staffgauge_MouseUp(object sender, MouseEventArgs e)
         {
+            isDown = false;
+            //刷会把底层画布刷掉
+            //g.Clear(this.BackColor);
         }
-
+        bool isDown = false;
         /// <summary>
         /// 按下鼠标
         /// </summary>
@@ -206,6 +216,8 @@ namespace Load_Tap_Changer_Test.Staffgauge
         /// <param name="e"></param>
         private void Staffgauge_MouseDown(object sender, MouseEventArgs e)
         {
+            isDown = true;
+            this.point = e.Location;
         }
 
         /// <summary>
@@ -217,6 +229,46 @@ namespace Load_Tap_Changer_Test.Staffgauge
         {
             this._opacity = 0;
             //this._borderWidth = 0;
+            if (isDown)
+            {
+                //刷会把底层画布刷掉
+
+                //g.Clear(this.BackColor);
+                Pen drawPen = new Pen(Color.Red, 1);
+                ///左上角到右下角画矩形
+                if (point.X < e.X && point.Y < e.Y)
+                {
+
+                    g.DrawRectangle(drawPen, point.X, point.Y,
+                                      Math.Abs(e.X - point.X),
+                                      Math.Abs(e.Y - point.Y));
+                }
+
+                ///右上角到左小角画矩形
+                if (point.X > e.X && point.Y < e.Y)
+                {
+                    g.DrawRectangle(drawPen, e.X, point.Y,
+                                      Math.Abs(e.X - point.X),
+                                      Math.Abs(e.Y - point.Y));
+                }
+
+                ///右小角到左上角画矩形
+                if (point.X > e.X && point.Y > e.Y)
+                {
+                    g.DrawRectangle(drawPen, e.X, e.Y,
+                                      Math.Abs(e.X - point.X),
+                                      Math.Abs(e.Y - point.Y));
+                }
+
+                ///左下角到右上角画矩形
+                if (point.X < e.X && point.Y > e.Y)
+                {
+                    g.DrawRectangle(drawPen, point.X, e.Y,
+                                      Math.Abs(e.X - point.X),
+                                      Math.Abs(e.Y - point.Y));
+                }
+
+            }
         }
         #endregion
 
@@ -231,6 +283,8 @@ namespace Load_Tap_Changer_Test.Staffgauge
             YY.Visible = isShowText;
 
             label1.Visible = isShowText;
+
+
         }
         /// 选择图片
         /// </summary>
@@ -291,12 +345,10 @@ namespace Load_Tap_Changer_Test.Staffgauge
         /// <param name="MarginTop">距离顶部边框</param>
         /// <param name="MarginRight">距离右边</param>
         /// <param name="MarginBottom">距离底部</param>
-        public void Init(double MarginLeft
-                        , double MarginTop
-                        , double MarginRight
-                        , double MarginBottom)
+        public void Init()
         {
-
+            g = this.CreateGraphics();
+            point = new Point(0, 0);
         }
 
 
@@ -304,10 +356,10 @@ namespace Load_Tap_Changer_Test.Staffgauge
 
         #endregion
 
-
+        #endregion
     }
 
-    #endregion
+
 
 }
 

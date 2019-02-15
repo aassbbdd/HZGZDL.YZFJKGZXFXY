@@ -96,10 +96,10 @@ namespace Basic_Controls
                     g.Clear(Color.FromArgb(22, 124, 127));
                     break;
                 case 4:
-                    g.Clear(Color.FromArgb(50, 182, 122));
+                    g.Clear(Color.FromArgb(0, 0, 255));
                     break;
                 case 5:
-                    g.Clear(Color.FromArgb(191, 181, 215));
+                    g.Clear(Color.FromArgb(255, 0, 0));
                     break;
                 case 6:
                     g.Clear(Color.FromArgb(240, 207, 97));
@@ -306,7 +306,7 @@ namespace Basic_Controls
             try
             {
                 string filepath = FileHelper.GetOpenFilePath();
-               // tChart.Header.Text = "加载数据";
+                // tChart.Header.Text = "加载数据";
 
                 Chart_Lond(filepath);
                 ckLineShow.Checked = true;
@@ -1924,10 +1924,11 @@ namespace Basic_Controls
 
                 lbtime.Text = Rounding((XValue2 - XValue1) * 1000, 2).ToString() + "ms";
                 //int length = Convert.ToInt32(allnum * XValue1) + (int)(allnum * Offset);
-
                 int length = (int)Math.Round((tChart.Axes.Bottom.CalcPosPoint(MouseX) * (double)allnum), 0);
                 if (length < 0)
                 {
+                    pcFront.Location = new Point((int)tChart.Panel.MarginLeft * 10 + 15, pcFront.Location.Y);
+                    lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 20);
                     return;
                 }
 
@@ -2342,17 +2343,18 @@ namespace Basic_Controls
             }
             double single = (100 / count) - space;
 
-            tChart.Axes.Left.StartPosition = space;
-            tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
-            tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
+            //tChart.Axes.Left.StartPosition = space;
+            //tChart.Axes.Left.EndPosition = tChart.Axes.Left.EndPosition = tChart.Axes.Left.StartPosition + single;
+            //tChart.Axes.Left.StartEndPositionUnits = PositionUnits.Percent;
 
             listBaseLine[0].CustomVertAxis = tChart.Axes.Left;
-            double startPosition = tChart.Axes.Left.StartPosition;
-            double endPosition = tChart.Axes.Left.EndPosition;
-            startPosition = 0;
-            endPosition = 0;
+            //double startPosition = tChart.Axes.Left.StartPosition;
+            //double endPosition = tChart.Axes.Left.EndPosition;
+            double startPosition = 0;
+            double endPosition = 0;
             Axis axis;
-
+            //double dd = space / (count - 1);
+            //计算间距和位置
             for (int i = 0; i < count; i++)
             {
                 axis = new Axis();
@@ -2363,7 +2365,6 @@ namespace Basic_Controls
                 axis.AutomaticMaximum = false;//最大刻度禁用
                 axis.AutomaticMinimum = false;//最小刻度禁用
                 axis.Title.Angle = 90;//'标题摆放角度
-
 
                 string title = tChart.Series[i].Title;
 
@@ -2498,7 +2499,7 @@ namespace Basic_Controls
 
                 string title = tChart.Series[i * 2].Title;
 
-             //   axis.Title.Text = title;
+                //   axis.Title.Text = title;
                 axis.Title.Color = Color.Red;
 
                 double MaxAndMin = 0;
@@ -2880,16 +2881,16 @@ namespace Basic_Controls
                     tChart.Series.Add(vline3);
                     vline3.Title = string.Format("震动曲线{0}", 3);
 
-                    //if (aotuzoom > 0)
-                    //{
-                    //vx3 = linex[5];
-                    //vy3 = liney[5];
-                    //}
-                    //else
-                    //{
-                    vx3 = linex[11];
-                    vy3 = liney[11];
-                    //}
+                    if (!IsFilterData.Checked)
+                    {
+                        vx3 = linex[5];
+                        vy3 = liney[5];
+                    }
+                    else
+                    {
+                        vx3 = linex[11];
+                        vy3 = liney[11];
+                    }
                     vline3.Add(vx3, vy3);
                     ShowleftMax.Add(leftMax[5]);
                 }
@@ -4749,7 +4750,7 @@ namespace Basic_Controls
             {
                 double Current = 0.0;
                 int lengtht = data.Length;
-                Vibration_Current vmodel = new Vibration_Current();
+                Vibration_Current vmodel = new Vibration_Current(); 
                 int length = 24 * i;//截取位置 +1 默认不取第一个点位
 
                 string Curren = "";
@@ -4779,7 +4780,9 @@ namespace Basic_Controls
                     double setSCURRENT = Convert.ToDouble(pub_Test_Plan.SCURRENT);
                     double setECURRENT = Convert.ToDouble(pub_Test_Plan.ECURRENT);
 
-                    double Current1 = Math.Abs(Math.Sqrt(countCurrent1 / 2000));
+                    //double Current1 = Math.Abs(Math.Sqrt(countCurrent1 / 2000));
+                    //取整数后平方
+                    double Current1 = Math.Sqrt(Math.Abs(countCurrent1 / 2000));
 
                     if (Current1 >= setSCURRENT && !SCURRENT)
                     {
@@ -5671,7 +5674,6 @@ namespace Basic_Controls
                     else
                     {
                         //tChart.Header.Text = "完整数据对比";
-
                         lond_Enum = Lond_Enum.数据对比加载;
                         Dv_Parameter_Init();
                         Chart_Data_Contrast_Lond();
@@ -5682,8 +5684,6 @@ namespace Basic_Controls
                     Add_CursorTool();
                     //cursorTool_Front.Series = tChart.Series[0];
                     //cursorTool_After.Series = tChart.Series[0]; 
-
-
                     Show_End();
                     btnEnvelope.Enabled = false;
                     btnRestore.Enabled = false;
@@ -5781,7 +5781,7 @@ namespace Basic_Controls
             staffgauge.MouseMove += chart_MouseMove;//chart_MouseDown
             staffgauge.MouseDown += chart_MouseDown;
             staffgauge.MouseUp += chart_MouseUp;
-
+            staffgauge.Init();
             #endregion
 
             #region 前线

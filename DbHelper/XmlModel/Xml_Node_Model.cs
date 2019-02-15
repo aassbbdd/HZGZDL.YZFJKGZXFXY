@@ -37,13 +37,19 @@ namespace DbHelper.XmlModel
         /// </summary>
         [XmlElement(ElementName = "Data")]
         public IList<Xml_Element_Model> Data { get; set; }
+
+
+        /// <summary>
+        /// 原始数据数据
+        /// </summary>
+        [XmlElement(ElementName = "Data")]
+        public Xml_Line_Data Line_Data { get; set; }
+
     }
 
     /// <summary>
     /// 解析数据
     /// </summary>
-
-
     public class Xml_Element_Model
     {
         /// <summary>
@@ -98,5 +104,109 @@ namespace DbHelper.XmlModel
         /// 
         [XmlAttribute("Xwitdh")]
         public string Xwitdh { get; set; }
+    }
+
+    /// <summary>
+    /// 完成的数据数据
+    /// </summary>
+    public class Xml_Line_Data
+    {
+        #region 原始数据
+        /// <summary>
+        /// 震动Y1
+        /// </summary>
+        [XmlAttribute("VY1")]
+        public string VY1 { get; set; }
+
+        /// <summary>
+        /// 震动Y2
+        /// </summary>
+        [XmlAttribute("VY2")]
+        public string VY2 { get; set; }
+
+        /// <summary>
+        /// 震动Y3
+        /// </summary>
+        [XmlAttribute("VY3")]
+        public string VY3 { get; set; }
+
+        /// <summary>
+        /// 电流Y1
+        /// </summary>
+
+        [XmlAttribute("CY1")]
+        public string CY1 { get; set; }
+
+        /// <summary> 
+        /// 电流Y2     
+        /// </summary>   
+        /// 
+        [XmlAttribute("CY2")]
+        public string CY2 { get; set; }
+
+        /// <summary> 
+        /// 电流Y3     
+        /// </summary>    
+        /// 
+        [XmlAttribute("CY3")]
+        public string CY3 { get; set; }
+
+        #endregion
+
+
+        #region 包络数据
+        /// <summary>
+        /// 震动Y1
+        /// </summary>
+        [XmlAttribute("Envelope_VY1")]
+        public string Envelope_VY1 { get; set; }
+
+        /// <summary>
+        /// 震动Y2
+        /// </summary>
+        [XmlAttribute("Envelope_VY2")]
+        public string Envelope_VY2 { get; set; }
+
+        /// <summary>
+        /// 震动Y3
+        /// </summary>
+        [XmlAttribute("Envelope_VY3")]
+        public string Envelope_VY3 { get; set; }
+
+        /// <summary>
+        /// 电流Y1
+        /// </summary>
+
+        [XmlAttribute("Envelope_CY1")]
+        public string Envelope_CY1 { get; set; }
+
+        /// <summary> 
+        /// 电流Y2     
+        /// </summary>   
+        /// 
+        [XmlAttribute("Envelope_CY2")]
+        public string Envelope_CY2 { get; set; }
+
+        /// <summary> 
+        /// 电流Y3     
+        /// </summary>    
+        /// 
+        [XmlAttribute("Envelope_CY3")]
+        public string Envelope_CY3 { get; set; }
+
+        #endregion 
+
+        /// <summary>
+        /// 所有X轴
+        /// </summary>
+        [XmlAttribute("ALLX")]
+        public string ALLX { get; set; }
+
+        /// <summary>
+        /// 左边最高值
+        /// </summary>
+        [XmlAttribute("leftMaxs")]
+        public string leftMaxs { get; set; }
+     
     }
 }
