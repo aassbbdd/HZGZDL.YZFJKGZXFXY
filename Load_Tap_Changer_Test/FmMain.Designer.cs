@@ -124,6 +124,7 @@
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             this.pclChart = new DevExpress.XtraEditors.PanelControl();
+            this.pan_Move_Rectangle = new System.Windows.Forms.Panel();
             this.lbline2 = new System.Windows.Forms.Label();
             this.lbline1 = new System.Windows.Forms.Label();
             this.pcAfter = new System.Windows.Forms.PictureBox();
@@ -1056,6 +1057,7 @@
             this.pclChart.Appearance.Options.UseBackColor = true;
             this.pclChart.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pclChart.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.pclChart.Controls.Add(this.pan_Move_Rectangle);
             this.pclChart.Controls.Add(this.lbline2);
             this.pclChart.Controls.Add(this.lbline1);
             this.pclChart.Controls.Add(this.pcAfter);
@@ -1075,11 +1077,20 @@
             this.pclChart.Controls.Add(this.btnNarrow1);
             this.pclChart.Controls.Add(this.btnReNew1);
             this.pclChart.Controls.Add(this.btnClear1);
-            this.pclChart.Location = new System.Drawing.Point(218, 112);
+            this.pclChart.Location = new System.Drawing.Point(249, 112);
             this.pclChart.Margin = new System.Windows.Forms.Padding(0, 0, 0, 1);
             this.pclChart.Name = "pclChart";
-            this.pclChart.Size = new System.Drawing.Size(1043, 837);
+            this.pclChart.Size = new System.Drawing.Size(1012, 837);
             this.pclChart.TabIndex = 30;
+            // 
+            // pan_Move_Rectangle
+            // 
+            this.pan_Move_Rectangle.BackColor = System.Drawing.Color.Transparent;
+            this.pan_Move_Rectangle.Location = new System.Drawing.Point(488, 414);
+            this.pan_Move_Rectangle.Name = "pan_Move_Rectangle";
+            this.pan_Move_Rectangle.Size = new System.Drawing.Size(305, 118);
+            this.pan_Move_Rectangle.TabIndex = 71;
+            this.pan_Move_Rectangle.Visible = false;
             // 
             // lbline2
             // 
@@ -1137,6 +1148,7 @@
             this.staffgauge.Name = "staffgauge";
             this.staffgauge.Size = new System.Drawing.Size(494, 216);
             this.staffgauge.TabIndex = 66;
+            this.staffgauge.tBorderStyle = "";
             this.staffgauge.XValue = 0;
             this.staffgauge.XXValue = null;
             this.staffgauge.YValue = 0;
@@ -1674,7 +1686,7 @@
             this.ckFollow.Location = new System.Drawing.Point(7, 294);
             this.ckFollow.MenuManager = this.barManager1;
             this.ckFollow.Name = "ckFollow";
-            this.ckFollow.Properties.Caption = "光标跟随鼠标";
+            this.ckFollow.Properties.Caption = "游标1跟随鼠标";
             this.ckFollow.Size = new System.Drawing.Size(118, 22);
             this.ckFollow.TabIndex = 80;
             this.ckFollow.CheckedChanged += new System.EventHandler(this.ckFollow_CheckedChanged);
@@ -1870,7 +1882,7 @@
             this.treeList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.删除,
             this.repositoryItemButtonEdit1});
-            this.treeList.Size = new System.Drawing.Size(214, 833);
+            this.treeList.Size = new System.Drawing.Size(242, 833);
             this.treeList.TabIndex = 57;
             this.treeList.FocusedNodeChanged += new DevExpress.XtraTreeList.FocusedNodeChangedEventHandler(this.treeList_FocusedNodeChanged);
             this.treeList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeList_MouseDown);
@@ -1924,7 +1936,7 @@
             this.pc2.Controls.Add(this.labelControl2);
             this.pc2.Location = new System.Drawing.Point(0, 112);
             this.pc2.Name = "pc2";
-            this.pc2.Size = new System.Drawing.Size(218, 837);
+            this.pc2.Size = new System.Drawing.Size(246, 837);
             this.pc2.TabIndex = 53;
             // 
             // labelControl1
@@ -1980,7 +1992,7 @@
             this.MinimumSize = new System.Drawing.Size(1024, 800);
             this.Name = "FmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "有载调压开关故障诊断系统(v1.0)";
+            this.Text = "变压器有载分接开关及绕组振动测试软件(v1.0)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
@@ -2215,5 +2227,6 @@
         private System.Windows.Forms.PictureBox pcAfter;
         private System.Windows.Forms.Label lbline1;
         private System.Windows.Forms.Label lbline2;
+        private System.Windows.Forms.Panel pan_Move_Rectangle;
     }
 }

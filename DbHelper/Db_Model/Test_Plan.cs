@@ -177,12 +177,6 @@ namespace DbHelper.Db_Model
         [XmlAttribute(AttributeName = "TEST_BASE_C")]
         public string TEST_BASE_C { get; set; }
 
-        /// <summary>
-        /// 单侧还是连续测试 1连续 2单次
-        /// </summary>
-        /// 
-        [XmlAttribute(AttributeName = "TEST_SINGLE_DOUBLE")]
-        public string TEST_SINGLE_DOUBLE { get; set; }
 
         /// <summary>
         /// 连续测试开始位置
@@ -206,7 +200,7 @@ namespace DbHelper.Db_Model
         public string SINGLE_P { get; set; }
 
         /// <summary>
-        /// 单次测试顺序 1前往后 2 后往前
+        /// 单次测试顺序 0前往后 1 后往前
         /// </summary>
         /// 
         [XmlAttribute(AttributeName = "TEST_ORDER")]
@@ -224,5 +218,13 @@ namespace DbHelper.Db_Model
         /// </summary>
         [XmlAttribute(AttributeName = "VOLTAGE")]
         public string VOLTAGE { get; set; }
+
+        /// <summary>
+        /// 单侧还是连续测试 1连续 2单次
+        /// </summary>
+        /// 
+        [XmlAttribute(AttributeName = "TEST_SINGLE_DOUBLE")]
+        public string TEST_SINGLE_DOUBLE { get; set; }
+
     }
 }

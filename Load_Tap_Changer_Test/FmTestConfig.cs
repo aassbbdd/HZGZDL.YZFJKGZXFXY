@@ -93,17 +93,40 @@ namespace Load_Tap_Changer_Test
 
         private void Get_Single()
         {
+            string showTxt = "";
             int Place = Convert.ToInt32(this.CmbPlace.Text);
             if (RdoOrder.Text == "1")
             {
-                RdoOrder.Properties.Items[0].Description = "前往后" + "(" + Place + "-" + (Place + 1) + ")";
+                int countNum = Convert.ToInt32(oldmodel.CONTACT_NUM);
+
+                if (Place >= countNum)
+                {
+                    showTxt = "(" + Place + "-禁止)";
+                }
+                else
+                {
+                    showTxt = "(" + Place + "-" + (Place + 1) + ")";
+
+                }
+
+                RdoOrder.Properties.Items[0].Description = "前往后" + showTxt;
                 RdoOrder.Properties.Items[1].Description = "后往前";
             }
             else
             {
+
+                if (Place <= 1)
+                {
+                    showTxt = "(" + Place + "-禁止)";
+                }
+                else
+                {
+                    showTxt = "(" + Place + "-" + (Place - 1) + ")";
+
+                }
                 RdoOrder.Properties.Items[0].Description = "前往后";
 
-                RdoOrder.Properties.Items[1].Description = "后往前" + "(" + Place + "-" + (Place - 1) + ")";
+                RdoOrder.Properties.Items[1].Description = "后往前" + showTxt;
             }
         }
         /// <summary>
@@ -118,17 +141,18 @@ namespace Load_Tap_Changer_Test
 
             }
 
-
             string dvname = oldmodel.DVNAME;
 
-            this.cmbBaseC.Text = "10";
+            this.cmbBaseC.Text = oldmodel.TEST_BASE_C;
             int countNum = Convert.ToInt32(oldmodel.CONTACT_NUM);
+
+            CmbPlace.Properties.Items.Clear();
 
             for (int i = 1; i <= countNum; i++)
             {
                 CmbPlace.Properties.Items.Add(i);
             }
-            CmbPlace.SelectedIndex = 0;
+            CmbPlace.Text = oldmodel.SINGLE_P;
 
             //判断采样信息是那种状态
             Get_Info_Type();
@@ -170,10 +194,35 @@ namespace Load_Tap_Changer_Test
             {
                 this.ckC3.Checked = true;
             }
+
+            if (oldmodel.COUNT_BASE_C == "1")
+            {
+                RdoBaseC.SelectedIndex = 0;
+            }
+            else if (oldmodel.COUNT_BASE_C == "2")
+            {
+                RdoBaseC.SelectedIndex = 1;
+            }
+            else
+            {
+                RdoBaseC.SelectedIndex = 2;
+            }
+
             this.txtSPlace.Text = "1";
             this.txtEPlace.Text = oldmodel.CONTACT_NUM;
-
+            if (oldmodel.TEST_ORDER == "2")
+            {
+                this.RdoOrder.SelectedIndex = 1;
+            }
+            else
+            {
+                this.RdoOrder.SelectedIndex = 0;
+            }
+ 
+            txtSPlace.Text = oldmodel.DOUBLE_SP;
+            txtEPlace.Text = oldmodel.DOUBLE_EP;
         }
+
 
         #region  保存数据库
 
@@ -214,10 +263,10 @@ namespace Load_Tap_Changer_Test
                 }
 
                 DvName = oldmodel.DVNAME;
-                oldmodel.GETINFO = this.rdoGETINFO.Text;
-                oldmodel.SCURRENT = oldmodel.GETINFO == "1" ? this.txtSA.Text : "";
-                oldmodel.ECURRENT = oldmodel.GETINFO == "1" ? this.txtEA.Text : "";
-                oldmodel.TIME_UNIT = oldmodel.GETINFO == "2" ? this.txtGetUnit.Text : "";
+                oldmodel.GETINFO = (this.rdoGETINFO.SelectedIndex + 1).ToString();
+                oldmodel.SCURRENT = this.txtSA.Text;
+                oldmodel.ECURRENT = this.txtEA.Text;
+                oldmodel.TIME_UNIT = this.txtGetUnit.Text;
 
                 oldmodel.V1 = ckV1.Checked ? "1" : "0";
                 oldmodel.V2 = ckV2.Checked ? "1" : "0";
@@ -231,9 +280,9 @@ namespace Load_Tap_Changer_Test
                 oldmodel.TEST_SINGLE_DOUBLE = this.rdoTestType.Text;
                 oldmodel.DOUBLE_SP = this.txtSPlace.Text;
                 oldmodel.DOUBLE_EP = this.txtEPlace.Text;
-                oldmodel.SINGLE_P = this.CmbPlace.Text;
+                oldmodel.SINGLE_P = (Convert.ToInt32(this.CmbPlace.Text) + 1).ToString();
 
-                oldmodel.TEST_ORDER = this.RdoOrder.Text;
+                oldmodel.TEST_ORDER = (this.RdoOrder.SelectedIndex + 1).ToString();
                 oldmodel.COUNT_BASE_C = this.RdoBaseC.Text;
                 oldmodel.ISEDIT = "1";
 
@@ -245,7 +294,7 @@ namespace Load_Tap_Changer_Test
 
                 int count = 0;
 
-                count = Db_Action.Instance.Test_Confige_Insert(oldmodel);
+                count = Db_Action.Instance.Test_Start_Edit(oldmodel);
 
                 if (count >= 1)
                 {
@@ -308,5 +357,9 @@ namespace Load_Tap_Changer_Test
             Get_Single();
         }
 
+        private void CmbPlace_Properties_EditValueChanged(object sender, EventArgs e)
+        {
+            Get_Single();
+        }
     }
 }

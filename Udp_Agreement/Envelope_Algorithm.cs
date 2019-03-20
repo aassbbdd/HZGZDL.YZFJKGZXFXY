@@ -40,9 +40,9 @@ namespace Udp_Agreement
         /// <param name="rc_up">上升 rc值</param>
         public void Envelope(double spacing, double[] x, double[] y
             , out double[] Out_x, out double[] Out_y
-             ,double rc_dn = 0.01, double rc_up = 0.0001)
+             , double rc_dn = 0.01, double rc_up = 0.0001)
         {
-  
+
             double[] yNew = (double[])y.Clone();
             double[] xNew = (double[])x.Clone();
 
@@ -52,137 +52,80 @@ namespace Udp_Agreement
 
             Out_x = x;
             Out_y = outY;
-         }
+        }
 
+        /// <summary>
+        /// 包络线算法
+        /// </summary>
+        /// <param name="x">传入x轴值</param>
+        /// <param name="y">传入y轴值</param>
+        /// <param name="Out_x">返回包络 x轴值</param>
+        /// <param name="Out_y">返回包络 y轴值</param>
+        /// <param name="spacing">点间距 </param>
+        /// <param name="rc_dn">下降 rc值</param>
+        /// <param name="rc_up">上升 rc值</param>
+        public void Envelope_01(double spacing, double[] x, double[] y
+            , out double[] Out_x, out double[] Out_y)
+        {
+            int HZ = 5;
+            double[] yNew = (double[])y.Clone();
+            double[] xNew = (double[])x.Clone();
+            int count = yNew.Length / HZ;
+
+            double[] outY = new double[count];
+            double[] outX = new double[count];
+            env_2(yNew, xNew, count, out outY, out outX, HZ);
+
+            Out_x = outX;
+            Out_y = outY;
+        }
         #endregion
 
-        //private double[] bf(double[] f)
-        //{
-        //    double[] fNew = new double[f.Length];
-        //    for (int i = 0; i < f.Length - 1; i++)
-        //    {
-        //        if (f[i] > 0)
-        //        {
-        //            fNew[i] = f[i];
-        //        }
-        //        else
-        //        {
-        //            fNew[i] = -1;
-        //        }
-        //    }
-        //    return fNew;
-        //}
-
-        ///// <summary>
-        ///// （求斜率函数）：对数组y0相邻元素求斜率，比原始信号少一位数据。结果是个数组。
-        ///// </summary>
-        ///// <param name="yArray">Y轴数组</param>
-        ///// <param name="yArray">峰数量</param>
-        ///// <returns></returns>
-        //public double[] Diff(double[] yArray, double[] xArray, out int fcount)
-        //{
-        //    fcount = 2;
-        //    double[] newY = new double[yArray.Length - 2];
-        //    for (int i = 0; i < newY.Length - 10; i++)
-        //    {
-        //        var n1 = yArray[i + 10];
-        //        var n2 = yArray[i];
-        //        var num = (yArray[i + 10] - yArray[i]);
-        //        newY[i] = (yArray[i + 10] - yArray[i]);
-        //        if (newY[i] < 0)
-        //        {
-        //            fcount++;
-        //        }
-        //    }
-        //    return newY;
-        //}
-
-        ///// <summary>
-        ///// （求符号函数）：判断数组yy1各元素符号，大于0结果为1，等于0结果为0，小于0结果为-1。结果是个数组。
-        ///// </summary>
-        ///// <param name="yArray">Y轴数组</param>
-        ///// <returns></returns>
-        //public double[] Sign(double[] yArray, out int fcount)
-        //{
-        //    double[] newX = new double[yArray.Length];
-        //    fcount = 1;
-        //    for (int i = 0; i < yArray.Length; i++)
-        //    {
-        //        double newY = yArray[i];
-
-        //        if (newY > 0)
-        //        {
-        //            newX[i] = 1;
-        //            fcount++;
-        //        }
-        //        else if (newY == 0)
-        //        {
-        //            newX[i] = 0;
-        //            fcount++;
-        //        }
-        //        else if (newY <= 0)
-        //        {
-        //            newX[i] = -1;
-        //        }
-        //    }
-        //    return newX;
-        //}
-
         /// <summary>
-        /// 
+        /// 返回包络线数据
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="rct"></param>
-        /// <returns></returns>
-        public double env_1(double x, double rct)
+        /// <param name="In_y">入参 震动值数组</param>
+        /// <param name="Out_y">出参 震动值数组</param>
+        /// <param name="rc_dn">下降 rc值</param>
+        /// <param name="rc_up">上升 rc值</param>
+        public void env_2(double[] In_y, double[] In_x, int count, out double[] Out_y, out double[] Out_x, int HZ = 5)
         {
-            double old_y = 0.0;
-            if (rct == 0.0)
+
+            double[] Out_y_01 = new double[count];
+            double[] Out_x_01 = new double[count];
+            double y = 0.0;
+            double x = 0.0;
+            int j = 1;
+
+            for (int i = 1; i < In_y.Length; i++)
             {
-                old_y = 0.0;
+                if (y < In_y[i])
+                {
+                    y = In_y[i];
+                    x = In_x[i];
+                }
+                if (i % HZ == 0)
+                {
+                    if (count > j && y != 0)
+                    {
+                        Out_y_01[j] = y;
+                        Out_x_01[j] = x;
+                        y = 0;
+                        j++;
+                    }
+                }
             }
-            else
+            Out_y = new double[j];
+            Out_x = new double[j];
+
+            for (int i = 0; i < j; i++)
             {
-                if (x > old_y)
-                {
-                    old_y = x;
-                }
-                else
-                {
-                    old_y *= rct / (rct + 1);
-                }
+                Out_y[i] = Out_y_01[i];
+                Out_x[i] = Out_x_01[i];
             }
-            return old_y;
+
+
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="N"></param>
-        /// <param name="rct"></param>
-        public void env_2(double[] x, double[] y, double[] outX, int N, double rct = 100)
-        {
-            double xx = 0.0;
-            int i;
-
-            y[0] = Math.Abs(x[0]);
-            for (i = 1; i < x.Length; i++)
-            {
-
-                xx = x[i];
-                if ((xx) > y[i - 1])
-                {
-                    y[i] = xx;
-                }
-                else
-                {
-                    y[i] = y[i - 1] * rct / (rct + 1);
-                }
-            }
-        }
-
-
         /// <summary>
         /// 返回包络线数据
         /// </summary>
@@ -202,11 +145,11 @@ namespace Udp_Agreement
                 xx = In_y[i];
                 if ((xx) > Out_y[i - 1])
                 {
-                    Out_y[i] = Math.Round(Out_y[i - 1] + ((xx - Out_y[i - 1]) * (1 - Math.Exp(-t / rc_up))),2);
+                    Out_y[i] = Math.Round(Out_y[i - 1] + ((xx - Out_y[i - 1]) * (1 - Math.Exp(-t / rc_up))), 2);
                 }
                 else
                 {
-                    Out_y[i] =Math.Round( Out_y[i - 1] - ((Out_y[i - 1] - xx) * (1 - Math.Exp(-t / rc_dn))),2);
+                    Out_y[i] = Math.Round(Out_y[i - 1] - ((Out_y[i - 1] - xx) * (1 - Math.Exp(-t / rc_dn))), 2);
                 }
 
 

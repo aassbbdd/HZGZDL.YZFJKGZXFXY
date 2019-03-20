@@ -1649,7 +1649,8 @@ namespace DbHelper
                 }
                 else
                 {
-                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                    //  I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+                    I = 100; //string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
                 }
 
                 linex = new double[20][];
@@ -1744,7 +1745,7 @@ namespace DbHelper
                     }
                     leftMaxs = leftMax;
 
-                    model.leftMaxs= string.Join(",", leftMaxs);
+                    model.leftMaxs = string.Join(",", leftMaxs);
                     model.CY1 = string.Join(",", liney[0]);
                     model.CY2 = string.Join(",", liney[1]);
                     model.CY3 = string.Join(",", liney[2]);
@@ -1766,6 +1767,8 @@ namespace DbHelper
 
                     //  model = Deserialize(typeof(Xml_Line_Data), AllEleData.ToString()) as Xml_Line_Data;
 
+
+
                     model.CY1 = AllEleData.Element("CY1").Value;
                     model.CY2 = AllEleData.Element("CY2").Value;
                     model.CY3 = AllEleData.Element("CY3").Value;
@@ -1776,11 +1779,15 @@ namespace DbHelper
                     model.VY3 = AllEleData.Element("VY3").Value;
                     model.ALLX = AllEleData.Element("ALLX").Value;
                     model.leftMaxs = AllEleData.Element("leftMaxs").Value;
+                    if (string.IsNullOrEmpty(model.CY1)
+                        || string.IsNullOrEmpty(model.CY2)
+                        || string.IsNullOrEmpty(model.CY3))
+                    {
+                        IsNotNull = false;
+                        return;
+                    }
 
-
-
-
-                    liney[0] = Array.ConvertAll(model.CY1.Split(','), s => double.Parse(s));
+                     liney[0] = Array.ConvertAll(model.CY1.Split(','), s => double.Parse(s));
                     liney[1] = Array.ConvertAll(model.CY2.Split(','), s => double.Parse(s));
                     liney[2] = Array.ConvertAll(model.CY3.Split(','), s => double.Parse(s));
 
@@ -1797,26 +1804,17 @@ namespace DbHelper
                     linex[4] =
                     linex[5] = Array.ConvertAll(model.ALLX.Split(','), s => double.Parse(s));
 
-                    leftMaxs= Array.ConvertAll(model.leftMaxs.Split(','), s => double.Parse(s)); 
+                    leftMaxs = Array.ConvertAll(model.leftMaxs.Split(','), s => double.Parse(s));
 
                 }
-
-
-
-
-
-
-
-
 
             }
             catch (Exception ex)
             {
-                throw ex;
+
+                throw;
             }
         }
-
-
 
         /// <summary>
         /// xml转数组  对比数据转换方法
@@ -1946,13 +1944,15 @@ namespace DbHelper
                 }
                 if (AverageCoun > 0)
                 {
-                    newy[2 + newDatalength][j] = c1 / AverageNum;
-                    newy[3 + newDatalength][j] = v1 / AverageNum;
+                  //  var dd = newy[2 + newDatalength][j-1];
+                  // // var dd = newy[2 + newDatalength][j];
+                  //  newy[2 + newDatalength][j] = c1 / AverageNum;
+                  //  newy[3 + newDatalength][j] = v1 / AverageNum;
 
-                    double newXvalue1 = (double)(j * AverageCoun) / allnum;
-                    newx[2 + newDatalength][j]
-                  = newx[3 + newDatalength][j]
-                  = newXvalue1;
+                  //  double newXvalue1 = (double)(j * AverageCoun) / allnum;
+                  //  newx[2 + newDatalength][j]
+                  //= newx[3 + newDatalength][j]
+                  //= newXvalue1;
                 }
                 leftMaxs = leftMax;
             }
@@ -2057,7 +2057,8 @@ namespace DbHelper
                     string Current1 = data.Substring(12 + length, 4);
                     newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
 
-                    if (leftMax[0] > Math.Abs(newy[0 + newDatalength][id]))
+                    var ddd = Math.Abs(newy[0 + newDatalength][id]);
+                    if (leftMax[0] < Math.Abs(newy[0 + newDatalength][id]))
                     {
                         leftMax[0] = Math.Abs(newy[0 + newDatalength][id]);
                     }
@@ -2068,7 +2069,7 @@ namespace DbHelper
                     string Current2 = data.Substring(16 + length, 4);
                     newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
 
-                    if (leftMax[1] > Math.Abs(newy[0 + newDatalength][id]))
+                    if (leftMax[1] < Math.Abs(newy[0 + newDatalength][id]))
                     {
                         leftMax[1] = Math.Abs(newy[0 + newDatalength][id]);
                     }
@@ -2082,7 +2083,7 @@ namespace DbHelper
                     //{
                     //    leftMax[2] = Math.Abs(newy[0 + newDatalength][id]);
                     //}
-                    if (leftMax[2] > newy[0 + newDatalength][id])
+                    if (leftMax[2] < newy[0 + newDatalength][id])
                     {
                         leftMax[2] = newy[0 + newDatalength][id];
                     }
@@ -2097,7 +2098,7 @@ namespace DbHelper
                     //    leftMax[3] = Math.Abs(newy[1 + newDatalength][id]);
                     //}
 
-                    if (leftMax[3] > newy[1 + newDatalength][id])
+                    if (leftMax[3] < newy[1 + newDatalength][id])
                     {
                         leftMax[3] = newy[1 + newDatalength][id];
                     }
@@ -2106,7 +2107,7 @@ namespace DbHelper
                 {
                     string Vibration2 = data.Substring(4 + length, 4);
                     newy[1 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
-                    if (leftMax[4] > Math.Abs(newy[1 + newDatalength][id]))
+                    if (leftMax[4] < Math.Abs(newy[1 + newDatalength][id]))
                     {
                         leftMax[4] = Math.Abs(newy[1 + newDatalength][id]);
                     }
@@ -2115,7 +2116,7 @@ namespace DbHelper
                 {
                     string Vibration3 = data.Substring(8 + length, 4);
                     newy[1 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
-                    if (leftMax[5] > Math.Abs(newy[1 + newDatalength][id]))
+                    if (leftMax[5] < Math.Abs(newy[1 + newDatalength][id]))
                     {
                         leftMax[5] = Math.Abs(newy[1 + newDatalength][id]);
                     }

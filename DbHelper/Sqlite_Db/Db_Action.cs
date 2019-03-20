@@ -79,14 +79,8 @@ namespace DbHelper.Sqlite_Db
 
         #region 测试计划数据操作
 
-        /// <summary>
-        /// 插入 测试计划 
-        /// </summary>
-        public int Test_Confige_Insert(Test_Plan model)
-        {
-            try
-            {
-                string strsql = @"
+        //插入数据库表
+        string Insert_Base = @"
                                 insert into TEST_CONFIGE(
       
                                                      DVNAME    
@@ -171,7 +165,11 @@ namespace DbHelper.Sqlite_Db
                                 )
                                 ";
 
-                SQLiteParameter[] parameters = {
+
+
+        public SQLiteParameter[] Insert_parameter_Bind(Test_Plan model)
+        {
+            SQLiteParameter[] parameters = {
                     new SQLiteParameter("DVNAME",DbType.String)
                     ,new SQLiteParameter("DVPOSITION",DbType.String)
                     ,new SQLiteParameter("DVID",DbType.String)
@@ -213,49 +211,60 @@ namespace DbHelper.Sqlite_Db
 
                 };
 
-                parameters[0].Value = string.IsNullOrEmpty(model.DVNAME) ? "" : model.DVNAME;
-                parameters[1].Value = string.IsNullOrEmpty(model.DVPOSITION) ? "" : model.DVPOSITION;
-                parameters[2].Value = string.IsNullOrEmpty(model.DVID) ? "" : model.DVID;
-                parameters[3].Value = string.IsNullOrEmpty(model.TESTER) ? "" : model.TESTER;
-                parameters[4].Value = string.IsNullOrEmpty(model.OLTC_TS) ? "" : model.OLTC_TS;
+            parameters[0].Value = string.IsNullOrEmpty(model.DVNAME) ? "" : model.DVNAME;
+            parameters[1].Value = string.IsNullOrEmpty(model.DVPOSITION) ? "" : model.DVPOSITION;
+            parameters[2].Value = string.IsNullOrEmpty(model.DVID) ? "" : model.DVID;
+            parameters[3].Value = string.IsNullOrEmpty(model.TESTER) ? "" : model.TESTER;
+            parameters[4].Value = string.IsNullOrEmpty(model.OLTC_TS) ? "" : model.OLTC_TS;
 
-                parameters[5].Value = string.IsNullOrEmpty(model.CONTACT_NUM) ? "" : model.CONTACT_NUM;
-                parameters[6].Value = string.IsNullOrEmpty(model.TEST_NUM) ? "" : model.TEST_NUM;
-                parameters[7].Value = string.IsNullOrEmpty(model.SPLACE) ? "" : model.SPLACE;
-                parameters[8].Value = string.IsNullOrEmpty(model.OILTEMP) ? "" : model.OILTEMP;
-                parameters[9].Value = string.IsNullOrEmpty(model.TEST_TIME) ? "" : model.TEST_TIME;
+            parameters[5].Value = string.IsNullOrEmpty(model.CONTACT_NUM) ? "" : model.CONTACT_NUM;
+            parameters[6].Value = string.IsNullOrEmpty(model.TEST_NUM) ? "" : model.TEST_NUM;
+            parameters[7].Value = string.IsNullOrEmpty(model.SPLACE) ? "" : model.SPLACE;
+            parameters[8].Value = string.IsNullOrEmpty(model.OILTEMP) ? "" : model.OILTEMP;
+            parameters[9].Value = string.IsNullOrEmpty(model.TEST_TIME) ? "" : model.TEST_TIME;
 
-                parameters[10].Value = string.IsNullOrEmpty(model.TEST_TYPE) ? "" : model.TEST_TYPE;
-                parameters[11].Value = string.IsNullOrEmpty(model.GETINFO) ? "" : model.GETINFO;
-                parameters[12].Value = string.IsNullOrEmpty(model.TESTSTAGE) ? "" : model.TESTSTAGE;
-                parameters[13].Value = string.IsNullOrEmpty(model.DJUST) ? "" : model.DJUST;
-                parameters[14].Value = string.IsNullOrEmpty(model.DESCRIBE) ? "" : model.DESCRIBE;
+            parameters[10].Value = string.IsNullOrEmpty(model.TEST_TYPE) ? "" : model.TEST_TYPE;
+            parameters[11].Value = string.IsNullOrEmpty(model.GETINFO) ? "" : model.GETINFO;
+            parameters[12].Value = string.IsNullOrEmpty(model.TESTSTAGE) ? "" : model.TESTSTAGE;
+            parameters[13].Value = string.IsNullOrEmpty(model.DJUST) ? "" : model.DJUST;
+            parameters[14].Value = string.IsNullOrEmpty(model.DESCRIBE) ? "" : model.DESCRIBE;
 
-                parameters[15].Value = string.IsNullOrEmpty(model.SCURRENT) ? "" : model.SCURRENT;
-                parameters[16].Value = string.IsNullOrEmpty(model.ECURRENT) ? "" : model.ECURRENT;
-                parameters[17].Value = string.IsNullOrEmpty(model.TIME_UNIT) ? "" : model.TIME_UNIT;
-                parameters[18].Value = string.IsNullOrEmpty(model.V1) ? "" : model.V1;
-                parameters[19].Value = string.IsNullOrEmpty(model.V2) ? "" : model.V2;
+            parameters[15].Value = string.IsNullOrEmpty(model.SCURRENT) ? "" : model.SCURRENT;
+            parameters[16].Value = string.IsNullOrEmpty(model.ECURRENT) ? "" : model.ECURRENT;
+            parameters[17].Value = string.IsNullOrEmpty(model.TIME_UNIT) ? "" : model.TIME_UNIT;
+            parameters[18].Value = string.IsNullOrEmpty(model.V1) ? "" : model.V1;
+            parameters[19].Value = string.IsNullOrEmpty(model.V2) ? "" : model.V2;
 
-                parameters[20].Value = string.IsNullOrEmpty(model.V3) ? "" : model.V3;
-                parameters[21].Value = string.IsNullOrEmpty(model.C1) ? "" : model.C1;
-                parameters[22].Value = string.IsNullOrEmpty(model.C2) ? "" : model.C2;
-                parameters[23].Value = string.IsNullOrEmpty(model.C3) ? "" : model.C3;
-                parameters[24].Value = model.PARENTID;
+            parameters[20].Value = string.IsNullOrEmpty(model.V3) ? "" : model.V3;
+            parameters[21].Value = string.IsNullOrEmpty(model.C1) ? "" : model.C1;
+            parameters[22].Value = string.IsNullOrEmpty(model.C2) ? "" : model.C2;
+            parameters[23].Value = string.IsNullOrEmpty(model.C3) ? "" : model.C3;
+            parameters[24].Value = model.PARENTID;
 
-                parameters[25].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "" : model.TEST_BASE_C;
+            parameters[25].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "" : model.TEST_BASE_C;
 
-                parameters[26].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "" : model.TEST_SINGLE_DOUBLE;
-                parameters[27].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "" : model.DOUBLE_SP;
-                parameters[28].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
-                parameters[29].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "" : model.SINGLE_P;
+            parameters[26].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "" : model.TEST_SINGLE_DOUBLE;
+            parameters[27].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "" : model.DOUBLE_SP;
+            parameters[28].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
+            parameters[29].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "" : model.SINGLE_P;
 
-                parameters[30].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "" : model.TEST_ORDER;
-                parameters[31].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
-                parameters[32].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
+            parameters[30].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "" : model.TEST_ORDER;
+            parameters[31].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "" : model.COUNT_BASE_C;
+            parameters[32].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
+            return parameters;
+        }
 
+
+        /// <summary>
+        /// 插入 测试计划 
+        /// </summary>
+        public int Test_Confige_Insert(Test_Plan model)
+        {
+            try
+            {
+                SQLiteParameter[] parameters = Insert_parameter_Bind(model);
                 int id = 0;
-                SQLiteHelper.ExecuteScalar(strsql, CommandType.Text, parameters);
+                SQLiteHelper.ExecuteScalar(Insert_Base, CommandType.Text, parameters);
 
                 DataTable dt = Get_Desc_Table();
                 if (dt != null)
@@ -418,7 +427,7 @@ namespace DbHelper.Sqlite_Db
         }
 
         /// <summary>
-        /// 修改 测试计划 
+        /// 修改 电流 电压
         /// </summary>
         public int Test_Confige_VOLTAGE_Edit(Test_Plan model)
         {
@@ -431,7 +440,7 @@ namespace DbHelper.Sqlite_Db
                 SQLiteParameter[] parameters = {
                     new SQLiteParameter("ID",DbType.Int32)
                     ,new SQLiteParameter("VOLTAGE",DbType.String)
-                     
+
                 };
                 parameters[0].Value = model.ID;
                 parameters[1].Value = string.IsNullOrEmpty(model.VOLTAGE) ? "" : model.VOLTAGE;
@@ -443,6 +452,110 @@ namespace DbHelper.Sqlite_Db
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// 开始测试 保存测试信息 并修改测试参数
+        /// </summary>
+        /// <returns></returns>
+        public int Test_Start_Edit(Test_Plan model)
+        {
+            try
+            {
+                List<KeyValuePair<string, SQLiteParameter[]>> list = new List<KeyValuePair<string, SQLiteParameter[]>>();
+                SQLiteParameter[] parameters = Insert_parameter_Bind(model);
+                KeyValuePair<string, SQLiteParameter[]> kay = new KeyValuePair<string, SQLiteParameter[]>(Insert_Base, parameters);
+                list.Add(kay);
+
+                string Base_Edit = @"
+                                update TEST_CONFIGE set 
+                                                    SCURRENT=@SCURRENT
+                                                    ,ECURRENT=@ECURRENT
+                                                    ,TIME_UNIT=@TIME_UNIT
+                                                    ,DOUBLE_SP=@DOUBLE_SP
+                                                    ,DOUBLE_EP=@DOUBLE_EP
+
+                                                    ,SINGLE_P=@SINGLE_P
+                                                    ,TEST_ORDER=@TEST_ORDER
+                                                    ,COUNT_BASE_C=@COUNT_BASE_C
+                                                    ,TEST_BASE_C=@TEST_BASE_C
+                                                    ,TEST_SINGLE_DOUBLE=@TEST_SINGLE_DOUBLE 
+
+                                                    ,GETINFO=@GETINFO
+                                                    ,V1=@V1
+                                                    ,V2=@V2
+                                                       
+                                                    ,V3=@V3
+                                                    ,C1=@C1
+                                                    ,C2=@C2
+                                                    ,C3=@C3
+                                                    ,DOUBLE_SP=@DOUBLE_SP
+                                                    ,DOUBLE_EP=@DOUBLE_EP
+                                                    where ID=@ID
+                                ";
+                SQLiteParameter[] parameters1 = new SQLiteParameter[] {
+
+                    new SQLiteParameter("SCURRENT",DbType.String)
+                     ,new SQLiteParameter("ECURRENT",DbType.String)
+                     ,new SQLiteParameter("TIME_UNIT",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_SP",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_EP",DbType.String)
+
+                     ,new SQLiteParameter("SINGLE_P",DbType.String)
+                     ,new SQLiteParameter("TEST_ORDER",DbType.String)
+                     ,new SQLiteParameter("COUNT_BASE_C",DbType.String)
+                     ,new SQLiteParameter("TEST_BASE_C",DbType.String)
+                     ,new SQLiteParameter("TEST_SINGLE_DOUBLE",DbType.String)
+
+                     ,new SQLiteParameter("ID",DbType.Int32)
+                     ,new SQLiteParameter("GETINFO",DbType.String)
+                     ,new SQLiteParameter("V1",DbType.String)
+                     ,new SQLiteParameter("V2",DbType.String)
+
+                     ,new SQLiteParameter("V3",DbType.String)
+                     ,new SQLiteParameter("C1",DbType.String)
+                     ,new SQLiteParameter("C2",DbType.String)
+                     ,new SQLiteParameter("C3",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_SP",DbType.String)
+                     ,new SQLiteParameter("DOUBLE_EP",DbType.String)
+                };
+
+                parameters1[0].Value = model.SCURRENT;
+                parameters1[1].Value = model.ECURRENT;
+                parameters1[2].Value = model.TIME_UNIT;
+                parameters1[3].Value = string.IsNullOrEmpty(model.DOUBLE_SP) ? "1" : model.DOUBLE_SP;
+                parameters1[4].Value = string.IsNullOrEmpty(model.DOUBLE_EP) ? "" : model.DOUBLE_EP;
+
+                parameters1[5].Value = string.IsNullOrEmpty(model.SINGLE_P) ? "1" : model.SINGLE_P;
+                parameters1[6].Value = string.IsNullOrEmpty(model.TEST_ORDER) ? "1" : model.TEST_ORDER;
+                parameters1[7].Value = string.IsNullOrEmpty(model.COUNT_BASE_C) ? "1" : model.COUNT_BASE_C;
+                parameters1[8].Value = string.IsNullOrEmpty(model.TEST_BASE_C) ? "1" : model.TEST_BASE_C;
+                parameters1[9].Value = string.IsNullOrEmpty(model.TEST_SINGLE_DOUBLE) ? "2" : model.TEST_SINGLE_DOUBLE;
+
+                parameters1[10].Value = model.PARENTID;
+                parameters1[11].Value = model.GETINFO;
+                parameters1[12].Value = model.V1;
+                parameters1[13].Value = model.V2;
+                parameters1[14].Value = model.V3;
+
+                parameters1[15].Value = model.C1;
+                parameters1[16].Value = model.C2;
+                parameters1[17].Value = model.C3;
+                parameters1[18].Value = model.DOUBLE_SP;
+                parameters1[19].Value = model.DOUBLE_EP;
+
+                kay = new KeyValuePair<string, SQLiteParameter[]>(Base_Edit, parameters1);
+                list.Add(kay);
+                SQLiteHelper.ExecuteNonQueryBatch(list);
+
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         /// <summary>
         /// 删除计划

@@ -193,6 +193,49 @@ namespace DbHelper
 
         #region 增删改查
 
+        #region 事务增改
+
+
+
+
+        /// <summary>
+		/// 批量处理数据操作语句。
+		/// </summary>
+		/// <param name="list">SQL语句集合。</param>
+		/// <exception cref="Exception"></exception>
+		static public void ExecuteNonQueryBatch(List<KeyValuePair<string, SQLiteParameter[]>> list)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                try { conn.Open(); }
+                catch { throw; }
+                using (SQLiteTransaction tran = conn.BeginTransaction())
+                {
+                    using (SQLiteCommand cmd = new SQLiteCommand(conn))
+                    {
+                        try
+                        {
+                            foreach (var item in list)
+                            {
+                                cmd.CommandText = item.Key;
+                                if (item.Value != null)
+                                {
+                                    cmd.Parameters.AddRange(item.Value);
+                                }
+                                cmd.ExecuteNonQuery();
+                            }
+                            tran.Commit();
+                        }
+                        catch (Exception) { tran.Rollback(); throw; }
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
+
         #region 执行数据库操作(新增、更新或删除)，返回影响行数
         /// <summary>
         /// 执行数据库操作(新增、更新或删除)
@@ -693,6 +736,10 @@ namespace DbHelper
                     cmd.Parameters.Add(parm);
             }
         }
+
+
+
+
 
         #endregion
 

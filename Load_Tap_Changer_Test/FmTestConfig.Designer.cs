@@ -152,6 +152,7 @@
             this.CmbPlace.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.CmbPlace.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.CmbPlace.Properties.EditValueChanged += new System.EventHandler(this.CmbPlace_Properties_EditValueChanged);
             this.CmbPlace.Size = new System.Drawing.Size(153, 24);
             this.CmbPlace.TabIndex = 21;
             // 
@@ -355,9 +356,9 @@
             // 
             this.labelControl6.Location = new System.Drawing.Point(224, 53);
             this.labelControl6.Name = "labelControl6";
-            this.labelControl6.Size = new System.Drawing.Size(10, 18);
+            this.labelControl6.Size = new System.Drawing.Size(8, 18);
             this.labelControl6.TabIndex = 18;
-            this.labelControl6.Text = "A";
+            this.labelControl6.Text = "S";
             // 
             // txtGetUnit
             // 
@@ -414,7 +415,7 @@
             // 
             // rdoGETINFO
             // 
-            this.rdoGETINFO.EditValue = "1";
+            this.rdoGETINFO.EditValue = "2";
             this.rdoGETINFO.Location = new System.Drawing.Point(4, 22);
             this.rdoGETINFO.Name = "rdoGETINFO";
             this.rdoGETINFO.Properties.Appearance.BackColor = System.Drawing.Color.White;
@@ -531,7 +532,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl13;
         private DevExpress.XtraEditors.LabelControl labelControl14;
         private DevExpress.XtraEditors.LabelControl labelControl15;
-        private DevExpress.XtraEditors.RadioGroup rdoGETINFO;
         private DevExpress.XtraEditors.LabelControl labelControl16;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.ComboBoxEdit cmbBaseC;
@@ -553,5 +553,6 @@
         private DevExpress.XtraEditors.RadioGroup rdoTestType;
         private DevExpress.XtraEditors.LabelControl labelControl7;
         private DevExpress.XtraEditors.LabelControl labelControl6;
+        private DevExpress.XtraEditors.RadioGroup rdoGETINFO;
     }
 }
