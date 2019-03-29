@@ -61,20 +61,18 @@ namespace Udp_Agreement
         /// <param name="y">传入y轴值</param>
         /// <param name="Out_x">返回包络 x轴值</param>
         /// <param name="Out_y">返回包络 y轴值</param>
-        /// <param name="spacing">点间距 </param>
-        /// <param name="rc_dn">下降 rc值</param>
-        /// <param name="rc_up">上升 rc值</param>
-        public void Envelope_01(double spacing, double[] x, double[] y
+        /// <param name="spot">点间距 </param>
+        public void Envelope_01(int spot, double[] x, double[] y
             , out double[] Out_x, out double[] Out_y)
         {
-            int HZ = 5;
+            //int HZ = 5;
             double[] yNew = (double[])y.Clone();
             double[] xNew = (double[])x.Clone();
-            int count = yNew.Length / HZ;
+            int count = yNew.Length / spot;
 
             double[] outY = new double[count];
             double[] outX = new double[count];
-            env_2(yNew, xNew, count, out outY, out outX, HZ);
+            env_2(yNew, xNew, count, out outY, out outX, spot);
 
             Out_x = outX;
             Out_y = outY;
@@ -84,13 +82,14 @@ namespace Udp_Agreement
         /// <summary>
         /// 返回包络线数据
         /// </summary>
-        /// <param name="In_y">入参 震动值数组</param>
-        /// <param name="Out_y">出参 震动值数组</param>
-        /// <param name="rc_dn">下降 rc值</param>
-        /// <param name="rc_up">上升 rc值</param>
-        public void env_2(double[] In_y, double[] In_x, int count, out double[] Out_y, out double[] Out_x, int HZ = 5)
+        /// <param name="In_y">完整y轴</param>
+        /// <param name="In_x">完整x轴</param>
+        /// <param name="count">总长度</param>
+        /// <param name="Out_y">返回y轴</param>
+        /// <param name="Out_x">返回x轴</param>
+        /// <param name="spot">间隔点位</param>
+        public void env_2(double[] In_y, double[] In_x, int count, out double[] Out_y, out double[] Out_x, int spot = 5)
         {
-
             double[] Out_y_01 = new double[count];
             double[] Out_x_01 = new double[count];
             double y = 0.0;
@@ -104,7 +103,7 @@ namespace Udp_Agreement
                     y = In_y[i];
                     x = In_x[i];
                 }
-                if (i % HZ == 0)
+                if (i % spot == 0)
                 {
                     if (count > j && y != 0)
                     {
@@ -124,6 +123,8 @@ namespace Udp_Agreement
                 Out_x[i] = Out_x_01[i];
             }
 
+            Out_y[j - 1] = 0;
+            Out_x[j - 1] = In_x[In_x.Length - 1];
 
         }
         /// <summary>

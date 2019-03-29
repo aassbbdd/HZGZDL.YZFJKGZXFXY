@@ -34,6 +34,11 @@ namespace DbHelper.Db_Model
         public string DVNAME { get; set; }
 
         /// <summary>
+        /// 父级单位名字
+        /// </summary>
+        [XmlAttribute(AttributeName = "PARENTNAME")]
+        public string PARENTNAME { get; set; }
+        /// <summary>
         /// 设备位置
         /// </summary>
         /// 
@@ -176,7 +181,6 @@ namespace DbHelper.Db_Model
         /// 
         [XmlAttribute(AttributeName = "TEST_BASE_C")]
         public string TEST_BASE_C { get; set; }
-
 
         /// <summary>
         /// 连续测试开始位置

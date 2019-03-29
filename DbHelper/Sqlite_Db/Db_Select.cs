@@ -57,13 +57,10 @@ namespace DbHelper.Sqlite_Db
         {
             try
             {
-
                 StringBuilder sbsql = new StringBuilder();
                 sbsql.Append("select * from TEST_DATA  order by  DATAID  ;");
                 DataSet ds = SQLiteHelper.ExecuteDataSet(sbsql.ToString());
-
                 return ds.Tables[0];
-
             }
             catch (Exception ex)
             {
@@ -84,9 +81,9 @@ namespace DbHelper.Sqlite_Db
             {
                 DataTable dt = new DataTable();
                 StringBuilder sb = new StringBuilder();
-                sb.Append(" select * from TEST_CONFIGE  order by ID desc");
+                sb.Append(" select tc.* ,( select DVNAME from TEST_CONFIGE where tc.PARENTID=id) as PARENTNAME  from TEST_CONFIGE tc  order by ID desc");
                 dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
-                if(dt.Rows.Count>0)
+                if (dt.Rows.Count > 0)
                 {
                     return Test_Plan_Bind(dt);
                 }
@@ -94,13 +91,45 @@ namespace DbHelper.Sqlite_Db
                 {
                     return null;
                 }
-               
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// 获取 单条数据
+        /// </summary>
+        /// <returns></returns>
+        public Test_Plan Single_Test_Cofig_Get(string dvname)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                StringBuilder sb = new StringBuilder();
+                sb.Append(" select tc.* ,( select DVNAME from TEST_CONFIGE where tc.PARENTID=id) as PARENTNAME  from TEST_CONFIGE tc where " +
+                    "tc.DVNAME='" + dvname + "' order by ID desc");
+                dt = SQLiteHelper.ExecuteDataTable(sb.ToString());
+                if (dt.Rows.Count > 0)
+                {
+                    return Test_Plan_Bind(dt)[0];
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
 
         private List<Test_Plan> Test_Plan_Bind(DataTable dt)
         {
@@ -114,6 +143,7 @@ namespace DbHelper.Sqlite_Db
                     item.ID = dr["ID"].ToString();
 
                     item.DVNAME = dr["DVNAME"].ToString();
+                    item.PARENTNAME = dr["PARENTNAME"].ToString();
                     item.DVPOSITION = dr["DVPOSITION"].ToString();
                     item.DVID = dr["DVID"].ToString();
                     item.TESTER = dr["TESTER"].ToString();
@@ -153,7 +183,7 @@ namespace DbHelper.Sqlite_Db
                     item.COUNT_BASE_C = dr["COUNT_BASE_C"].ToString();
                     item.VOLTAGE = dr["VOLTAGE"].ToString();
 
-                    
+
                     list.Add(item);
                 }
 

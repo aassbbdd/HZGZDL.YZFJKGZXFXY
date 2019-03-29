@@ -188,6 +188,35 @@ namespace Commons
             }
 
         }
+
+
+        /// <summary>
+        /// 将 字符串 保存txt 到指定目录
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <param name="text"></param>
+        public void WriteListToTextFile_New(string filepath, string text)
+        {
+            FileStream fs;
+            StreamWriter sw;
+            string path = filepath + "\\info.txt";
+
+            if (File.Exists(path))
+            {
+
+                File.Delete(path);
+
+            }
+            sw = new StreamWriter(path, true, Encoding.UTF8);//转码
+
+            //创建一个文件流，用以写入或者创建一个StreamWriter
+            sw.Flush();
+
+            sw.WriteLine(text);
+            //关闭此文件
+            sw.Flush();
+            sw.Close();
+        }
         //将List转换为TXT文件
         public void WriteListToTextFile1(string text)
         {

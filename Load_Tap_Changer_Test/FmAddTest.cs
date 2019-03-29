@@ -31,7 +31,7 @@ namespace Basic_Controls
         private void FmAddTest_Load(object sender, EventArgs e)
         {
             txtTEST_TIME.Properties.VistaEditTime = DefaultBoolean.True;
-            if (oldmodel != null && !string.IsNullOrEmpty(oldmodel.DVNAME)&& oldmodel.ISEDIT=="2")
+            if (oldmodel != null && !string.IsNullOrEmpty(oldmodel.DVNAME) && oldmodel.ISEDIT == "2")
             {
                 Page_Data_Bind();
                 txtTEST_TIME.Enabled = false;
@@ -319,7 +319,7 @@ namespace Basic_Controls
             int n;
             if (int.TryParse(txtGetUnit.Text, out n))
             {
-                if (Convert.ToInt32(txtGetUnit.Text) > 20|| Convert.ToInt32(txtGetUnit.Text)<5)
+                if (Convert.ToInt32(txtGetUnit.Text) > 20 || Convert.ToInt32(txtGetUnit.Text) < 5)
                 {
                     MessageBox.Show("请输入2-20 范围的时间");
                     this.txtGetUnit.Focus();
@@ -372,17 +372,20 @@ namespace Basic_Controls
             {
                 int CONTACT_NUM = Convert.ToInt32(this.txtCONTACT_NUM.Text);
                 string heardnum = "";
+                cmbSPLACE.Properties.Items.Clear();
                 for (int i = 1; i <= CONTACT_NUM; i++)
                 {
                     heardnum += i.ToString() + ",";
                     cmbSPLACE.Properties.Items.Add(i);
                 }
+                cmbSPLACE.Text = "1";
                 this.lbHearder.Text = heardnum;
             }
             else
             {
                 this.lbHearder.Text = "";
             }
+
         }
         #endregion
 

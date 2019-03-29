@@ -1,6 +1,6 @@
 ﻿using DbHelper.Db_Model;
 using DbHelper.XmlModel;
-using DocDecrypt.Common;
+using Common;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -1165,8 +1165,8 @@ namespace DbHelper
                 newcx3 = new double[count]; newcy3 = new double[count];
 
 
-                linex = new double[6][];
-                liney = new double[6][];
+                linex = new double[24][];
+                liney = new double[24][];
                 if (count == 0)
                 {
                     IsNotNull = false;
@@ -1508,8 +1508,8 @@ namespace DbHelper
                     I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
                 }
 
-                linex = new double[20][];
-                liney = new double[20][];
+                linex = new double[24][];
+                liney = new double[24][];
                 #region  完全数据组
                 int count = eles.Count() * 80;
 
@@ -1653,8 +1653,8 @@ namespace DbHelper
                     I = 100; //string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value) ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
                 }
 
-                linex = new double[20][];
-                liney = new double[20][];
+                linex = new double[24][];
+                liney = new double[24][];
                 #region  完全数据组
                 int count = eles.Count() * 80;
 
@@ -1787,7 +1787,7 @@ namespace DbHelper
                         return;
                     }
 
-                     liney[0] = Array.ConvertAll(model.CY1.Split(','), s => double.Parse(s));
+                    liney[0] = Array.ConvertAll(model.CY1.Split(','), s => double.Parse(s));
                     liney[1] = Array.ConvertAll(model.CY2.Split(','), s => double.Parse(s));
                     liney[2] = Array.ConvertAll(model.CY3.Split(','), s => double.Parse(s));
 
@@ -1816,75 +1816,75 @@ namespace DbHelper
             }
         }
 
-        /// <summary>
-        /// xml转数组  对比数据转换方法
-        /// </summary>
-        /// <typeparam name="T">实体类型</typeparam>
-        /// <param name="path">xml路径</param>
-        /// <returns></returns>
-        public static void Xml_To_Array_Contrast(string path, bool[] cks,
-            out double[] vx1, out double[] vy1,
-             out double[] cx1, out double[] cy1
-            )
-        {
-            try
-            {
-                XDocument document;
-                try
-                {
-                    document = XDocument.Load(path);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                XElement root = document.Root;
-                IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
+        ///// <summary>
+        ///// xml转数组  对比数据转换方法
+        ///// </summary>
+        ///// <typeparam name="T">实体类型</typeparam>
+        ///// <param name="path">xml路径</param>
+        ///// <returns></returns>
+        //public static void Xml_To_Array_Contrast(string path, bool[] cks,
+        //    out double[] vx1, out double[] vy1,
+        //     out double[] cx1, out double[] cy1
+        //    )
+        //{
+        //    try
+        //    {
+        //        XDocument document;
+        //        try
+        //        {
+        //            document = XDocument.Load(path);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw ex;
+        //        }
+        //        XElement root = document.Root;
+        //        IEnumerable<XElement> eles = root.Elements("Xml_Node_Model");
 
-                XElement ele = root.Element("Test_Plan");
+        //        XElement ele = root.Element("Test_Plan");
 
-                if (ele == null)
-                {
-                    I = 10;
-                }
-                else
-                {
-                    I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value)
-                        ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
-                }
-                int count = eles.Count() * 80;
-                newvx1 = new double[count]; newvy1 = new double[count];
-                newcx1 = new double[count]; newcy1 = new double[count];
-                vx1 = new double[count]; vy1 = new double[count];
-                cx1 = new double[count]; cy1 = new double[count];
+        //        if (ele == null)
+        //        {
+        //            I = 10;
+        //        }
+        //        else
+        //        {
+        //            I = string.IsNullOrEmpty(ele.Element("TEST_BASE_C").Value)
+        //                ? 10 : Convert.ToInt32(ele.Element("TEST_BASE_C").Value);
+        //        }
+        //        int count = eles.Count() * 80;
+        //        newvx1 = new double[count]; newvy1 = new double[count];
+        //        newcx1 = new double[count]; newcy1 = new double[count];
+        //        vx1 = new double[count]; vy1 = new double[count];
+        //        cx1 = new double[count]; cy1 = new double[count];
 
-                int index = 0; //index 为索引值
-                foreach (XElement item in eles)
-                {
-                    Algorithm_To_Arrey_Contrast(item, cks, index);
-                    index++;
-                }
-                vx1 = newvx1; vy1 = newvy1;
-                cx1 = newcx1; cy1 = newcy1;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //        int index = 0; //index 为索引值
+        //        foreach (XElement item in eles)
+        //        {
+        //            Algorithm_To_Arrey_Contrast(item, cks, index);
+        //            index++;
+        //        }
+        //        vx1 = newvx1; vy1 = newvy1;
+        //        cx1 = newcx1; cy1 = newcy1;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         /// <summary>
         /// 多维数组 储存数据之间 间距
         /// </summary>
         static int newDatalength;
         /// <summary>
-        /// xml转数组   平均数组和完整数组 对比数据转换方法 
-        /// 0 电流 1震动 2平均电流 3 平均震动
-        /// 4 电流 5震动 6平均电流 7平均震动
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// xml转数组   平均数组和完整数组 对比数据转换方法  
+        /// 0， 电流1； 1，电流2；
+        /// 4， 震动1； 5，震动2；  
         /// </summary>                                      
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
+        /// <param name="Datalength">0，第一条， 1 第二条 </param>
         /// <returns></returns>
         public static void Xml_To_Array_AverageAndContrast(string path, bool[] cks,
              double[][] linex, double[][] liney, out double[] leftMaxs
@@ -1921,16 +1921,16 @@ namespace DbHelper
                 int count = eles.Count() * 80;
 
                 linex[0 + Datalength] = new double[count];
-                linex[1 + Datalength] = new double[count];
-                liney[0 + Datalength] = new double[count];
-                liney[1 + Datalength] = new double[count];
-
-                count = count / AverageNum;
-
-                linex[2 + Datalength] = new double[count];
                 linex[3 + Datalength] = new double[count];
-                liney[2 + Datalength] = new double[count];
+                liney[0 + Datalength] = new double[count];
                 liney[3 + Datalength] = new double[count];
+
+                //count = count / AverageNum;
+
+                //linex[2 + Datalength] = new double[count];
+                //linex[3 + Datalength] = new double[count];
+                //liney[2 + Datalength] = new double[count];
+                //liney[3 + Datalength] = new double[count];
 
                 newx = linex;
                 newy = liney;
@@ -1944,15 +1944,15 @@ namespace DbHelper
                 }
                 if (AverageCoun > 0)
                 {
-                  //  var dd = newy[2 + newDatalength][j-1];
-                  // // var dd = newy[2 + newDatalength][j];
-                  //  newy[2 + newDatalength][j] = c1 / AverageNum;
-                  //  newy[3 + newDatalength][j] = v1 / AverageNum;
+                    //  var dd = newy[2 + newDatalength][j-1];
+                    // // var dd = newy[2 + newDatalength][j];
+                    //  newy[2 + newDatalength][j] = c1 / AverageNum;
+                    //  newy[3 + newDatalength][j] = v1 / AverageNum;
 
-                  //  double newXvalue1 = (double)(j * AverageCoun) / allnum;
-                  //  newx[2 + newDatalength][j]
-                  //= newx[3 + newDatalength][j]
-                  //= newXvalue1;
+                    //  double newXvalue1 = (double)(j * AverageCoun) / allnum;
+                    //  newx[2 + newDatalength][j]
+                    //= newx[3 + newDatalength][j]
+                    //= newXvalue1;
                 }
                 leftMaxs = leftMax;
             }
@@ -1962,11 +1962,79 @@ namespace DbHelper
             }
         }
 
+        ///// <summary>        
+        ///// 对比度提取算法
+        ///// </summary>
+        //private static void Algorithm_To_Arrey_Contrast(XElement model, bool[] cks, int jinex
+        //    )
+        //{
+        //    //转成毫秒除数
+        //    int allnum = 100000;
+        //    //基本宽度
+        //    int num = 1;
+        //    //一组数据总计算次数
+        //    int count = 80;
+
+        //    string DataSource = model.Element("DataSource").Value;
+        //    string data = DataSource.Substring(8, DataSource.Length - 8);
+
+        //    for (int i = 0; i < count; i++)
+        //    {
+        //        int length = 24 * i;//截取位置
+
+        //        int id = (jinex * count) + i;
+        //        if (cks[0])
+        //        {
+        //            //计算
+        //            string Current1 = data.Substring(12 + length, 4);
+        //            newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+        //        }
+        //        else if (cks[1])
+        //        {
+        //            string Current2 = data.Substring(16 + length, 4);
+        //            newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+        //        }
+        //        else if (cks[2])
+        //        {
+        //            string Current3 = data.Substring(20 + length, 4);
+        //            newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+        //        }
+
+        //        if (cks[3])
+        //        {
+        //            string Vibration1 = data.Substring(0 + length, 4);
+        //            newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+        //        }
+        //        else if (cks[4])
+        //        {
+        //            string Vibration2 = data.Substring(4 + length, 4);
+        //            newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+        //        }
+        //        else if (cks[5])
+        //        {
+        //            string Vibration3 = data.Substring(8 + length, 4);
+        //            newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+        //        }
+        //        //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
+        //        double newXvalue = (double)((jinex * count) + num + i) / allnum;
+        //        newvx1[id]
+        //      = newcx1[id]
+        //      = newXvalue;
+
+
+
+
+
+
+
+
+        //    }
+        //}
+
         /// <summary>        
-        /// 对比度提取算法
+        /// 对比度提取算法 平均和完整
         /// </summary>
-        private static void Algorithm_To_Arrey_Contrast(XElement model, bool[] cks, int jinex
-            )
+        private static void Algorithm_To_Arrey_AverageAndContrast(XElement model, bool[] cks, int jinex, int AverageNum)
         {
             //转成毫秒除数
             int allnum = 100000;
@@ -1987,54 +2055,94 @@ namespace DbHelper
                 {
                     //计算
                     string Current1 = data.Substring(12 + length, 4);
-                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                    newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current1, I);
+                    if (leftMax[0] < Math.Abs(newy[0 + newDatalength][id]))
+                    {
+                        leftMax[0] = Math.Abs(newy[0 + newDatalength][id]);
+                    }
                 }
                 else if (cks[1])
                 {
                     string Current2 = data.Substring(16 + length, 4);
-                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                    newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current2, I);
+                    if (leftMax[1] < Math.Abs(newy[0 + newDatalength][id]))
+                    {
+                        leftMax[1] = Math.Abs(newy[0 + newDatalength][id]);
+                    }
                 }
                 else if (cks[2])
                 {
                     string Current3 = data.Substring(20 + length, 4);
-                    newcy1[id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+                    newy[0 + newDatalength][id] = Algorithm.Instance.Current_Algorithm_Double(Current3, I);
+                    if (leftMax[2] < newy[0 + newDatalength][id])
+                    {
+                        leftMax[2] = newy[0 + newDatalength][id];
+                    }
                 }
 
                 if (cks[3])
                 {
                     string Vibration1 = data.Substring(0 + length, 4);
-                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                    newy[3 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration1);
+                    if (leftMax[3] < newy[3 + newDatalength][id])
+                    {
+                        leftMax[3] = newy[3+ newDatalength][id];
+                    }
                 }
                 else if (cks[4])
                 {
                     string Vibration2 = data.Substring(4 + length, 4);
-                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                    newy[3 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration2);
+                    if (leftMax[4] < Math.Abs(newy[3 + newDatalength][id]))
+                    {
+                        leftMax[4] = Math.Abs(newy[3+ newDatalength][id]);
+                    }
                 }
                 else if (cks[5])
                 {
                     string Vibration3 = data.Substring(8 + length, 4);
-                    newvy1[id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+                    newy[3 + newDatalength][id] = Algorithm.Instance.Vibration_Algorithm_Double(Vibration3);
+                    if (leftMax[5] < Math.Abs(newy[3 + newDatalength][id]))
+                    {
+                        leftMax[5] = Math.Abs(newy[3 + newDatalength][id]);
+                    }
                 }
                 //单点宽度计算公式  当前包的 ((序号* 包截取个数) +当前截取序号)/转成毫秒除数
                 double newXvalue = (double)((jinex * count) + num + i) / allnum;
-                newvx1[id]
-              = newcx1[id]
+                newx[0 + newDatalength][id]
+              = newx[3 + newDatalength][id]
               = newXvalue;
 
+                #region 计算求平均部分
 
+                //c1 += newy[0 + newDatalength][id];
+                //v1 += newy[1 + newDatalength][id];
 
+                //if (AverageCoun >= AverageNum)
+                //{
+                //    newy[2 + newDatalength][j] = c1 / AverageNum;
+                //    newy[3 + newDatalength][j] = v1 / AverageNum;
 
+                //    double newXvalue1 = (double)(j * AverageCoun) / allnum;
+                //    newx[2 + newDatalength][j]
+                //  = newx[3 + newDatalength][j]
+                //  = newXvalue1;
 
+                //    AverageCoun = 0;
+                //    c1 = 0;
+                //    v1 = 0;
+                //    j++;
+                //}
+                //  AverageCoun++;
 
-
-
+                #endregion
             }
         }
 
         /// <summary>        
         /// 对比度提取算法 平均和完整
         /// </summary>
-        private static void Algorithm_To_Arrey_AverageAndContrast(XElement model, bool[] cks, int jinex, int AverageNum)
+        private static void Algorithm_To_Arrey_AverageAndContrast_Copy(XElement model, bool[] cks, int jinex, int AverageNum)
         {
             //转成毫秒除数
             int allnum = 100000;
@@ -2045,7 +2153,7 @@ namespace DbHelper
 
             string DataSource = model.Element("DataSource").Value;
             string data = DataSource.Substring(8, DataSource.Length - 8);
-            double max = 0;
+
             for (int i = 0; i < count; i++)
             {
                 int length = 24 * i;//截取位置

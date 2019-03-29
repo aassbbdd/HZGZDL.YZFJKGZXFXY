@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DocDecrypt.Common
+namespace Common
 {
     public class FileHelper
     {
@@ -147,28 +147,71 @@ namespace DocDecrypt.Common
                 PrintExcetpion(string.Format("删除文件夹失败-{0}", dstPath), ex);
             }
         }
-
+        /// <summary>
+        /// 复制单个文件到指定文件夹
+        /// </summary>
+        /// <param name="src">指定文件路径</param>
+        /// <param name="dst">保存路径</param>
         public static void CopyFile(string src, string dst)
         {
             try
             {
                 if (src.ToLower() == dst.ToLower())
+                {
                     return;
+                }
 
                 if (!File.Exists(src))
+                {
                     return;
+                }
 
                 FileHelper.DeleteFile(dst);
                 FileHelper.CreateDirectoy(Path.GetDirectoryName(dst));
-
-                System.IO.File.Copy(src, dst);
+                File.Copy(src, dst);
             }
             catch (Exception ex)
             {
                 PrintExcetpion(string.Format("拷贝文件失败-{0}:{1}", src, dst), ex);
             }
         }
+        /// <summary>
+        /// 复制单个文件到指定文件夹
+        /// </summary>
+        /// <param name="src">指定文件路径</param>
+        /// <param name="dst">保存路径</param>
+        /// <param name="filename">文件名字</param>
+        public static string CopyFile(string src, string dst, string filename)
+        {
+            try
+            {
+                if (src.ToLower() == dst.ToLower())
+                {
+                    return "复制路径和保存路径一样！";
+                }
 
+                if (!File.Exists(src))
+                {
+                    return "未找到需复制文件！";
+                }
+
+                FileHelper.DeleteFile(dst + filename);
+
+                ///删除后文件还存在
+                if (File.Exists(dst + filename))
+                {
+                    return "指定目录下已有该文件！";
+                }
+                FileHelper.CreateDirectoy(Path.GetDirectoryName(dst));
+                File.Copy(src, dst + filename);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                PrintExcetpion(string.Format("拷贝文件失败-{0}:{1}", src, dst), ex);
+                throw ex;
+            }
+        }
         /// <summary>
         /// //验证文件是否存在
         /// </summary>
@@ -303,7 +346,7 @@ namespace DocDecrypt.Common
             }
         }
 
- 
+
         /// <summary>
         /// 复制整个文件夹下文件
         /// </summary>
@@ -350,6 +393,53 @@ namespace DocDecrypt.Common
             }
         }
 
+
+        /// 拷贝oldlab的文件到newlab下面
+        /// </summary>
+        /// <param name="sourcePath">lab文件所在目录(@"~\labs\oldlab")</param>
+        /// <param name="savePath">保存的目标目录(@"~\labs\newlab")</param>
+        /// <returns>返回:true-拷贝成功;false:拷贝失败</returns>
+        public static bool CopyOldLabFilesToNewLab(string sourcePath, string savePath)
+        {
+            if (!Directory.Exists(savePath))
+            {
+                Directory.CreateDirectory(savePath);
+            }
+
+            #region //拷贝labs文件夹到savePath下
+            try
+            {
+                string[] labDirs = Directory.GetDirectories(sourcePath);//目录
+                string[] labFiles = Directory.GetFiles(sourcePath);//文件
+                if (labFiles.Length > 0)
+                {
+                    for (int i = 0; i < labFiles.Length; i++)
+                    {
+
+                        File.Copy(sourcePath + "\\" + System.IO.Path.GetFileName(labFiles[i]), savePath + "\\"
+                            + System.IO.Path.GetFileName(labFiles[i]), true);
+
+                    }
+                }
+                if (labDirs.Length > 0)
+                {
+                    for (int j = 0; j < labDirs.Length; j++)
+                    {
+                        Directory.GetDirectories(sourcePath + "\\" + System.IO.Path.GetFileName(labDirs[j]));
+
+                        //递归调用
+                        CopyOldLabFilesToNewLab(sourcePath + "\\" + System.IO.Path.GetFileName(labDirs[j]), savePath + "\\"
+                            + System.IO.Path.GetFileName(labDirs[j]));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            #endregion
+            return true;
+        }
 
         /// <summary>  
         /// 复制文件夹中的所有文件夹与文件到另一个文件夹

@@ -19,7 +19,7 @@ using System.Net;
 using Steema.TeeChart;
 using Steema.TeeChart.Styles;
 using Steema.TeeChart.Export;
-using DocDecrypt.Common;
+using Common;
 using DbHelper.Sqlite_Db;
 using Commons;
 
@@ -38,6 +38,8 @@ using Load_Tap_Changer_Test;
 using DbHelper.Db_Enum;
 using DevExpress.Utils;
 using Load_Tap_Changer_Test.Staffgauge;
+using System.Numerics;
+using MathNet.Numerics.IntegralTransforms;
 
 namespace Basic_Controls
 {
@@ -61,7 +63,7 @@ namespace Basic_Controls
                 Tester_List_Bind();//获取测试计划绑定到页面树
             }
             // MoveNum = Convert.ToDouble(this.TxtOffset11.EditValue);
-            this.Text = Program_Name+"(v" + Version + ")";
+            this.Text = Program_Name + "(v" + Version + ")";
             //测试连接通信
             // sendUdp(agreement._1_CMD_HEARTBEAT);
             pclChart.Controls.Add(tChart);// 绑定图表位置 
@@ -69,6 +71,7 @@ namespace Basic_Controls
             #region 绑定浮层控件
             BindCount();
             #endregion
+            ckLineShow_CheckedChanged(null, null);
         }
 
         /// 选择图片
@@ -314,6 +317,7 @@ namespace Basic_Controls
 
                 Chart_Lond(filepath);
                 ckLineShow.Checked = true;
+                Set_Cursor_Height();
 
             }
             catch (Exception ex)
@@ -438,7 +442,7 @@ namespace Basic_Controls
                             }
                             else
                             {
-                                
+
                                 Invoke(new ThreadStart(delegate ()
                                 {
                                     Tester_List_Bind();
@@ -608,6 +612,8 @@ namespace Basic_Controls
                 {
                     Chart_Init();
                 }
+                Set_Cursor_Height();
+
                 ckLineShow.Checked = true;
 
             }
@@ -1376,93 +1382,93 @@ namespace Basic_Controls
                     double maxt = tChart.Axes.Top.CalcPosPoint(e.X);
 
                     //0-20才能放大缩小
-                    if ((min >= 0 && min <= 20) && (max >= 0 && max <= 20) && (mint >= 0 && mint <= 20) && (maxt >= 0 && maxt <= 20))
+                    //if ((min >= 0 && min <= 20) && (max >= 0 && max <= 20) && (mint >= 0 && mint <= 20) && (maxt >= 0 && maxt <= 20))
+                    //{
+                    // 开始位置大于结束位置    开始位置大于0  是鼠标左键
+                    if ((sx < e.X || sy < e.Y) && sx > 0 && sy > 0)
                     {
-                        // 开始位置大于结束位置    开始位置大于0  是鼠标左键
-                        if ((sx < e.X || sy < e.Y) && sx > 0 && sy > 0)
+                        if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 100)
                         {
-                            if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 100)
+                            if (linex == null)//数据为空
                             {
-                                if (linex == null)//数据为空
-                                {
-                                    r = new Rectangle();
-                                    tChart_AfterDraw_Del(null, tChart.Graphics3D);
-                                    return;
-                                }
-                                if (aotuzoom == 0)
-                                {
-                                    aotuzoom = 7;
-                                    //Select_Chart_Lond();
-                                }
-
-                                tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
-                                tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
-                                tChart.Axes.Bottom.SetMinMax(min, max);
-
-
-                                tChart.Axes.Top.Labels.ValueFormat = "0.000000";
-                                tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
-                                tChart.Axes.Top.SetMinMax(mint, maxt);
-                                startTime = DateTime.Now;
-
-                                //if (LeftOrRightNum != 0)
-                                //{
-
-                                //    for (int i = 0; i < cursorToll_After.Length; i++)
-                                //    {
-                                //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
-                                //        {
-                                //            cursorToll_Front[i].XValue = mint + ((maxt - mint) / 4);
-                                //            cursorToll_After[i].XValue = mint + ((maxt - mint) / 2);
-                                //        }
-                                //    }
-
-
-
-                                //    //cursorTool_Front_V1.XValue = mint + ((maxt - mint) / 4);
-                                //    //cursorTool_After_V1.XValue = mint + ((maxt - mint) / 2);
-
-                                //}
-                                //else
-                                //{
-                                //    for (int i = 0; i < cursorToll_After.Length; i++)
-                                //    {
-                                //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
-                                //        {
-                                //            cursorToll_Front[i].XValue = min + ((max - min) / 4);
-                                //            cursorToll_After[i].XValue = min + ((max - min) / 2);
-                                //        }
-                                //    }
-
-                                //    //cursorTool_Front_V1.XValue = min + ((max - min) / 4);
-                                //    //cursorTool_After_V1.XValue = min + ((max - min) / 2);
-                                //}
+                                r = new Rectangle();
+                                tChart_AfterDraw_Del(null, tChart.Graphics3D);
+                                return;
                             }
-                            else
+                            if (aotuzoom == 0)
                             {
-
+                                aotuzoom = 7;
+                                //Select_Chart_Lond();
                             }
 
-                        }
-                        else if ((sx > e.X || sy > e.Y) && sx > 0 && sy > 0)
-                        {
-                            //if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                            tChart.Axes.Bottom.Labels.ValueFormat = "0.000000";
+                            tChart.Axes.Bottom.Increment = 0.000001;//控制X轴 刻度的增量
+                            tChart.Axes.Bottom.SetMinMax(min, max);
+
+
+                            tChart.Axes.Top.Labels.ValueFormat = "0.000000";
+                            tChart.Axes.Top.Increment = 0.000001;//控制X轴 刻度的增量
+                            tChart.Axes.Top.SetMinMax(mint, maxt);
+                            startTime = DateTime.Now;
+
+                            //if (LeftOrRightNum != 0)
                             //{
-                            Reduction();
-                            //startTime = DateTime.Now;
+
+                            //    for (int i = 0; i < cursorToll_After.Length; i++)
+                            //    {
+                            //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
+                            //        {
+                            //            cursorToll_Front[i].XValue = mint + ((maxt - mint) / 4);
+                            //            cursorToll_After[i].XValue = mint + ((maxt - mint) / 2);
+                            //        }
+                            //    }
+
+
+
+                            //    //cursorTool_Front_V1.XValue = mint + ((maxt - mint) / 4);
+                            //    //cursorTool_After_V1.XValue = mint + ((maxt - mint) / 2);
+
                             //}
                             //else
                             //{
+                            //    for (int i = 0; i < cursorToll_After.Length; i++)
+                            //    {
+                            //        if (cursorToll_After[i] != null && cursorToll_Front[i] != null)
+                            //        {
+                            //            cursorToll_Front[i].XValue = min + ((max - min) / 4);
+                            //            cursorToll_After[i].XValue = min + ((max - min) / 2);
+                            //        }
+                            //    }
 
+                            //    //cursorTool_Front_V1.XValue = min + ((max - min) / 4);
+                            //    //cursorTool_After_V1.XValue = min + ((max - min) / 2);
                             //}
-
                         }
                         else
                         {
 
                         }
+
+                    }
+                    else if ((sx > e.X || sy > e.Y) && sx > 0 && sy > 0)
+                    {
+                        //if (DateTimeUtil.DateTimeDiff(startTime, DateTime.Now) > 1000)
+                        //{
+                        Reduction();
+                        //startTime = DateTime.Now;
+                        //}
+                        //else
+                        //{
+
+                        //}
+
+                    }
+                    else
+                    {
+
                     }
                 }
+                //}
             }
             r = new Rectangle();
             tChart_AfterDraw_Del(null, tChart.Graphics3D);
@@ -1793,7 +1799,7 @@ namespace Basic_Controls
 
             this.lbBottomTimeT2.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(pcAfter.Location.X)) + "s";
 
-           // Move_Front( pcAfter.Location.X, pcFront.Location.X);
+            // Move_Front( pcAfter.Location.X, pcFront.Location.X);
 
             this.lbtime.Text = "0ms";
 
@@ -1987,36 +1993,42 @@ namespace Basic_Controls
 
         private void Move_Front(int XValue1, int XValue2)
         {
-
             try
             {
-
-
-
+                if (liney == null)
+                {
+                    return;
+                }
                 if (XValue1 > XValue2)
                 {
-                    pcFront.Location = new Point(XValue2 - 5, pcFront.Location.Y);
+                    pcFront.Location = new Point(XValue2 - 15, pcFront.Location.Y);
                     return;
                 }
 
-                //lbtime.Text = Rounding((XValue2 - XValue1) , 2).ToString() + "ms";
-                //int length = Convert.ToInt32(allnum * XValue1) + (int)(allnum * Offset);
                 int length = (int)Math.Round((tChart.Axes.Bottom.CalcPosPoint(MouseX) * (double)allnum), 0);
+
                 if (length < 0)
                 {
                     pcFront.Location = new Point((int)tChart.Panel.MarginLeft * 10 + 15, pcFront.Location.Y);
                     lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 20);
                     return;
                 }
+                //包络震动数据偷点后长度
+                int v_length_lost = 0;
+                //包络电流数据偷点后长度
+                int c_length_lost = 0;
+                if (Lond_Enum.包络数据对比加载 == lond_Enum || Lond_Enum.包络线加载 == lond_Enum)
+                {
+                    v_length_lost = length / VPoint_Lost;
+                    c_length_lost = length / CPoint_Lost;
+                }
+
 
                 if (Lond_Enum.数据对比加载 == lond_Enum)
                 {
                     lbTopTime.Text = Rounding(tChart.Axes.Top.CalcPosPoint(MouseX)) + "s";
                 }
                 lbBottomTime.Text = Rounding(tChart.Axes.Bottom.CalcPosPoint(MouseX)) + "s";
-
-                //var dd = lbBottomTime.Text.Substring(0, lbBottomTime.Text.Length - 1)!=""? lbBottomTime.Text.Substring(0, lbBottomTime.Text.Length - 1) : "0";
-                //var dd1= lbBottomTimeT2.Text.Substring(0, lbBottomTimeT2.Text.Length - 1)!="" ? lbBottomTimeT2.Text.Substring(0, lbBottomTimeT2.Text.Length - 1) : "0";
                 double t1 = Convert.ToDouble(lbBottomTime.Text.Substring(0, lbBottomTime.Text.Length - 1) != "" ? lbBottomTime.Text.Substring(0, lbBottomTime.Text.Length - 1) : "0");
                 double t2 = Convert.ToDouble(lbBottomTimeT2.Text.Substring(0, lbBottomTimeT2.Text.Length - 1) != "" ? lbBottomTimeT2.Text.Substring(0, lbBottomTimeT2.Text.Length - 1) : "0");
 
@@ -2026,20 +2038,37 @@ namespace Basic_Controls
                 {
                     lbv1.Text = Rounding(vline1.YValues[length]) + "g";
                 }
-                if (Offset == 0)
+                else if (length < liney[3].Length)// && ckV1.Checked
                 {
-                    if (length < vline2.YValues.Count)// && ckV1.Checked
+                    double num = liney[3][length];
+                    if (num > 0)
                     {
-                        lbv2.Text = Rounding(vline2.YValues[length]) + "g";
+                        lbv1.Text = Rounding(liney[3][length]) + "g";
+                    }
+                    // lbv1.Text = Rounding(vline1.YValues[v_length_lost]) + "g";
+                }
+                //if (Offset == 0)
+                //{
+                if (length < vline2.YValues.Count)// && ckV1.Checked
+                {
+                    lbv2.Text = Rounding(vline2.YValues[length]) + "g";
+                }
+                else if (length < liney[4].Length && Lond_Enum.包络数据对比加载 == lond_Enum)// && ckV1.Checked
+                {
+                    double num = liney[4][length];
+                    if (num > 0)
+                    {
+                        lbv2.Text = Rounding(liney[4][length]) + "g";
                     }
                 }
-                else
-                {
-                    if (length <= vline2.YValues.Count)
-                    {
-                        lbv2.Text = Rounding(vline2.YValues[length]) + "g";
-                    }
-                }
+                //}
+                //else
+                //{
+                //    if (length <= vline2.YValues.Count)
+                //    {
+                //        lbv2.Text = Rounding(vline2.YValues[length]) + "g";
+                //    }
+                //}
 
                 if (length < vline3.YValues.Count)//&& ckV3.Checked
                 {
@@ -2050,28 +2079,41 @@ namespace Basic_Controls
                 {
                     lbc1.Text = Rounding(cline1.YValues[length]) + "a";
                 }
-                if (Offset == 0)
+                else if (length < liney[0].Length)// && ckV1.Checked
                 {
-                    if (length < cline2.YValues.Count)// && ckV1.Checked
+                    double num = liney[0][length];
+                    if (num > 0)
                     {
-                        lbc2.Text = Rounding(cline2.YValues[length]) + "a";
+                        lbc1.Text = Rounding(liney[0][length]) + "a";
                     }
                 }
-                else
+                //if (Offset == 0)
+                //{
+                if (length < cline2.YValues.Count)// && ckV1.Checked
                 {
-                    if (length <= cline2.YValues.Count)
+                    lbc2.Text = Rounding(cline2.YValues[length]) + "a";
+                }
+                else if (length < liney[1].Length && Lond_Enum.包络数据对比加载 == lond_Enum)// && ckV1.Checked
+                {
+                    double num = liney[1][length];
+                    if (num > 0)
                     {
-                        lbc2.Text = Rounding(cline2.YValues[length]) + "a";
+                        lbc2.Text = Rounding(liney[1][length]) + "a";
                     }
                 }
+                //}
+                //else
+                //{
+                //    if (length <= cline2.YValues.Count)
+                //    {
+                //        lbc2.Text = Rounding(cline2.YValues[length]) + "a";
+                //    }
+                //}
                 if (length < cline3.YValues.Count)//&& ckC3.Checked
                 {
                     lbc3.Text = Rounding(cline3.YValues[length]) + "a";
                 }
-
-
                 OpenCursortTime = DateTime.Now;
-
             }
             catch (Exception ex)
             {
@@ -2186,9 +2228,13 @@ namespace Basic_Controls
 
             try
             {
+                if (liney == null)
+                {
+                    return;
+                }
                 if (XValue1 > XValue2)
                 {
-                    pcAfter.Location = new Point(XValue1 + 5, pcAfter.Location.Y);
+                    pcAfter.Location = new Point(XValue1 + 15, pcAfter.Location.Y);
                     return;
                 }
 
@@ -2215,20 +2261,37 @@ namespace Basic_Controls
                 {
                     lbv1T2.Text = Rounding(vline1.YValues[length]) + "g";
                 }
-                if (Offset == 0)
+                //if (Offset == 0)
+                //{
+                if (length < vline2.YValues.Count)// && ckV1.Checked
                 {
-                    if (length < vline2.YValues.Count)// && ckV1.Checked
+                    lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
+                }
+                //else if (length < liney[3].Length)// && ckV1.Checked
+                //{
+                //    double num = liney[3][length];
+                //    if (num > 0)
+                //    {
+                //        lbv2T2.Text = Rounding(liney[3][length]) + "g";
+                //    }
+                //    // lbv1.Text = Rounding(vline1.YValues[v_length_lost]) + "g";
+                //}
+                else if (length < liney[4].Length && Lond_Enum.包络数据对比加载 == lond_Enum)// && ckV1.Checked
+                {
+                    double num = liney[4][length];
+                    if (num > 0)
                     {
-                        lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
+                        lbv2T2.Text = Rounding(liney[4][length]) + "g";
                     }
                 }
-                else
-                {
-                    if (length <= vline2.YValues.Count)
-                    {
-                        lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
-                    }
-                }
+                //}
+                //else
+                //{
+                //    if (length <= vline2.YValues.Count)
+                //    {
+                //        lbv2T2.Text = Rounding(vline2.YValues[length]) + "g";
+                //    }
+                //}
 
                 if (length < vline3.YValues.Count)//&& ckV3.Checked
                 {
@@ -2239,20 +2302,36 @@ namespace Basic_Controls
                 {
                     lbc1T2.Text = Rounding(cline1.YValues[length]) + "a";
                 }
-                if (Offset == 0)
+                else if (length < liney[0].Length)// && ckV1.Checked
                 {
-                    if (length < cline2.YValues.Count)// && ckV1.Checked
+                    double num = liney[0][length];
+                    if (num > 0)
                     {
-                        lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                        lbc1T2.Text = Rounding(liney[0][length]) + "a";
                     }
                 }
-                else
+                //if (Offset == 0)
+                //{
+                if (length < cline2.YValues.Count)// && ckV1.Checked
                 {
-                    if (length <= cline2.YValues.Count)
+                    lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                }
+                else if (length < liney[1].Length && Lond_Enum.包络数据对比加载 == lond_Enum)// && ckV1.Checked
+                {
+                    double num = liney[1][length];
+                    if (num > 0)
                     {
-                        lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                        lbc2T2.Text = Rounding(liney[1][length]) + "a";
                     }
                 }
+                //}
+                //else
+                //{
+                //    if (length <= cline2.YValues.Count)
+                //    {
+                //        lbc2T2.Text = Rounding(cline2.YValues[length]) + "a";
+                //    }
+                //}
                 if (length < cline3.YValues.Count)//&& ckC3.Checked
                 {
                     lbc3T2.Text = Rounding(cline3.YValues[length]) + "a";
@@ -2352,7 +2431,6 @@ namespace Basic_Controls
 
         //10秒
         //换算数据包个数 = 10秒/800微秒 10/0.0008
-
         /// <summary>
         /// 添加若干个自定义坐标轴 绘制 图表画布
         /// </summary>
@@ -2409,9 +2487,7 @@ namespace Basic_Controls
                     axis.Minimum = -10;//最小值
                 }
                 tChart.Axes.Custom.Add(axis);
-
                 listBaseLine[i].CustomVertAxis = axis;
-
             }
         }
 
@@ -2699,7 +2775,6 @@ namespace Basic_Controls
         ///  两条数据对比 对比时使用
         /// </summary>
         double[] leftMax2 = new double[6];
-
 
         /// <summary>
         /// 加载波形图配置
@@ -3100,8 +3175,8 @@ namespace Basic_Controls
                 Chart_DataTable_Init();
                 //if (aotuzoom > 0)
                 //{
-                vx1 = linex[1];
-                vy1 = liney[1];
+                vx1 = linex[3];
+                vy1 = liney[3];
                 //}
                 //else
                 //{
@@ -3117,8 +3192,8 @@ namespace Basic_Controls
 
                 //if (aotuzoom > 0)
                 //{
-                vx2 = linex[5];
-                vy2 = liney[5];
+                vx2 = linex[4];
+                vy2 = liney[4];
                 //}
                 //else
                 //{
@@ -3151,8 +3226,8 @@ namespace Basic_Controls
 
                 //if (aotuzoom > 0)
                 //{
-                cx2 = linex[4];
-                cy2 = liney[4];
+                cx2 = linex[1];
+                cy2 = liney[1];
                 //}
                 //else
                 //{
@@ -3242,27 +3317,24 @@ namespace Basic_Controls
 
                 }
 
-                cx1 = linex[0];
-                cy1 = liney[0];
+                cx1 = linex[16];
+                cy1 = liney[16];
 
                 cline1 = new Line();
                 if (!Single)
                 {
                     if (ckC1.Checked)
                     {
-                        cy1 = liney[0];
                         cline1.Title = string.Format("【电流1】");
 
                     }
                     else if (ckC2.Checked)
                     {
-                        cy1 = liney[1];
                         cline1.Title = string.Format("【电流2】");
 
                     }
                     else if (ckC3.Checked)
                     {
-                        cy1 = liney[2];
                         cline1.Title = string.Format("【电流3】");
 
                     }
@@ -3276,8 +3348,8 @@ namespace Basic_Controls
                 if (Single)
                 {
                     cline1.Title = string.Format("【电流对比】");
-                    cx2 = linex[4];
-                    cy2 = liney[4];
+                    cx2 = linex[17];
+                    cy2 = liney[17];
 
                     cline2 = new Line();
 
@@ -3375,18 +3447,20 @@ namespace Basic_Controls
         double[] cy3;
 
         /// <summary>
-        ///  0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
         /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2,16： 完整包络电流1 17：完整包络电流2
+        /// 对比数据时； 0:  电流1 对应数组0;   1：震动1 对应数组1;   4:电流2  对应数组4; 5： 震动2 ，对应数组15     点间距 震动5  点间距 震动2000
         /// </summary>
-        double[][] linex;//= new double[12][];
-                         /// <summary>
-                         /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-                         /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-                         /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        double[][] linex;
 
+        /// <summary>
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
+        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2,16： 完整包络电流1 17：完整包络电流2
+        /// 对比数据时； 0:  电流1 对应数组0;   1：震动1 对应数组1;   4:电流2  对应数组4; 5： 震动2 ，对应数组15     点间距 震动5  点间距 震动2000
         /// </summary>
-        double[][] liney;//= new double[12][];
+        double[][] liney;
 
         #endregion
 
@@ -5127,8 +5201,27 @@ namespace Basic_Controls
         public void Tester_List_Bind()
         {
             List<Test_Plan> list = Db_Select.Instance.All_Test_Cofig_Get();
-
-            treeList.DataSource = list;
+            List<Test_Plan> newlist = new List<Test_Plan>();
+            if (list != null)
+            {
+                foreach (Test_Plan item in list)
+                {
+                    if (item.PARENTID == "0")
+                    {
+                        newlist.Add(item);
+                    }
+                    else
+                    {
+                        string path = "\\Xml_Data\\";
+                        string sourcePath = Environment.CurrentDirectory + path + item.DVNAME + ".xml";
+                        if (File.Exists(sourcePath))
+                        {
+                            newlist.Add(item);
+                        }
+                    }
+                }
+            }
+            treeList.DataSource = newlist;
             treeList.Refresh();
             treeList.ExpandAll();
         }
@@ -5308,6 +5401,8 @@ namespace Basic_Controls
                             {
                                 MessageBox.Show("未找到该图形数据！");
                             }
+                            Set_Cursor_Height();
+
                         }
                         else
                         {
@@ -5335,7 +5430,8 @@ namespace Basic_Controls
                         popupMenu.ShowPopup(barManager1, point);
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ListToText.Instance.WriteListToTextFile1(ex.ToString());
             }
@@ -5506,6 +5602,14 @@ namespace Basic_Controls
         #endregion
 
         #region 包络线相关转换
+        /// <summary>
+        /// 震动包络偷点数 5点
+        /// </summary>
+        int VPoint_Lost = 5;
+        /// <summary>
+        /// 电流包络偷点数 2000点
+        /// </summary>
+        int CPoint_Lost = 2000;
 
         /// <summary>
         /// 包络线
@@ -5518,8 +5622,13 @@ namespace Basic_Controls
             {
                 Show_Open();
 
-               // Re_Envelope_Data(linex[9], liney[9], out linex[12], out liney[12]);
-                Re_Envelope_Data(linex[3], liney[3], out linex[14], out liney[14]);
+                // Re_Envelope_Data(linex[9], liney[9], out linex[12], out liney[12]);
+                //震动点位5
+
+
+                Re_Envelope_Data(linex[3], liney[3], out linex[14], out liney[14], VPoint_Lost);
+                //电流点位2000
+                Re_Envelope_Data(linex[0], liney[0], out linex[16], out liney[16], CPoint_Lost);
 
                 string time = linex[14][linex[14].Length - 1].ToString();
                 Single = false;
@@ -5549,17 +5658,17 @@ namespace Basic_Controls
         /// </summary>
         /// <param name="Out_x">返回X轴数据</param>
         /// <param name="Out_y">返回Y轴数据</param>
-        private void Re_Envelope_Data(double[] In_x, double[] In_y, out double[] Out_x, out double[] Out_y)
+        private void Re_Envelope_Data(double[] In_x, double[] In_y, out double[] Out_x, out double[] Out_y, int spacing = 5)
         {
-            double spacing = (double)(1 * num) / allnum;
-            double rc_up = txtRcUp.Text != "0" ? Convert.ToDouble(txtRcUp.Text) : 0.0001;
-            double rc_dn = txtRcDn.Text != "0" ? Convert.ToDouble(txtRcDn.Text) : 0.01;
+            //double spacing = (double)(1 * num) / allnum;
+            //double rc_up = txtRcUp.Text != "0" ? Convert.ToDouble(txtRcUp.Text) : 0.0001;
+            //double rc_dn = txtRcDn.Text != "0" ? Convert.ToDouble(txtRcDn.Text) : 0.01;
             //Envelope_Algorithm.Instance.Envelope(spacing, In_x, In_y
             //    , out Out_x, out Out_y
             //    , rc_dn, rc_up);
             Envelope_Algorithm.Instance.Envelope_01(spacing, In_x, In_y
-                , out Out_x, out Out_y  );
-            
+                , out Out_x, out Out_y);
+
 
 
         }
@@ -5629,12 +5738,6 @@ namespace Basic_Controls
                         if (!string.IsNullOrEmpty(filepath))
                         {
                             leftMax = new double[6];
-
-                            //XmlHelper.Xml_To_Array_Contrast(filepath, cks,
-                            //   out vx1, out vy1,
-                            //   out cx1, out cy1
-                            //    );
-
                             XmlHelper.Xml_To_Array_AverageAndContrast(
                                                             filepath, cks,
                                                              linex, liney, out leftMax, 0, firstAverageNum
@@ -5653,15 +5756,9 @@ namespace Basic_Controls
                         if (!string.IsNullOrEmpty(filepath))
                         {
                             leftMax2 = new double[6];
-
-                            //XmlHelper.Xml_To_Array_Contrast(filepath, cks,
-                            //   out vx2, out vy2,
-                            //   out cx2, out cy2
-                            //    );
-
                             XmlHelper.Xml_To_Array_AverageAndContrast(
                                                             filepath, cks,
-                                                             linex, liney, out leftMax2, 4, firstAverageNum
+                                                             linex, liney, out leftMax2, 1, firstAverageNum
                                                             );
                         }
                     }
@@ -5685,7 +5782,7 @@ namespace Basic_Controls
                         return;
                     }
                     double time1 = linex[0][linex[0].Length - 1];
-                    double time2 = linex[4][linex[4].Length - 1];
+                    double time2 = linex[3][linex[3].Length - 1];
 
                     lbybname.Text = Node1.DVNAME;
                     lbybtime.Text = time1.ToString() + " 秒(sec)";
@@ -5707,13 +5804,15 @@ namespace Basic_Controls
                         //tChart.Header.Text = "包络线对比";
                         lond_Enum = Lond_Enum.包络数据对比加载;
                         //   平均
-                        Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
-                        Re_Envelope_Data(linex[7], liney[7], out linex[13], out liney[13]);
+                        //Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
+                        //Re_Envelope_Data(linex[7], liney[7], out linex[13], out liney[13]);
 
-                        //完整
-                        Re_Envelope_Data(linex[1], liney[1], out linex[14], out liney[14]);
-                        Re_Envelope_Data(linex[5], liney[5], out linex[15], out liney[15]);
-
+                        //   震动1 对应数组1 ,震动2 ，对应数组15     点间距 震动5
+                        Re_Envelope_Data(linex[3], liney[3], out linex[14], out liney[14], VPoint_Lost);
+                        Re_Envelope_Data(linex[4], liney[4], out linex[15], out liney[15], VPoint_Lost);
+                        //   电流1 对应数组0 电流2 ，对应数组4      点间距 震动2000
+                        Re_Envelope_Data(linex[0], liney[0], out linex[16], out liney[16], CPoint_Lost);
+                        Re_Envelope_Data(linex[1], liney[1], out linex[17], out liney[17], CPoint_Lost);
                         Single = true;
                         Chart_Data_Envelope_Lond();
                     }
@@ -5735,6 +5834,35 @@ namespace Basic_Controls
                     btnRestore.Enabled = false;
                     ckLineShow.Checked = true;
                 }
+
+                Set_Cursor_Height();
+
+            }
+        }
+        bool IsContrast = false;
+        /// <summary>
+        /// 设置游标高度
+        /// </summary>
+        private void Set_Cursor_Height()
+        {
+            int Height = 35;
+            if ((lond_Enum == Lond_Enum.数据对比加载 || lond_Enum == Lond_Enum.包络数据对比加载) & !IsContrast)
+            {
+                pcAfter.Height = pcAfter.Height - Height;
+                pcAfter.Location = new Point(pcAfter.Location.X + Height, pcAfter.Location.Y + Height);
+
+                pcFront.Height = pcFront.Height - Height;
+                pcFront.Location = new Point(pcFront.Location.X + Height, pcFront.Location.Y + Height);
+                IsContrast = true;
+            }
+            else if ((lond_Enum != Lond_Enum.数据对比加载 || lond_Enum != Lond_Enum.包络数据对比加载) & IsContrast)
+            {
+                pcAfter.Height = pcAfter.Height + Height;
+                pcAfter.Location = new Point(pcAfter.Location.X - Height, pcAfter.Location.Y - Height);
+
+                pcFront.Height = pcFront.Height + Height;
+                pcFront.Location = new Point(pcFront.Location.X - Height, pcFront.Location.Y - Height);
+                IsContrast = false;
             }
         }
 
@@ -5820,7 +5948,7 @@ namespace Basic_Controls
         /// </summary>
         private void BindCount()
         {
-            #region 浮沉控件
+            #region 浮层控件
             staffgauge.Height = pclChart.Height;
             staffgauge.Width = pclChart.Width;
             staffgauge.Location = new Point(0, 0);
@@ -5876,6 +6004,7 @@ namespace Basic_Controls
             Selection = false;
             ckFollow.Checked = false;
         }
+
         /// <summary>
         /// 移动 前线 轴1
         /// </summary>
@@ -5887,11 +6016,11 @@ namespace Basic_Controls
             {
                 Point point = Control.MousePosition;
                 pcFront.Location = new Point(point.X - pclChart.Location.X, pcFront.Location.Y);
-                MouseX = point.X - pclChart.Location.X;
+
+                MouseX = pcFront.Location.X;
                 Move_Front(MouseX, pcAfter.Location.X);
 
                 lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 15);
-
             }
         }
 
@@ -5987,6 +6116,231 @@ namespace Basic_Controls
 
             }
 
+        }
+        /// <summary>
+        /// 浮点分析
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSpotAnalysis_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            int length = 1000;
+            double[] in_fft_r = new double[length];
+            double[] in_fft_i = new double[length];
+            double[] out_fft_r = new double[length];
+            double[] out_fft_i = new double[length];
+            for (int i = 0; i < length; i++)
+            {
+                int t = i;
+                in_fft_r[i] = 20 + 30 * Math.Sin(2 * Math.PI * 50 * t / 180) + 15 * Math.Cos(2 * Math.PI * 75 * t / 180);
+            }
+
+            Fourier.Forward(in_fft_r, in_fft_i, FourierOptions.Matlab);
+
+            double[] ffx = new double[in_fft_r.Length];
+            out_fft_r[0] = Math.Sqrt((in_fft_r[0] * in_fft_r[0]) + (in_fft_i[0] * in_fft_i[0])) / length;
+
+            for (int i = 1; i < in_fft_r.Length; i++)
+            {
+                ffx[i] = 0.005 * i;
+
+                out_fft_r[i] = 2 * Math.Sqrt((in_fft_r[i] * in_fft_r[i]) + (in_fft_i[i] * in_fft_i[i])) / length;
+            }
+
+
+            ////返回参数 有问题 需要验证
+            ////  var DD = out_fft_r; GetGridPen
+            //tChart.Series.Clear();
+            //tChart.Axes.Custom.Clear();
+
+            //tChart.Axes.Bottom.SetMinMax(0, 20);
+
+
+
+
+            //double leftmax = Math.Round(leftMax[3] * (1 + 0.2), 3);
+
+            //if(leftmax<=0)
+            //{
+            //leftmax = 50;
+            // }
+
+            //tChart.Axes.Left.SetMinMax(-leftmax, leftmax);
+
+            //tChart.Axes.Left.StartPosition = 0;
+            //tChart.Axes.Left.EndPosition = 100;
+
+            //Points ps = new Points();
+            //ps.Pointer.HorizSize = 1;
+            //ps.Pointer.VertSize = 1;
+            //ps.Pointer.Pen.Visible = true;
+            //ps.Pointer.Style = PointerStyles.Circle;
+            //tChart.Series.Add(ps);
+
+            //ps.Add(linex[20], liney[20]);
+
+            FFT(liney[3]);
+
+            //  vline1 = new Line();
+
+
+            //tChart.Series.Add(vline1);          
+            // vline1.Add(linex[20], liney[20]);
+
+            // vline1.Add(ffx[3], out_fft_r[20]);
+
+
+
+
+
+        }
+        /// <summary>
+        /// FFT 运算
+        /// </summary>
+        private void FFT(double[] Data_In)
+        {
+            try
+            {
+
+                liney[20] = new double[Data_In.Length];
+                linex[20] = new double[Data_In.Length];
+
+
+                //double leftmax = Math.Round(leftMax[3] * (1 + 0.2), 3);
+
+                //tChart.Axes.Left.SetMinMax(-leftmax, leftmax);
+
+                //tChart.Axes.Left.StartPosition = 0;
+                //tChart.Axes.Left.EndPosition = 100;
+                //tChart.Axes.Bottom.Grid.Visible = false;
+                //tChart.Axes.Left.Grid.Visible = false;
+
+
+
+                //Steema.TeeChart.Themes.ColorPalettes.ApplyPalette(tChart.Chart, 9);
+
+
+                //Points ps = new Points();
+                //ps.Pointer.HorizSize = 1;
+                //ps.Pointer.VertSize = 1;
+                //ps.Pointer.Pen.Visible = false;
+                //ps.Pointer.Style = PointerStyles.Circle;
+
+
+
+
+                //ps.Color = Color.Red;
+
+
+
+                //tChart.Series.Add(ps);
+
+
+
+
+                //数据总长度
+                int llength = liney[3].Length;
+                //fft 运算长度
+                int num = 2000;
+                //执行运算次数
+                int count = llength / num;
+
+                int savenum = num / 5;
+                int saveallnum = savenum * count;
+
+                double[] out_fft_r = new double[saveallnum];
+                double[] out_fft_i = new double[saveallnum];
+
+                double[] ffx = new double[saveallnum];
+
+                for (int i = 0; i < count; i++)
+                {
+                    //数据当前位置
+                    int getlength = i * num;
+                    //运算数组
+                    double[] in_fft_r = new double[num];
+                    double[] in_fft_i = new double[num];
+                    in_fft_r[0] = 0;
+                    in_fft_i[0] = 0;
+
+                    for (int j = 0; j < num; j++)
+                    {
+                        if (getlength + j >= llength)
+                        {
+                            break;
+                        }
+                        in_fft_r[j] = Data_In[getlength + j];
+                    }
+                    Fourier.Forward(in_fft_r, in_fft_i, FourierOptions.Matlab);
+                    int savelength = i * savenum;
+                    for (int j = 1; j <= savenum; j++)
+                    {
+                        if (savelength + j >= saveallnum)
+                        {
+                            break;
+                        }
+                        ffx[savelength + j] = 0.02 * i;
+                        out_fft_r[savelength + j] = 2 * Math.Sqrt((in_fft_r[j] * in_fft_r[j]) + (in_fft_i[j] * in_fft_i[j])) / num;
+ 
+                        if (out_fft_r[savelength + j]>0.1)
+                        {
+                            var dd = out_fft_r[savelength + j];
+                        }
+                    }
+                }
+
+                liney[20] = out_fft_r;
+                linex[20] = ffx;
+
+                Bitmap srcImage = new Bitmap(1000, 400);
+                for (int i = 0; i < srcImage.Width; i++)
+                {
+                    if ((i * srcImage.Height) >= out_fft_r.Length)
+                    {
+                        break;
+                    }
+                    for (int j = 0; j < srcImage.Height; j++)
+                    { 
+                        double dnum = out_fft_r[i * srcImage.Height + j];
+                        int colorB = (int)(255 - (dnum / 0.3 * 255) + 0.5);
+      
+                        Color color = Color.FromArgb(255, colorB, colorB, colorB);
+                        srcImage.SetPixel(i, j, color);
+                    }
+                }
+
+                srcImage.RotateFlip(RotateFlipType.Rotate180FlipX);
+                pictureBox1.Height = srcImage.Height;
+                pictureBox1.Width = srcImage.Width;
+                pictureBox1.Image = srcImage;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 导入导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_In_Out_Data_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Fm_In_Out_Data from = new Fm_In_Out_Data(treeList);
+            from.ShowDialog();
+            Tester_List_Bind();
+
+        }
+
+        private void btn_In_Out_Data1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Fm_In_Out_Data from = new Fm_In_Out_Data(treeList);
+            from.ShowDialog();
+            Tester_List_Bind();
         }
 
         #endregion

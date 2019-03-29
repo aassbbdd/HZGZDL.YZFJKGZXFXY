@@ -93,40 +93,63 @@ namespace Load_Tap_Changer_Test
 
         private void Get_Single()
         {
-            string showTxt = "";
-            int Place = Convert.ToInt32(this.CmbPlace.Text);
-            if (RdoOrder.Text == "1")
+            try
             {
+                string showTxt = ""; string showTxt1 = "";
+                int Place = Convert.ToInt32(this.CmbPlace.Text);
                 int countNum = Convert.ToInt32(oldmodel.CONTACT_NUM);
-
-                if (Place >= countNum)
+                if (RdoOrder.Text == "1")
                 {
-                    showTxt = "(" + Place + "-禁止)";
+                    
+
+                    if (Place >= countNum)
+                    {
+                        showTxt = "(" + Place + "-禁止)";
+                    
+                        RdoOrder.Properties.Items[1].Enabled = true;
+                        RdoOrder.Properties.Items[0].Enabled = false;
+
+                        RdoOrder.SelectedIndex = 1;
+                        showTxt1 = "(" + (Place-1) + "-"+ Place + ")";
+                    }
+                    else
+                    {
+                        RdoOrder.Properties.Items[1].Enabled = Place != 1;
+                        RdoOrder.Properties.Items[0].Enabled = Place != countNum;
+                        showTxt = "(" + Place + "-" + (Place + 1) + ")";
+                    }
+
+                    RdoOrder.Properties.Items[0].Description = "前往后" + showTxt;
+                    RdoOrder.Properties.Items[1].Description = "后往前"+ showTxt1;
                 }
                 else
                 {
-                    showTxt = "(" + Place + "-" + (Place + 1) + ")";
 
+                    if (Place <= 1)
+                    {
+                        showTxt = "(" + Place + "-禁止)";
+
+                        RdoOrder.Properties.Items[1].Enabled = false;
+                        RdoOrder.Properties.Items[0].Enabled = true;
+
+                        RdoOrder.SelectedIndex = 0;
+                        showTxt1 = "(" + Place + "-" + (Place + 1)+ ")";
+
+                    }
+                    else
+                    {
+                        showTxt = "(" + Place + "-" + (Place - 1) + ")";
+                        RdoOrder.Properties.Items[1].Enabled = Place != 1;
+                        RdoOrder.Properties.Items[0].Enabled = Place != countNum;
+                    }
+                    RdoOrder.Properties.Items[0].Description = "前往后"+ showTxt1;
+
+                    RdoOrder.Properties.Items[1].Description = "后往前" + showTxt;
                 }
-
-                RdoOrder.Properties.Items[0].Description = "前往后" + showTxt;
-                RdoOrder.Properties.Items[1].Description = "后往前";
             }
-            else
+            catch (Exception ex)
             {
 
-                if (Place <= 1)
-                {
-                    showTxt = "(" + Place + "-禁止)";
-                }
-                else
-                {
-                    showTxt = "(" + Place + "-" + (Place - 1) + ")";
-
-                }
-                RdoOrder.Properties.Items[0].Description = "前往后";
-
-                RdoOrder.Properties.Items[1].Description = "后往前" + showTxt;
             }
         }
         /// <summary>
@@ -152,7 +175,7 @@ namespace Load_Tap_Changer_Test
             {
                 CmbPlace.Properties.Items.Add(i);
             }
-            CmbPlace.Text = oldmodel.SINGLE_P;
+            CmbPlace.Text = string.IsNullOrEmpty(oldmodel.SINGLE_P) ? "1" : oldmodel.SINGLE_P;
 
             //判断采样信息是那种状态
             Get_Info_Type();
@@ -218,9 +241,10 @@ namespace Load_Tap_Changer_Test
             {
                 this.RdoOrder.SelectedIndex = 0;
             }
- 
+
             txtSPlace.Text = oldmodel.DOUBLE_SP;
             txtEPlace.Text = oldmodel.DOUBLE_EP;
+
         }
 
 
@@ -359,7 +383,7 @@ namespace Load_Tap_Changer_Test
 
         private void CmbPlace_Properties_EditValueChanged(object sender, EventArgs e)
         {
-            Get_Single();
+             Get_Single();
         }
     }
 }
