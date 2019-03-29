@@ -6308,7 +6308,6 @@ namespace Basic_Controls
                         srcImage.SetPixel(i, j, color);
                     }
                 }
-
                 srcImage.RotateFlip(RotateFlipType.Rotate180FlipX);
                 pictureBox1.Height = srcImage.Height;
                 pictureBox1.Width = srcImage.Width;

@@ -17,6 +17,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basic_Controls", "Basic_Controls\Basic_Controls.csproj", "{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win_Controls", "ClassLibrary1\Win_Controls.csproj", "{63D22E6B-4F1E-4A92-8B1F-7BC896C40210}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C19EF7-754E-42BF-BD2C-EFF37CF454EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D22E6B-4F1E-4A92-8B1F-7BC896C40210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D22E6B-4F1E-4A92-8B1F-7BC896C40210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D22E6B-4F1E-4A92-8B1F-7BC896C40210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D22E6B-4F1E-4A92-8B1F-7BC896C40210}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

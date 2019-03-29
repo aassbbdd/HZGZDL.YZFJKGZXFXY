@@ -260,6 +260,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\Win_Controls.csproj">
+      <Project>{63d22e6b-4f1e-4a92-8b1f-7bc896c40210}</Project>
+      <Name>Win_Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Commons\Commons.csproj">
       <Project>{F60EDB23-65BC-48D2-87F6-F467D42E59CC}</Project>
       <Name>Commons</Name>
