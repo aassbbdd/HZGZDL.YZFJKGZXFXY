@@ -34,7 +34,7 @@ namespace Udp_Agreement.Model
     }
 
     /// <summary>
-    /// 震动电流实体
+    /// 振动电流实体
     /// </summary>
     public class Vibration_Current
     {
@@ -48,15 +48,15 @@ namespace Udp_Agreement.Model
         public string width { get; set; }
 
         /// <summary>
-        /// 震动1
+        /// 振动1
         /// </summary>
         public string Vibration1 { get; set; }
         /// <summary>
-        /// 震动2
+        /// 振动2
         /// </summary>
         public string Vibration2 { get; set; }
         /// <summary>
-        /// 震动3
+        /// 振动3
         /// </summary>
         public string Vibration3 { get; set; }
 

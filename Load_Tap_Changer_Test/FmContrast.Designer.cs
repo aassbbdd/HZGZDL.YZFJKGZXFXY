@@ -80,9 +80,9 @@
             this.rdoV.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.rdoV.Properties.Appearance.Options.UseBackColor = true;
             this.rdoV.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            new DevExpress.XtraEditors.Controls.RadioGroupItem("1", "震动1"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem("2", "震动2"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(3, "震动3")});
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("1", "振动1"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem("2", "振动2"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(3, "振动3")});
             this.rdoV.Properties.SelectedIndexChanged += new System.EventHandler(this.rdov_Properties_SelectedIndexChanged);
             this.rdoV.Size = new System.Drawing.Size(77, 76);
             this.rdoV.TabIndex = 19;
@@ -309,7 +309,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 18);
             this.label4.TabIndex = 63;
-            this.label4.Text = "震动:";
+            this.label4.Text = "振动:";
             // 
             // btnOk
             // 
@@ -339,7 +339,7 @@
             this.lbVibrate.Name = "lbVibrate";
             this.lbVibrate.Size = new System.Drawing.Size(43, 18);
             this.lbVibrate.TabIndex = 69;
-            this.lbVibrate.Text = "震动:";
+            this.lbVibrate.Text = "振动:";
             // 
             // lbCurrent
             // 

@@ -730,7 +730,7 @@
             // 
             this.ckV2.Location = new System.Drawing.Point(84, 35);
             this.ckV2.Name = "ckV2";
-            this.ckV2.Properties.Caption = "震动2";
+            this.ckV2.Properties.Caption = "振动2";
             this.ckV2.Size = new System.Drawing.Size(62, 22);
             this.ckV2.TabIndex = 4;
             // 
@@ -738,7 +738,7 @@
             // 
             this.ckV3.Location = new System.Drawing.Point(152, 35);
             this.ckV3.Name = "ckV3";
-            this.ckV3.Properties.Caption = "震动3";
+            this.ckV3.Properties.Caption = "振动3";
             this.ckV3.Size = new System.Drawing.Size(62, 22);
             this.ckV3.TabIndex = 3;
             // 
@@ -747,7 +747,7 @@
             this.ckV1.EditValue = true;
             this.ckV1.Location = new System.Drawing.Point(16, 35);
             this.ckV1.Name = "ckV1";
-            this.ckV1.Properties.Caption = "震动1";
+            this.ckV1.Properties.Caption = "振动1";
             this.ckV1.Size = new System.Drawing.Size(62, 22);
             this.ckV1.TabIndex = 0;
             // 

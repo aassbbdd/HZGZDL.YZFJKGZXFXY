@@ -63,12 +63,12 @@ namespace Load_Tap_Changer_Test
             treeList2.Refresh();
         }
         /// <summary>
-        /// 绑定震动
+        /// 绑定振动
         /// </summary>
         private void Bind_V()
         {
             V = rdoV.Text;
-            lbVibrate.Text = "震动 " + V;
+            lbVibrate.Text = "振动 " + V;
         }
         /// <summary>
         /// 绑定电流
@@ -146,16 +146,16 @@ namespace Load_Tap_Changer_Test
 
                     if (node1["V1"].ToString() == "1")
                     {
-                        rdoV.Properties.Items.Add(new RadioGroupItem("1", "震动1"));
+                        rdoV.Properties.Items.Add(new RadioGroupItem("1", "振动1"));
                     }
                     if (node1["V2"].ToString() == "1")
                     {
-                        rdoV.Properties.Items.Add(new RadioGroupItem("2", "震动2"));
+                        rdoV.Properties.Items.Add(new RadioGroupItem("2", "振动2"));
                     }
 
                     if (node1["V3"].ToString() == "1")
                     {
-                        rdoV.Properties.Items.Add(new RadioGroupItem("3", "震动3"));
+                        rdoV.Properties.Items.Add(new RadioGroupItem("3", "振动3"));
                     }
                 }
             }
@@ -233,7 +233,7 @@ namespace Load_Tap_Changer_Test
             Bind_C();
         }
         /// <summary>
-        /// 选择震动
+        /// 选择振动
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

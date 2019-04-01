@@ -24,7 +24,13 @@ namespace Win_Controls
         /// </summary>
         public void InIt()
         {
+            //pic_img.Height = picMap .Height-200;
+            //pic_img.Width = picMap.Width;
+            pic_img.BackgroundImage = _Bitmap;
+            pic_img.SizeMode = PictureBoxSizeMode.StretchImage;
+            pic_img.BackgroundImageLayout = ImageLayout.Stretch;
 
+            lbTitle.Text = _Title;
         }
         #endregion
 

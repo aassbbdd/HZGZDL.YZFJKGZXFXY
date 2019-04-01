@@ -163,7 +163,7 @@ namespace Socket_Server
         }
 
         /// <summary>
-        /// 发送开始 测试协议（震动 电流数据 用）
+        /// 发送开始 测试协议（振动 电流数据 用）
         /// </summary>
         /// <param name="sendMsg"></param>
         private static void SendMessages1(object sendMsg)
@@ -221,7 +221,7 @@ namespace Socket_Server
         }
 
         /// <summary>
-        /// 发送开始 测试协议（震动 电流数据 用）
+        /// 发送开始 测试协议（振动 电流数据 用）
         /// </summary>
         /// <param name="sendMsg"></param>
         private static void SendMessages2(object sendMsg)

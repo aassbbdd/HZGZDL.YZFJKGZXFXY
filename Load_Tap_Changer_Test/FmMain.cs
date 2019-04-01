@@ -40,6 +40,7 @@ using DevExpress.Utils;
 using Load_Tap_Changer_Test.Staffgauge;
 using System.Numerics;
 using MathNet.Numerics.IntegralTransforms;
+using Win_Controls;
 
 namespace Basic_Controls
 {
@@ -68,10 +69,28 @@ namespace Basic_Controls
             // sendUdp(agreement._1_CMD_HEARTBEAT);
             pclChart.Controls.Add(tChart);// 绑定图表位置 
 
+
+
             #region 绑定浮层控件
             BindCount();
             #endregion
             ckLineShow_CheckedChanged(null, null);
+
+            #region 绑定图片控件
+            bit.Dock = DockStyle.Fill;
+            pclChart.Controls.Add(bit);// 绑定图表位置 
+            pclChart.Controls[21].BringToFront();
+            cmbGray_level.Properties.Items.Clear();
+            for (int i = 1; i <= trackBar.Maximum; i++)
+            {
+                cmbGray_level.Properties.Items.Add(i);
+            }
+            cmbGray_level.Text = "1";
+            Bind_Bit();
+
+
+            #endregion
+
         }
 
         /// 选择图片
@@ -487,6 +506,9 @@ namespace Basic_Controls
         {
             try
             {
+                Bind_Bit();
+
+
                 Send_Config();
             }
             catch (Exception ex)
@@ -678,7 +700,7 @@ namespace Basic_Controls
 
         /// <summary>
         /// 是否勾选通道
-        ///  0电流1， 1 电流2，2电流3， 3震动1， 4震动2 5震动3
+        ///  0电流1， 1 电流2，2电流3， 3振动1， 4振动2 5振动3
         /// </summary>
         bool[] cks = new bool[6];
 
@@ -709,7 +731,7 @@ namespace Basic_Controls
             }
             else
             {
-                MessageBox.Show("请勾选左侧电流震动");
+                MessageBox.Show("请勾选左侧电流振动");
                 return false;
             }
 
@@ -1596,6 +1618,10 @@ namespace Basic_Controls
         /// TChart 控件初始化
         /// </summary>
         private TChart tChart = new TChart();
+        /// <summary>
+        /// 自定义图片控件
+        /// </summary>
+        Bitmap_Control bit = new Bitmap_Control();
 
         /// <summary>
         /// //计算坐标百分比参数
@@ -1648,16 +1674,16 @@ namespace Basic_Controls
         /// 单个点位的长度
         /// </summary>
         double newXvalue = 0;
-        Line vline1;//震动1
-        Line vline2;//震动2
-        Line vline3;//震动3
+        Line vline1;//振动1
+        Line vline2;//振动2
+        Line vline3;//振动3
         Line cline1;//电流1
         Line cline2;//电流2
         Line cline3;//电流3
         #endregion
 
         #region 控制显示几路波形
-        /*震动3路*/
+        /*振动3路*/
         bool v1 = true;
         bool v2 = false;
         bool v3 = false;
@@ -1708,11 +1734,11 @@ namespace Basic_Controls
             //计算单点的距离
             newXvalue = (double)(1 * num * LessPoint) / allnum;
 
-            vline1 = new Line();//震动1
+            vline1 = new Line();//振动1
 
-            vline2 = new Line();//震动2
+            vline2 = new Line();//振动2
 
-            vline3 = new Line();//震动3
+            vline3 = new Line();//振动3
 
             cline1 = new Line();//电流1
 
@@ -1817,20 +1843,33 @@ namespace Basic_Controls
             }
             else
             {
-                this.lbdbv.Text = "震动2:";
+                this.lbdbv.Text = "振动2:";
                 this.lbdbc.Text = "电流2:";
-                this.lbybv.Text = "震动1:";
+                this.lbybv.Text = "振动1:";
                 this.lbybc.Text = "电流1:";
 
-                this.lbdbvT2.Text = "震动2:";
+                this.lbdbvT2.Text = "振动2:";
                 this.lbdbcT2.Text = "电流2:";
-                this.lbybvT2.Text = "震动1:";
+                this.lbybvT2.Text = "振动1:";
                 this.lbybcT2.Text = "电流1:";
             }
 
-            btnEnvelope.Enabled = true;
-            btnRestore.Enabled = true;
+            //btnEnvelope.Enabled = true;
+            //btnRestore.Enabled = true;
+            IsShowControl(true);
         }
+        /// <summary>
+        /// 有数据显示否显示控件
+        /// </summary>
+        /// <param name="isShow"></param>
+        private void IsShowControl(bool isShow=false)
+        {
+            btnSpot_Img.Enabled = isShow;
+            btnSpotAnalysis.Enabled = isShow;
+            btnEnvelope.Enabled = isShow;
+            btnRestore.Enabled = isShow;
+        }
+
         CursorTool[] cursorToll_Front;
         CursorTool[] cursorToll_After;
         /// <summary>
@@ -2013,7 +2052,7 @@ namespace Basic_Controls
                     lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 20);
                     return;
                 }
-                //包络震动数据偷点后长度
+                //包络振动数据偷点后长度
                 int v_length_lost = 0;
                 //包络电流数据偷点后长度
                 int c_length_lost = 0;
@@ -2391,8 +2430,8 @@ namespace Basic_Controls
         /// </summary>
         private void Chart_Config_Contrast(string dvname1, string dvname2, string time1, string time2)
         {
-            vline1 = new Line();//震动1
-            vline2 = new Line();//震动2
+            vline1 = new Line();//振动1
+            vline2 = new Line();//振动2
             cline1 = new Line();//电流1
             cline2 = new Line();//电流2
 
@@ -2437,6 +2476,9 @@ namespace Basic_Controls
         /// <param name="count"></param>
         private void AddCustomAxis(int count)
         {
+            Bind_Bit();
+
+
             List<BaseLine> listBaseLine = new List<BaseLine>();
             for (int i = 0; i < tChart.Series.Count; i++)
             {
@@ -2502,6 +2544,9 @@ namespace Basic_Controls
         /// <param name="count"></param>
         private void AddCustomAxis_Left(int count, List<double> leftMax)
         {
+            Bind_Bit();
+
+
             List<BaseLine> listBaseLine = new List<BaseLine>();
             for (int i = 0; i < tChart.Series.Count; i++)
             {
@@ -2546,101 +2591,15 @@ namespace Basic_Controls
                 listBaseLine[i].CustomVertAxis = axis;
             }
         }
-
-        ///// <summary>
-        ///// 添加对比数据线
-        ///// </summary>
-        ///// <param name="count"></param>
-        //private void AddCustomAxis_Contrast_Envelope(int count)
-        //{
-        //    double single = (100 / count) - space;
-        //    List<BaseLine> listBaseLine = new List<BaseLine>();
-        //    for (int i = 0; i < tChart.Series.Count; i++)
-        //    {
-        //        listBaseLine.Add((BaseLine)tChart.Series[i]);
-        //    }
-        //    Axis axis = new Axis();
-
-        //    axis.StartPosition = 0;
-        //    axis.EndPosition = 100;
-        //    axis.AutomaticMaximum = false;//最大刻度禁用
-        //    axis.AutomaticMinimum = false;//最小刻度禁用
-        //    axis.Title.Angle = 90;//'标题摆放角度
-
-        //    string title = tChart.Series[0].Title;
-
-        //    axis.Title.Text = title;
-        //    axis.Title.Color = Color.Red;
-        //    axis.Maximum = 5;//最大值
-        //    axis.Minimum = -5;//最小值
-
-        //    tChart.Axes.Custom.Add(axis);
-        //    listBaseLine[0].CustomVertAxis = axis;
-        //    if (count > 1)
-        //    {
-        //        listBaseLine[1].CustomVertAxis = axis;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 添加对比数据线
-        ///// </summary>
-        ///// <param name="count"></param>
-        //private void AddCustomAxis_Contrast(int count)
-        //{
-        //    double single = (100 / count) - space;
-        //    List<BaseLine> listBaseLine = new List<BaseLine>();
-        //    for (int i = 0; i < tChart.Series.Count; i++)
-        //    {
-        //        listBaseLine.Add((BaseLine)tChart.Series[i]);
-        //    }
-        //    double startPosition = tChart.Axes.Left.StartPosition;
-        //    double endPosition = tChart.Axes.Left.EndPosition;
-        //    startPosition = 0;
-        //    endPosition = 0;
-        //    Axis axis;
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        axis = new Axis();
-        //        startPosition = endPosition + space;
-        //        endPosition = startPosition + single;
-        //        axis.StartPosition = startPosition;
-        //        axis.EndPosition = endPosition;
-        //        axis.AutomaticMaximum = false;//最大刻度禁用
-        //        axis.AutomaticMinimum = false;//最小刻度禁用
-        //        axis.Title.Angle = 90;//'标题摆放角度
-
-        //        string title = tChart.Series[i * 2].Title;
-
-        //        axis.Title.Text = title;
-        //        axis.Title.Color = Color.Red;
-        //        if (title.Substring(0, 2) == "电流")
-        //        {
-        //            axis.Maximum = 5;//最大值
-        //            axis.Minimum = -5;//最小值
-        //        }
-        //        else
-        //        {
-        //            axis.Maximum = 10;//最大值
-        //            axis.Minimum = -10;//最小值
-        //        }
-
-        //        tChart.Axes.Custom.Add(axis);
-        //        listBaseLine[i * 2].CustomVertAxis = axis;
-        //        if (count > 1)
-        //        {
-        //            listBaseLine[(i * 2) + 1].CustomVertAxis = axis;
-        //        }
-        //    }
-        //}
-
-
         /// <summary>
         /// 添加对比数据线
         /// </summary>
         /// <param name="count"></param>
         private void AddCustomAxis_Contrast_Left(int count, List<double> leftMax)
         {
+            Bind_Bit();
+
+
             double single = (100 / count) - space;
             List<BaseLine> listBaseLine = new List<BaseLine>();
             for (int i = 0; i < tChart.Series.Count; i++)
@@ -2691,8 +2650,8 @@ namespace Basic_Controls
                 tChart.Axes.Custom.Clear();
                 if (v1)
                 {
-                    //震动1路 vline1
-                    vline1.Title = string.Format("震动曲线{0}", 1);
+                    //振动1路 vline1
+                    vline1.Title = string.Format("振动曲线{0}", 1);
                     //    vline1.Color = Color.Green;
                     tChart.Series.Add(vline1);
 
@@ -2702,16 +2661,16 @@ namespace Basic_Controls
                 }
                 if (v2)
                 {
-                    //震动2路 vline2
+                    //振动2路 vline2
                     //Line vline2 = new Line();
-                    vline2.Title = string.Format("震动曲线{0}", 2);
+                    vline2.Title = string.Format("振动曲线{0}", 2);
                     tChart.Series.Add(vline2);
                 }
                 if (v3)
                 {
-                    //震动3路 vline3
+                    //振动3路 vline3
                     //Line vline3 = new Line();
-                    vline3.Title = string.Format("震动曲线{0}", 3);
+                    vline3.Title = string.Format("振动曲线{0}", 3);
                     tChart.Series.Add(vline3);
                 }
                 if (c1)
@@ -2767,7 +2726,7 @@ namespace Basic_Controls
         int firstAverageNum = 100;
         /// <summary>
         ///左边最大 Y轴值  
-        /// 左边轴高低 0 电流1 ，1 电流2 ，2 电流3，3 震动1 ，4 震动2 5 震动3
+        /// 左边轴高低 0 电流1 ，1 电流2 ，2 电流3，3 振动1 ，4 振动2 5 振动3
         /// </summary>
         double[] leftMax = new double[6];
 
@@ -2782,6 +2741,7 @@ namespace Basic_Controls
         /// <param name="filepath"></param>
         private void Chart_Lond(string filepath)
         {
+
             Dv_Parameter_Init();
             btnClear_ItemClick(null, null);
             if (!string.IsNullOrEmpty(filepath))
@@ -2848,134 +2808,6 @@ namespace Basic_Controls
             }
             //对比包络线
         }
-        ///// <summary>
-        ///// 重新加载图表
-        ///// </summary>
-        //private void Chart_Data_Lond()
-        //{
-        //    try
-        //    {
-        //        alltime = 20;
-        //        Chart_DataTable_Init();
-        //        //震动1路 vline1
-        //        if (v1)
-        //        {
-        //            vline1 = new Line();
-        //            tChart.Series.Add(vline1);
-        //            vline1.Title = string.Format("震动曲线{0}", 1);
-        //            if (aotuzoom > 0)
-        //            {
-        //                vx1 = linex[3];
-        //                vy1 = liney[3];
-        //            }
-        //            else
-        //            {
-        //                vx1 = linex[9];
-        //                vy1 = liney[9];
-        //            }
-        //            vline1.Add(vx1, vy1);
-        //        }
-        //        //震动2路 vline2
-        //        if (v2)
-        //        {
-        //            vline2 = new Line();
-        //            tChart.Series.Add(vline2);
-        //            vline2.Title = string.Format("震动曲线{0}", 2);
-        //            if (aotuzoom > 0)
-        //            {
-        //                vx2 = linex[4];
-        //                vy2 = liney[4];
-        //            }
-        //            else
-        //            {
-        //                vx2 = linex[10];
-        //                vy2 = liney[10];
-        //            }
-        //            vline2.Add(vx2, vy2);
-        //        }
-        //        //震动3路 vline3
-        //        if (v3)
-        //        {
-        //            vline3 = new Line();
-        //            tChart.Series.Add(vline3);
-        //            vline3.Title = string.Format("震动曲线{0}", 3);
-
-        //            if (aotuzoom > 0)
-        //            {
-        //                vx3 = linex[5];
-        //                vy3 = liney[5];
-        //            }
-        //            else
-        //            {
-        //                vx3 = linex[11];
-        //                vy3 = liney[11];
-        //            }
-        //            vline3.Add(vx3, vy3);
-        //        }
-        //        //电流1路 cline1
-        //        if (c1)
-        //        {
-        //            cline1 = new Line();
-        //            tChart.Series.Add(cline1);
-        //            cline1.Title = string.Format("电流曲线{0}", 1);
-        //            if (aotuzoom > 0)
-        //            {
-        //                cx1 = linex[0];
-        //                cy1 = liney[0];
-        //            }
-        //            else
-        //            {
-        //                cx1 = linex[6];
-        //                cy1 = liney[6];
-        //            }
-        //            cline1.Add(cx1, cy1);
-        //        }
-        //        //电流2路 cline2
-        //        if (c2)
-        //        {
-        //            cline2 = new Line();
-        //            tChart.Series.Add(cline2);
-        //            cline2.Title = string.Format("电流曲线{0}", 2);
-        //            if (aotuzoom > 0)
-        //            {
-        //                cx2 = linex[1];
-        //                cy2 = liney[1];
-        //            }
-        //            else
-        //            {
-        //                cx2 = linex[7];
-        //                cy2 = liney[7];
-        //            }
-        //            cline2.Add(cx2, cy2);
-        //        }
-        //        //电流3路 cline3
-        //        if (c3)
-        //        {
-        //            cline3 = new Line();
-        //            tChart.Series.Add(cline3);
-        //            cline3.Title = string.Format("电流曲线{0}", 3);
-
-        //            if (aotuzoom > 0)
-        //            {
-        //                cx3 = linex[2];
-        //                cy3 = liney[2];
-        //            }
-        //            else
-        //            {
-        //                cx3 = linex[8];
-        //                cy3 = liney[8];
-        //            }
-        //            cline3.Add(cx3, cy3);
-        //        }
-
-        //        //绘制画布
-        //        AddCustomAxis(tChart.Series.Count);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ListToText.Instance.WriteListToTextFile1(ex.ToString());
-        //    }
-        //}
 
         /// <summary>
         /// 重新加载图表
@@ -2989,12 +2821,12 @@ namespace Basic_Controls
 
                 List<double> ShowleftMax = new List<double>();
 
-                //震动1路 vline1
+                //振动1路 vline1
                 if (v1)
                 {
                     vline1 = new Line();
                     tChart.Series.Add(vline1);
-                    vline1.Title = string.Format("震动曲线{0}", 1);
+                    vline1.Title = string.Format("振动曲线{0}", 1);
                     //if (aotuzoom > 0)
                     if (!IsFilterData.Checked)
                     {
@@ -3009,12 +2841,12 @@ namespace Basic_Controls
                     vline1.Add(vx1, vy1);
                     ShowleftMax.Add(leftMax[3]);
                 }
-                //震动2路 vline2
+                //振动2路 vline2
                 if (v2)
                 {
                     vline2 = new Line();
                     tChart.Series.Add(vline2);
-                    vline2.Title = string.Format("震动曲线{0}", 2);
+                    vline2.Title = string.Format("振动曲线{0}", 2);
                     //if (aotuzoom > 0)
                     if (!IsFilterData.Checked)
                     {
@@ -3029,12 +2861,12 @@ namespace Basic_Controls
                     vline2.Add(vx2, vy2);
                     ShowleftMax.Add(leftMax[4]);
                 }
-                //震动3路 vline3
+                //振动3路 vline3
                 if (v3)
                 {
                     vline3 = new Line();
                     tChart.Series.Add(vline3);
-                    vline3.Title = string.Format("震动曲线{0}", 3);
+                    vline3.Title = string.Format("振动曲线{0}", 3);
 
                     if (!IsFilterData.Checked)
                     {
@@ -3123,9 +2955,9 @@ namespace Basic_Controls
 
         /// <summary>
         /// 对比数据加载加载图表
-        /// 0 电流 1震动 2平均电流 3 平均震动
-        /// 4 电流 5震动 6平均电流 7平均震动
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// 0 电流 1振动 2平均电流 3 平均振动
+        /// 4 电流 5振动 6平均电流 7平均振动
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2
         /// </summary>
         private void Chart_Data_Contrast_Lond()
         {
@@ -3185,7 +3017,7 @@ namespace Basic_Controls
                 //}
                 vline1 = new Line();
                 vline1.HorizAxis = HorizontalAxis.Top;
-                vline1.Title = string.Format("【震动】");
+                vline1.Title = string.Format("【振动】");
                 vline1.Add(vx1, vy1);
                 vline1.Color = Color.Green;
                 tChart.Series.Add(vline1);
@@ -3256,9 +3088,9 @@ namespace Basic_Controls
 
         /// <summary>
         /// 包络对比数据加载 图表
-        /// 0 电流1 1震动1 2平均电流1 3 平均震动1
-        /// 4 电流2 5震动2 6平均电流2 7平均震动2
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// 0 电流1 1振动1 2平均电流1 3 平均振动1
+        /// 4 电流2 5振动2 6平均电流2 7平均振动2
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2
         /// </summary>
         private void Chart_Data_Envelope_Lond()
         {
@@ -3291,7 +3123,7 @@ namespace Basic_Controls
                 Chart_DataTable_Init();
 
                 vline1 = new Line();
-                vline1.Title = string.Format("【震动1】包络线");
+                vline1.Title = string.Format("【振动1】包络线");
                 vx1 = linex[14];
                 vy1 = liney[14];
 
@@ -3304,7 +3136,7 @@ namespace Basic_Controls
                     count++;
                     vline2 = new Line();
                     tChart.Series.Add(vline2);
-                    vline1.Title = string.Format("【震动】包络线  绿色【样本数据】红色【对比数据】");
+                    vline1.Title = string.Format("【振动】包络线  绿色【样本数据】红色【对比数据】");
 
                     vline1.HorizAxis = HorizontalAxis.Top;
                     vline2.HorizAxis = HorizontalAxis.Bottom;
@@ -3447,18 +3279,18 @@ namespace Basic_Controls
         double[] cy3;
 
         /// <summary>
-        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2,16： 完整包络电流1 17：完整包络电流2
-        /// 对比数据时； 0:  电流1 对应数组0;   1：震动1 对应数组1;   4:电流2  对应数组4; 5： 震动2 ，对应数组15     点间距 震动5  点间距 震动2000
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据振动1; 4 ：完整数据振动2;5：完整数据振动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据振动1;10 ：平均数据振动2;11：平均数据振动3;
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2,16： 完整包络电流1 17：完整包络电流2
+        /// 对比数据时； 0:  电流1 对应数组0;   1：振动1 对应数组1;   4:电流2  对应数组4; 5： 振动2 ，对应数组15     点间距 振动5  点间距 振动2000
         /// </summary>
         double[][] linex;
 
         /// <summary>
-        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2,16： 完整包络电流1 17：完整包络电流2
-        /// 对比数据时； 0:  电流1 对应数组0;   1：震动1 对应数组1;   4:电流2  对应数组4; 5： 震动2 ，对应数组15     点间距 震动5  点间距 震动2000
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据振动1; 4 ：完整数据振动2;5：完整数据振动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据振动1;10 ：平均数据振动2;11：平均数据振动3;
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2,16： 完整包络电流1 17：完整包络电流2
+        /// 对比数据时； 0:  电流1 对应数组0;   1：振动1 对应数组1;   4:电流2  对应数组4; 5： 振动2 ，对应数组15     点间距 振动5  点间距 振动2000
         /// </summary>
         double[][] liney;
 
@@ -5235,9 +5067,9 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void treeList_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
         {
-            btnEnvelope.Enabled = false;
-            btnRestore.Enabled = false;
-
+            //btnEnvelope.Enabled =false;
+            //btnRestore.Enabled = false;
+            IsShowControl();
             // treeList.OptionsView.ShowIndicator = false;
             if (e.Node.Selected)
             {
@@ -5378,9 +5210,9 @@ namespace Basic_Controls
 
                             btnSaveData.Enabled = true;
                             btnSaveImg.Enabled = true;
-                            btnEnvelope.Enabled = true;
-                            btnRestore.Enabled = true;
-
+                            //btnEnvelope.Enabled = true;
+                            //btnRestore.Enabled = true;
+                            IsShowControl(true);
                             filepath = FileHelper.Local_Path_Get() + "Xml_Data\\" + pub_Test_Plan.DVNAME + ".xml";
                             if (FileHelper.IsFileExist(filepath))
                             {
@@ -5603,7 +5435,7 @@ namespace Basic_Controls
 
         #region 包络线相关转换
         /// <summary>
-        /// 震动包络偷点数 5点
+        /// 振动包络偷点数 5点
         /// </summary>
         int VPoint_Lost = 5;
         /// <summary>
@@ -5623,7 +5455,7 @@ namespace Basic_Controls
                 Show_Open();
 
                 // Re_Envelope_Data(linex[9], liney[9], out linex[12], out liney[12]);
-                //震动点位5
+                //振动点位5
 
 
                 Re_Envelope_Data(linex[3], liney[3], out linex[14], out liney[14], VPoint_Lost);
@@ -5807,10 +5639,10 @@ namespace Basic_Controls
                         //Re_Envelope_Data(linex[3], liney[3], out linex[12], out liney[12]);
                         //Re_Envelope_Data(linex[7], liney[7], out linex[13], out liney[13]);
 
-                        //   震动1 对应数组1 ,震动2 ，对应数组15     点间距 震动5
+                        //   振动1 对应数组1 ,振动2 ，对应数组15     点间距 振动5
                         Re_Envelope_Data(linex[3], liney[3], out linex[14], out liney[14], VPoint_Lost);
                         Re_Envelope_Data(linex[4], liney[4], out linex[15], out liney[15], VPoint_Lost);
-                        //   电流1 对应数组0 电流2 ，对应数组4      点间距 震动2000
+                        //   电流1 对应数组0 电流2 ，对应数组4      点间距 振动2000
                         Re_Envelope_Data(linex[0], liney[0], out linex[16], out liney[16], CPoint_Lost);
                         Re_Envelope_Data(linex[1], liney[1], out linex[17], out liney[17], CPoint_Lost);
                         Single = true;
@@ -5830,8 +5662,10 @@ namespace Basic_Controls
                     //cursorTool_Front.Series = tChart.Series[0];
                     //cursorTool_After.Series = tChart.Series[0]; 
                     Show_End();
-                    btnEnvelope.Enabled = false;
-                    btnRestore.Enabled = false;
+                    //btnEnvelope.Enabled = false;
+                    //btnRestore.Enabled = false;
+                    IsShowControl();
+
                     ckLineShow.Checked = true;
                 }
 
@@ -6100,6 +5934,7 @@ namespace Basic_Controls
         }
 
         #endregion
+
         /// <summary>
         /// 画布上移动
         /// </summary>
@@ -6110,12 +5945,9 @@ namespace Basic_Controls
             if (Selection)
             {
                 Point point = Control.MousePosition;
-
                 pcFront.Location = new Point(point.X - pclChart.Location.X, pcAfter.Location.Y);
                 lbline1.Location = new Point(pcFront.Location.X - 15, pcFront.Height + (int)(tChart.Panel.MarginTop * 10) - 15);
-
             }
-
         }
         /// <summary>
         /// 浮点分析
@@ -6124,80 +5956,19 @@ namespace Basic_Controls
         /// <param name="e"></param>
         private void btnSpotAnalysis_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            int length = 1000;
-            double[] in_fft_r = new double[length];
-            double[] in_fft_i = new double[length];
-            double[] out_fft_r = new double[length];
-            double[] out_fft_i = new double[length];
-            for (int i = 0; i < length; i++)
+            if (liney != null && liney[3] != null)
             {
-                int t = i;
-                in_fft_r[i] = 20 + 30 * Math.Sin(2 * Math.PI * 50 * t / 180) + 15 * Math.Cos(2 * Math.PI * 75 * t / 180);
+                FFT_Img(liney[3]);
             }
-
-            Fourier.Forward(in_fft_r, in_fft_i, FourierOptions.Matlab);
-
-            double[] ffx = new double[in_fft_r.Length];
-            out_fft_r[0] = Math.Sqrt((in_fft_r[0] * in_fft_r[0]) + (in_fft_i[0] * in_fft_i[0])) / length;
-
-            for (int i = 1; i < in_fft_r.Length; i++)
+            else
             {
-                ffx[i] = 0.005 * i;
-
-                out_fft_r[i] = 2 * Math.Sqrt((in_fft_r[i] * in_fft_r[i]) + (in_fft_i[i] * in_fft_i[i])) / length;
+                Mapping();
             }
-
-
-            ////返回参数 有问题 需要验证
-            ////  var DD = out_fft_r; GetGridPen
-            //tChart.Series.Clear();
-            //tChart.Axes.Custom.Clear();
-
-            //tChart.Axes.Bottom.SetMinMax(0, 20);
-
-
-
-
-            //double leftmax = Math.Round(leftMax[3] * (1 + 0.2), 3);
-
-            //if(leftmax<=0)
-            //{
-            //leftmax = 50;
-            // }
-
-            //tChart.Axes.Left.SetMinMax(-leftmax, leftmax);
-
-            //tChart.Axes.Left.StartPosition = 0;
-            //tChart.Axes.Left.EndPosition = 100;
-
-            //Points ps = new Points();
-            //ps.Pointer.HorizSize = 1;
-            //ps.Pointer.VertSize = 1;
-            //ps.Pointer.Pen.Visible = true;
-            //ps.Pointer.Style = PointerStyles.Circle;
-            //tChart.Series.Add(ps);
-
-            //ps.Add(linex[20], liney[20]);
-
-            FFT(liney[3]);
-
-            //  vline1 = new Line();
-
-
-            //tChart.Series.Add(vline1);          
-            // vline1.Add(linex[20], liney[20]);
-
-            // vline1.Add(ffx[3], out_fft_r[20]);
-
-
-
-
-
         }
         /// <summary>
         /// FFT 运算
         /// </summary>
-        private void FFT(double[] Data_In)
+        private void FFT_Chart(double[] Data_In)
         {
             try
             {
@@ -6281,8 +6052,8 @@ namespace Basic_Controls
                         }
                         ffx[savelength + j] = 0.02 * i;
                         out_fft_r[savelength + j] = 2 * Math.Sqrt((in_fft_r[j] * in_fft_r[j]) + (in_fft_i[j] * in_fft_i[j])) / num;
- 
-                        if (out_fft_r[savelength + j]>0.1)
+
+                        if (out_fft_r[savelength + j] > 0.1)
                         {
                             var dd = out_fft_r[savelength + j];
                         }
@@ -6292,6 +6063,9 @@ namespace Basic_Controls
                 liney[20] = out_fft_r;
                 linex[20] = ffx;
 
+
+
+                //刻度 下周来做 
                 Bitmap srcImage = new Bitmap(1000, 400);
                 for (int i = 0; i < srcImage.Width; i++)
                 {
@@ -6300,18 +6074,43 @@ namespace Basic_Controls
                         break;
                     }
                     for (int j = 0; j < srcImage.Height; j++)
-                    { 
+                    {
                         double dnum = out_fft_r[i * srcImage.Height + j];
                         int colorB = (int)(255 - (dnum / 0.3 * 255) + 0.5);
-      
+
                         Color color = Color.FromArgb(255, colorB, colorB, colorB);
                         srcImage.SetPixel(i, j, color);
                     }
                 }
+
+                #region 图片旋转配置
+                /*
+                    Rotate180FlipNone   指定不进行翻转的 180 度旋转。
+                    Rotate180FlipX  指定后接水平翻转的 180 度旋转。
+                    Rotate180FlipXY 指定后接水平翻转和垂直翻转的 180 度旋转。
+                    Rotate180FlipY  指定后接垂直翻转的 180 度旋转。
+                    Rotate270FlipNone   指定不进行翻转的 270 度旋转。
+                    Rotate270FlipX  指定后接水平翻转的 270 度旋转。
+                    Rotate270FlipXY 指定后接水平翻转和垂直翻转的 270 度旋转。
+                    Rotate270FlipY  指定后接垂直翻转的 270 度旋转。
+                    Rotate90FlipNone    指定不进行翻转的 90 度旋转。
+                    Rotate90FlipX   指定后接水平翻转的 90 度旋转。
+                    Rotate90FlipXY  指定后接水平翻转和垂直翻转的 90 度旋转。
+                    Rotate90FlipY   指定后接垂直翻转的 90 度旋转。
+                    RotateNoneFlipNone  指定不进行旋转和翻转。
+                    RotateNoneFlipX 指定没有后跟水平翻转的旋转。
+                    RotateNoneFlipXY    指定没有后跟水平和垂直翻转的旋转。
+                    RotateNoneFlipY 指定没有后跟垂直翻转的旋转。
+                 */
                 srcImage.RotateFlip(RotateFlipType.Rotate180FlipX);
-                pictureBox1.Height = srcImage.Height;
-                pictureBox1.Width = srcImage.Width;
-                pictureBox1.Image = srcImage;
+                #endregion
+                Bitmap_Control bit = new Bitmap_Control();
+                bit.Dock = DockStyle.Fill;
+                bit.Bitmap = srcImage;
+                bit.InIt();
+                pclChart.Controls.Add(bit);// 绑定图表位置 
+                pclChart.Controls[21].BringToFront();
+
             }
             catch (Exception ex)
             {
@@ -6319,8 +6118,232 @@ namespace Basic_Controls
             }
         }
 
+        /// <summary>
+        /// FFT 转换成图片
+        /// </summary>
+        private void FFT_Img(double[] Data_In)
+        {
+            try
+            {
+                liney[20] = new double[Data_In.Length];
+                linex[20] = new double[Data_In.Length];
+
+                //数据总长度
+                int llength = liney[3].Length;
+                //fft 运算长度
+                int num = 2000;
+                //执行运算次数
+                int count = llength / num;
+
+                int savenum = num / 5;
+                int saveallnum = savenum * count;
+
+                double[] out_fft_r = new double[saveallnum];
+                double[] out_fft_i = new double[saveallnum];
+
+                double[] ffx = new double[saveallnum];
+
+                for (int i = 0; i < count; i++)
+                {
+                    //数据当前位置
+                    int getlength = i * num;
+                    //运算数组
+                    double[] in_fft_r = new double[num];
+                    double[] in_fft_i = new double[num];
+                    in_fft_r[0] = 0;
+                    in_fft_i[0] = 0;
+
+                    for (int j = 0; j < num; j++)
+                    {
+                        if (getlength + j >= llength)
+                        {
+                            break;
+                        }
+                        in_fft_r[j] = Data_In[getlength + j];
+                    }
+                    Fourier.Forward(in_fft_r, in_fft_i, FourierOptions.Matlab);
+                    int savelength = i * savenum;
+                    for (int j = 1; j <= savenum; j++)
+                    {
+                        if (savelength + j >= saveallnum)
+                        {
+                            break;
+                        }
+                        ffx[savelength + j] = 0.02 * i;
+                        out_fft_r[savelength + j] = 2 * Math.Sqrt((in_fft_r[j] * in_fft_r[j]) + (in_fft_i[j] * in_fft_i[j])) / num;
+                    }
+                }
+
+                liney[20] = out_fft_r;
+                linex[20] = ffx;
+
+                Mapping(liney[20]);
+            }
+            catch (Exception ex)
+            {
+                ListToText.Instance.WriteListToTextFile1("FFT_Img:" + ex.ToString());
+            }
+        }
+        /// <summary>
+        /// 指纹图图片
+        /// </summary>
+        Bitmap srcImage = null;
+        /// <summary>
+        /// 绘制图形
+        /// </summary>
+        /// <param name="Y"></param>
+        private void Mapping(double[] Y = null)
+        {
+            #region 绘图
+            int right_shift = 40;
+            //间距量
+            int addnum = 50 + right_shift;
+            //偏移量
+
+            int width_length = 1000;
+            int heigth_length = 400;
+
+            srcImage = new Bitmap(width_length + addnum + right_shift, heigth_length + addnum + right_shift);
+
+            if (Y != null)
+            {
+                //数据绘图区
+                for (int i = 0; i < width_length; i++)
+                {
+                    if ((i * heigth_length) >= Y.Length)
+                    {
+                        break;
+                    }
+                    for (int j = 0; j < heigth_length; j++)
+                    {
+                        double dnum = Y[i * heigth_length + j];
+
+                        //灰度系数
+                        //double Gray_level = Convert.ToInt32(cmbGray_level.Text) * 0.3;
+                        double Gray_level = Convert.ToInt32(cmbGray_level.Text);
+
+                        int colorB = (int)(255 - (dnum / Gray_level * 255) + 0.5);
+
+                        Color color = Color.FromArgb(255, colorB, colorB, colorB);
+                        srcImage.SetPixel(i + addnum, j + addnum, color);
+                    }
+                }
+            }
+            #region 图片旋转配置
+            /*
+                Rotate180FlipNone   指定不进行翻转的 180 度旋转。
+                Rotate180FlipX  指定后接水平翻转的 180 度旋转。
+                Rotate180FlipXY 指定后接水平翻转和垂直翻转的 180 度旋转。
+                Rotate180FlipY  指定后接垂直翻转的 180 度旋转。
+                Rotate270FlipNone   指定不进行翻转的 270 度旋转。
+                Rotate270FlipX  指定后接水平翻转的 270 度旋转。
+                Rotate270FlipXY 指定后接水平翻转和垂直翻转的 270 度旋转。
+                Rotate270FlipY  指定后接垂直翻转的 270 度旋转。
+                Rotate90FlipNone    指定不进行翻转的 90 度旋转。
+                Rotate90FlipX   指定后接水平翻转的 90 度旋转。
+                Rotate90FlipXY  指定后接水平翻转和垂直翻转的 90 度旋转。
+                Rotate90FlipY   指定后接垂直翻转的 90 度旋转。
+                RotateNoneFlipNone  指定不进行旋转和翻转。
+                RotateNoneFlipX 指定没有后跟水平翻转的旋转。
+                RotateNoneFlipXY    指定没有后跟水平和垂直翻转的旋转。
+                RotateNoneFlipY 指定没有后跟垂直翻转的旋转。
+             */
+            srcImage.RotateFlip(RotateFlipType.Rotate180FlipX);
+            #endregion
 
 
+            #region 外框绘图区
+            int y_spacing = 1 + right_shift;
+            int x_spacing = addnum - 2;
+            Color com_Color = Color.Black;
+            Font font = new Font("黑体", 8, FontStyle.Bold);
+            Graphics g = Graphics.FromImage(srcImage);
+
+            //短竖线
+            for (int i = 0; i <= heigth_length; i++)
+            { //竖线
+                srcImage.SetPixel(x_spacing, i + y_spacing, com_Color);
+                if (i % 20 == 0)
+                {
+                    srcImage.SetPixel(x_spacing - 1, heigth_length - i + y_spacing, com_Color);
+                    srcImage.SetPixel(x_spacing - 2, heigth_length - i + y_spacing, com_Color);
+                    srcImage.SetPixel(x_spacing - 3, heigth_length - i + y_spacing, com_Color);
+                    if (i % 100 == 0)
+                    {
+                        srcImage.SetPixel(x_spacing - 4, heigth_length - i + y_spacing, com_Color);
+                        srcImage.SetPixel(x_spacing - 5, heigth_length - i + y_spacing, com_Color);
+                        srcImage.SetPixel(x_spacing - 6, heigth_length - i + y_spacing, com_Color);
+
+
+
+                        //编写刻度单位
+                        int num = (i / 100 * 5);
+                        //System.Drawing.ColorTranslator.FromHtml(Info.Color) 将字符串转换为颜色
+                        g.DrawString(num.ToString(), font, new SolidBrush(Color.Black), x_spacing - 20, heigth_length - i + y_spacing - 5);
+
+                        //绘制中线
+                        if (num == 10)
+                        {
+                            //横线
+                            for (int j = 0; j <= width_length; j++)
+                            {
+                                srcImage.SetPixel(j + x_spacing, heigth_length - i + y_spacing, Color.Green);
+                            }
+                        }
+                        if (num == 20)
+                        {
+                            g.DrawString("(kHz)", font, new SolidBrush(Color.Black), x_spacing - 20, heigth_length - i + y_spacing - 15);
+                        }
+                    }
+                }
+
+                if (srcImage.Width / 3 == i)
+                {
+                    g.DrawString(pub_Test_Plan.DVNAME + "_灰暗度:" + cmbGray_level.Text, font, new SolidBrush(Color.Black), srcImage.Width / 2, 1);
+                }
+            }
+
+            //短横线
+            for (int i = 0; i <= width_length; i++)
+            {
+                srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing, com_Color);
+                if (i % 10 == 0)
+                {
+                    srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing + 1, com_Color);
+                    srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing + 2, com_Color);
+                    srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing + 3, com_Color);
+                    if (i % 50 == 0)
+                    {
+                        srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing + 4, com_Color);
+                        srcImage.SetPixel(i + x_spacing, heigth_length + y_spacing + 5, com_Color);
+                        g = Graphics.FromImage(srcImage);
+                        //编写刻度单位
+                        int num = (i / 50);
+                        //System.Drawing.ColorTranslator.FromHtml(Info.Color) 将字符串转换为颜色
+                        g.DrawString(num.ToString(), font, new SolidBrush(Color.Black), i + x_spacing - 5, heigth_length + y_spacing + 7);
+
+                        if (num == 20)
+                        {
+                            g.DrawString("(s)", font, new SolidBrush(Color.Black), i + x_spacing + 7, heigth_length + y_spacing + 7);
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+            bit.Bitmap = srcImage;
+            bit.Title = tChart.Header.Text + "_" + cmbGray_level.Text;
+            bit.InIt();
+            Bind_Bit(true);
+            #endregion
+        }
+
+        private void Bind_Bit(bool isShow = false)
+        {
+            bit.Visible = isShow;
+            gbuGray_level.Enabled = isShow;
+        }
 
         /// <summary>
         /// 导入导出
@@ -6332,75 +6355,79 @@ namespace Basic_Controls
             Fm_In_Out_Data from = new Fm_In_Out_Data(treeList);
             from.ShowDialog();
             Tester_List_Bind();
-
         }
-
+        /// <summary>
+        /// 导入导出关闭刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_In_Out_Data1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             Fm_In_Out_Data from = new Fm_In_Out_Data(treeList);
             from.ShowDialog();
             Tester_List_Bind();
         }
+        #region 指纹图功能
+        /// <summary>
+        /// 导出指纹图
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSpot_Img_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (srcImage != null)
+            {
+                string path = "";
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    path = fbd.SelectedPath;
+                }
+                srcImage.Save(path + "//" + pub_Test_Plan.DVNAME + "_灰暗度  " + cmbGray_level.Text + ".png");
+                MessageBox.Show("生成图片成功");
+            }
+            else
+            {
+                MessageBox.Show("未生成指纹图,请点击【" + btnSpotAnalysis.Caption + "】生成！");
+            }
+        }
+        /// <summary>
+        /// 选择灰暗度
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbGray_level_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (liney != null && liney[20] != null)
+            {
+                Mapping(liney[20]);
+            }
+            else
+            {
+                MessageBox.Show("未找到数据请选择其他图形！");
+            }
+        }
+
+        /// <summary>
+        /// 移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void trackBar_Scroll(object sender, EventArgs e)
+        {
+            cmbGray_level.Text = trackBar.Value.ToString();
+            if (liney != null && liney[20] != null)
+            {
+                Mapping(liney[20]);
+            }
+            else
+            {
+                MessageBox.Show("未找到数据请选择其他图形！");
+            }
+        }
+        #endregion
 
         #endregion
-        //public Graphics g;
-        //public Point point;
-        //bool isDown = false;
 
-        //private void pclChart_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (isDown)
-        //    {
-        //        //刷会把底层画布刷掉
-
-        //        //g.Clear(this.BackColor);
-        //        Pen drawPen = new Pen(Color.Red, 1);
-        //        ///左上角到右下角画矩形
-        //        if (point.X < e.X && point.Y < e.Y)
-        //        {
-
-        //            g.DrawRectangle(drawPen, point.X, point.Y,
-        //                              Math.Abs(e.X - point.X),
-        //                              Math.Abs(e.Y - point.Y));
-        //        }
-
-        //        ///右上角到左小角画矩形
-        //        if (point.X > e.X && point.Y < e.Y)
-        //        {
-        //            g.DrawRectangle(drawPen, e.X, point.Y,
-        //                              Math.Abs(e.X - point.X),
-        //                              Math.Abs(e.Y - point.Y));
-        //        }
-
-        //        ///右小角到左上角画矩形
-        //        if (point.X > e.X && point.Y > e.Y)
-        //        {
-        //            g.DrawRectangle(drawPen, e.X, e.Y,
-        //                              Math.Abs(e.X - point.X),
-        //                              Math.Abs(e.Y - point.Y));
-        //        }
-
-        //        ///左下角到右上角画矩形
-        //        if (point.X < e.X && point.Y > e.Y)
-        //        {
-        //            g.DrawRectangle(drawPen, point.X, e.Y,
-        //                              Math.Abs(e.X - point.X),
-        //                              Math.Abs(e.Y - point.Y));
-        //        }
-
-        //    }
-
-        //}
-
-        //private void pclChart_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    isDown = true;
-        //    this.point = e.Location;
-        //}
-
-        //private void pclChart_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    isDown = false;
-        //}
     }
 }

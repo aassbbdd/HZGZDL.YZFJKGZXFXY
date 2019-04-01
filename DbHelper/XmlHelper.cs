@@ -1171,7 +1171,7 @@ namespace DbHelper
                 {
                     IsNotNull = false;
                 }
-                int index = 0; //index 为 震动电流 每个点的 索引位置值
+                int index = 0; //index 为 振动电流 每个点的 索引位置值
 
                 //转成毫秒除数
                 int allnum = 100000;
@@ -1355,7 +1355,7 @@ namespace DbHelper
                 {
                     IsNotNull = false;
                 }
-                int index = 0; //index 为 震动电流 每个点的 索引位置值
+                int index = 0; //index 为 振动电流 每个点的 索引位置值
 
                 //转成毫秒除数
                 int allnum = 100000;
@@ -1462,16 +1462,16 @@ namespace DbHelper
         static double[][] newy;
 
         /// <summary>
-        /// 左边轴高低 0 电流1 ，1 电流2 ，2 电流3，3 震动1 ，4 震动2 5 震动3
+        /// 左边轴高低 0 电流1 ，1 电流2 ，2 电流3，3 振动1 ，4 振动2 5 振动3
         /// </summary>
         static double[] leftMax;
 
 
         /// <summary>
         /// xml转 平均数组和完整数组
-        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据振动1; 4 ：完整数据振动2;5：完整数据振动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据振动1;10 ：平均数据振动2;11：平均数据振动3;
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2
         /// </summary>
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>
@@ -1568,7 +1568,7 @@ namespace DbHelper
                 {
                     IsNotNull = false;
                 }
-                int index = 0; //index 为 震动电流 每个点的 索引位置值
+                int index = 0; //index 为 振动电流 每个点的 索引位置值
 
                 leftMax = new double[6];
 
@@ -1606,14 +1606,14 @@ namespace DbHelper
 
         /// <summary>
         /// xml转 偷点数组和完整数组
-        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据震动1; 4 ：完整数据震动2;5：完整数据震动3;
-        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据震动1;10 ：平均数据震动2;11：平均数据震动3;
-        /// 12： 平均包络震动1 13：平均包络震动2 14： 完整包络震动1 15：完整包络震动2
+        /// 0 ：完整数据电流1;  1 ：完整数据电流2 ; 2：完整数据电流3;  3：完整数据振动1; 4 ：完整数据振动2;5：完整数据振动3;
+        /// 6 ：平均数据电流1;7：平均数据电流2; 8 ：平均数据电流3;9 ：平均数据振动1;10 ：平均数据振动2;11：平均数据振动3;
+        /// 12： 平均包络振动1 13：平均包络振动2 14： 完整包络振动1 15：完整包络振动2
         /// </summary>
         /// <param name="path">储存路径</param>
         /// <param name="cks">展示那几个通道</param>
-        /// <param name="linex">X轴数组集合 1 2 3 电路和震动</param>
-        /// <param name="liney">Y轴数组集合 1 2 3 电路和震动</param>
+        /// <param name="linex">X轴数组集合 1 2 3 电路和振动</param>
+        /// <param name="liney">Y轴数组集合 1 2 3 电路和振动</param>
         /// <param name="IsNotNull">数据是否为空</param>
         /// <param name="leftMaxs">Y轴坐标卡尺</param>
         /// <param name="LeakNum">偷点漏点数</param>
@@ -1713,7 +1713,7 @@ namespace DbHelper
                 {
                     IsNotNull = false;
                 }
-                int index = 0; //index 为 震动电流 每个点的 索引位置值
+                int index = 0; //index 为 振动电流 每个点的 索引位置值
 
                 leftMax = new double[6];
                 Xml_Line_Data model = new Xml_Line_Data();
@@ -1880,7 +1880,7 @@ namespace DbHelper
         /// <summary>
         /// xml转数组   平均数组和完整数组 对比数据转换方法  
         /// 0， 电流1； 1，电流2；
-        /// 4， 震动1； 5，震动2；  
+        /// 4， 振动1； 5，振动2；  
         /// </summary>                                      
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="path">xml路径</param>

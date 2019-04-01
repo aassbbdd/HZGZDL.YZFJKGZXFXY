@@ -59,19 +59,19 @@ namespace DbHelper.XmlModel
         [XmlAttribute("Id")]
         public string Id { get; set; }
         /// <summary>
-        /// 震动1
+        /// 振动1
         /// </summary>
         /// 
         [XmlAttribute("V1")]
         public string V1 { get; set; }
         /// <summary>
-        /// 震动2
+        /// 振动2
         /// </summary>
         /// 
         [XmlAttribute("V2")]
         public string V2 { get; set; }
         /// <summary>
-        /// 震动3
+        /// 振动3
         /// </summary>
         /// 
         [XmlAttribute("V3")]
@@ -113,19 +113,19 @@ namespace DbHelper.XmlModel
     {
         #region 原始数据
         /// <summary>
-        /// 震动Y1
+        /// 振动Y1
         /// </summary>
         [XmlAttribute("VY1")]
         public string VY1 { get; set; }
 
         /// <summary>
-        /// 震动Y2
+        /// 振动Y2
         /// </summary>
         [XmlAttribute("VY2")]
         public string VY2 { get; set; }
 
         /// <summary>
-        /// 震动Y3
+        /// 振动Y3
         /// </summary>
         [XmlAttribute("VY3")]
         public string VY3 { get; set; }
@@ -156,19 +156,19 @@ namespace DbHelper.XmlModel
 
         #region 包络数据
         /// <summary>
-        /// 震动Y1
+        /// 振动Y1
         /// </summary>
         [XmlAttribute("Envelope_VY1")]
         public string Envelope_VY1 { get; set; }
 
         /// <summary>
-        /// 震动Y2
+        /// 振动Y2
         /// </summary>
         [XmlAttribute("Envelope_VY2")]
         public string Envelope_VY2 { get; set; }
 
         /// <summary>
-        /// 震动Y3
+        /// 振动Y3
         /// </summary>
         [XmlAttribute("Envelope_VY3")]
         public string Envelope_VY3 { get; set; }

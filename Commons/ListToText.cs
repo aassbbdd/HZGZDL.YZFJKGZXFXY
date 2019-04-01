@@ -86,9 +86,9 @@ namespace Commons
                         //sw.WriteLine("电流2: " + item.old_data[i].Current2 + " :" + item.new_data[i].Current2);
                         //sw.WriteLine("电流3: " + item.old_data[i].Current3 + " :" + item.new_data[i].Current3);
 
-                        sw.WriteLine("震动1: " + item.old_data[i].Vibration1 + " :" + item.new_data[i].Vibration1);
-                        //sw.WriteLine("震动2: " + item.old_data[i].Vibration2 + " :" + item.new_data[i].Vibration2);
-                        //sw.WriteLine("震动3: " + item.old_data[i].Vibration3 + " :" + item.new_data[i].Vibration3);
+                        sw.WriteLine("振动1: " + item.old_data[i].Vibration1 + " :" + item.new_data[i].Vibration1);
+                        //sw.WriteLine("振动2: " + item.old_data[i].Vibration2 + " :" + item.new_data[i].Vibration2);
+                        //sw.WriteLine("振动3: " + item.old_data[i].Vibration3 + " :" + item.new_data[i].Vibration3);
                     };
                     sw.WriteLine("结束解析---------------------------------------------------------------------------------");
 
@@ -217,7 +217,10 @@ namespace Commons
             sw.Flush();
             sw.Close();
         }
-        //将List转换为TXT文件
+       /// <summary>
+       /// 日志
+       /// </summary>
+       /// <param name="text"></param>
         public void WriteListToTextFile1(string text)
         {
             FileStream fs;

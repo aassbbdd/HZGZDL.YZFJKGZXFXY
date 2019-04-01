@@ -325,7 +325,6 @@ namespace Basic_Controls
                     this.txtGetUnit.Focus();
                     txtGetUnit.Text = "";
                     return;
-
                 }
             }
             else

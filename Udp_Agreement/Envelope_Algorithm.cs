@@ -130,8 +130,8 @@ namespace Udp_Agreement
         /// <summary>
         /// 返回包络线数据
         /// </summary>
-        /// <param name="In_y">入参 震动值数组</param>
-        /// <param name="Out_y">出参 震动值数组</param>
+        /// <param name="In_y">入参 振动值数组</param>
+        /// <param name="Out_y">出参 振动值数组</param>
         /// <param name="rc_dn">下降 rc值</param>
         /// <param name="rc_up">上升 rc值</param>
         public void env_3(double[] In_y, double[] Out_y, double rc_dn = 0.01, double rc_up = 0.0001)
